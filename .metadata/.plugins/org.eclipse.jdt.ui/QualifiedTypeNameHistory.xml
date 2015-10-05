@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="android.app.Application"/>
+<fullyQualifiedTypeName name="com.instirepo.app.preferences.ZPreferences"/>
+<fullyQualifiedTypeName name="android.support.v7.app.AppCompatActivity"/>
+<fullyQualifiedTypeName name="com.instirepo.app.activities.BaseActivity"/>
+<fullyQualifiedTypeName name="com.instirepo.app.application.ZApplication"/>
+<fullyQualifiedTypeName name="android.content.Intent"/>
+<fullyQualifiedTypeName name="java.lang.reflect.Field"/>
+<fullyQualifiedTypeName name="android.support.v4.app.FragmentManager"/>
+<fullyQualifiedTypeName name="com.google.android.gms.common.api.ResultCallback"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="com.instirepo.app.activities.ZHomeActivity"/>
+<fullyQualifiedTypeName name="com.instirepo.app.activities.ZLaunchActivity"/>
+<fullyQualifiedTypeName name="com.google.android.gms.plus.Account"/>
+<fullyQualifiedTypeName name="android.accounts.Account"/>
+<fullyQualifiedTypeName name="android.support.v4.app.Fragment"/>
+<fullyQualifiedTypeName name="com.instirepo.app.fragments.BaseFragment"/>
+<fullyQualifiedTypeName name="android.os.Bundle"/>
+<fullyQualifiedTypeName name="com.instirepo.app.fragments.LaunchScreen1Fragment"/>
+<fullyQualifiedTypeName name="com.instirepo.app.R"/>
+<fullyQualifiedTypeName name="com.instirepo.app.R.layout"/>
+</qualifiedTypeNameHistroy>

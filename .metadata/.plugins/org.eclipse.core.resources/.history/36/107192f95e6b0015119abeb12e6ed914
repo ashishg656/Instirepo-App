@@ -1,0 +1,86 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/launch_activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_launch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/indicatorandbuttonslayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical" >
+
+        <com.bookncart.app.widgets.CirclePageIndicator
+            android:id="@+id/circle_page_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/bnc_margin_small"
+            app:radius="5dp" />
+
+        <LinearLayout
+            android:id="@+id/login_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/bnc_margin_small"
+            android:paddingLeft="@dimen/bnc_margin_small"
+            android:paddingRight="@dimen/bnc_margin_small" >
+
+            <Button
+                android:id="@+id/google_sign_in_button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/google_login_button_bg_selector"
+                android:drawableLeft="@drawable/google_logo"
+                android:paddingLeft="@dimen/bnc_margin_small"
+                android:text="Login with Google"
+                android:textColor="@color/bnc_white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/skipbuttonlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right" >
+
+        <ImageView
+            android:id="@+id/skip_button_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/launch_skip_text"
+            android:layout_alignLeft="@+id/launch_skip_text"
+            android:layout_alignRight="@+id/launch_skip_text"
+            android:layout_alignTop="@+id/launch_skip_text"
+            android:src="#33000000" />
+
+        <TextView
+            android:id="@+id/launch_skip_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/bnc_margin_small"
+            android:paddingLeft="@dimen/bnc_margin_medium"
+            android:paddingRight="@dimen/bnc_margin_medium"
+            android:paddingTop="@dimen/bnc_margin_small"
+            android:text="SKIP"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/ic_app_icon_launch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/app_logo_image" />
+
+</FrameLayout>

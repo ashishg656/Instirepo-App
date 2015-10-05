@@ -1,0 +1,51 @@
+package com.instirepo.app.widgets;
+
+import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.widget.LinearLayout;
+
+import com.bookncart.app.activities.HomeActivity;
+
+public class TouchEventInterceptLinearLayout extends LinearLayout {
+
+	Context context;
+
+	public TouchEventInterceptLinearLayout(Context context, AttributeSet attrs,
+			int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
+		this.context = context;
+	}
+
+	public TouchEventInterceptLinearLayout(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		this.context = context;
+	}
+
+	public TouchEventInterceptLinearLayout(Context context) {
+		super(context);
+		this.context = context;
+	}
+
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		if (getTranslationY() != 0) {
+			return true;
+		} else if (getTranslationY() == 0) {
+			GridLayoutManager layoutManager = (GridLayoutManager) ((HomeActivity) context).similarBooksRecyclerView
+					.getLayoutManager();
+			int pos = layoutManager.findFirstCompletelyVisibleItemPosition();
+			if (pos == 0) {
+				if (ev.getHistorySize() > 0) {
+					float dy = ev.getY() - ev.getHistoricalY(0);
+					if (dy > 0) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		return false;
+	}
+}

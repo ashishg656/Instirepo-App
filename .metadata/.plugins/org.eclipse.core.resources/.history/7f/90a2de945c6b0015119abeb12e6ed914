@@ -1,0 +1,12 @@
+package com.instirepo.app.application;
+
+import android.app.Application;
+
+public class ZApplication extends Application {
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+	}
+
+}

@@ -1,0 +1,12 @@
+<resources>
+
+    <style name="NoActionBarThemeTransparentStatusBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowSharedElementsUseOverlay">false</item>
+        <item name="colorPrimary">@color/PrimaryColor</item>
+        <item name="colorPrimaryDark">@color/PrimaryDarkColor</item>
+    </style>
+
+</resources>
