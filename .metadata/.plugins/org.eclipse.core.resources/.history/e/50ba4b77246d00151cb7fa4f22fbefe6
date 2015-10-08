@@ -1,0 +1,20 @@
+package com.example.faceless.activities;
+
+import com.example.faceless.fragments.SignUpFragment1;
+
+import android.os.Bundle;
+
+public class SignUpActivity extends BaseActivity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		setFirstFragment();
+	}
+
+	private void setFirstFragment() {
+		getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new SignUpFragment1());
+	}
+
+}

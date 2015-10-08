@@ -1,0 +1,10 @@
+package com.example.faceless.objects;
+
+public class ZChatObject {
+
+	public class ChatItem {
+		String text;
+		String time;
+	}
+
+}

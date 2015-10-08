@@ -1,0 +1,6 @@
+package com.example.faceless.extras;
+
+public interface RequestTags {
+	public String Z_CHECK_TEAM_EXIST_OR_NOT = "Z_CHECK_TEAM_EXIST_OR_NOT";
+
+}

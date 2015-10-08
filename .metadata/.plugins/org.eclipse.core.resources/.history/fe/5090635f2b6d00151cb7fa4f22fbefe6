@@ -1,0 +1,19 @@
+package com.example.faceless.fragments;
+
+agment {
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.signup_fragment_2_layout,
+				container, false);
+
+		return v;
+	}
+
+	@Override
+	public void onActivityCreated( Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+	}
+
+}

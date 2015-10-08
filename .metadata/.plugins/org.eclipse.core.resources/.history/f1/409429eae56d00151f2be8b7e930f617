@@ -1,0 +1,83 @@
+package com.example.faceless.activities;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.toolbox.StringRequest;
+import com.example.faceless.R;
+import com.example.faceless.adapters.ChatListAdapter;
+import com.example.faceless.application.ZApplication;
+import com.example.faceless.extras.RequestTags;
+import com.example.faceless.objects.ZChatObject;
+import com.google.gson.Gson;
+
+public class ChatActivity extends BaseActivity implements RequestTags {
+
+	RecyclerView recyclerView;
+	LinearLayoutManager layoutManager;
+
+	int channelId;
+	boolean isMoreAllowed;
+	int nextPage = 1;
+	ChatListAdapter adapter;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.chat_activity_layout);
+
+		recyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
+
+		layoutManager = new LinearLayoutManager(this,
+				LinearLayoutManager.VERTICAL, true);
+		recyclerView.setLayoutManager(layoutManager);
+
+		channelId = getIntent().getExtras().getInt("channel_id");
+
+		loadData();
+	}
+
+	private void loadData() {
+		StringRequest req = new StringRequest(Method.POST,
+				ZApplication.getBaseUrl() + "get_chats_for_channel/",
+				new Listener<String>() {
+
+					@Override
+					public void onResponse(String res) {
+						ZChatObject obj = new Gson().fromJson(res,
+								ZChatObject.class);
+						nextPage = obj.getNext_page();
+						if (obj.getNext_page() == null)
+							isMoreAllowed = false;
+						if (adapter == null) {
+							adapter = new ChatListAdapter(ChatActivity.this,
+									obj.getChats(), isMoreAllowed);
+						}
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						makeToast("Error.Check internet");
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				Map<String, String> params = new HashMap<String, String>();
+
+				return params;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, Z_CHATS);
+	}
+
+}

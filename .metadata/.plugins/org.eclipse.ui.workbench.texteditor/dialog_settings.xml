@@ -2,17 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="startActivity" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="bookncart"/>
-			<item value="gradientBg"/>
-			<item value="509487250429-pekgqlshg58mfqm6adctmvm3ul9nlbjr.apps.googleusercontent.com"/>
-			<item value="509487250429-pekgqlshg58mfq"/>
-			<item value="account"/>
+			<item value="startActivity"/>
+			<item value="onclick(v"/>
+			<item value="httpClient"/>
+			<item value="DefaultHttpClient"/>
+			<item value="default"/>
+			<item value="nothingSelectedText"/>
+			<item value="android.R"/>
+			<item value="dropdo"/>
 		</list>
 		<list key="replacehistory">
 			<item value="instirepo"/>

@@ -1,0 +1,24 @@
+package com.example.faceless.application;
+
+import android.app.Application;
+
+public class ZApplication extends Application {
+
+	static ZApplication sInstance;
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		sInstance = this;
+	}
+
+	public static String getBaseUrl() {
+		return "";
+	}
+
+	public static synchronized ZApplication getInstance() {
+		if (sInstance == null)
+			sInstance = new ZApplication();
+		return sInstance;
+	}
+}

@@ -4103,7 +4103,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0a0077;
         public static final int action_mode_bar_stub=0x7f0a0076;
         public static final int action_mode_close_button=0x7f0a005f;
-        public static final int action_settings=0x7f0a00a9;
+        public static final int action_settings=0x7f0a00ab;
         public static final int activity_chooser_view_content=0x7f0a0060;
         public static final int adjust_height=0x7f0a003a;
         public static final int adjust_width=0x7f0a003b;
@@ -4188,6 +4188,7 @@ containing a value of this type.
         public static final int middle=0x7f0a0023;
         public static final int mini=0x7f0a0024;
         public static final int mirror=0x7f0a0059;
+        public static final int mobile=0x7f0a00a7;
         public static final int monochrome=0x7f0a0054;
         public static final int multiply=0x7f0a0017;
         public static final int never=0x7f0a001f;
@@ -4202,7 +4203,7 @@ containing a value of this type.
         public static final int production=0x7f0a0041;
         public static final int progress_circular=0x7f0a0007;
         public static final int progress_horizontal=0x7f0a0008;
-        public static final int psts_tab_title=0x7f0a00a7;
+        public static final int psts_tab_title=0x7f0a00a9;
         public static final int radio=0x7f0a0074;
         public static final int repeat=0x7f0a005a;
         public static final int right=0x7f0a0031;
@@ -4245,7 +4246,7 @@ containing a value of this type.
         public static final int terrain=0x7f0a003e;
         public static final int test=0x7f0a0044;
         public static final int text=0x7f0a00a4;
-        public static final int text1=0x7f0a00a8;
+        public static final int text1=0x7f0a00aa;
         public static final int text2=0x7f0a00a2;
         public static final int textSpacerNoButtons=0x7f0a006d;
         public static final int time=0x7f0a00a0;
@@ -4257,6 +4258,7 @@ containing a value of this type.
         public static final int underline=0x7f0a005c;
         public static final int up=0x7f0a0001;
         public static final int useLogo=0x7f0a0016;
+        public static final int verify=0x7f0a00a8;
         public static final int view_offset_helper=0x7f0a0009;
         public static final int withText=0x7f0a0020;
         public static final int wrap_content=0x7f0a000c;
@@ -4353,16 +4355,17 @@ containing a value of this type.
         public static final int notification_template_media=0x7f03002d;
         public static final int notification_template_part_chronometer=0x7f03002e;
         public static final int notification_template_part_time=0x7f03002f;
-        public static final int post_by_student_list_item_layout=0x7f030030;
-        public static final int post_by_teacher_list_item_layout=0x7f030031;
-        public static final int psts_custom_tab=0x7f030032;
-        public static final int psts_tab=0x7f030033;
-        public static final int select_dialog_item_material=0x7f030034;
-        public static final int select_dialog_multichoice_material=0x7f030035;
-        public static final int select_dialog_singlechoice_material=0x7f030036;
-        public static final int spinner_item_nothing_selected=0x7f030037;
-        public static final int splash_activity_layout=0x7f030038;
-        public static final int support_simple_spinner_dropdown_item=0x7f030039;
+        public static final int otp_verification_activity_layout=0x7f030030;
+        public static final int post_by_student_list_item_layout=0x7f030031;
+        public static final int post_by_teacher_list_item_layout=0x7f030032;
+        public static final int psts_custom_tab=0x7f030033;
+        public static final int psts_tab=0x7f030034;
+        public static final int select_dialog_item_material=0x7f030035;
+        public static final int select_dialog_multichoice_material=0x7f030036;
+        public static final int select_dialog_singlechoice_material=0x7f030037;
+        public static final int spinner_item_nothing_selected=0x7f030038;
+        public static final int splash_activity_layout=0x7f030039;
+        public static final int support_simple_spinner_dropdown_item=0x7f03003a;
     }
     public static final class menu {
         public static final int splash=0x7f0d0000;

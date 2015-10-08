@@ -1,0 +1,10 @@
+package com.example.faceless.objects;
+
+public class ZLoginObject {
+	
+	boolean error;
+	boolean password_change_required;
+	int id;
+	boolean is_admin;
+
+}

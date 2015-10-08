@@ -1,0 +1,33 @@
+package com.example.faceless.adapters;
+
+import java.util.List;
+
+import com.example.faceless.objects.ZChatObject;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.view.ViewGroup;
+
+public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+
+	Context context;
+	List<ZChatObject.ChatItem> chats;
+	
+	@Override
+	public int getItemCount() {
+		return chats.size();
+	}
+
+	@Override
+	public void onBindViewHolder(ViewHolder arg0, int arg1) {
+		
+	}
+
+	@Override
+	public ViewHolder onCreateViewHolder(ViewGroup arg0, int arg1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
