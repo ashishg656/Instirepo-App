@@ -24,6 +24,7 @@ import com.example.faceless.activities.HomeActivity;
 import com.example.faceless.activities.LoginActivity;
 import com.example.faceless.application.ZApplication;
 import com.example.faceless.extras.RequestTags;
+import com.example.faceless.gcm.RegistrationIntentService;
 import com.example.faceless.objects.ZLoginObject;
 import com.example.faceless.preferences.ZPreferences;
 import com.google.gson.Gson;
@@ -82,6 +83,10 @@ public class LoginFragment2 extends BaseFragment implements RequestTags {
 							ZPreferences.setIsUserLogin(getActivity(), true);
 							ZPreferences.setIsAdmin(getActivity(),
 									obj.isIs_admin());
+
+							Intent intent = new Intent(getActivity(),
+									RegistrationIntentService.class);
+							getActivity().startService(intent);
 
 							if (obj.isPassword_change_required()) {
 								makeToast("Password change required");

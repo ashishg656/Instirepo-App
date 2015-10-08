@@ -23,6 +23,7 @@ import com.example.faceless.activities.HomeActivity;
 import com.example.faceless.activities.SignUpActivity;
 import com.example.faceless.application.ZApplication;
 import com.example.faceless.extras.RequestTags;
+import com.example.faceless.gcm.RegistrationIntentService;
 import com.example.faceless.objects.ZSignUpObject;
 import com.example.faceless.preferences.ZPreferences;
 import com.google.gson.Gson;
@@ -80,6 +81,10 @@ public class SignUpFragment2 extends BaseFragment implements RequestTags {
 									+ "");
 							ZPreferences.setIsUserLogin(getActivity(), true);
 							ZPreferences.setIsAdmin(getActivity(), true);
+
+							Intent intent = new Intent(getActivity(),
+									RegistrationIntentService.class);
+							getActivity().startService(intent);
 
 							Intent i = new Intent(getActivity(),
 									HomeActivity.class);

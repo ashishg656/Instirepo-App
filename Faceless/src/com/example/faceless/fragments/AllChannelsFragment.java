@@ -24,6 +24,7 @@ import com.example.faceless.R;
 import com.example.faceless.activities.ChatActivity;
 import com.example.faceless.application.ZApplication;
 import com.example.faceless.extras.RequestTags;
+import com.example.faceless.gcm.RegistrationIntentService;
 import com.example.faceless.objects.ZAllChannelsObject;
 import com.example.faceless.preferences.ZPreferences;
 import com.google.gson.Gson;
@@ -78,6 +79,10 @@ public class AllChannelsFragment extends BaseFragment implements RequestTags {
 								getActivity().startActivity(i);
 							}
 						});
+
+						Intent intent = new Intent(getActivity(),
+								RegistrationIntentService.class);
+						getActivity().startService(intent);
 					}
 				}, new ErrorListener() {
 					@Override

@@ -1,14 +1,16 @@
 package com.example.faceless.activities;
 
-import com.example.faceless.R;
-import com.example.faceless.fragments.AllChannelsFragment;
-import com.example.faceless.fragments.PostsFragment;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+
+import com.example.faceless.R;
+import com.example.faceless.fragments.AllChannelsFragment;
+import com.example.faceless.fragments.PostsFragment;
+import com.example.faceless.gcm.RegistrationIntentService;
 
 public class HomeActivity extends BaseActivity {
 
@@ -21,7 +23,7 @@ public class HomeActivity extends BaseActivity {
 		setContentView(R.layout.home_activity_layout);
 
 		viewPager = (ViewPager) findViewById(R.id.pager_launch);
-		
+
 		adapter = new MyPagerAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(adapter);
 	}
