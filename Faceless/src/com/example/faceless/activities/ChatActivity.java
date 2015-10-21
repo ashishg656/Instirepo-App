@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -23,6 +22,7 @@ import com.example.faceless.adapters.ChatListAdapter;
 import com.example.faceless.application.ZApplication;
 import com.example.faceless.extras.RequestTags;
 import com.example.faceless.objects.ZChatObject;
+import com.example.faceless.preferences.ZPreferences;
 import com.google.gson.Gson;
 
 public class ChatActivity extends BaseActivity implements RequestTags {
@@ -35,6 +35,20 @@ public class ChatActivity extends BaseActivity implements RequestTags {
 	Integer nextPage = 1;
 	ChatListAdapter adapter;
 	EditText messageBox;
+
+	public static boolean isChatActivityResumed;
+
+	@Override
+	protected void onResume() {
+		isChatActivityResumed = true;
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		isChatActivityResumed = false;
+		super.onPause();
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +72,8 @@ public class ChatActivity extends BaseActivity implements RequestTags {
 				if (recyclerView.getAdapter() != null) {
 					int lastitem = layoutManager.findLastVisibleItemPosition();
 					int totalitems = recyclerView.getAdapter().getItemCount();
-					Log.w("As", "recy " + lastitem + "  -  " + totalitems);
 					int diff = totalitems - lastitem;
-					if (diff < 5 && !isRequestRunning && isMoreAllowed) {
+					if (diff < 6 && !isRequestRunning && isMoreAllowed) {
 						loadData();
 					}
 				}
@@ -107,6 +120,8 @@ public class ChatActivity extends BaseActivity implements RequestTags {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("message", message);
 				params.put("channel_id", channelId + "");
+				params.put("user_profile_id",
+						ZPreferences.getUserId(ChatActivity.this));
 				return params;
 			}
 		};
@@ -142,7 +157,6 @@ public class ChatActivity extends BaseActivity implements RequestTags {
 					@Override
 					public void onErrorResponse(VolleyError arg0) {
 						isRequestRunning = false;
-						makeToast("Error.Check internet");
 					}
 				}) {
 			@Override

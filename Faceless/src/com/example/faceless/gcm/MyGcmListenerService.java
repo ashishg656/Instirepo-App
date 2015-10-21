@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.faceless.R;
+import com.example.faceless.activities.ChatActivity;
 import com.example.faceless.activities.SplashActivity;
 import com.google.android.gms.gcm.GcmListenerService;
 
@@ -24,10 +25,20 @@ public class MyGcmListenerService extends GcmListenerService {
 		Log.d(TAG, "From: " + from);
 		Log.d(TAG, "Message: " + message);
 
-		if (from.startsWith("/topics/")) {
-			// message received from some topic.
-		} else {
-			// normal downstream message.
+		// if (from.startsWith("/topics/")) {
+		// // message received from some topic.
+		// } else {
+		// // normal downstream message.
+		// }
+
+		try {
+			if (ChatActivity.isChatActivityResumed) {
+				Log.w("as", "chat activity resumes");
+			} else {
+				Log.w("as", "chat activity not resumes");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		sendNotification(message);

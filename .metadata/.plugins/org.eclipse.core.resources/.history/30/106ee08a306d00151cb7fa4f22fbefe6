@@ -1,8 +1,0 @@
-package com.example.faceless.objects;
-
-public class ZSignUpObject {
-
-	boolean error;
-	int id;
-
-}

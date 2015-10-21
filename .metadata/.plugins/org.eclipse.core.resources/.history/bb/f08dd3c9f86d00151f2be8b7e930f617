@@ -1,8 +1,0 @@
-package com.example.faceless.extras;
-
-public class CommonLib {
-
-	public static final String GCM_SENDER_ID = "509487250429";
-	public static final String GCM_TAG = "GCM Message Tag";
-
-}
