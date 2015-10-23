@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:padding="@dimen/bnc_margin_small"
+            android:padding="@dimen/z_margin_small"
             app:radius="5dp" />
 
         <LinearLayout
@@ -45,10 +45,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/bnc_margin_small"
-            android:paddingLeft="@dimen/bnc_margin_small"
-            android:paddingRight="@dimen/bnc_margin_small"
-            android:paddingTop="@dimen/bnc_margin_small" >
+            android:paddingBottom="@dimen/z_margin_small"
+            android:paddingLeft="@dimen/z_margin_small"
+            android:paddingRight="@dimen/z_margin_small"
+            android:paddingTop="@dimen/z_margin_small" >
 
             <Button
                 android:id="@+id/google_sign_in_button"
@@ -56,9 +56,9 @@
                 android:layout_height="40dp"
                 android:background="@drawable/google_login_button_bg_selector"
                 android:drawableLeft="@drawable/google_logo"
-                android:paddingLeft="@dimen/bnc_margin_small"
+                android:paddingLeft="@dimen/z_margin_small"
                 android:text="Login with Google"
-                android:textColor="@color/bnc_white" />
+                android:textColor="@color/z_white" />
         </LinearLayout>
     </LinearLayout>
 
@@ -82,10 +82,10 @@
             android:id="@+id/launch_skip_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/bnc_margin_small"
-            android:paddingLeft="@dimen/bnc_margin_medium"
-            android:paddingRight="@dimen/bnc_margin_medium"
-            android:paddingTop="@dimen/bnc_margin_small"
+            android:paddingBottom="@dimen/z_margin_small"
+            android:paddingLeft="@dimen/z_margin_medium"
+            android:paddingRight="@dimen/z_margin_medium"
+            android:paddingTop="@dimen/z_margin_small"
             android:text="SKIP"
             android:textColor="@android:color/white"
             android:textStyle="bold" />

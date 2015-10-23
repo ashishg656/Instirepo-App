@@ -1,0 +1,67 @@
+package com.instirepo.app.activities;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.instirepo.app.R;
+import com.matesnetwork.Cognalys.VerifyMobile;
+
+public class OTPVerificationActivity extends BaseActivity implements
+		OnClickListener {
+
+	EditText mobileNumber;
+	Button verifyButton;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.otp_verification_activity_layout);
+
+		verifyButton = (Button) findViewById(R.id.verify);
+		mobileNumber = (EditText) findViewById(R.id.mobile);
+
+		verifyButton.setOnClickListener(this);
+	}
+
+	void makeToast(String s) {
+		Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		super.onActivityResult(arg0, arg1, arg2);
+		if (arg0 == VerifyMobile.REQUEST_CODE) {
+			String message = arg2.getStringExtra("message");
+			int result = arg2.getIntExtra("result", 0);
+
+			Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT)
+					.show();
+			Toast.makeText(getApplicationContext(), "" + result,
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v.getId() == R.id.verify) {
+			if (mobileNumber.getText().toString().length() != 10) {
+				makeToast("Enter valid 10 digit mobile number");
+			} else {
+				String mobile = VerifyMobile
+						.getCountryCode(OTPVerificationActivity.this)
+						+ mobileNumber.getText().toString();
+				Intent in = new Intent(this, VerifyMobile.class);
+				in.putExtra("app_id", "b3c23aa7630141ffa49251d");
+				in.putExtra("access_token", "f387a5da3139d0396d966cc7915d9551aef249fb");
+				in.putExtra("mobile", mobile);
+				startActivityForResult(in, VerifyMobile.REQUEST_CODE);
+			}
+		}
+	}
+
+}

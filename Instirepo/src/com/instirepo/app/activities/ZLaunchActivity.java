@@ -318,7 +318,7 @@ public class ZLaunchActivity extends BaseActivity implements
 		if (positionOffset >= 0.5)
 			positionOffset = 0.5f;
 		float trans = (deviceHeight - getResources().getDimensionPixelSize(
-				R.dimen.bnc_launch_app_icon_margin))
+				R.dimen.z_launch_app_icon_margin))
 				* positionOffset * -1;
 		launchIcon.setTranslationY(trans);
 	}
@@ -513,7 +513,7 @@ public class ZLaunchActivity extends BaseActivity implements
 						ZLoginActivity.class);
 				startActivity(intent);
 			} else {
-
+				
 			}
 		}
 	}

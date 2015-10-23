@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
-    android:padding="@dimen/bnc_margin_small"
+    android:padding="@dimen/z_margin_small"
     android:singleLine="true"
     android:text="Select .."
     android:textColor="#808080"

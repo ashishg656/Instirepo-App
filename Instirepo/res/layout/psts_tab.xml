@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/psts_tab_title"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/z_user_profile_article_bg_selector"
-    android:gravity="center"
-    android:singleLine="true" />

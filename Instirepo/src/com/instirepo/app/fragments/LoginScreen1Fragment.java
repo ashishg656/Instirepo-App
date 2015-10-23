@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -20,7 +21,7 @@ import com.instirepo.app.widgets.NothingSelectedSpinnerAdapter;
 public class LoginScreen1Fragment extends BaseFragment {
 
 	Spinner universitySpinner, collegeSpinner;
-	LinearLayout nextButton;
+	FrameLayout nextButton;
 	CheckBox isTeacherOrNotCheckBox;
 
 	public static LoginScreen1Fragment newInstance(Bundle b) {
@@ -38,7 +39,7 @@ public class LoginScreen1Fragment extends BaseFragment {
 		universitySpinner = (Spinner) v.findViewById(R.id.niversityspiner);
 		collegeSpinner = (Spinner) v.findViewById(R.id.collegespinner);
 		isTeacherOrNotCheckBox = (CheckBox) v.findViewById(R.id.checkbox);
-		nextButton = (LinearLayout) v.findViewById(R.id.nextbutton);
+		nextButton = (FrameLayout) v.findViewById(R.id.nextbutton);
 
 		return v;
 	}
