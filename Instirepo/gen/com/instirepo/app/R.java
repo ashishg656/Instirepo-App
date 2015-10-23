@@ -19,10 +19,14 @@ public final class R {
         public static final int abc_slide_in_top=0x7f040007;
         public static final int abc_slide_out_bottom=0x7f040008;
         public static final int abc_slide_out_top=0x7f040009;
-        public static final int design_fab_in=0x7f04000a;
-        public static final int design_fab_out=0x7f04000b;
-        public static final int design_snackbar_in=0x7f04000c;
-        public static final int design_snackbar_out=0x7f04000d;
+        public static final int bs_list_item_in=0x7f04000a;
+        public static final int bs_list_layout_anim_in=0x7f04000b;
+        public static final int design_fab_in=0x7f04000c;
+        public static final int design_fab_out=0x7f04000d;
+        public static final int design_snackbar_in=0x7f04000e;
+        public static final int design_snackbar_out=0x7f04000f;
+        public static final int dock_bottom_enter=0x7f040010;
+        public static final int dock_bottom_exit=0x7f040011;
     }
     public static final class attr {
         /**  the maximum of the range 
@@ -4046,26 +4050,29 @@ containing a value of this type.
         public static final int ic_plusone_small_off_client=0x7f020073;
         public static final int ic_plusone_standard_off_client=0x7f020074;
         public static final int ic_plusone_tall_off_client=0x7f020075;
-        public static final int ic_up_normal=0x7f020076;
-        public static final int ic_up_selected=0x7f020077;
-        public static final int ic_user=0x7f020078;
-        public static final int notification_template_icon_bg=0x7f020089;
-        public static final int powered_by_google_dark=0x7f020079;
-        public static final int powered_by_google_light=0x7f02007a;
-        public static final int sample=0x7f02007b;
-        public static final int shadow_card=0x7f02007c;
-        public static final int shadow_post=0x7f02007d;
-        public static final int shadow_toolbar=0x7f02007e;
-        public static final int test_user=0x7f02007f;
-        public static final int upvote_button_selector=0x7f020080;
-        public static final int vpi__tab_indicator=0x7f020081;
-        public static final int vpi__tab_selected_focused_holo=0x7f020082;
-        public static final int vpi__tab_selected_holo=0x7f020083;
-        public static final int vpi__tab_selected_pressed_holo=0x7f020084;
-        public static final int vpi__tab_unselected_focused_holo=0x7f020085;
-        public static final int vpi__tab_unselected_holo=0x7f020086;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f020087;
-        public static final int z_user_profile_article_bg_selector=0x7f020088;
+        public static final int ic_star_normal=0x7f020076;
+        public static final int ic_star_pressed=0x7f020077;
+        public static final int ic_up_normal=0x7f020078;
+        public static final int ic_up_selected=0x7f020079;
+        public static final int ic_user=0x7f02007a;
+        public static final int notification_template_icon_bg=0x7f02008c;
+        public static final int powered_by_google_dark=0x7f02007b;
+        public static final int powered_by_google_light=0x7f02007c;
+        public static final int sample=0x7f02007d;
+        public static final int shadow_card=0x7f02007e;
+        public static final int shadow_post=0x7f02007f;
+        public static final int shadow_toolbar=0x7f020080;
+        public static final int star_button_selector=0x7f020081;
+        public static final int test_user=0x7f020082;
+        public static final int upvote_button_selector=0x7f020083;
+        public static final int vpi__tab_indicator=0x7f020084;
+        public static final int vpi__tab_selected_focused_holo=0x7f020085;
+        public static final int vpi__tab_selected_holo=0x7f020086;
+        public static final int vpi__tab_selected_pressed_holo=0x7f020087;
+        public static final int vpi__tab_unselected_focused_holo=0x7f020088;
+        public static final int vpi__tab_unselected_holo=0x7f020089;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f02008a;
+        public static final int z_user_profile_article_bg_selector=0x7f02008b;
     }
     public static final class id {
         public static final int action0=0x7f08009d;

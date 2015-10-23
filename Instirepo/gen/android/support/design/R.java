@@ -18,10 +18,10 @@ public final class R {
 		public static final int abc_slide_in_top = 0x7f040007;
 		public static final int abc_slide_out_bottom = 0x7f040008;
 		public static final int abc_slide_out_top = 0x7f040009;
-		public static final int design_fab_in = 0x7f04000a;
-		public static final int design_fab_out = 0x7f04000b;
-		public static final int design_snackbar_in = 0x7f04000c;
-		public static final int design_snackbar_out = 0x7f04000d;
+		public static final int design_fab_in = 0x7f04000c;
+		public static final int design_fab_out = 0x7f04000d;
+		public static final int design_snackbar_in = 0x7f04000e;
+		public static final int design_snackbar_out = 0x7f04000f;
 	}
 	public static final class attr {
 		public static final int actionBarDivider = 0x7f01003f;
@@ -540,7 +540,7 @@ public final class R {
 		public static final int abc_textfield_search_material = 0x7f02003d;
 		public static final int design_fab_background = 0x7f02005f;
 		public static final int design_snackbar_background = 0x7f020060;
-		public static final int notification_template_icon_bg = 0x7f020089;
+		public static final int notification_template_icon_bg = 0x7f02008c;
 	}
 	public static final class id {
 		public static final int action0 = 0x7f08009d;

@@ -186,22 +186,31 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/z_margin_small"
-                android:layout_marginRight="@dimen/z_margin_small"
+                android:layout_marginLeft="@dimen/z_margin_mini"
                 android:text="10"
                 android:textColor="@color/z_text_color_medium_dark"
                 android:textSize="@dimen/z_font_supermini" />
 
-            <ImageView
-                android:layout_width="@dimen/z_upvote_button_height"
-                android:layout_height="@dimen/z_upvote_button_height"
-                android:background="@drawable/downvote_button_selector"
-                android:clickable="true" />
-
-            <View
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center" >
+
+                <ImageView
+                    android:layout_width="@dimen/z_upvote_button_height"
+                    android:layout_height="@dimen/z_upvote_button_height"
+                    android:background="@drawable/star_button_selector"
+                    android:clickable="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/z_margin_mini"
+                    android:text="10"
+                    android:textColor="@color/z_text_color_medium_dark"
+                    android:textSize="@dimen/z_font_supermini" />
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="@dimen/z_upvote_button_height"
