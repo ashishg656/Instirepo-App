@@ -1,0 +1,49 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/share"
+        android:title="share"/>
+    <item
+        android:id="@+id/upload"
+        android:title="upload"/>
+    <item
+        android:id="@+id/call"
+        android:title="call"/>
+
+    <group android:id="@+id/helpgroup" >
+        <item
+            android:id="@+id/help"
+            android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+        <item android:title="help"/>
+    </group>
+
+</menu>

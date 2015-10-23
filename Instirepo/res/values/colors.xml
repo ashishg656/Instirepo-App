@@ -19,6 +19,8 @@
     <color name="z_text_color_light">@color/z_grey_shade_6</color>
     <color name="google_login_normal">#dd4b39</color>
     <color name="google_login_pressed">#f24c36</color>
+    <color name="bs_divider_color">#1f000000</color>
+    <color name="bs_dark_divider_color">#1fffffff</color>
 
     <!-- ripple color -->
     <color name="z_bg_color_selector_pressed">#80ececec</color>

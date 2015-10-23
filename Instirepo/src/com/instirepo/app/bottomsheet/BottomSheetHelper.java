@@ -1,5 +1,7 @@
 package com.instirepo.app.bottomsheet;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.DialogInterface;
@@ -9,7 +11,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.support.annotation.NonNull;
 
-import java.util.List;
+import com.instirepo.app.R;
 
 /**
  * A helper class,

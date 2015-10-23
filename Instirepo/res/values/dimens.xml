@@ -9,6 +9,12 @@
     <dimen name="z_margin_xlarge">25dp</dimen>
     <dimen name="z_margin_top_104">104dp</dimen>
     <dimen name="z_margin_top_108">108dp</dimen>
+    
+    <!-- Sliding panel -->
+    <dimen name="bs_grid_left_padding">8dp</dimen>
+    <dimen name="bs_grid_top_padding">0dp</dimen>
+    <dimen name="bs_grid_right_padding">8dp</dimen>
+    <dimen name="bs_grid_bottom_padding">8dp</dimen>
 
     <!-- fonts -->
     <dimen name="z_font_supermini">12sp</dimen>
