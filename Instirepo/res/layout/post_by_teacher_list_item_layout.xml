@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
@@ -7,6 +8,7 @@
     android:orientation="vertical" >
 
     <FrameLayout
+        android:id="@+id/openuserprofilepost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -123,14 +125,17 @@
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground" >
 
-        <ImageView
+        <com.instirepo.app.widgets.PEWImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/z_post_image_height"
             android:scaleType="centerCrop"
-            android:src="@drawable/sample" />
+            android:src="@drawable/sample"
+            app:parallax_y="100dp"
+            app:reverse="reverseY" />
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/seenbycontainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -213,19 +218,27 @@
                     android:textSize="@dimen/z_font_supermini" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="@dimen/z_upvote_button_height"
-                android:layout_height="@dimen/z_upvote_button_height"
-                android:background="@drawable/comment_button_selector"
-                android:clickable="true" />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/z_margin_mini"
-                android:text="10"
-                android:textColor="@color/z_text_color_medium_dark"
-                android:textSize="@dimen/z_font_supermini" />
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/commentsviewconatiner"
+                    android:layout_width="@dimen/z_upvote_button_height"
+                    android:layout_height="@dimen/z_upvote_button_height"
+                    android:background="@drawable/comment_button_selector"
+                    android:clickable="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/z_margin_mini"
+                    android:text="10"
+                    android:textColor="@color/z_text_color_medium_dark"
+                    android:textSize="@dimen/z_font_supermini" />
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 

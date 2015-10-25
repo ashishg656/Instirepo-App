@@ -5,5 +5,7 @@
     <string name="action_settings">Settings</string>
     
     <string name="bs_more">More</string>
+    <string name="z_open_drawer">opendrawervalueconstatnt</string>
+    <string name="z_close_drawer">closedrawervaluecontant</string>
 
 </resources>

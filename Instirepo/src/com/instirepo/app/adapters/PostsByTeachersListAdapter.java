@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.instirepo.app.R;
@@ -45,6 +47,12 @@ public class PostsByTeachersListAdapter extends
 		if (getItemViewType(pos) == Z_RECYCLER_VIEW_ITEM_NORMAL) {
 			PostsHolderNormal holder = (PostsHolderNormal) holderCom;
 			holder.overflowIcon.setOnClickListener(clickListener);
+
+			holder.seenByContainerLayout.setOnClickListener(clickListener);
+
+			holder.commentsLayout.setOnClickListener(clickListener);
+
+			holder.openUserProfile.setOnClickListener(clickListener);
 		}
 	}
 
@@ -62,10 +70,18 @@ public class PostsByTeachersListAdapter extends
 	class PostsHolderNormal extends RecyclerView.ViewHolder {
 
 		LinearLayout overflowIcon;
+		FrameLayout seenByContainerLayout, openUserProfile;
+		ImageView commentsLayout;
 
 		public PostsHolderNormal(View v) {
 			super(v);
 			overflowIcon = (LinearLayout) v.findViewById(R.id.overflowiconpost);
+			seenByContainerLayout = (FrameLayout) v
+					.findViewById(R.id.seenbycontainer);
+			commentsLayout = (ImageView) v
+					.findViewById(R.id.commentsviewconatiner);
+			openUserProfile = (FrameLayout) v
+					.findViewById(R.id.openuserprofilepost);
 		}
 	}
 
@@ -77,7 +93,15 @@ public class PostsByTeachersListAdapter extends
 			case R.id.overflowiconpost:
 				showOverflowIconContent("Post Heading", 0);
 				break;
-
+			case R.id.seenbycontainer:
+				showSeenByPeople();
+				break;
+			case R.id.commentsviewconatiner:
+				showCommentsFragment();
+				break;
+			case R.id.openuserprofilepost:
+				openUserProfileFragment();
+				break;
 			default:
 				break;
 			}
@@ -92,8 +116,21 @@ public class PostsByTeachersListAdapter extends
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						switch (which) {
+
 						}
 					}
-				}).grid().show();
+				}).show();
+	}
+
+	public void showSeenByPeople() {
+		((ZHomeActivity) context).switchToSeenByPeopleFragment();
+	}
+
+	public void showCommentsFragment() {
+		((ZHomeActivity) context).switchToCommentsFragment();
+	}
+
+	void openUserProfileFragment() {
+		((ZHomeActivity) context).switchToUserProfileViewedByOtherFragment();
 	}
 }

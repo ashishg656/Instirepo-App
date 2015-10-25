@@ -1,0 +1,25 @@
+package com.instirepo.app.fragments;
+
+import android.app.Dialog;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.instirepo.app.R;
+
+public class SeenByPeopleFragment extends Dialog {
+
+	public static SeenByPeopleFragment newInstance(Bundle b) {
+		SeenByPeopleFragment frg = new SeenByPeopleFragment();
+		frg.setArguments(b);
+		return frg;
+	}
+	
+	public SeenByPeopleFragment(Context context){
+		
+	}
+
+
+}

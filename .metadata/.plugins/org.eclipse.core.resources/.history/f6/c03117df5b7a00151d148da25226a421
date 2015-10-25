@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/z_black_50_alpha"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/z_margin_large"
+        android:layout_marginLeft="@dimen/z_button_height"
+        android:layout_marginRight="@dimen/z_button_height"
+        android:layout_marginTop="@dimen/z_margin_large"
+        android:background="@drawable/ic_dialog_bg" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/z_margin_small"
+            android:text="Seen By"
+            android:textColor="@color/z_text_color_medium_dark"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/z_grey_shade_2" />
+    </LinearLayout>
+
+</FrameLayout>

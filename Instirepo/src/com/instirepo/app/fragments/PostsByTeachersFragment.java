@@ -3,17 +3,18 @@ package com.instirepo.app.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.instirepo.app.R;
-import com.instirepo.app.adapters.PostsByTeachersListAdapter;
-import com.instirepo.app.objects.PostListSinglePostObject;
-import com.instirepo.app.objects.PostsListObject;
-
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.instirepo.app.R;
+import com.instirepo.app.activities.ZHomeActivity;
+import com.instirepo.app.adapters.PostsByTeachersListAdapter;
+import com.instirepo.app.objects.PostListSinglePostObject;
+import com.instirepo.app.objects.PostsListObject;
 
 public class PostsByTeachersFragment extends BaseFragment {
 
@@ -45,6 +46,30 @@ public class PostsByTeachersFragment extends BaseFragment {
 
 		layoutManager = new LinearLayoutManager(getActivity());
 		recyclerView.setLayoutManager(layoutManager);
+
+		recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(RecyclerView recyclerView,
+					int newState) {
+				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+					int pos = layoutManager.findFirstVisibleItemPosition();
+					if (pos == 0) {
+						((ZHomeActivity) getActivity())
+								.setToolbarTranslation(recyclerView
+										.getChildAt(0));
+					} else
+						((ZHomeActivity) getActivity())
+								.scrollToolbarAfterTouchEnds();
+				}
+				super.onScrollStateChanged(recyclerView, newState);
+			}
+
+			@Override
+			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+				((ZHomeActivity) getActivity()).scrollToolbarBy(-dy);
+				super.onScrolled(recyclerView, dx, dy);
+			}
+		});
 
 		addData();
 	}

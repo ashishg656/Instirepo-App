@@ -9,7 +9,7 @@
     <dimen name="z_margin_xlarge">25dp</dimen>
     <dimen name="z_margin_top_104">104dp</dimen>
     <dimen name="z_margin_top_108">108dp</dimen>
-    
+
     <!-- Sliding panel -->
     <dimen name="bs_grid_left_padding">8dp</dimen>
     <dimen name="bs_grid_top_padding">0dp</dimen>
@@ -35,6 +35,7 @@
 
     <!-- Posts Screen -->
     <dimen name="z_post_uploader_image_height">40dp</dimen>
+    <dimen name="z_seen_by_uploader_image_height">40dp</dimen>
     <dimen name="z_upvote_button_height">35dp</dimen>
     <dimen name="z_post_image_height">200dp</dimen>
 

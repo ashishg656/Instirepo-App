@@ -6,7 +6,7 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
         <item name="colorPrimary">@color/PrimaryColor</item>
-        <item name="colorPrimaryDark">@color/PrimaryDarkColor</item>
+        <item name="colorPrimaryDark">@color/PrimaryColor</item>
     </style>
 
 </resources>

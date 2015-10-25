@@ -1,0 +1,14 @@
+package com.instirepo.app.fragments;
+
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+
+public class SeenByPeopleFragment extends DialogFragment {
+
+	public static SeenByPeopleFragment newInstance(Bundle b) {
+		SeenByPeopleFragment frg = new SeenByPeopleFragment();
+		frg.setArguments(b);
+		return frg;
+	}
+
+}

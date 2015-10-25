@@ -1,0 +1,15 @@
+package com.instirepo.app.fragments;
+
+import com.instirepo.app.R;
+
+import android.os.Bundle;
+
+public class ZUserProfileViewedByOther extends BaseActivity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.user_profile_viewed_by_other_fragment_layout);
+	}
+
+}

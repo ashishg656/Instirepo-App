@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="icon_ma" key="selection"/>
+		<item value="dialog" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="dialog"/>
+			<item value="android"/>
+			<item value="black"/>
+			<item value="bottomsheet_dialog"/>
+			<item value="style"/>
+			<item value="BottomSheet.Dialog"/>
 			<item value="icon_ma"/>
 			<item value="icon_,a"/>
-			<item value="com.google.android.c2dm.intent.REGISTRATION"/>
-			<item value="com.google.android.c2dm.permission.RECEIVE"/>
-			<item value="androidex"/>
-			<item value="onresume"/>
-			<item value="com.bookncart.app"/>
-			<item value="ConnectivityWatcherService"/>
 		</list>
 		<list key="replacehistory">
 			<item value="com.example.faceless"/>
@@ -27,6 +27,6 @@
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="381" key="DIALOG_HEIGHT"/>
 		<item value="790" key="DIALOG_X_ORIGIN"/>
-		<item value="321" key="DIALOG_Y_ORIGIN"/>
+		<item value="238" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

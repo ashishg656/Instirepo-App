@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 public class BaseActivity extends AppCompatActivity {
 
 	Toolbar toolbar;
+	int toolbarHeight;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

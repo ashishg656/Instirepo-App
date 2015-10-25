@@ -1,0 +1,27 @@
+package com.instirepo.app.fragments;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.instirepo.app.R;
+
+public class ZUserProfileViewedByOtherFragment extends BaseFragment {
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View v = inflater.inflate(
+				R.layout.user_profile_viewed_by_other_fragment_layout,
+				container, false);
+
+		return v;
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+	}
+
+}

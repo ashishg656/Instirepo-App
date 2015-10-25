@@ -21,6 +21,7 @@
     <color name="google_login_pressed">#f24c36</color>
     <color name="bs_divider_color">#1f000000</color>
     <color name="bs_dark_divider_color">#1fffffff</color>
+    <color name="z_black_50_alpha">#80000000</color>
 
     <!-- ripple color -->
     <color name="z_bg_color_selector_pressed">#80ececec</color>
