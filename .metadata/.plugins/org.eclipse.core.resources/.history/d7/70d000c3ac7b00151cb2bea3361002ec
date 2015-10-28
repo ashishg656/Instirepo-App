@@ -1,0 +1,40 @@
+package com.instirepo.app.extras;
+
+import com.instirepo.app.R;
+import com.instirepo.app.widgets.CircularImageView;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.FrameLayout;
+import android.widget.ScrollView;
+
+@SuppressLint("NewApi")
+public class UserProfileFrameLayout extends FrameLayout {
+
+	Context context;
+
+	
+
+	public UserProfileFrameLayout(Context context) {
+		this(context, null);
+	}
+
+	public UserProfileFrameLayout(Context context, AttributeSet attrs) {
+		this(context, attrs, 0);
+	}
+
+	public UserProfileFrameLayout(Context context, AttributeSet attrs,
+			int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
+		this.context = context;
+	}
+
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		return super.onInterceptTouchEvent(ev);
+	}
+
+}

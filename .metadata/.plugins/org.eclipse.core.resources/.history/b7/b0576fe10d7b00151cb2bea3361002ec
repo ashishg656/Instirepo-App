@@ -1,0 +1,16 @@
+public class DragLayout extends LinearLayout {
+
+private final ViewDragHelper mDragHelper;
+private View mDragView;
+
+public DragLayout(Context context) {
+  this(context, null);
+}
+
+public DragLayout(Context context, AttributeSet attrs) {
+  this(context, attrs, 0);
+}
+
+public DragLayout(Context context, AttributeSet attrs, int defStyle) {
+  super(context, attrs, defStyle);
+}

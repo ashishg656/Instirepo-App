@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="dialog" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="heightp"/>
+			<item value="initialTranslationOfUserCard"/>
+			<item value="draghelper\"/>
+			<item value="draghelper"/>
+			<item value="closable"/>
+			<item value="closeable"/>
 			<item value="dialog"/>
 			<item value="android"/>
-			<item value="black"/>
-			<item value="bottomsheet_dialog"/>
-			<item value="style"/>
-			<item value="BottomSheet.Dialog"/>
-			<item value="icon_ma"/>
-			<item value="icon_,a"/>
 		</list>
 		<list key="replacehistory">
 			<item value="com.example.faceless"/>

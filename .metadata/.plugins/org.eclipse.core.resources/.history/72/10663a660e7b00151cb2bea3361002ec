@@ -1,0 +1,14 @@
+package com.instirepo.app.extras;
+
+import android.support.v4.widget.ViewDragHelper.Callback;
+import android.view.View;
+
+public class DragHelperCallback extends Callback {
+
+	@Override
+	public boolean tryCaptureView(View arg0, int arg1) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

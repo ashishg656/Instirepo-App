@@ -1,0 +1,60 @@
+package com.instirepo.app.extras;
+
+import com.instirepo.app.widgets.CircularImageView;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.FrameLayout;
+import android.widget.ScrollView;
+
+@SuppressLint("NewApi")
+public class UserProfileFrameLayout extends FrameLayout {
+
+	int deviceHeight;
+	int initialTranslationOfUserCard;
+	Context context;
+
+	CircularImageView circularImageView;
+	FrameLayout userCardLayout;
+	ScrollView scrollView;
+
+	public UserProfileFrameLayout(Context context) {
+		super(context, null);
+	}
+
+	public UserProfileFrameLayout(Context context, AttributeSet attrs) {
+		super(context, attrs, 0);
+	}
+
+	public UserProfileFrameLayout(Context context, AttributeSet attrs,
+			int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
+		this.context = context;
+		this.getViewTreeObserver().addOnGlobalLayoutListener(
+				new OnGlobalLayoutListener() {
+
+					@Override
+					public void onGlobalLayout() {
+						try {
+							getViewTreeObserver().removeOnGlobalLayoutListener(
+									this);
+						} catch (Exception e) {
+							getViewTreeObserver().removeGlobalOnLayoutListener(
+									this);
+						}
+
+						deviceHeight = getHeight();
+						initialTranslationOfUserCard = deviceHeight / 2;
+					}
+				});
+	}
+
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		return super.onInterceptTouchEvent(ev);
+	}
+
+}
