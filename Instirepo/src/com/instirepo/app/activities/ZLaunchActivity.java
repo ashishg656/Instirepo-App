@@ -3,6 +3,8 @@ package com.instirepo.app.activities;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.accounts.Account;
 import android.animation.ArgbEvaluator;
@@ -31,6 +33,12 @@ import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.AuthFailureError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
@@ -42,8 +50,12 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.People.LoadPeopleResult;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.google.gson.Gson;
 import com.instirepo.app.R;
+import com.instirepo.app.application.ZApplication;
+import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.fragments.LaunchScreen1Fragment;
+import com.instirepo.app.objects.GoogleLoginObject;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.CirclePageIndicator;
 
@@ -51,7 +63,7 @@ public class ZLaunchActivity extends BaseActivity implements
 		OnPageChangeListener, OnClickListener,
 		GoogleApiClient.ConnectionCallbacks,
 		GoogleApiClient.OnConnectionFailedListener,
-		ResultCallback<LoadPeopleResult> {
+		ResultCallback<LoadPeopleResult>, ZUrls {
 
 	ViewPager viewPager;
 	ArgbEvaluator argbEvaluator;
@@ -333,9 +345,6 @@ public class ZLaunchActivity extends BaseActivity implements
 		switch (v.getId()) {
 		case R.id.launch_skip_text:
 			Intent i = new Intent(this, ZHomeActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-					| Intent.FLAG_ACTIVITY_CLEAR_TASK
-					| Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(i);
 			break;
 		case R.id.google_sign_in_button:
@@ -507,15 +516,76 @@ public class ZLaunchActivity extends BaseActivity implements
 				progressDialog.dismiss();
 			if (result != null) {
 				accessTokenToSend = result;
-				// TODO makeLoginRequestToServer();
-				// TODO remove this
-				Intent intent = new Intent(ZLaunchActivity.this,
-						ZLoginActivity.class);
-				startActivity(intent);
+				makeLoginRequestToServer();
 			} else {
-				
+
 			}
 		}
+	}
+
+	public void makeLoginRequestToServer() {
+		progressDialog = ProgressDialog.show(this, null, "Logging In");
+		StringRequest request = new StringRequest(Method.POST, loginUrl,
+				new Listener<String>() {
+
+					@Override
+					public void onResponse(String res) {
+						if (progressDialog != null)
+							progressDialog.dismiss();
+						GoogleLoginObject obj = new Gson().fromJson(res,
+								GoogleLoginObject.class);
+						ZPreferences.setUserProfileID(ZLaunchActivity.this,
+								obj.getUser_id() + "");
+						ZPreferences.setUserImageURL(ZLaunchActivity.this,
+								imageUrlToSend);
+						ZPreferences.setUserName(ZLaunchActivity.this,
+								nameToSend);
+						ZPreferences.setUserEmail(ZLaunchActivity.this,
+								emailToSend);
+						if (obj.isIs_details_found_on_server()) {
+							ZPreferences.setIsUserLogin(ZLaunchActivity.this,
+									true);
+							Intent intent = new Intent(ZLaunchActivity.this,
+									ZHomeActivity.class);
+							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+									| Intent.FLAG_ACTIVITY_CLEAR_TASK
+									| Intent.FLAG_ACTIVITY_NEW_TASK);
+							startActivity(intent);
+							ZLaunchActivity.this.finish();
+						} else {
+							Intent intent = new Intent(ZLaunchActivity.this,
+									ZLoginActivity.class);
+							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+									| Intent.FLAG_ACTIVITY_CLEAR_TASK
+									| Intent.FLAG_ACTIVITY_NEW_TASK);
+							startActivity(intent);
+							ZLaunchActivity.this.finish();
+						}
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						Toast.makeText(ZLaunchActivity.this,
+								"Some error occured.Try again",
+								Toast.LENGTH_SHORT).show();
+						if (progressDialog != null)
+							progressDialog.dismiss();
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				Map<String, String> p = new HashMap<>();
+				p.put("access_token", accessTokenToSend);
+				p.put("user_id", idToSend);
+				p.put("additional_data", additionalDataToSend);
+				p.put("email", emailToSend);
+				p.put("name", nameToSend);
+				p.put("image_url", imageUrlToSend);
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(request, loginUrl);
 	}
 
 }

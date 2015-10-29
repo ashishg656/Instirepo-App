@@ -1,0 +1,28 @@
+package com.instirepo.app.application;
+
+import android.app.Application;
+
+public class ZApplication extends Application {
+
+	static ZApplication sInstance;
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		sInstance = this;
+	}
+
+	public ZApplication getInstance() {
+		if (sInstance == null)
+			sInstance = new ZApplication();
+		return sInstance;
+	}
+
+	public static String getBaseUrl() {
+		return "http://django-instirepo.rhcloud.com/app/";
+	}
+
+	public static String getImageUrl(String imageUrl) {
+		return "" + imageUrl;
+	}
+}

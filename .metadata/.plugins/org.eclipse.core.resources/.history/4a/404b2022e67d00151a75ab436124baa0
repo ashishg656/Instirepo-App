@@ -1,0 +1,9 @@
+package com.instirepo.app.extras;
+
+public interface ZUrls {
+
+	public String loginUrl = "";
+	public String userRegistrationStep1Url = "";
+	public String userRegistrationStep2Url = "";
+
+}

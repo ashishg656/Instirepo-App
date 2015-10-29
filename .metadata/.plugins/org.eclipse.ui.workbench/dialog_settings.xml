@@ -11,18 +11,22 @@
 			<item value="1"/>
 			<item value="1"/>
 			<item value="1"/>
+			<item value="1"/>
 		</list>
 		<list key="orderedElements">
+			<item value="com.android.ide.eclipse.ddms.views.LogCatView"/>
 			<item value="com.android.ide.eclipse.ddms.Perspective"/>
 			<item value="org.eclipse.debug.ui.BreakpointView"/>
 			<item value="com.android.ide.eclipse.ddms.views.DeviceView"/>
 		</list>
 		<list key="orderedProviders">
+			<item value="org.eclipse.e4.ui.parts"/>
 			<item value="org.eclipse.ui.perspectives"/>
 			<item value="org.eclipse.e4.ui.parts"/>
 			<item value="org.eclipse.e4.ui.parts"/>
 		</list>
 		<list key="textArray">
+			<item value="log"/>
 			<item value="ddms"/>
 			<item value="bre"/>
 			<item value="dev"/>

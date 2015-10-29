@@ -3955,26 +3955,26 @@ containing a value of this type.
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f0c007f;
+        public static final int activity_horizontal_margin=0x7f0c007c;
         public static final int bs_grid_bottom_padding=0x7f0c006e;
         /**  Sliding panel 
          */
         public static final int bs_grid_left_padding=0x7f0c006b;
         public static final int bs_grid_right_padding=0x7f0c006d;
         public static final int bs_grid_top_padding=0x7f0c006c;
-        public static final int default_circle_indicator_radius=0x7f0c0080;
-        public static final int default_circle_indicator_stroke_width=0x7f0c0081;
-        public static final int default_line_indicator_gap_width=0x7f0c0083;
-        public static final int default_line_indicator_line_width=0x7f0c0082;
-        public static final int default_line_indicator_stroke_width=0x7f0c0084;
-        public static final int default_title_indicator_clip_padding=0x7f0c0085;
-        public static final int default_title_indicator_footer_indicator_height=0x7f0c0087;
-        public static final int default_title_indicator_footer_indicator_underline_padding=0x7f0c0088;
-        public static final int default_title_indicator_footer_line_height=0x7f0c0086;
-        public static final int default_title_indicator_footer_padding=0x7f0c0089;
-        public static final int default_title_indicator_text_size=0x7f0c008a;
-        public static final int default_title_indicator_title_padding=0x7f0c008b;
-        public static final int default_title_indicator_top_padding=0x7f0c008c;
+        public static final int default_circle_indicator_radius=0x7f0c007d;
+        public static final int default_circle_indicator_stroke_width=0x7f0c007e;
+        public static final int default_line_indicator_gap_width=0x7f0c0080;
+        public static final int default_line_indicator_line_width=0x7f0c007f;
+        public static final int default_line_indicator_stroke_width=0x7f0c0081;
+        public static final int default_title_indicator_clip_padding=0x7f0c0082;
+        public static final int default_title_indicator_footer_indicator_height=0x7f0c0084;
+        public static final int default_title_indicator_footer_indicator_underline_padding=0x7f0c0085;
+        public static final int default_title_indicator_footer_line_height=0x7f0c0083;
+        public static final int default_title_indicator_footer_padding=0x7f0c0086;
+        public static final int default_title_indicator_text_size=0x7f0c0087;
+        public static final int default_title_indicator_title_padding=0x7f0c0088;
+        public static final int default_title_indicator_top_padding=0x7f0c0089;
         public static final int design_appbar_elevation=0x7f0c0061;
         public static final int design_fab_border_width=0x7f0c004d;
         public static final int design_fab_content_size=0x7f0c004a;
@@ -4090,11 +4090,6 @@ containing a value of this type.
         public static final int z_seen_by_uploader_image_height=0x7f0c0079;
         public static final int z_toolbar_height=0x7f0c0074;
         public static final int z_upvote_button_height=0x7f0c007a;
-        /**  User profile 
-         */
-        public static final int z_user_profile_image_height=0x7f0c007c;
-        public static final int z_user_profile_image_height_half=0x7f0c007d;
-        public static final int z_user_profile_image_height_half_large=0x7f0c007e;
     }
     public static final class drawable {
         public static final int abc_ab_share_pack_mtrl_alpha=0x7f020000;
@@ -4271,7 +4266,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f080087;
         public static final int action_mode_bar_stub=0x7f080086;
         public static final int action_mode_close_button=0x7f08006f;
-        public static final int action_settings=0x7f0800d1;
+        public static final int action_settings=0x7f0800cd;
         public static final int activity_chooser_view_content=0x7f080070;
         public static final int adjust_height=0x7f080011;
         public static final int adjust_width=0x7f080012;
@@ -4280,8 +4275,8 @@ containing a value of this type.
         public static final int anticipate=0x7f080060;
         public static final int anticipate_overshoot=0x7f080061;
         public static final int appbarlayout=0x7f0800a2;
-        public static final int avatar=0x7f0800ce;
-        public static final int avatardefault=0x7f0800cd;
+        public static final int avatar=0x7f0800ca;
+        public static final int avatardefault=0x7f0800c9;
         public static final int beginning=0x7f080042;
         public static final int bold=0x7f080066;
         public static final int book_now=0x7f080022;
@@ -4307,7 +4302,6 @@ containing a value of this type.
         public static final int checkbox=0x7f080082;
         public static final int chronometer=0x7f0800bb;
         public static final int circle_page_indicator=0x7f0800aa;
-        public static final int circularimageview=0x7f0800ca;
         public static final int clamp=0x7f080068;
         public static final int classic=0x7f080029;
         public static final int clip_horizontal=0x7f08004d;
@@ -4380,10 +4374,10 @@ containing a value of this type.
         public static final int mirror=0x7f080069;
         public static final int monochrome=0x7f08002e;
         public static final int multiply=0x7f080038;
-        public static final int navdraweremail=0x7f0800d0;
-        public static final int navdrawerusername=0x7f0800cf;
+        public static final int navdraweremail=0x7f0800cc;
+        public static final int navdrawerusername=0x7f0800cb;
         public static final int navigation_view=0x7f0800a6;
-        public static final int navigationdrawerheader=0x7f0800cc;
+        public static final int navigationdrawerheader=0x7f0800c8;
         public static final int never=0x7f080040;
         public static final int nextbutton=0x7f0800b3;
         public static final int niversityspiner=0x7f0800b1;
@@ -4413,7 +4407,6 @@ containing a value of this type.
         public static final int scroll=0x7f080058;
         public static final int scrollView=0x7f08007c;
         public static final int scrollable=0x7f080047;
-        public static final int scrollview=0x7f0800cb;
         public static final int search_badge=0x7f08008e;
         public static final int search_bar=0x7f08008d;
         public static final int search_button=0x7f08008f;
@@ -4457,12 +4450,10 @@ containing a value of this type.
         public static final int toolbar=0x7f0800a3;
         public static final int top=0x7f080054;
         public static final int topPanel=0x7f080078;
-        public static final int touchinterceptframelayout=0x7f0800c8;
         public static final int triangle=0x7f08006b;
         public static final int underline=0x7f08006c;
         public static final int up=0x7f080002;
         public static final int useLogo=0x7f080037;
-        public static final int usercard=0x7f0800c9;
         public static final int view_offset_helper=0x7f08000a;
         public static final int withText=0x7f080041;
         public static final int wrap_content=0x7f080021;
