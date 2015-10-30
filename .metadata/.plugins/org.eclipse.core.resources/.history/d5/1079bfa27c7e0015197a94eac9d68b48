@@ -1,0 +1,23 @@
+package com.instirepo.app.anim;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.widget.FrameLayout;
+
+public class TouchInterceptFrameLayoutUserProfile extends FrameLayout {
+
+	public TouchInterceptFrameLayoutUserProfile(Context context,
+			AttributeSet attrs, int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
+	}
+
+	public TouchInterceptFrameLayoutUserProfile(Context context,
+			AttributeSet attrs) {
+		super(context, attrs);
+	}
+
+	public TouchInterceptFrameLayoutUserProfile(Context context) {
+		super(context);
+	}
+
+}

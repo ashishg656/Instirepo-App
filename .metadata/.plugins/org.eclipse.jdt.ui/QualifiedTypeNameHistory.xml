@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.support.v4.app.Fragment"/>
-<fullyQualifiedTypeName name="com.instirepo.app.fragments.SeenByPeopleFragment"/>
-<fullyQualifiedTypeName name="android.widget.BaseAdapter"/>
-<fullyQualifiedTypeName name="android.view.LayoutInflater"/>
-<fullyQualifiedTypeName name="com.instirepo.app.adapters.SeenByPeopleListAdapter.SeenByHolder"/>
-<fullyQualifiedTypeName name="android.widget.TextView"/>
 <fullyQualifiedTypeName name="com.instirepo.app.adapters.SeenByPeopleListAdapter"/>
 <fullyQualifiedTypeName name="com.instirepo.app.objects.SeenByPeopleObject"/>
 <fullyQualifiedTypeName name="com.instirepo.app.objects.SeenByPeopleObject.PeopleSeenPost"/>
@@ -16,7 +10,6 @@
 <fullyQualifiedTypeName name="com.instirepo.app.objects.CommentsListObject.CommentObject"/>
 <fullyQualifiedTypeName name="com.instirepo.app.objects.CommentsListObject"/>
 <fullyQualifiedTypeName name="com.instirepo.app.fragments.CommentsFragment"/>
-<fullyQualifiedTypeName name="android.widget.LinearLayout"/>
 <fullyQualifiedTypeName name="android.widget.ImageView"/>
 <fullyQualifiedTypeName name="com.instirepo.app.fragments.BaseFragment"/>
 <fullyQualifiedTypeName name="android.os.Bundle"/>
@@ -25,18 +18,11 @@
 <fullyQualifiedTypeName name="android.support.v4.widget.ViewDragHelper"/>
 <fullyQualifiedTypeName name="android.support.v4.widget.ViewDragHelper.Callback"/>
 <fullyQualifiedTypeName name="android.content.Context"/>
-<fullyQualifiedTypeName name="android.view.ViewTreeObserver.OnGlobalLayoutListener"/>
 <fullyQualifiedTypeName name="java.lang.Exception"/>
-<fullyQualifiedTypeName name="com.instirepo.app.widgets.CircularImageView"/>
 <fullyQualifiedTypeName name="com.instirepo.app.R.id"/>
 <fullyQualifiedTypeName name="android.support.design.widget.TabLayout"/>
-<fullyQualifiedTypeName name="android.widget.FrameLayout"/>
 <fullyQualifiedTypeName name="com.instirepo.app.extras.UserProfileFrameLayout"/>
-<fullyQualifiedTypeName name="android.widget.ScrollView"/>
-<fullyQualifiedTypeName name="com.instirepo.app.R"/>
-<fullyQualifiedTypeName name="android.view.View.OnTouchListener"/>
 <fullyQualifiedTypeName name="android.view.animation.LinearInterpolator"/>
-<fullyQualifiedTypeName name="com.instirepo.app.R.dimen"/>
 <fullyQualifiedTypeName name="com.android.volley.Request"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="android.app.ProgressDialog"/>
@@ -59,5 +45,19 @@
 <fullyQualifiedTypeName name="com.instirepo.app.objects.LoginScreenFragment1Object"/>
 <fullyQualifiedTypeName name="android.widget.AdapterView.OnItemSelectedListener"/>
 <fullyQualifiedTypeName name="com.instirepo.app.application.ZApplication"/>
+<fullyQualifiedTypeName name="android.view.ViewTreeObserver.OnGlobalLayoutListener"/>
+<fullyQualifiedTypeName name="android.widget.FrameLayout.LayoutParams"/>
+<fullyQualifiedTypeName name="com.instirepo.app.widgets.CircularImageView"/>
+<fullyQualifiedTypeName name="com.instirepo.app.R.dimen"/>
+<fullyQualifiedTypeName name="android.view.View.OnScrollChangeListener"/>
+<fullyQualifiedTypeName name="com.instirepo.app.widgets.ObservableScrollViewListener"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.widget.LinearLayout"/>
+<fullyQualifiedTypeName name="android.widget.ScrollView"/>
+<fullyQualifiedTypeName name="com.instirepo.app.widgets.ObservableScrollView"/>
+<fullyQualifiedTypeName name="com.instirepo.app.R"/>
+<fullyQualifiedTypeName name="android.view.MotionEvent"/>
+<fullyQualifiedTypeName name="com.instirepo.app.anim.TouchInterceptFrameLayoutUserProfile"/>
+<fullyQualifiedTypeName name="android.view.View.OnTouchListener"/>
+<fullyQualifiedTypeName name="android.widget.FrameLayout"/>
 </qualifiedTypeNameHistroy>

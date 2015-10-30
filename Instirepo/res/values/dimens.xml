@@ -40,6 +40,8 @@
     <dimen name="z_post_image_height">200dp</dimen>
 
     <!-- User profile -->
-    
+	<dimen name="z_user_profile_image_height">120dp</dimen>    
+	<dimen name="z_user_profile_image_height_half">60dp</dimen>    
+	<dimen name="z_user_profile_image_height_half_large">80dp</dimen>    
 
 </resources>

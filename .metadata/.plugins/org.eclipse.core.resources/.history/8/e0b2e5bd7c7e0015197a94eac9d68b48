@@ -1,0 +1,36 @@
+package com.instirepo.app.anim;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.widget.FrameLayout;
+import android.widget.ScrollView;
+
+public class TouchInterceptFrameLayoutUserProfile extends FrameLayout {
+
+	ScrollView scrollView;
+
+	public TouchInterceptFrameLayoutUserProfile(Context context,
+			AttributeSet attrs, int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
+	}
+
+	public TouchInterceptFrameLayoutUserProfile(Context context,
+			AttributeSet attrs) {
+		this(context, attrs, 0);
+	}
+
+	public TouchInterceptFrameLayoutUserProfile(Context context) {
+		this(context, null);
+	}
+
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		return super.onInterceptTouchEvent(ev);
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		return super.onTouchEvent(event);
+	}
+}

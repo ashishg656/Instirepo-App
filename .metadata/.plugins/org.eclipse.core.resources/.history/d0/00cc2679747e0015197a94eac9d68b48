@@ -1,0 +1,87 @@
+package com.instirepo.app.fragments;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+
+import com.instirepo.app.R;
+import com.instirepo.app.widgets.CircularImageView;
+
+public class ZUserProfileViewedByOtherFragment extends BaseFragment {
+
+	int heightOfUserDetailCard;
+	int marginTopForUserDetailCard;
+	LinearLayout userProfileDetail;
+	ScrollView scrollView;
+	CircularImageView circularImageView;
+
+	int userProfileImageHeight;
+
+	public static ZUserProfileViewedByOtherFragment newInstance(Bundle b) {
+		ZUserProfileViewedByOtherFragment frg = new ZUserProfileViewedByOtherFragment();
+		frg.setArguments(b);
+		return frg;
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View v = inflater.inflate(
+				R.layout.user_profile_viewed_by_other_fragment_layout,
+				container, false);
+
+		userProfileDetail = (LinearLayout) v.findViewById(R.id.userprofilecard);
+		scrollView = (ScrollView) v.findViewById(R.id.scrollviewuserrofiel);
+		circularImageView = (CircularImageView) v
+				.findViewById(R.id.userprofilecircularimage);
+
+		return v;
+	}
+
+	@SuppressLint("NewApi")
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		userProfileImageHeight = getActivity().getResources()
+				.getDimensionPixelSize(R.dimen.z_user_profile_image_height);
+
+		userProfileDetail.getViewTreeObserver().addOnGlobalLayoutListener(
+				new OnGlobalLayoutListener() {
+
+					@Override
+					public void onGlobalLayout() {
+						userProfileDetail.getViewTreeObserver()
+								.removeOnGlobalLayoutListener(this);
+						heightOfUserDetailCard = userProfileDetail.getHeight();
+
+						performCalculationsAfterViewTreeObserver();
+					}
+				});
+	}
+
+	void performCalculationsAfterViewTreeObserver() {
+		marginTopForUserDetailCard = (int) (getActivity().getResources()
+				.getDisplayMetrics().heightPixels / 3);
+
+		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) userProfileDetail
+				.getLayoutParams();
+		params.topMargin = marginTopForUserDetailCard;
+		userProfileDetail.setLayoutParams(params);
+
+		params = (FrameLayout.LayoutParams) circularImageView.getLayoutParams();
+		params.topMargin = marginTopForUserDetailCard - userProfileImageHeight
+				/ 2;
+		circularImageView.setLayoutParams(params);
+
+		scrollView.setPadding(0,
+				(int) (marginTopForUserDetailCard + heightOfUserDetailCard), 0,
+				0);
+	}
+}
