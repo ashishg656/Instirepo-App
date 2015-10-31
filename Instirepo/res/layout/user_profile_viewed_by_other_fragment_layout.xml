@@ -4,9 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/z_black_50_alpha"
+    android:clickable="true"
     android:orientation="vertical" >
 
-    <com.instirepo.app.anim.TouchInterceptFrameLayoutUserProfile
+    <com.instirepo.app.circularreveal.RevealFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <View
+            android:id="@+id/revealviewuserprofiel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/z_white" />
+    </com.instirepo.app.circularreveal.RevealFrameLayout>
+
+    <FrameLayout
         android:id="@+id/touchinterceptframelayouruserprof"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -241,6 +253,6 @@
             app:border="true"
             app:border_color="@color/z_white"
             app:border_width="2dp" />
-    </com.instirepo.app.anim.TouchInterceptFrameLayoutUserProfile>
+    </FrameLayout>
 
 </FrameLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app1="http://schemas.android.com/apk/res/com.instirepo.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/fragmentcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right|bottom"
+        android:orientation="vertical" >
+
+        <com.instirepo.app.floatingactionbutton.FloatingActionsMenu
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app1:fab_addButtonColorNormal="@color/PrimaryColor"
+            app1:fab_addButtonColorPressed="@color/PrimaryDarkColor"
+            app1:fab_addButtonPlusIconColor="@color/z_white"
+            app1:fab_addButtonSize="normal" >
+        </com.instirepo.app.floatingactionbutton.FloatingActionsMenu>
+    </LinearLayout>
+
+</LinearLayout>

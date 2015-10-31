@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.instirepo.app"
+    android:layout_width="match_parent"
+    android:background="@color/z_black_50_alpha"
+    android:clickable="true"
+    android:layout_height="match_parent" >
+    
+    <F
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/z_black_50_alpha"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_dialog_bg"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/z_button_height"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="@dimen/z_button_height"
+                    android:layout_height="@dimen/z_button_height"
+                    android:background="@drawable/z_user_profile_article_bg_selector"
+                    android:clickable="true"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="@dimen/z_margin_large"
+                        android:layout_height="@dimen/z_margin_large"
+                        android:src="@drawable/ic_navigation_arrow_back" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="53 comments"
+                    android:textColor="@color/z_text_color_dark"
+                    android:textSize="@dimen/z_font_small" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/z_grey_shade_2" />
+
+            <ListView
+                android:id="@+id/commentlist"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:divider="@null"
+                android:paddingBottom="56dp" >
+            </ListView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/adddocmmentfab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="@dimen/z_margin_large"
+        android:src="@drawable/ic_comment_white"
+        app:backgroundTint="@color/PrimaryColor"
+        app:fabSize="normal" />
+
+    <com.instirepo.app.circularreveal.RevealFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" >
+
+        <LinearLayout
+            android:id="@+id/commentlayoutadd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/PrimaryColor"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/z_margin_mini"
+            android:paddingLeft="@dimen/z_margin_small"
+            android:paddingTop="@dimen/z_margin_mini"
+            android:visibility="gone" >
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="Enter Comment.."
+                android:maxLines="4"
+                android:textColor="@color/z_white"
+                android:textColorHint="@color/z_grey_shade_1"
+                android:textSize="@dimen/z_font_mini" />
+
+            <LinearLayout
+                android:layout_width="@dimen/z_button_height"
+                android:layout_height="@dimen/z_button_height"
+                android:background="@drawable/z_user_profile_article_bg_selector"
+                android:clickable="true"
+                android:gravity="center" >
+
+                <ImageView
+                    android:layout_width="@dimen/z_margin_large"
+                    android:layout_height="@dimen/z_margin_large"
+                    android:src="@drawable/ic_upload_white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/z_button_height"
+                android:layout_height="@dimen/z_button_height"
+                android:background="@drawable/z_user_profile_article_bg_selector"
+                android:clickable="true"
+                android:gravity="center" >
+
+                <ImageView
+                    android:layout_width="@dimen/z_margin_large"
+                    android:layout_height="@dimen/z_margin_large"
+                    android:src="@drawable/ic_send_white" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.instirepo.app.circularreveal.RevealFrameLayout>
+
+</FrameLayout>

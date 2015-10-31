@@ -5,4 +5,6 @@
     <item name="bs_list_title" type="id" />
     <item name="bottom_sheet_title_image" type="id" />
     <item name="bottom_sheet_title" type="id" />
+    <item name="fab_expand_menu_button" type="id"/>
+    <item name="fab_label" type="id"/>
 </resources>

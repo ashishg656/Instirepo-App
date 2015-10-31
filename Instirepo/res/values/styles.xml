@@ -1,5 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@color/z_text_color_dark</item>
+    </style>
+
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <item name="windowActionBarOverlay">true</item>
         <item name="android:typeface">serif</item>

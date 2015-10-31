@@ -20,6 +20,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
 
 import com.instirepo.app.R;
+import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.ZAnimatorListener;
 import com.instirepo.app.fragments.CommentsFragment;
 import com.instirepo.app.fragments.PostsByStudentsFragment;
@@ -27,7 +28,8 @@ import com.instirepo.app.fragments.PostsByTeachersFragment;
 import com.instirepo.app.fragments.SeenByPeopleFragment;
 import com.instirepo.app.fragments.ZUserProfileViewedByOtherFragment;
 
-public class ZHomeActivity extends BaseActivity implements OnPageChangeListener {
+public class ZHomeActivity extends BaseActivity implements
+		OnPageChangeListener, AppConstants {
 
 	ViewPager viewPager;
 	TabLayout tabLayout;
@@ -237,17 +239,41 @@ public class ZHomeActivity extends BaseActivity implements OnPageChangeListener 
 		getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.fragmentcontainer,
-						CommentsFragment.newInstance(new Bundle()))
-				.addToBackStack("tag").commit();
+						CommentsFragment.newInstance(new Bundle()),
+						Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG)
+				.addToBackStack("Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG")
+				.commit();
 	}
 
 	public void switchToUserProfileViewedByOtherFragment() {
+		Bundle bundle = new Bundle();
 		getSupportFragmentManager()
 				.beginTransaction()
-				.replace(
-						R.id.fragmentcontainer,
-						ZUserProfileViewedByOtherFragment
-								.newInstance(new Bundle()))
-				.addToBackStack("tag").commit();
+				.replace(R.id.fragmentcontainer,
+						ZUserProfileViewedByOtherFragment.newInstance(bundle),
+						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG)
+				.addToBackStack(
+						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG)
+				.commit();
+	}
+
+	@Override
+	public void onBackPressed() {
+		Fragment fragmentUserProfile = getSupportFragmentManager()
+				.findFragmentByTag(
+						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG);
+		Fragment fragmentComments = getSupportFragmentManager()
+				.findFragmentByTag(Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG);
+
+		if (fragmentUserProfile != null
+				&& !((ZUserProfileViewedByOtherFragment) fragmentUserProfile).fragmentDestroyed) {
+			((ZUserProfileViewedByOtherFragment) fragmentUserProfile)
+					.dismissScrollViewDownCalledFromActivityBackPressed();
+		} else if (fragmentComments != null) {
+			CommentsFragment frg = (CommentsFragment) fragmentComments;
+			if (frg.shouldGoBackOnBackButtonPress())
+				super.onBackPressed();
+		} else
+			super.onBackPressed();
 	}
 }
