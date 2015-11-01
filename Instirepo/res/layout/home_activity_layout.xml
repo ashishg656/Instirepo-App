@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:app1="http://schemas.android.com/apk/res/com.instirepo.app"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -52,41 +51,61 @@
             </android.support.design.widget.AppBarLayout>
         </FrameLayout>
 
+        <com.instirepo.app.circularreveal.RevealFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <View
+                android:id="@+id/revealviewfab"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#BFffffff"
+                android:clickable="true"
+                android:visibility="gone" />
+        </com.instirepo.app.circularreveal.RevealFrameLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="right|bottom"
             android:orientation="vertical" >
 
-            <com.instirepo.app.floatingactionbutton.FloatingActionsMenu
+            <com.instirepo.app.floatingactionbutton.FloatingActionMenu
+                android:id="@+id/fabmenuy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fab_addButtonColorNormal="@color/PrimaryColor"
-                app:fab_addButtonColorPressed="@color/PrimaryDarkColor"
-                app:fab_addButtonPlusIconColor="@color/z_white"
-                app:fab_addButtonSize="normal"
-                app:fab_expandDirection="up"
-                app:fab_labelStyle="@style/menu_labels_style"
-                app:fab_labelsPosition="left" >
+                android:layout_margin="@dimen/z_margin_small"
+                app:menu_animationDelayPerItem="50"
+                app:menu_colorNormal="@color/PrimaryColor"
+                app:menu_colorPressed="@color/PrimaryDarkColor"
+                app:menu_colorRipple="#80ffffff"
+                app:menu_icon="@drawable/fab_add"
+                app:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+                app:menu_labels_showAnimation="@anim/fab_slide_in_from_right" >
+
+                <com.instirepo.app.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/createpostbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_edit_small_white"
+                    app:fab_colorNormal="@color/PrimaryColor"
+                    app:fab_colorPressed="@color/PrimaryDarkColor"
+                    app:fab_colorRipple="#80ffffff"
+                    app:fab_label="Create Post"
+                    app:fab_size="mini" >
+                </com.instirepo.app.floatingactionbutton.FloatingActionButton>
 
                 <com.instirepo.app.floatingactionbutton.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/ic_filter_white"
                     app:fab_colorNormal="@color/PrimaryColor"
                     app:fab_colorPressed="@color/PrimaryDarkColor"
-                    app:fab_icon="@drawable/ic_comment"
-                    app:fab_size="mini"
-                    app:fab_title="Filter Posts" />
-
-                <com.instirepo.app.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:fab_colorNormal="@color/PrimaryColor"
-                    app:fab_colorPressed="@color/PrimaryDarkColor"
-                    app:fab_icon="@drawable/ic_comment"
-                    app:fab_size="mini"
-                    app:fab_title="Add Post" />
-            </com.instirepo.app.floatingactionbutton.FloatingActionsMenu>
+                    app:fab_colorRipple="#80ffffff"
+                    app:fab_label="Filter Posts"
+                    app:fab_size="mini" >
+                </com.instirepo.app.floatingactionbutton.FloatingActionButton>
+            </com.instirepo.app.floatingactionbutton.FloatingActionMenu>
         </LinearLayout>
 
         <FrameLayout

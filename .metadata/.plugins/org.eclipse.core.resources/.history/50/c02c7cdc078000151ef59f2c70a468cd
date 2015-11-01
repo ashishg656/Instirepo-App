@@ -1,0 +1,27 @@
+package com.instirepo.app.objects;
+
+import java.util.List;
+
+public class PostsListObject {
+
+	List<PostListSinglePostObject> posts;
+	List<PostCategoriesListObject.SinglePostCategory> categories;
+
+	public List<PostCategoriesListObject.SinglePostCategory> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(
+			List<PostCategoriesListObject.SinglePostCategory> categories) {
+		this.categories = categories;
+	}
+
+	public List<PostListSinglePostObject> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<PostListSinglePostObject> posts) {
+		this.posts = posts;
+	}
+
+}

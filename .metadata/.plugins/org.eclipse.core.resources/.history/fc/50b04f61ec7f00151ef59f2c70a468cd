@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app1="http://schemas.android.com/apk/res/com.instirepo.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/fragmentcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
+
+    <com.instirepo.app.floatingactionbutton.FloatingActionMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/z_margin_small"
+        app1:menu_animationDelayPerItem="50"
+        app1:menu_colorNormal="@color/PrimaryColor"
+        app1:menu_colorPressed="@color/PrimaryDarkColor"
+        app1:menu_colorRipple="#80ffffff"
+        app1:menu_icon="@drawable/fab_add"
+        app1:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+        app1:menu_labels_showAnimation="@anim/fab_slide_in_from_right" >
+
+        <com.instirepo.app.floatingactionbutton.FloatingActionButton>
+        </com.instirepo.app.floatingactionbutton.FloatingActionButton>
+    </com.instirepo.app.floatingactionbutton.FloatingActionMenu>
+
+</LinearLayout>

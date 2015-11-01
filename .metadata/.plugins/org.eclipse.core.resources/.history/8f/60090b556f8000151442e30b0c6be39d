@@ -1,0 +1,49 @@
+package com.instirepo.app.activities;
+
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
+
+import com.instirepo.app.R;
+import com.instirepo.app.fragments.CreatePostFragment1OtherCategory;
+
+public class ZCreatePostActivity extends BaseActivity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.create_post_activity_layout);
+
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
+	}
+
+	void setFirstFragmentForOthersCategory() {
+		getSupportFragmentManager()
+				.beginTransaction()
+				.replace(
+						R.id.fragmtnholder,
+						CreatePostFragment1OtherCategory
+								.newInstance(new Bundle())).commit();
+	}
+
+	@Override
+	public void onBackPressed() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Do you want to discrad this post?");
+		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				ZCreatePostActivity.this.finish();
+			}
+		});
+		builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+			}
+		});
+		AlertDialog dialog = builder.create();
+		dialog.show();
+	}
+}

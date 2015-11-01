@@ -12,8 +12,10 @@
 			<item value="1"/>
 			<item value="1"/>
 			<item value="1"/>
+			<item value="1"/>
 		</list>
 		<list key="orderedElements">
+			<item value="org.eclipse.cdt.ui.callHierarchy"/>
 			<item value="com.android.ide.eclipse.ddms.views.LogCatView"/>
 			<item value="com.android.ide.eclipse.ddms.Perspective"/>
 			<item value="org.eclipse.debug.ui.BreakpointView"/>
@@ -21,16 +23,20 @@
 		</list>
 		<list key="orderedProviders">
 			<item value="org.eclipse.e4.ui.parts"/>
+			<item value="org.eclipse.e4.ui.parts"/>
 			<item value="org.eclipse.ui.perspectives"/>
 			<item value="org.eclipse.e4.ui.parts"/>
 			<item value="org.eclipse.e4.ui.parts"/>
 		</list>
 		<list key="textArray">
+			<item value="hie"/>
 			<item value="log"/>
 			<item value="ddms"/>
 			<item value="bre"/>
 			<item value="dev"/>
 		</list>
+	</section>
+	<section name="NewWizardAction">
 	</section>
 	<section name="InstallationDialogSettings">
 		<item value="706" key="DIALOG_WIDTH"/>

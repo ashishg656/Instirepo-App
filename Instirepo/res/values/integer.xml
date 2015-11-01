@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <integer name="no_limit">0</integer>
     <integer name="bs_grid_colum">3</integer>
     <integer name="bs_initial_grid_row">3</integer>
     <integer name="bs_initial_list_row">5</integer>
+
+    <!-- select post fragment list adapter -->
+    <integer name="z_select_post_tag_holder">0</integer>
+    <integer name="z_select_post_tag_position">1</integer>
+
 </resources>

@@ -66,6 +66,11 @@
             android:label="@string/app_name"
             android:theme="@style/NoActionBarThemeTransparentStatusBar" >
         </activity>
+        <activity
+            android:name="com.instirepo.app.activities.ZCreatePostActivity"
+            android:label="@string/app_name"
+            android:theme="@style/BNCNoActionBar" >
+        </activity>
     </application>
 
 </manifest>

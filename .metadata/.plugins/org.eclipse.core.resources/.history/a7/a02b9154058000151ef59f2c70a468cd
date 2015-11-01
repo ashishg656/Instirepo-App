@@ -1,0 +1,7 @@
+package com.instirepo.app.adapters;
+
+import android.widget.BaseAdapter;
+
+public class SelectPostCategoryGridAdapter extends BaseAdapter {
+
+}

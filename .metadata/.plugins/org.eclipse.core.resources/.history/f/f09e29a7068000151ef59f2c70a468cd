@@ -1,0 +1,54 @@
+package com.instirepo.app.adapters;
+
+import java.util.List;
+
+import com.instirepo.app.R;
+import com.instirepo.app.objects.PostCategoriesListObject;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+
+public class SelectPostCategoryGridAdapter extends BaseAdapter {
+
+	List<PostCategoriesListObject.SinglePostCategory> mData;
+	Context context;
+
+	@Override
+	public int getCount() {
+		return mData.size();
+	}
+
+	@Override
+	public Object getItem(int pos) {
+		return mData.get(pos);
+	}
+
+	@Override
+	public long getItemId(int arg0) {
+		return arg0;
+	}
+
+	@Override
+	public View getView(int pos, View convertView, ViewGroup parent) {
+		PostCategoryHolder holder = null;
+		if (convertView == null) {
+			convertView = LayoutInflater.from(context).inflate(
+					R.layout.abc_action_bar_title_item, parent, false);
+			holder = new PostCategoryHolder(convertView);
+			convertView.setTag(holder);
+		} else
+			holder = (PostCategoryHolder) convertView.getTag();
+
+		return convertView;
+	}
+
+	class PostCategoryHolder {
+
+		public PostCategoryHolder(View v) {
+		}
+	}
+
+}

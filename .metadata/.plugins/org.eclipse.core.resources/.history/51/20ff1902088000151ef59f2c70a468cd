@@ -1,0 +1,32 @@
+package com.instirepo.app.objects;
+
+import java.util.List;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class PostCategoriesListObject implements Parcelable{
+
+	List<PostCategorySinglePostCategory> categories;
+
+	public List<PostCategorySinglePostCategory> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<PostCategorySinglePostCategory> categories) {
+		this.categories = categories;
+	}
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
