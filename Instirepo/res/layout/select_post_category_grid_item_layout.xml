@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.instirepo.app"
     android:id="@+id/containergridselect"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,11 +9,12 @@
     android:foreground="?attr/selectableItemBackground"
     android:orientation="vertical" >
 
-    <ImageView
+    <com.instirepo.app.widgets.RoundedImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/sample" />
+        android:src="@drawable/sample"
+        app:riv_corner_radius="2dp" />
 
     <View
         android:layout_width="match_parent"

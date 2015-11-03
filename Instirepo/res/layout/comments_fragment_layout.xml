@@ -117,7 +117,8 @@
                 <ImageView
                     android:layout_width="@dimen/z_margin_large"
                     android:layout_height="@dimen/z_margin_large"
-                    android:src="@drawable/ic_upload_white" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_attachment_white" />
             </LinearLayout>
 
             <LinearLayout

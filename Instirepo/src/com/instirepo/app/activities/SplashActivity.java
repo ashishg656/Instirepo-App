@@ -28,9 +28,9 @@ public class SplashActivity extends BaseActivity {
 	}
 
 	private void switchToLoginActivityOrHomeActivity() {
-		Intent i = new Intent(this, ZLaunchActivity.class);
+		Intent i = new Intent(this, LaunchActivity.class);
 		if (ZPreferences.isUserLogIn(this)) {
-			i = new Intent(this, ZHomeActivity.class);
+			i = new Intent(this, HomeActivity.class);
 		}
 		startActivity(i);
 		this.finish();

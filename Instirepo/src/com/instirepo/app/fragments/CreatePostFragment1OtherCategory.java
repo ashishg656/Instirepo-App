@@ -15,12 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.instirepo.app.R;
+import com.instirepo.app.activities.CreatePostActivity;
 import com.instirepo.app.widgets.RoundedImageView;
 
 public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		OnClickListener {
 
-	LinearLayout uploadPicLayout;
+	LinearLayout uploadPicLayout, addAttachmentLayout;
 	TextView uploadPicText;
 	public static int SELECT_FILE = 50;
 	RoundedImageView roundedImageView;
@@ -42,6 +43,8 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		uploadPicText = (TextView) v.findViewById(R.id.uploadpictext);
 		roundedImageView = (RoundedImageView) v
 				.findViewById(R.id.rounderimagecreapost);
+		addAttachmentLayout = (LinearLayout) v
+				.findViewById(R.id.googledrivebutton);
 
 		return v;
 	}
@@ -51,6 +54,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		super.onActivityCreated(savedInstanceState);
 
 		uploadPicLayout.setOnClickListener(this);
+		addAttachmentLayout.setOnClickListener(this);
 	}
 
 	public void setImageForPost(Bitmap bitmap) {
@@ -68,6 +72,10 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			intent.setType("image/*");
 			startActivityForResult(
 					Intent.createChooser(intent, "Select Image"), SELECT_FILE);
+			break;
+		case R.id.googledrivebutton:
+			((CreatePostActivity) getActivity())
+					.connectGoogleClientAndRequestFile();
 			break;
 
 		default:

@@ -39,6 +39,7 @@ public class CommentsFragment extends BaseFragment implements OnClickListener {
 	int location[];
 
 	boolean isShowCommentLayoutAnimRunning;
+	boolean shownAddCommentLayoutOnListScroll;
 
 	public static CommentsFragment newInstance(Bundle b) {
 		CommentsFragment frg = new CommentsFragment();
@@ -82,8 +83,10 @@ public class CommentsFragment extends BaseFragment implements OnClickListener {
 					int visibleItemCount, int totalItemCount) {
 				if ((firstVisibleItem + visibleItemCount == totalItemCount - 1)
 						&& addCommentLayout.getVisibility() == View.GONE
-						&& !isShowCommentLayoutAnimRunning) {
+						&& !isShowCommentLayoutAnimRunning
+						&& !shownAddCommentLayoutOnListScroll) {
 					showCommentLayout();
+					shownAddCommentLayoutOnListScroll = true;
 				}
 			}
 		});

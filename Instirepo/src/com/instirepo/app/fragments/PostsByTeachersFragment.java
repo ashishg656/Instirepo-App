@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.instirepo.app.R;
-import com.instirepo.app.activities.ZHomeActivity;
+import com.instirepo.app.activities.HomeActivity;
 import com.instirepo.app.adapters.PostsByTeachersListAdapter;
 import com.instirepo.app.objects.PostListSinglePostObject;
 import com.instirepo.app.objects.PostsListObject;
@@ -54,11 +54,11 @@ public class PostsByTeachersFragment extends BaseFragment {
 				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
 					int pos = layoutManager.findFirstVisibleItemPosition();
 					if (pos == 0) {
-						((ZHomeActivity) getActivity())
+						((HomeActivity) getActivity())
 								.setToolbarTranslation(recyclerView
 										.getChildAt(0));
 					} else
-						((ZHomeActivity) getActivity())
+						((HomeActivity) getActivity())
 								.scrollToolbarAfterTouchEnds();
 				}
 				super.onScrollStateChanged(recyclerView, newState);
@@ -66,7 +66,7 @@ public class PostsByTeachersFragment extends BaseFragment {
 
 			@Override
 			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-				((ZHomeActivity) getActivity()).scrollToolbarBy(-dy);
+				((HomeActivity) getActivity()).scrollToolbarBy(-dy);
 				super.onScrolled(recyclerView, dx, dy);
 			}
 		});

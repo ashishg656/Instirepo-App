@@ -22,7 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
-import com.instirepo.app.activities.ZLoginActivity;
+import com.instirepo.app.activities.LoginActivity;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.objects.LoginScreenFragment1Object;
@@ -64,10 +64,10 @@ public class LoginScreen1Fragment extends BaseFragment implements ZUrls {
 			@Override
 			public void onClick(View v) {
 				if (isTeacherOrNotCheckBox.isChecked()) {
-					((ZLoginActivity) getActivity())
+					((LoginActivity) getActivity())
 							.setSecondFragmentForTeacherDetails();
 				} else {
-					((ZLoginActivity) getActivity())
+					((LoginActivity) getActivity())
 							.setSecondFragmentForStudentDetails();
 				}
 			}

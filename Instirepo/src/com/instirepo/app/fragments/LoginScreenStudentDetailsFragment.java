@@ -1,7 +1,7 @@
 package com.instirepo.app.fragments;
 
 import com.instirepo.app.R;
-import com.instirepo.app.activities.ZLoginActivity;
+import com.instirepo.app.activities.LoginActivity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -43,7 +43,7 @@ public class LoginScreenStudentDetailsFragment extends BaseFragment implements
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.nextbutton) {
-			((ZLoginActivity) getActivity()).switchToHomeActivity();
+			((LoginActivity) getActivity()).switchToHomeActivity();
 		}
 	}
 

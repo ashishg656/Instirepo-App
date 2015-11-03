@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.instirepo.app.R;
-import com.instirepo.app.activities.ZHomeActivity;
+import com.instirepo.app.activities.HomeActivity;
 import com.instirepo.app.bottomsheet.BottomSheet;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.objects.PostsListObject;
@@ -110,7 +110,7 @@ public class PostsByTeachersListAdapter extends
 	}
 
 	public void showOverflowIconContent(String message, int id) {
-		new BottomSheet.Builder((ZHomeActivity) context).title(message)
+		new BottomSheet.Builder((HomeActivity) context).title(message)
 				.sheet(R.menu.posts_sliding_panel_menu)
 				.listener(new DialogInterface.OnClickListener() {
 					@Override
@@ -123,14 +123,14 @@ public class PostsByTeachersListAdapter extends
 	}
 
 	public void showSeenByPeople() {
-		((ZHomeActivity) context).switchToSeenByPeopleFragment();
+		((HomeActivity) context).switchToSeenByPeopleFragment();
 	}
 
 	public void showCommentsFragment() {
-		((ZHomeActivity) context).switchToCommentsFragment();
+		((HomeActivity) context).switchToCommentsFragment();
 	}
 
 	void openUserProfileFragment() {
-		((ZHomeActivity) context).switchToUserProfileViewedByOtherFragment();
+		((HomeActivity) context).switchToUserProfileViewedByOtherFragment();
 	}
 }

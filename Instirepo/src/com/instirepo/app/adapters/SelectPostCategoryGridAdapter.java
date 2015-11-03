@@ -12,10 +12,9 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 
-import com.google.android.gms.nearby.messages.Strategy;
 import com.instirepo.app.R;
-import com.instirepo.app.activities.ZCreatePostActivity;
-import com.instirepo.app.activities.ZHomeActivity;
+import com.instirepo.app.activities.CreatePostActivity;
+import com.instirepo.app.activities.HomeActivity;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.objects.PostCategorySinglePostCategory;
 
@@ -103,7 +102,13 @@ public class SelectPostCategoryGridAdapter extends BaseAdapter implements
 				} else if (mData.get(pos).getType() == Z_CATEGORY_TYPE_POLLS) {
 
 				} else {
-					Intent i = new Intent(context, ZCreatePostActivity.class);
+					Intent i = new Intent(context, CreatePostActivity.class);
+					int location[] = new int[2];
+					v.getLocationInWindow(location);
+					i.putExtra("touchx", location[0] + v.getWidth() / 2);
+					i.putExtra("touchy", location[1] + v.getHeight() / 2);
+					i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+					((HomeActivity) context).overridePendingTransition(0, 0);
 					context.startActivity(i);
 				}
 				break;
