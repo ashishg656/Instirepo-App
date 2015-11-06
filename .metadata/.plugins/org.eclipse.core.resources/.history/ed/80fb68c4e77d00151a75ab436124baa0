@@ -1,9 +1,0 @@
-package com.instirepo.app.extras;
-
-public interface ZUrls {
-
-	public String loginUrl = "login_request";
-	public String userRegistrationStep1Url = "get_college_batch_years_list";
-	public String userRegistrationStep2Url = "";
-
-}

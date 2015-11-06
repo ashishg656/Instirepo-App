@@ -1,8 +1,2 @@
-1446364874848	Delete element
-1446442652807	Delete element
-1446442660933	Delete element
-1446443631257	Rename type 'ZCreatePostActivity'
-1446443636976	Rename type 'ZHomeActivity'
-1446443641867	Rename type 'ZLaunchActivity'
-1446443646164	Rename type 'ZLoginActivity'
-1446443673556	Rename type 'ZUserProfileViewedByOtherFragment'
+1446734200232	Rename field 'SELECT_FILE'
+1446734224910	Rename field 'FILE_SELECT_CODE'

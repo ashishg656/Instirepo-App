@@ -1,18 +1,41 @@
 package com.instirepo.app.activities;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveApi.DriveContentsResult;
+import com.google.android.gms.drive.DriveContents;
+import com.google.android.gms.drive.DriveFolder.DriveFileResult;
+import com.google.android.gms.drive.DriveId;
+import com.google.android.gms.drive.MetadataChangeSet;
+import com.google.android.gms.drive.OpenFileActivityBuilder;
 import com.instirepo.app.R;
 import com.instirepo.app.circularreveal.SupportAnimator;
 import com.instirepo.app.circularreveal.ViewAnimationUtils;
@@ -22,7 +45,8 @@ import com.instirepo.app.extras.ZCircularAnimatorListener;
 import com.instirepo.app.fragments.CreatePostFragment1OtherCategory;
 
 @SuppressLint("NewApi")
-public class CreatePostActivity extends BaseActivity implements AppConstants {
+public class CreatePostActivity extends BaseActivity implements AppConstants,
+		ConnectionCallbacks, OnConnectionFailedListener {
 
 	CreatePostFragment1OtherCategory createPostFragment1OtherCategory;
 	int touchX, touchY;
@@ -31,6 +55,13 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 	LinearLayout mainLayoutForFragment;
 	int toolbarHeight;
 	AppBarLayout appBarLayout;
+
+	private static final String TAG = "PickFileWithOpenerActivity";
+	private static final int REQUEST_CODE_OPENER = 2;
+	protected static final int REQUEST_CODE_RESOLUTION = 1;
+	File file;
+
+	private GoogleApiClient mGoogleApiClient;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +102,28 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 						showAndHideCircularRevealView();
 					}
 				});
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (mGoogleApiClient == null) {
+			mGoogleApiClient = new GoogleApiClient.Builder(this)
+					.addApi(Drive.API).addScope(Drive.SCOPE_FILE)
+					.addScope(Drive.SCOPE_APPFOLDER)
+					// required for App Folder sample
+					.addConnectionCallbacks(this)
+					.addOnConnectionFailedListener(this).build();
+		}
+		mGoogleApiClient.connect();
+	}
+
+	@Override
+	protected void onPause() {
+		if (mGoogleApiClient != null) {
+			mGoogleApiClient.disconnect();
+		}
+		super.onPause();
 	}
 
 	private void showAndHideCircularRevealView() {
@@ -121,16 +174,116 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 		dialog.show();
 	}
 
-	public void connectGoogleClientAndRequestFile() {
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == REQUEST_CODE_RESOLUTION && resultCode == RESULT_OK) {
+			mGoogleApiClient.connect();
+		} else if (requestCode == REQUEST_CODE_OPENER) {
+			if (resultCode == RESULT_OK) {
+				DriveId driveId = (DriveId) data
+						.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
+				Log.w("as", "Selected file's ID: " + driveId);
+			}
+		}
+	}
+
+	@Override
+	public void onConnected(Bundle arg0) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
+	public void onConnectionSuspended(int arg0) {
+		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		if (!result.hasResolution()) {
+			// show the localized error dialog.
+			GoogleApiAvailability.getInstance()
+					.getErrorDialog(this, result.getErrorCode(), 0).show();
+			return;
+		}
+		try {
+			result.startResolutionForResult(this, REQUEST_CODE_RESOLUTION);
+		} catch (SendIntentException e) {
+			Log.e(TAG, "Exception while starting resolution activity", e);
 		}
 	}
 
+	public void requestFileOpen() {
+		IntentSender intentSender = Drive.DriveApi.newOpenFileActivityBuilder()
+				.setMimeType(new String[] { "text/plain", "text/html" })
+				.build(mGoogleApiClient);
+		try {
+			startIntentSenderForResult(intentSender, REQUEST_CODE_OPENER, null,
+					0, 0, 0);
+		} catch (SendIntentException e) {
+			Log.w(TAG, "Unable to send intent", e);
+		}
+	}
+
+	public void createFile(File file) {
+		this.file = file;
+		Drive.DriveApi.newDriveContents(mGoogleApiClient).setResultCallback(
+				driveContentsCallback);
+	}
+
+	public void showMessage(String message) {
+		Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+	}
+
+	final private ResultCallback<DriveContentsResult> driveContentsCallback = new ResultCallback<DriveContentsResult>() {
+		@Override
+		public void onResult(DriveContentsResult result) {
+			if (!result.getStatus().isSuccess()) {
+				showMessage("Error while trying to create new file contents");
+				return;
+			}
+			final DriveContents driveContents = result.getDriveContents();
+
+			// Perform I/O off the UI thread.
+			new Thread() {
+				@Override
+				public void run() {
+					// write content to DriveContents
+					OutputStream outputStream = driveContents.getOutputStream();
+					Writer writer = new OutputStreamWriter(outputStream);
+					try {
+						writer.write("Hello World!");
+						writer.close();
+					} catch (IOException e) {
+						Log.e(TAG, e.getMessage());
+					}
+
+					MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
+							.setTitle("New file").setMimeType("text/plain")
+							.setStarred(true).build();
+
+					// create a file on root folder
+					Drive.DriveApi
+							.getRootFolder(mGoogleApiClient)
+							.createFile(mGoogleApiClient, changeSet,
+									driveContents)
+							.setResultCallback(fileCallback);
+				}
+			}.start();
+		}
+	};
+
+	final private ResultCallback<DriveFileResult> fileCallback = new ResultCallback<DriveFileResult>() {
+		@Override
+		public void onResult(DriveFileResult result) {
+			if (!result.getStatus().isSuccess()) {
+				showMessage("Error while trying to create the file");
+				return;
+			}
+			showMessage("Created a file with content: "
+					+ result.getDriveFile().getDriveId());
+		}
+	};
 }

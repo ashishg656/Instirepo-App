@@ -1,6 +1,4 @@
 com.android.ide.eclipse.adt.autoPickTarget=false
 com.android.ide.eclipse.adt.fixLegacyEditors=1
-com.android.ide.eclipse.adt.sdk=C\:\\ashish data\\eclipse latest SDK KITKAT\\SDK
-com.android.ide.eclipse.adt.xmlEditor=true
-design.structure.flyout.width=268
+com.android.ide.eclipse.adt.sdk=C\:\\Users\\Ashish Goel\\AppData\\Local\\.android\\sdk1
 eclipse.preferences.version=1

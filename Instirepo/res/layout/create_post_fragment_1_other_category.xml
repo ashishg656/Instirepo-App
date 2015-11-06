@@ -18,14 +18,43 @@
             android:background="@drawable/ic_cart_bg_shadow"
             android:orientation="vertical" >
 
-            <com.instirepo.app.widgets.RoundedImageView
-                android:id="@+id/rounderimagecreapost"
+            <FrameLayout
+                android:id="@+id/createpostimagelayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/z_post_image_height"
-                android:scaleType="centerCrop"
-                android:visibility="gone"
-                app:riv_corner_radius_top_left="2dp"
-                app:riv_corner_radius_top_right="2dp" />
+                android:layout_height="wrap_content"
+                android:visibility="gone" >
+
+                <com.instirepo.app.widgets.RoundedImageView
+                    android:id="@+id/rounderimagecreapost"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/z_post_image_height"
+                    android:scaleType="centerCrop"
+                    app:riv_corner_radius_top_left="2dp"
+                    app:riv_corner_radius_top_right="2dp" />
+
+                <LinearLayout
+                    android:id="@+id/crossbuttonimage"
+                    android:layout_width="@dimen/z_button_height"
+                    android:layout_height="@dimen/z_button_height"
+                    android:layout_gravity="right"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true" >
+
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:background="@color/z_black_50_alpha"
+                        android:gravity="center" >
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/bs_ic_clear" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
