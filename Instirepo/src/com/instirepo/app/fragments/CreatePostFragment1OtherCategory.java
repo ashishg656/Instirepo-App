@@ -1,8 +1,6 @@
 package com.instirepo.app.fragments;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.instirepo.app.R;
-import com.instirepo.app.activities.CreatePostActivity;
 import com.instirepo.app.widgets.RoundedImageView;
 
 public class CreatePostFragment1OtherCategory extends BaseFragment implements
@@ -94,7 +91,6 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			startActivityForResult(intent, SELECT_POST_COVER_PIC);
 			break;
 		case R.id.googledrivebutton:
-			// ((CreatePostActivity)getActivity()).requestFileOpen();
 			intentForRequestingFileFromBrowser();
 			break;
 		case R.id.crossbuttonimage:
@@ -158,8 +154,6 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 				// Log.w("as", file.exists() + "--- " + selectedFile.getPath());
 				Log.w("as", "msg " + file.getAbsolutePath() + file.getName()
 						+ " --  " + file.getTotalSpace());
-				
-				((CreatePostActivity)getActivity()).createFile(file);
 			}
 		}
 	}
