@@ -20,6 +20,20 @@ public class ZPreferences {
 	private static final String USER_NAME = "username";
 	private static final String USER_EMAIL = "useremail";
 	private static final String GCM_TOKEN = "gcm_token";
+	private static final String DROPBOX_TOKEN = "DROPBOX_TOKEN";
+
+	public static void setDropboxToken(Context context, String text) {
+		Editor editor = context.getSharedPreferences(KEY, Context.MODE_PRIVATE)
+				.edit();
+		editor.putString(DROPBOX_TOKEN, text);
+		editor.commit();
+	}
+
+	public static String getDropboxToken(Context context) {
+		SharedPreferences savedSession = context.getSharedPreferences(KEY,
+				Context.MODE_PRIVATE);
+		return savedSession.getString(DROPBOX_TOKEN, null);
+	}
 
 	public static void setGcmToken(Context context, String text) {
 		Editor editor = context.getSharedPreferences(KEY, Context.MODE_PRIVATE)

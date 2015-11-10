@@ -7,5 +7,7 @@
     <string name="bs_more">More</string>
     <string name="z_open_drawer">opendrawervalueconstatnt</string>
     <string name="z_close_drawer">closedrawervaluecontant</string>
+    
+    <string name="dropbox_app_key">ku1kknp8f14k7a6</string>
 
 </resources>

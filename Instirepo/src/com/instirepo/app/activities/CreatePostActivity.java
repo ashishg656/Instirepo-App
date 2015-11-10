@@ -107,7 +107,7 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 	@Override
 	public void onBackPressed() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Are you sure you want to discrad this post?");
+		builder.setMessage("Are you sure you want to discard this post?");
 		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				CreatePostActivity.this.finish();

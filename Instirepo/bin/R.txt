@@ -1364,6 +1364,7 @@ int string common_signin_button_text_long 0x7f070009
 int string create_calendar_message 0x7f070005
 int string create_calendar_title 0x7f070004
 int string decline 0x7f070003
+int string dropbox_app_key 0x7f070044
 int string status_bar_notification_info_overflow 0x7f07003d
 int string store_picture_message 0x7f070001
 int string store_picture_title 0x7f070000

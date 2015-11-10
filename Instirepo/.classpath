@@ -9,5 +9,7 @@
 	<classpathentry kind="lib" path="libs/volley.jar"/>
 	<classpathentry kind="lib" path="libs/universal-image-loader-1.9.3-with-sources.jar"/>
 	<classpathentry kind="lib" path="libs/nineoldandroids-2.4.0.jar"/>
+	<classpathentry kind="lib" path="libs/dropbox-core-sdk-2.0-beta-1.jar"/>
+	<classpathentry kind="lib" path="libs/jackson-core-2.6.1.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

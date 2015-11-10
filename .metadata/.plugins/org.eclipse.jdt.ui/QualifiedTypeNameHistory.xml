@@ -10,4 +10,8 @@
 <fullyQualifiedTypeName name="com.google.android.gms.common.api.ResultCallback"/>
 <fullyQualifiedTypeName name="com.instirepo.app.activities.CreatePostActivity"/>
 <fullyQualifiedTypeName name="java.io.OutputStream"/>
+<fullyQualifiedTypeName name="com.dropbox.core.android.Auth"/>
+<fullyQualifiedTypeName name="com.instirepo.app.preferences.ZPreferences"/>
+<fullyQualifiedTypeName name="com.instirepo.app.R.string"/>
+<fullyQualifiedTypeName name="com.dropbox.core.v2.Files"/>
 </qualifiedTypeNameHistroy>
