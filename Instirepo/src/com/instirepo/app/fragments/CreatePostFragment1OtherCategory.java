@@ -27,7 +27,8 @@ import com.dropbox.core.android.Auth;
 import com.dropbox.core.v2.Files;
 import com.instirepo.app.R;
 import com.instirepo.app.dropboxtasks.DropboxClient;
-import com.instirepo.app.dropboxtasks.UploadFileTask;
+import com.instirepo.app.dropboxtasks.UploadFileTaskInputStream;
+import com.instirepo.app.dropboxtasks.UploadFileTaskInputStream.Callback;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.RoundedImageView;
 
@@ -127,20 +128,6 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	}
 
 	private void intentForRequestingFileFromBrowser() {
-		// boolean isKitKat = Build.VERSION.SDK_INT >=
-		// Build.VERSION_CODES.KITKAT;
-		// if (isKitKat) {
-		// Intent intent = new Intent();
-		// intent.setType("*/*");
-		// intent.setAction(Intent.ACTION_GET_CONTENT);
-		// startActivityForResult(intent, SELECT_FILE_FROM_BROWSER_CODE);
-		//
-		// } else {
-		// Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-		// intent.setType("*/*");
-		// startActivityForResult(intent, SELECT_FILE_FROM_BROWSER_CODE);
-		// }
-
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.addCategory(Intent.CATEGORY_OPENABLE);
 		intent.setType("*/*");
@@ -173,22 +160,19 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 				bm = BitmapFactory.decodeFile(selectedImagePath, options);
 				setImageForPost(bm);
 			} else if (requestCode == CreatePostFragment1OtherCategory.SELECT_FILE_FROM_BROWSER_CODE) {
-				// Uri selectedFile = data.getData();
-				//
-				// // String FilePath = data.getData().getPath();
-				// // String FileName = data.getData().getLastPathSegment();
-				// // int lastPos = FilePath.length() - FileName.length();
-				// // String Folder = FilePath.substring(0, lastPos);
-				//
-				// uploadFile(data.getData().toString());
+				Uri selectedFile = data.getData();
 
-				newCodeToGetFileFromUri(data);
+				String FilePath = data.getData().getPath();
+				String FileName = data.getData().getLastPathSegment();
+				int lastPos = FilePath.length() - FileName.length();
+				String Folder = FilePath.substring(0, lastPos);
+
+				uploadFile(data, FileName, Folder);
 			}
 		}
 	}
 
 	public byte[] getBytes(InputStream is) throws IOException {
-
 		int len;
 		int size = 1024;
 		byte[] buf;
@@ -207,7 +191,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		return buf;
 	}
 
-	private void newCodeToGetFileFromUri(Intent data) {
+	private void uploadFile(Intent data, String fileName, String folder) {
 		Uri uri = data.getData();
 		byte[] fileContent;
 		InputStream inputStream = null;
@@ -216,17 +200,53 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			inputStream = getActivity().getContentResolver().openInputStream(
 					uri);
 			if (inputStream != null) {
-				fileContent = new byte[1];
-				inputStream.read(fileContent);
-				fileContent = new byte[1024];
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				int read;
-				while ((read = inputStream.read(fileContent)) > -1)
-					baos.write(fileContent, 0, read);
-				fileContent = baos.toByteArray();
-				baos.close();
-				Log.v("as", "-----> Input Stream: " + inputStream);
-				Log.v("as", "-----> Byte Array: " + fileContent.length);
+
+				// fileContent = getBytes(inputStream);
+				// inputStream.read(fileContent);
+				// fileContent = new byte[1024];
+				// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				// int read;
+				// while ((read = inputStream.read(fileContent)) > -1)
+				// baos.write(fileContent, 0, read);
+				// fileContent = baos.toByteArray();
+				// baos.close();
+				// Log.v("as", "-----> Input Stream: " + inputStream);
+				// Log.v("as", "-----> Byte Array: " + fileContent.length);
+
+				final ProgressDialog dialog = new ProgressDialog(getActivity());
+				dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+				dialog.setCancelable(false);
+				dialog.setMessage("Uploading");
+				dialog.show();
+
+				new UploadFileTaskInputStream(getActivity(),
+						DropboxClient.files(), new Callback() {
+
+							@Override
+							public void onUploadComplete(
+									Files.FileMetadata result) {
+								dialog.dismiss();
+
+								Toast.makeText(
+										getActivity(),
+										result.name
+												+ " size "
+												+ result.size
+												+ " modified "
+												+ result.clientModified
+														.toGMTString(),
+										Toast.LENGTH_SHORT).show();
+
+							}
+
+							@Override
+							public void onError(Exception e) {
+								dialog.dismiss();
+								Toast.makeText(getActivity(),
+										"An error has occurred",
+										Toast.LENGTH_SHORT).show();
+							}
+						}, fileName).execute(inputStream);
 			} else {
 				Log.e("AS", "-----> Input Stream is null");
 			}
@@ -243,34 +263,4 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		}
 	}
 
-	private void uploadFile(String fileUri) {
-		final ProgressDialog dialog = new ProgressDialog(getActivity());
-		dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		dialog.setCancelable(false);
-		dialog.setMessage("Uploading");
-		dialog.show();
-
-		new UploadFileTask(getActivity(), DropboxClient.files(),
-				new UploadFileTask.Callback() {
-					@Override
-					public void onUploadComplete(Files.FileMetadata result) {
-						dialog.dismiss();
-
-						Toast.makeText(
-								getActivity(),
-								result.name + " size " + result.size
-										+ " modified "
-										+ result.clientModified.toGMTString(),
-								Toast.LENGTH_SHORT).show();
-
-					}
-
-					@Override
-					public void onError(Exception e) {
-						dialog.dismiss();
-						Toast.makeText(getActivity(), "An error has occurred",
-								Toast.LENGTH_SHORT).show();
-					}
-				}).execute(fileUri, "POSTS");
-	}
 }
