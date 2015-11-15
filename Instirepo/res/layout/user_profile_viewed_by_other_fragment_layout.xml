@@ -33,19 +33,289 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/z_white"
+                android:background="@color/z_grey_shade_1"
                 android:orientation="vertical" >
 
                 <LinearLayout
                     android:id="@+id/scrollviewlinearlayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
-                        android:text="First child" />
+                        android:layout_marginTop="-3dp"
+                        android:background="@drawable/shadow_post"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/z_margin_large"
+                            android:text="About"
+                            android:textColor="@color/PrimaryColor" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/z_grey_shade_2" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/z_margin_large"
+                            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                            android:textColor="@color/z_text_color_medium_dark" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/z_margin_mini"
+                        android:background="@drawable/shadow_post"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/z_margin_large"
+                            android:text="User Details"
+                            android:textColor="@color/PrimaryColor" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/z_grey_shade_2" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/z_margin_large" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Branch : Information Technology"
+                                android:textColor="@color/z_text_color_dark" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Batch : 7I 456"
+                                android:textColor="@color/z_text_color_dark" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Year : 4th year"
+                                android:textColor="@color/z_text_color_dark" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginBottom="@dimen/z_margin_large"
+                                android:layout_marginTop="@dimen/z_margin_large"
+                                android:background="@color/z_grey_shade_2" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Number of Posts Posted : 16"
+                                android:textColor="@color/z_text_color_dark" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Number of Upvotes Received : 16"
+                                android:textColor="@color/z_text_color_dark" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Number of Downvotes Received : 16"
+                                android:textColor="@color/z_text_color_dark" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/z_margin_mini"
+                        android:background="@drawable/shadow_post"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/z_margin_large"
+                            android:text="Vote User"
+                            android:textColor="@color/PrimaryColor" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/z_grey_shade_2" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal" >
+
+                            <FrameLayout
+                                android:layout_width="@dimen/z_button_height"
+                                android:layout_height="@dimen/z_button_height"
+                                android:clickable="true" >
+
+                                <ImageView
+                                    android:layout_width="@dimen/z_upvote_button_height"
+                                    android:layout_height="@dimen/z_upvote_button_height"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/upvote_button_selector" />
+                            </FrameLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/z_margin_medium"
+                                android:layout_marginRight="@dimen/z_margin_medium"
+                                android:includeFontPadding="false"
+                                android:text="10"
+                                android:textColor="@color/z_text_color_medium_dark"
+                                android:textSize="@dimen/z_font_mini" />
+
+                            <FrameLayout
+                                android:layout_width="@dimen/z_button_height"
+                                android:layout_height="@dimen/z_button_height"
+                                android:clickable="true" >
+
+                                <ImageView
+                                    android:layout_width="@dimen/z_upvote_button_height"
+                                    android:layout_height="@dimen/z_upvote_button_height"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/downvote_button_selector" />
+                            </FrameLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/z_margin_mini"
+                        android:background="@drawable/shadow_post"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/z_margin_large"
+                            android:text="Resume"
+                            android:textColor="@color/PrimaryColor" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/z_grey_shade_2" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:padding="@dimen/z_margin_large"
+                            android:text="Download Resume"
+                            android:textColor="@color/z_text_color_dark" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/z_margin_mini"
+                        android:background="@drawable/shadow_post"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/z_margin_large"
+                            android:text="Contact"
+                            android:textColor="@color/PrimaryColor" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/z_grey_shade_2" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/z_margin_large"
+                            android:layout_marginRight="@dimen/z_margin_large"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:padding="@dimen/z_margin_large"
+                                android:text="Message Ashish on Instirepo"
+                                android:textColor="@color/z_text_color_dark" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/z_grey_shade_2" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:padding="@dimen/z_margin_large"
+                                android:text="Email ashishg656@gmail.com"
+                                android:textColor="@color/z_text_color_dark" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/z_grey_shade_2" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:padding="@dimen/z_margin_large"
+                                android:text="Call 9873443137"
+                                android:textColor="@color/z_text_color_dark" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/z_margin_mini"
+                        android:background="@drawable/shadow_post"
+                        android:gravity="right"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/z_margin_large"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:padding="@dimen/z_margin_large"
+                            android:text="BLOCK USER"
+                            android:textColor="@color/PrimaryColor" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </com.instirepo.app.widgets.ObservableScrollView>
@@ -71,7 +341,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/z_margin_mini"
-                android:text="7I 456"
+                android:text="Student Coordinator"
                 android:textColor="@color/z_white"
                 android:textSize="@dimen/z_font_mini" />
         </LinearLayout>

@@ -5,11 +5,15 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="libs/gson-2.3.1.jar"/>
 	<classpathentry kind="lib" path="libs/volley.jar"/>
 	<classpathentry kind="lib" path="libs/universal-image-loader-1.9.3-with-sources.jar"/>
 	<classpathentry kind="lib" path="libs/nineoldandroids-2.4.0.jar"/>
-	<classpathentry kind="lib" path="libs/dropbox-core-sdk-2.0-beta-1.jar"/>
-	<classpathentry kind="lib" path="libs/jackson-core-2.6.1.jar"/>
+	<classpathentry kind="lib" path="libs/google-api-client-android-1.20.0.jar"/>
+	<classpathentry kind="lib" path="libs/google-http-client-android-1.20.0.jar"/>
+	<classpathentry kind="lib" path="libs/google-api-services-drive-v2-rev192-1.20.0.jar"/>
+	<classpathentry kind="lib" path="libs/google-api-client-1.20.0.jar"/>
+	<classpathentry kind="lib" path="libs/google-http-client-1.20.0.jar"/>
+	<classpathentry kind="lib" path="libs/google-http-client-gson-1.20.0.jar"/>
+	<classpathentry kind="lib" path="libs/gson-2.3.1.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
