@@ -12,4 +12,7 @@
         android:paddingTop="100dp"
         android:scrollbars="none" />
 
+    <include layout="@layout/error_layout"/>
+    
+    <include layout="@layout/progress_layout"/>
 </FrameLayout>

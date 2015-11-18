@@ -23,6 +23,7 @@
             android:paddingTop="@dimen/z_margin_small" >
 
             <com.instirepo.app.widgets.CircularImageView
+                android:id="@+id/circularimage"
                 android:layout_width="@dimen/z_post_uploader_image_height"
                 android:layout_height="@dimen/z_post_uploader_image_height"
                 android:src="@drawable/test_user" />
@@ -36,6 +37,7 @@
                 android:orientation="vertical" >
 
                 <TextView
+                    android:id="@+id/uploadrname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ashish Goel"
@@ -56,6 +58,7 @@
                         android:src="@drawable/ic_clock" />
 
                     <TextView
+                        android:id="@+id/utime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/z_margin_mini"
@@ -99,6 +102,7 @@
             android:paddingTop="@dimen/z_margin_mini" >
 
             <TextView
+                android:id="@+id/uptheading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Post Heading Come Here Isnt this good article must read"
@@ -106,6 +110,7 @@
                 android:textSize="@dimen/z_font_mini" />
 
             <TextView
+                android:id="@+id/uptdesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/z_margin_mini"
@@ -126,6 +131,7 @@
         android:foreground="?attr/selectableItemBackground" >
 
         <com.instirepo.app.widgets.PEWImageView
+            android:id="@+id/pewimage"
             android:layout_width="match_parent"
             android:layout_height="@dimen/z_post_image_height"
             android:scaleType="centerCrop"

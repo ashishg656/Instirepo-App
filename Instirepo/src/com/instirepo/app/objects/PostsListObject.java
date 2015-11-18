@@ -6,6 +6,15 @@ public class PostsListObject {
 
 	List<PostListSinglePostObject> posts;
 	List<PostCategorySinglePostCategory> categories;
+	Integer next_page;
+
+	public Integer getNext_page() {
+		return next_page;
+	}
+
+	public void setNext_page(Integer next_page) {
+		this.next_page = next_page;
+	}
 
 	public List<PostCategorySinglePostCategory> getCategories() {
 		return categories;

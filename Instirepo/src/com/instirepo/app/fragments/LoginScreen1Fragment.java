@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,6 +51,8 @@ public class LoginScreen1Fragment extends BaseFragment implements ZUrls {
 		isTeacherOrNotCheckBox = (CheckBox) v.findViewById(R.id.checkbox);
 		nextButton = (FrameLayout) v.findViewById(R.id.nextbutton);
 
+		setProgressLayoutVariablesAndErrorVariables(v);
+
 		return v;
 	}
 
@@ -63,12 +64,24 @@ public class LoginScreen1Fragment extends BaseFragment implements ZUrls {
 
 			@Override
 			public void onClick(View v) {
-				if (isTeacherOrNotCheckBox.isChecked()) {
-					((LoginActivity) getActivity())
-							.setSecondFragmentForTeacherDetails();
-				} else {
-					((LoginActivity) getActivity())
-							.setSecondFragmentForStudentDetails();
+				if (chechWhetherDetailsFilled()) {
+					((LoginActivity) getActivity()).collegeIDSelected = mData
+							.getColleges_list()
+							.get(collegeSpinner.getSelectedItemPosition() - 1)
+							.getId();
+					((LoginActivity) getActivity()).universityID = mData
+							.getUniversity_list()
+							.get(universitySpinner.getSelectedItemPosition() - 1)
+							.getId();
+					if (isTeacherOrNotCheckBox.isChecked()) {
+						((LoginActivity) getActivity()).isProfessor = true;
+						((LoginActivity) getActivity())
+								.setSecondFragmentForTeacherDetails();
+					} else {
+						((LoginActivity) getActivity()).isProfessor = false;
+						((LoginActivity) getActivity())
+								.setSecondFragmentForStudentDetails();
+					}
 				}
 			}
 		});
@@ -76,7 +89,21 @@ public class LoginScreen1Fragment extends BaseFragment implements ZUrls {
 		loadData();
 	}
 
+	protected boolean chechWhetherDetailsFilled() {
+		if (universitySpinner.getSelectedItemPosition() < 1) {
+			makeToast("Select University");
+			return false;
+		} else if (collegeSpinner.getSelectedItemPosition() < 1) {
+			makeToast("Select College");
+			return false;
+		}
+		return true;
+	}
+
 	private void loadData() {
+		showLoadingLayout();
+		hideErrorLayout();
+
 		StringRequest req = new StringRequest(getAllCollegesAndUniversities,
 				new Listener<String>() {
 					@Override
@@ -84,11 +111,15 @@ public class LoginScreen1Fragment extends BaseFragment implements ZUrls {
 						mData = new Gson().fromJson(res,
 								LoginScreenFragment1Object.class);
 						setAdapterData();
+
+						hideErrorLayout();
+						hideLoadingLayout();
 					}
 				}, new ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError arg0) {
-
+						hideLoadingLayout();
+						showErrorLayout();
 					}
 				});
 		ZApplication.getInstance().addToRequestQueue(req,
@@ -145,7 +176,7 @@ public class LoginScreen1Fragment extends BaseFragment implements ZUrls {
 
 					@Override
 					public void onNothingSelected(AdapterView<?> arg0) {
-						Log.w("As", "sd");
+
 					}
 				});
 	}

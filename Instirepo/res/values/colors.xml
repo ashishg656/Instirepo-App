@@ -33,5 +33,8 @@
     <color name="home_viewpager_color_2">#00bcd4</color>
     <color name="home_viewpager_color_3">#4caf50</color>
     <color name="home_viewpager_color_4">#f44336</color>
+    <color name="z_blue_color_primary">#0288d1</color>
+    <color name="z_green_color_primary">#2e7d32</color>
+    <color name="z_red_color_primary">#e53935</color>
 
 </resources>

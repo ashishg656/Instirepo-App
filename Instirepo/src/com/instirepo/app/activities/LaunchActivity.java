@@ -20,6 +20,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -571,6 +572,8 @@ public class LaunchActivity extends BaseActivity implements
 								Toast.LENGTH_SHORT).show();
 						if (progressDialog != null)
 							progressDialog.dismiss();
+						Log.w("as", arg0.toString() + arg0.getStackTrace()
+								+ arg0.networkResponse.data);
 					}
 				}) {
 			@Override

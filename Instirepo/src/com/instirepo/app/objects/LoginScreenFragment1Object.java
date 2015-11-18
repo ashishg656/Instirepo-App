@@ -42,6 +42,15 @@ public class LoginScreenFragment1Object {
 		int university_id;
 		String name;
 		String location;
+		int id;
+
+		public int getId() {
+			return id;
+		}
+
+		public void setId(int id) {
+			this.id = id;
+		}
 
 		public int getUniversity_id() {
 			return university_id;

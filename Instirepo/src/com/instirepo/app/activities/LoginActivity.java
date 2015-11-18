@@ -10,6 +10,10 @@ import android.os.Bundle;
 
 public class LoginActivity extends BaseActivity {
 
+	public int collegeIDSelected;
+	public boolean isProfessor;
+	public int universityID;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

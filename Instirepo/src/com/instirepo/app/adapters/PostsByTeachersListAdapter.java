@@ -1,5 +1,9 @@
 package com.instirepo.app.adapters;
 
+import java.util.List;
+
+import serverApi.ImageRequestManager;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
@@ -10,34 +14,51 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.instirepo.app.R;
 import com.instirepo.app.activities.HomeActivity;
+import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.bottomsheet.BottomSheet;
 import com.instirepo.app.extras.AppConstants;
-import com.instirepo.app.objects.PostsListObject;
+import com.instirepo.app.objects.PostListSinglePostObject;
+import com.instirepo.app.widgets.CircularImageView;
+import com.instirepo.app.widgets.PEWImageView;
 
 public class PostsByTeachersListAdapter extends
 		RecyclerView.Adapter<RecyclerView.ViewHolder> implements AppConstants {
 
 	Context context;
-	PostsListObject mData;
+	List<PostListSinglePostObject> mData;
 	MyClickListener clickListener;
+	boolean isMoreAllowed;
 
-	public PostsByTeachersListAdapter(Context context, PostsListObject mData) {
+	public PostsByTeachersListAdapter(Context context,
+			List<PostListSinglePostObject> mData, boolean isMoreAllowed) {
 		super();
 		this.context = context;
 		this.mData = mData;
+		this.isMoreAllowed = isMoreAllowed;
 		clickListener = new MyClickListener();
+	}
+
+	public void addData(List<PostListSinglePostObject> data, boolean isMore) {
+		mData.addAll(data);
+		this.isMoreAllowed = isMore;
+		notifyDataSetChanged();
 	}
 
 	@Override
 	public int getItemCount() {
-		return mData.getPosts().size();
+		if (isMoreAllowed == true)
+			return mData.size() + 1;
+		return mData.size();
 	}
 
 	@Override
 	public int getItemViewType(int position) {
+		if (position > mData.size() - 1)
+			return Z_RECYCLER_VIEW_ITEM_LOADING;
 		return Z_RECYCLER_VIEW_ITEM_NORMAL;
 	}
 
@@ -53,6 +74,19 @@ public class PostsByTeachersListAdapter extends
 			holder.commentsLayout.setOnClickListener(clickListener);
 
 			holder.openUserProfile.setOnClickListener(clickListener);
+
+			PostListSinglePostObject obj = mData.get(pos);
+			holder.userName.setText(obj.getUser_name());
+			holder.heading.setText(obj.getHeading());
+			holder.description.setText(obj.getDescription());
+			if (obj.getImage() == null) {
+				holder.imagePost.setVisibility(View.GONE);
+			} else {
+				holder.imagePost.setVisibility(View.VISIBLE);
+				ImageRequestManager.get(context).requestImage(context,
+						holder.imagePost,
+						ZApplication.getImageUrl(obj.getImage()), -1);
+			}
 		}
 	}
 
@@ -63,8 +97,20 @@ public class PostsByTeachersListAdapter extends
 					R.layout.post_by_teacher_list_item_layout, arg0, false);
 			PostsHolderNormal holder = new PostsHolderNormal(v);
 			return holder;
+		} else if (type == Z_RECYCLER_VIEW_ITEM_LOADING) {
+			View v = LayoutInflater.from(context).inflate(
+					R.layout.loading_more, arg0, false);
+			PostHolderLoading holder = new PostHolderLoading(v);
+			return holder;
 		}
 		return null;
+	}
+
+	class PostHolderLoading extends RecyclerView.ViewHolder {
+
+		public PostHolderLoading(View v) {
+			super(v);
+		}
 	}
 
 	class PostsHolderNormal extends RecyclerView.ViewHolder {
@@ -72,6 +118,9 @@ public class PostsByTeachersListAdapter extends
 		LinearLayout overflowIcon;
 		FrameLayout seenByContainerLayout, openUserProfile;
 		ImageView commentsLayout;
+		CircularImageView userImage;
+		TextView userName, time, heading, description;
+		PEWImageView imagePost;
 
 		public PostsHolderNormal(View v) {
 			super(v);
@@ -82,6 +131,12 @@ public class PostsByTeachersListAdapter extends
 					.findViewById(R.id.commentsviewconatiner);
 			openUserProfile = (FrameLayout) v
 					.findViewById(R.id.openuserprofilepost);
+			userImage = (CircularImageView) v.findViewById(R.id.circularimage);
+			userName = (TextView) v.findViewById(R.id.uploadrname);
+			time = (TextView) v.findViewById(R.id.utime);
+			heading = (TextView) v.findViewById(R.id.uptheading);
+			description = (TextView) v.findViewById(R.id.uptdesc);
+			imagePost = (PEWImageView) v.findViewById(R.id.pewimage);
 		}
 	}
 
