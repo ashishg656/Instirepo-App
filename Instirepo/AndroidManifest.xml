@@ -73,21 +73,23 @@
             android:theme="@style/Theme.Transparent" >
         </activity>
 
-        <!-- Dropbox activity -->
+        <!-- File chooser activity -->
         <activity
-            android:name="com.dropbox.core.android.AuthActivity"
-            android:configChanges="orientation|keyboard"
-            android:launchMode="singleTask" >
+            android:name="com.instirepo.app.afilechooser.FileChooserActivity"
+            android:enabled="@bool/use_activity"
+            android:exported="true"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/choose_file" >
             <intent-filter>
-                <data android:scheme="db-ku1kknp8f14k7a6" />
+                <action android:name="android.intent.action.GET_CONTENT" />
 
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.OPENABLE" />
+
+                <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
-        <!-- End Dropbox activity -->
+        <!-- end File chooser activity -->
     </application>
 
 </manifest>

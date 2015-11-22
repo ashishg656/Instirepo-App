@@ -17,4 +17,11 @@
     <string name="menu_mark_important">Mark Important</string>
     <string name="menu_marked_important">Marked Important</string>
 
+    <!-- afilechooser -->
+    <string name="empty_directory">Empty Directory</string>
+    <string name="storage_removed">Storage was removed or unmounted.</string>
+    <string name="choose_file">Select a file</string>
+    <string name="error_selecting_file">Error selecting File</string>
+    <string name="internal_storage">Internal storage</string>
+
 </resources>

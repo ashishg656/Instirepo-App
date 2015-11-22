@@ -55,4 +55,8 @@
     <dimen name="labels_text_size">14sp</dimen>
     <dimen name="floating_action_button_height_with_margin_bottom_considered">80dp</dimen>
 
+    <!-- afilechooser -->
+    <dimen name="list_padding">0dp</dimen>
+    <dimen name="list_item_padding">16dp</dimen>
+
 </resources>

@@ -1,5 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <style name="fileChooserName">
+        <item name="android:drawablePadding">@dimen/list_item_padding</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:paddingLeft">@dimen/list_item_padding</item>
+        <item name="android:paddingRight">@dimen/list_item_padding</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <item name="windowActionBarOverlay">true</item>
         <item name="android:typeface">serif</item>
@@ -32,14 +42,13 @@
         <item name="windowActionBar">false</item>
         <item name="android:typeface">serif</item>
         <item name="colorPrimary">@color/PrimaryColor</item>
-        <item name="colorPrimaryDark">@color/PrimaryDarkColor</item>
+        <item name="colorPrimaryDark">@color/PrimaryDarkColor</item>
         -->
 
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:typeface">serif</item>

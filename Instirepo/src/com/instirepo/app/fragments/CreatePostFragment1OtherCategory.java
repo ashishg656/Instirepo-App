@@ -35,6 +35,7 @@ import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi.DriveContentsResult;
 import com.google.android.gms.drive.MetadataChangeSet;
 import com.instirepo.app.R;
+import com.instirepo.app.afilechooser.utils.FileUtils;
 import com.instirepo.app.widgets.RoundedImageView;
 
 public class CreatePostFragment1OtherCategory extends BaseFragment implements
@@ -44,13 +45,11 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	TextView uploadPicText;
 	FrameLayout imageViewHolder;
 	RoundedImageView roundedImageView;
-	
-	Uri filePickURI;
 
 	static final int REQUEST_CODE_RESOLUTION = 155;
-	static final int REQUEST_CODE_CREATOR = 255;
+	public static final int REQUEST_CODE_CREATOR = 255;
 	public static int SELECT_POST_COVER_PIC = 355;
-	private static final int SELECT_FILE_FROM_BROWSER_CODE = 455;
+	private static final int SELECT_FILE_FROM_AFILECHOOSER_CODE = 455;
 
 	private GoogleApiClient mGoogleApiClient;
 
@@ -139,10 +138,9 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	}
 
 	private void intentForRequestingFileFromBrowser() {
-		Intent intent = new Intent(Intent.ACTION_PICK);
-		// intent.addCategory(Intent.CATEGORY_OPENABLE);
-		intent.setType("*/*");
-		startActivityForResult(intent, SELECT_FILE_FROM_BROWSER_CODE);
+		Intent getContentIntent = FileUtils.createGetContentIntent();
+		Intent intent = Intent.createChooser(getContentIntent, "Select a file");
+		startActivityForResult(intent, SELECT_FILE_FROM_AFILECHOOSER_CODE);
 	}
 
 	@Override
@@ -170,15 +168,13 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 				options.inJustDecodeBounds = false;
 				bm = BitmapFactory.decodeFile(selectedImagePath, options);
 				setImageForPost(bm);
-			} else if (requestCode == CreatePostFragment1OtherCategory.SELECT_FILE_FROM_BROWSER_CODE) {
-				filePickURI = data.getData();
+			} else if (requestCode == CreatePostFragment1OtherCategory.SELECT_FILE_FROM_AFILECHOOSER_CODE) {
+				final Uri uri = data.getData();
 
-				// String FilePath = data.getData().getPath();
-				// String FileName = data.getData().getLastPathSegment();
-				// int lastPos = FilePath.length() - FileName.length();
-				// String Folder = FilePath.substring(0, lastPos);
-
-				saveFileToDrive();
+				String path = FileUtils.getPath(getActivity(), uri);
+				if (path != null && FileUtils.isLocal(path)) {
+					saveFileToDrive(path, uri);
+				}
 			} else if (requestCode == CreatePostFragment1OtherCategory.REQUEST_CODE_CREATOR) {
 				Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT)
 						.show();
@@ -186,7 +182,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		}
 	}
 
-	private void saveFileToDrive() {
+	private void saveFileToDrive(final String path, final Uri uri) {
 		Drive.DriveApi.newDriveContents(mGoogleApiClient).setResultCallback(
 				new ResultCallback<DriveContentsResult>() {
 
@@ -200,7 +196,6 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 						OutputStream outputStream = result.getDriveContents()
 								.getOutputStream();
 
-						String path = getPathFromUri(filePickURI);
 						File file = new File(path);
 
 						try {
@@ -220,7 +215,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 						MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
 								.setMimeType(
 										getActivity().getContentResolver()
-												.getType(filePickURI))
+												.getType(uri))
 								.setTitle(file.getName()).build();
 						IntentSender intentSender = Drive.DriveApi
 								.newCreateFileActivityBuilder()

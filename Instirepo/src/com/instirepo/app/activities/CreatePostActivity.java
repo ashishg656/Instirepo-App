@@ -2,6 +2,7 @@ package com.instirepo.app.activities;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.app.ApplicationErrorReport.CrashInfo;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -124,6 +125,11 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		if (createPostFragment1OtherCategory != null
+				&& requestCode == CreatePostFragment1OtherCategory.REQUEST_CODE_CREATOR) {
+			createPostFragment1OtherCategory.onActivityResult(requestCode,
+					resultCode, data);
+		}
 	}
 
 }
