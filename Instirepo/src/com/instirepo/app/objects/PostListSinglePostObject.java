@@ -14,6 +14,60 @@ public class PostListSinglePostObject {
 	boolean has_upvoted;
 	boolean has_downvoted;
 	int comment;
+	int seens;
+	String category;
+	String category_color;
+	int saves;
+	boolean is_saved;
+	int user_id;
+
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+
+	public int getSaves() {
+		return saves;
+	}
+
+	public void setSaves(int saves) {
+		this.saves = saves;
+	}
+
+	public boolean isIs_saved() {
+		return is_saved;
+	}
+
+	public void setIs_saved(boolean is_saved) {
+		this.is_saved = is_saved;
+	}
+
+	public int getSeens() {
+		return seens;
+	}
+
+	public void setSeens(int seens) {
+		this.seens = seens;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getCategory_color() {
+		return category_color;
+	}
+
+	public void setCategory_color(String category_color) {
+		this.category_color = category_color;
+	}
 
 	public int getUpvotes() {
 		return upvotes;

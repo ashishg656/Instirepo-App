@@ -44,8 +44,8 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	TextView uploadPicText;
 	FrameLayout imageViewHolder;
 	RoundedImageView roundedImageView;
+	
 	Uri filePickURI;
-	private static Drive mService;
 
 	static final int REQUEST_CODE_RESOLUTION = 155;
 	static final int REQUEST_CODE_CREATOR = 255;

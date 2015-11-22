@@ -20,9 +20,9 @@
             android:paddingTop="10dp" >
 
             <com.instirepo.app.widgets.CircularImageView
+                android:id="@+id/seenbyimage"
                 android:layout_width="@dimen/z_seen_by_uploader_image_height"
-                android:layout_height="@dimen/z_seen_by_uploader_image_height"
-                android:src="@drawable/test_user" />
+                android:layout_height="@dimen/z_seen_by_uploader_image_height" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -32,12 +32,14 @@
                 android:orientation="vertical" >
 
                 <TextView
+                    android:id="@+id/seenbyname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ashish Goel"
                     android:textColor="@color/z_text_color_dark" />
 
                 <TextView
+                    android:id="@+id/seenbytime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/z_margin_supermini"
@@ -48,5 +50,10 @@
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/z_grey_shade_2" />
 
 </LinearLayout>

@@ -355,9 +355,11 @@ public class CircularImageView extends ImageView {
 	 * Reinitializes the shader texture used to fill in the Circle upon drawing.
 	 */
 	public void refreshBitmapShader() {
-		shader = new BitmapShader(Bitmap.createScaledBitmap(image, canvasSize,
-				canvasSize, false), Shader.TileMode.CLAMP,
-				Shader.TileMode.CLAMP);
+		if (image != null) {
+			shader = new BitmapShader(Bitmap.createScaledBitmap(image,
+					canvasSize, canvasSize, false), Shader.TileMode.CLAMP,
+					Shader.TileMode.CLAMP);
+		}
 	}
 
 	/**

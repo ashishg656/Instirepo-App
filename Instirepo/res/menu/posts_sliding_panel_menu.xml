@@ -4,6 +4,7 @@
         android:icon="@drawable/flag_button_selector"
         android:title="Report Post"/>
     <item
+        android:id="@+id/markimportant"
         android:icon="@drawable/star_button_selector"
         android:title="Mark Important"/>
     <item

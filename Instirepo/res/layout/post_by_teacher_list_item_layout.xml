@@ -119,6 +119,22 @@
                 android:text="Post description here must be come here is a big one but this is great text lorel ipsum hello world foo bar sheldon barney hello there description here must be come here is a big one but this is great text lorel ipsum hello world foo bar sheldon barney hello there"
                 android:textColor="@color/z_text_color_light"
                 android:textSize="@dimen/z_font_supermini" />
+
+            <TextView
+                android:id="@+id/postcategoy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/post_category_bg"
+                android:includeFontPadding="false"
+                android:paddingBottom="2dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:paddingTop="2dp"
+                android:text="General"
+                android:textAllCaps="true"
+                android:textSize="@dimen/z_font_supermini" />
         </LinearLayout>
     </FrameLayout>
 
@@ -163,6 +179,7 @@
                 android:src="@drawable/ic_user" />
 
             <TextView
+                android:id="@+id/peopleviewednumebr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/z_margin_small"
@@ -190,12 +207,14 @@
             android:paddingTop="@dimen/z_margin_mini" >
 
             <ImageView
+                android:id="@+id/upvotepostimage"
                 android:layout_width="@dimen/z_upvote_button_height"
                 android:layout_height="@dimen/z_upvote_button_height"
                 android:background="@drawable/upvote_button_selector"
                 android:clickable="true" />
 
             <TextView
+                android:id="@+id/numberofupvotes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/z_margin_mini"
@@ -210,12 +229,14 @@
                 android:gravity="center" >
 
                 <ImageView
+                    android:id="@+id/savepostimage"
                     android:layout_width="@dimen/z_upvote_button_height"
                     android:layout_height="@dimen/z_upvote_button_height"
                     android:background="@drawable/star_button_selector"
                     android:clickable="true" />
 
                 <TextView
+                    android:id="@+id/numberofsavs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/z_margin_mini"
@@ -238,6 +259,7 @@
                     android:clickable="true" />
 
                 <TextView
+                    android:id="@+id/numberofcomments"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/z_margin_mini"

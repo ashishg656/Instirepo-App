@@ -21,4 +21,25 @@ public interface ZUrls {
 	public String studentsPostsUrl = ZApplication.getBaseUrl()
 			+ "get_students_posts/";
 
+	public String getPeopleWhoSawPost = ZApplication.getBaseUrl()
+			+ "get_people_who_saw_post/";
+
+	public String getCommentsOnPost = ZApplication.getBaseUrl()
+			+ "get_comments_on_post/";
+
+	public String addCommentOnPost = ZApplication.getBaseUrl()
+			+ "add_comment_on_post/";
+
+	public String markPostAsImportant = ZApplication.getBaseUrl()
+			+ "save_post_for_later/";
+
+	public String upvotePost = ZApplication.getBaseUrl()
+			+ "upvote_or_downvote_post/";
+
+	public String userProfileViewedByOther = ZApplication.getBaseUrl()
+			+ "user_profile_viewed_by_other/";
+
+	public String upvoteUser = ZApplication.getBaseUrl()
+			+ "upvote_or_downvote_user/";
+
 }

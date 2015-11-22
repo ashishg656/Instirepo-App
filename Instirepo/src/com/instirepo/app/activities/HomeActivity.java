@@ -41,8 +41,8 @@ import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
 import com.instirepo.app.objects.PostCategoriesListObject;
 import com.instirepo.app.objects.PostCategorySinglePostCategory;
 
-public class HomeActivity extends BaseActivity implements
-		OnPageChangeListener, AppConstants, OnClickListener {
+public class HomeActivity extends BaseActivity implements OnPageChangeListener,
+		AppConstants, OnClickListener {
 
 	ViewPager viewPager;
 	TabLayout tabLayout;
@@ -350,19 +350,25 @@ public class HomeActivity extends BaseActivity implements
 
 	}
 
-	public void switchToSeenByPeopleFragment() {
+	public void switchToSeenByPeopleFragment(int postid) {
+		Bundle bundle = new Bundle();
+		bundle.putInt("postid", postid);
+
 		getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.fragmentcontainer,
-						SeenByPeopleFragment.newInstance(new Bundle()))
+						SeenByPeopleFragment.newInstance(bundle))
 				.addToBackStack("tag").commit();
 	}
 
-	public void switchToCommentsFragment() {
+	public void switchToCommentsFragment(int postid) {
+		Bundle bundle = new Bundle();
+		bundle.putInt("postid", postid);
+
 		getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.fragmentcontainer,
-						CommentsFragment.newInstance(new Bundle()),
+						CommentsFragment.newInstance(bundle),
 						Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG)
 				.addToBackStack("Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG")
 				.commit();
@@ -393,8 +399,13 @@ public class HomeActivity extends BaseActivity implements
 				.addToBackStack("").commit();
 	}
 
-	public void switchToUserProfileViewedByOtherFragment() {
+	public void switchToUserProfileViewedByOtherFragment(int userid,
+			String name, String image) {
 		Bundle bundle = new Bundle();
+		bundle.putString("name", name);
+		bundle.putInt("userid", userid);
+		bundle.putString("image", image);
+
 		getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.fragmentcontainer,

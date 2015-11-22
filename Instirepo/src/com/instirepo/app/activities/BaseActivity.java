@@ -3,6 +3,7 @@ package com.instirepo.app.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -80,5 +81,11 @@ public class BaseActivity extends AppCompatActivity {
 
 	void makeToast(String text) {
 		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+	}
+
+	public void showSnackBar(String text) {
+		if (findViewById(R.id.coordinatorlayout) != null)
+			Snackbar.make(findViewById(R.id.coordinatorlayout), text,
+					Snackbar.LENGTH_SHORT).show();
 	}
 }
