@@ -242,6 +242,9 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 
 				addFileToFilesList(fileName, driveId.toString());
 			}
+		} else if (requestCode == CreatePostFragment1OtherCategory.REQUEST_CODE_CREATOR) {
+			if (progressDialog != null)
+				progressDialog.dismiss();
 		}
 	}
 

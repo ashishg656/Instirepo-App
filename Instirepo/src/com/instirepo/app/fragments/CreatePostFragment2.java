@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.instirepo.app.R;
 import com.instirepo.app.activities.CreatePostActivity;
-import com.instirepo.app.objects.LoginScreenFragment2Object.Batches;
 import com.instirepo.app.widgets.CustomFlowLayout;
 import com.instirepo.app.widgets.CustomFlowLayout.LayoutParams;
 
@@ -36,6 +35,12 @@ public class CreatePostFragment2 extends BaseFragment {
 	@Override
 	public void onResume() {
 		((CreatePostActivity) getActivity()).isFirstFragmentVisible = false;
+		super.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		((CreatePostActivity) getActivity()).isFirstFragmentVisible = true;
 		super.onResume();
 	}
 

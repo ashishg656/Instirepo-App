@@ -21,23 +21,21 @@ import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.CreatePostActivity;
 import com.instirepo.app.adapters.CreatePostSelectBranchListAdapter;
-import com.instirepo.app.adapters.CreatePostSelectYearListAdapter;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.objects.LoginScreenFragment2Object;
 import com.instirepo.app.preferences.ZPreferences;
 
-public class CreatePostSelectBranchOrYearFragment extends BaseFragment
-		implements AppConstants, ZUrls, OnClickListener {
+public class CreatePostSelectBranchFragment extends BaseFragment implements
+		AppConstants, ZUrls, OnClickListener {
 
-	int postVisibilityOption;
 	LoginScreenFragment2Object mData;
 	ListView listView;
 	TextView okButton;
 
-	public static CreatePostSelectBranchOrYearFragment newInstance(Bundle b) {
-		CreatePostSelectBranchOrYearFragment frg = new CreatePostSelectBranchOrYearFragment();
+	public static CreatePostSelectBranchFragment newInstance(Bundle b) {
+		CreatePostSelectBranchFragment frg = new CreatePostSelectBranchFragment();
 		frg.setArguments(b);
 		return frg;
 	}
@@ -61,19 +59,13 @@ public class CreatePostSelectBranchOrYearFragment extends BaseFragment
 		super.onActivityCreated(savedInstanceState);
 		okButton.setOnClickListener(this);
 
-		postVisibilityOption = getArguments().getInt("option");
-
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
 		loadData();
 	}
 
 	private void loadData() {
-		if (postVisibilityOption == Z_VISIBILIY_BRANCH) {
-			fetchBranches();
-		} else if (postVisibilityOption == Z_VISIBILIY_YEAR) {
-			fetchYears();
-		}
+		fetchBranches();
 	}
 
 	private void fetchBranches() {
@@ -114,55 +106,12 @@ public class CreatePostSelectBranchOrYearFragment extends BaseFragment
 				userRegistrationStep1Url);
 	}
 
-	private void fetchYears() {
-		showLoadingLayout();
-		hideErrorLayout();
-
-		StringRequest req = new StringRequest(Method.POST,
-				userRegistrationStep1Url, new Listener<String>() {
-					@Override
-					public void onResponse(String res) {
-						mData = new Gson().fromJson(res,
-								LoginScreenFragment2Object.class);
-
-						if (getActivity() != null) {
-							CreatePostSelectYearListAdapter adapter = new CreatePostSelectYearListAdapter(
-									getActivity(), mData.getYears_list());
-							listView.setAdapter(adapter);
-						}
-
-						hideErrorLayout();
-						hideLoadingLayout();
-					}
-				}, new ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError arg0) {
-						hideLoadingLayout();
-						showErrorLayout();
-					}
-				}) {
-			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				HashMap<String, String> p = new HashMap<>();
-				p.put("user_id", ZPreferences.getUserProfileID(getActivity()));
-				return p;
-			}
-		};
-		ZApplication.getInstance().addToRequestQueue(req,
-				userRegistrationStep1Url);
-	}
-
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.okbuttonseen:
-			if (postVisibilityOption == Z_VISIBILIY_BRANCH) {
-				((CreatePostActivity) getActivity()).updateBranchesList(
-						listView.getCheckedItemIds(), mData);
-			} else if (postVisibilityOption == Z_VISIBILIY_YEAR) {
-				((CreatePostActivity) getActivity()).updateYearsList(
-						listView.getCheckedItemIds(), mData);
-			}
+			((CreatePostActivity) getActivity()).updateBranchesList(
+					listView.getCheckedItemIds(), mData);
 			break;
 
 		default:

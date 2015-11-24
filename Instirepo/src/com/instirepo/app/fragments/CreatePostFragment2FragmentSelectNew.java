@@ -87,6 +87,8 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		categoryBg = (GradientDrawable) batchImage3.getBackground();
 		categoryBg.setColor(getActivity().getResources().getColor(
 				R.color.orange_post));
+
+		((CreatePostActivity) getActivity()).callFragmentUpdateCustomFlowBox();
 	}
 
 	@Override
@@ -96,19 +98,19 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 			Bundle bundle = new Bundle();
 			bundle.putInt("option", Z_VISIBILIY_BRANCH);
 			((CreatePostActivity) getActivity())
-					.showFragmentForSelectingBranchOrYear(bundle);
+					.showFragmentForSelectingBranch(bundle);
 			break;
 		case R.id.yearlayout:
 			bundle = new Bundle();
 			bundle.putInt("option", Z_VISIBILIY_YEAR);
 			((CreatePostActivity) getActivity())
-					.showFragmentForSelectingBatch(bundle);
+					.showFragmentForSelectingYearOrBatch(bundle);
 			break;
 		case R.id.batchlayout:
 			bundle = new Bundle();
 			bundle.putInt("option", Z_VISIBILIY_BATCH);
 			((CreatePostActivity) getActivity())
-					.showFragmentForSelectingBatch(bundle);
+					.showFragmentForSelectingYearOrBatch(bundle);
 			break;
 
 		default:

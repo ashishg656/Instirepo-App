@@ -38,17 +38,18 @@ import com.instirepo.app.objects.LoginScreenFragment2Object.Years;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.CustomExpandableListView;
 
-public class CreatePostSelectBatchFragment extends BaseFragment implements
+public class CreatePostSelectYearOrBatchFragment extends BaseFragment implements
 		AppConstants, ZUrls, OnClickListener {
 
 	ExpandableListView expandableListViewParent;
 	LoginScreenFragment2Object mData;
 	TextView okButton;
-	ArrayList<Integer> batches;
-	ArrayList<String> batchesString;
+	ArrayList<Integer> batches, years;
+	ArrayList<String> batchesString, yearsString;
+	int postVisibilityOption;
 
-	public static CreatePostSelectBatchFragment newInstance(Bundle b) {
-		CreatePostSelectBatchFragment frg = new CreatePostSelectBatchFragment();
+	public static CreatePostSelectYearOrBatchFragment newInstance(Bundle b) {
+		CreatePostSelectYearOrBatchFragment frg = new CreatePostSelectYearOrBatchFragment();
 		frg.setArguments(b);
 		return frg;
 	}
@@ -71,9 +72,12 @@ public class CreatePostSelectBatchFragment extends BaseFragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		postVisibilityOption = getArguments().getInt("option");
 		okButton.setOnClickListener(this);
 		batches = ((CreatePostActivity) getActivity()).batchArray;
 		batchesString = ((CreatePostActivity) getActivity()).batchArrayString;
+		years = ((CreatePostActivity) getActivity()).yearArray;
+		yearsString = ((CreatePostActivity) getActivity()).yearArrayString;
 
 		loadData();
 	}
@@ -90,8 +94,13 @@ public class CreatePostSelectBatchFragment extends BaseFragment implements
 								LoginScreenFragment2Object.class);
 
 						if (getActivity() != null) {
-							expandableListViewParent
-									.setAdapter(new ParentLevel());
+							if (postVisibilityOption == Z_VISIBILIY_BATCH) {
+								expandableListViewParent
+										.setAdapter(new ParentLevel());
+							} else if (postVisibilityOption == Z_VISIBILIY_YEAR) {
+								expandableListViewParent
+										.setAdapter(new YearsExpandableListAdapter());
+							}
 						}
 
 						hideErrorLayout();
@@ -113,6 +122,126 @@ public class CreatePostSelectBatchFragment extends BaseFragment implements
 		};
 		ZApplication.getInstance().addToRequestQueue(req,
 				userRegistrationStep1Url);
+	}
+
+	class YearsExpandableListAdapter extends BaseExpandableListAdapter {
+
+		@Override
+		public int getGroupCount() {
+			return mData.getBranches_list().size();
+		}
+
+		@Override
+		public int getChildrenCount(int groupPosition) {
+			ArrayList<Years> years = new ArrayList<>();
+			Branches branch = (Branches) getGroup(groupPosition);
+			for (Years year : mData.getYears_list()) {
+				if (year.getBranch_id() == branch.getBranch_id()) {
+					years.add(year);
+				}
+			}
+			return years.size();
+		}
+
+		@Override
+		public Object getGroup(int groupPosition) {
+			return mData.getBranches_list().get(groupPosition);
+		}
+
+		@Override
+		public Object getChild(int groupPosition, int childPosition) {
+			ArrayList<Years> years = new ArrayList<>();
+			Branches branch = (Branches) getGroup(groupPosition);
+			for (Years year : mData.getYears_list()) {
+				if (year.getBranch_id() == branch.getBranch_id()) {
+					years.add(year);
+				}
+			}
+			return years.get(childPosition);
+		}
+
+		@Override
+		public long getGroupId(int groupPosition) {
+			return groupPosition;
+		}
+
+		@Override
+		public long getChildId(int groupPosition, int childPosition) {
+			return childPosition;
+		}
+
+		@Override
+		public boolean hasStableIds() {
+			return false;
+		}
+
+		@Override
+		public View getGroupView(int groupPosition, boolean isExpanded,
+				View convertView, ViewGroup parent) {
+			View v = LayoutInflater.from(getActivity()).inflate(
+					R.layout.year_group_level1, parent, false);
+
+			Branches branch = (Branches) getGroup(groupPosition);
+			TextView tv = (TextView) v.findViewById(R.id.text);
+			ImageView iv = (ImageView) v.findViewById(R.id.batchimage1);
+
+			tv.setText(branch.getBranch_name());
+			GradientDrawable gd = (GradientDrawable) iv.getBackground();
+			gd.setColor(getActivity().getResources().getColor(
+					R.color.z_red_color_primary));
+
+			return v;
+		}
+
+		@Override
+		public View getChildView(int groupPosition, int childPosition,
+				boolean isLastChild, View convertView, ViewGroup parent) {
+			View v = LayoutInflater.from(getActivity()).inflate(
+					R.layout.year_group_level2, parent, false);
+
+			Years year = (Years) getChild(groupPosition, childPosition);
+			TextView tv = (TextView) v.findViewById(R.id.text);
+			tv.setText(year.getAdmission_year() + " - "
+					+ year.getPassout_year());
+
+			CheckBox checkBox = (CheckBox) v.findViewById(R.id.check);
+
+			if (years.contains(year.getYear_id())) {
+				checkBox.setChecked(true);
+			} else {
+				checkBox.setChecked(false);
+			}
+			checkBox.setTag(R.integer.z_batch_tag_id, year);
+			checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView,
+						boolean isChecked) {
+					Years year = (Years) buttonView
+							.getTag(R.integer.z_batch_tag_id);
+					if (isChecked) {
+						if (!years.contains(year.getYear_id())) {
+							years.add(year.getYear_id());
+							yearsString.add(year.getAdmission_year() + " - "
+									+ year.getPassout_year());
+						}
+					} else {
+						if (years.contains(year.getYear_id())) {
+							int id = years.indexOf(year.getYear_id());
+							years.remove(id);
+							yearsString.remove(id);
+						}
+					}
+				}
+			});
+
+			return v;
+		}
+
+		@Override
+		public boolean isChildSelectable(int groupPosition, int childPosition) {
+			return true;
+		}
 	}
 
 	public class ParentLevel extends BaseExpandableListAdapter {
@@ -268,8 +397,6 @@ public class CreatePostSelectBatchFragment extends BaseFragment implements
 							batchesString.remove(id);
 						}
 					}
-
-					makeToast("len " + batches.size());
 				}
 			});
 
@@ -338,8 +465,13 @@ public class CreatePostSelectBatchFragment extends BaseFragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.okbuttonseen:
-			((CreatePostActivity) getActivity()).updateBatchesList(
-					batchesString, batches);
+			if (postVisibilityOption == Z_VISIBILIY_BATCH) {
+				((CreatePostActivity) getActivity()).updateBatchesList(
+						batchesString, batches);
+			} else if (postVisibilityOption == Z_VISIBILIY_YEAR) {
+				((CreatePostActivity) getActivity()).updateYearsList(
+						batchesString, batches);
+			}
 			break;
 
 		default:

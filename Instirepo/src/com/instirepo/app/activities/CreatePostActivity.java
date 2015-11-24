@@ -24,8 +24,8 @@ import com.instirepo.app.extras.ZAnimatorListener;
 import com.instirepo.app.extras.ZCircularAnimatorListener;
 import com.instirepo.app.fragments.CreatePostFragment1OtherCategory;
 import com.instirepo.app.fragments.CreatePostFragment2;
-import com.instirepo.app.fragments.CreatePostSelectBatchFragment;
-import com.instirepo.app.fragments.CreatePostSelectBranchOrYearFragment;
+import com.instirepo.app.fragments.CreatePostSelectYearOrBatchFragment;
+import com.instirepo.app.fragments.CreatePostSelectBranchFragment;
 import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.objects.LoginScreenFragment2Object;
 import com.instirepo.app.objects.LoginScreenFragment2Object.Years;
@@ -202,20 +202,19 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 		}
 	}
 
-	public void showFragmentForSelectingBranchOrYear(Bundle bundle) {
+	public void showFragmentForSelectingBranch(Bundle bundle) {
 		getSupportFragmentManager()
 				.beginTransaction()
 				.add(R.id.fragmtnholder,
-						CreatePostSelectBranchOrYearFragment
-								.newInstance(bundle)).addToBackStack("")
-				.commit();
+						CreatePostSelectBranchFragment.newInstance(bundle))
+				.addToBackStack("").commit();
 	}
 
-	public void showFragmentForSelectingBatch(Bundle bundle) {
+	public void showFragmentForSelectingYearOrBatch(Bundle bundle) {
 		getSupportFragmentManager()
 				.beginTransaction()
 				.add(R.id.fragmtnholder,
-						CreatePostSelectBatchFragment.newInstance(bundle))
+						CreatePostSelectYearOrBatchFragment.newInstance(bundle))
 				.addToBackStack("").commit();
 	}
 
@@ -233,17 +232,10 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 		super.onBackPressed();
 	}
 
-	public void updateYearsList(long[] checkedItemIds,
-			LoginScreenFragment2Object mData) {
-		yearArray = new ArrayList<>();
-		yearArrayString = new ArrayList<>();
-		for (int i = 0; i < checkedItemIds.length; i++) {
-			yearArray.add(mData.getYears_list().get((int) checkedItemIds[i])
-					.getYear_id());
-			Years year = mData.getYears_list().get((int) checkedItemIds[i]);
-			yearArrayString.add(year.getAdmission_year() + " - "
-					+ year.getPassout_year());
-		}
+	public void updateYearsList(ArrayList<String> batchesString,
+			ArrayList<Integer> batches) {
+		this.batchArray = batches;
+		this.batchArrayString = batchesString;
 		createPostFragment2.updateToTextBoxInFragment2();
 		super.onBackPressed();
 	}
@@ -254,5 +246,9 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 		batchArrayString = names;
 		createPostFragment2.updateToTextBoxInFragment2();
 		super.onBackPressed();
+	}
+
+	public void callFragmentUpdateCustomFlowBox() {
+		createPostFragment2.updateToTextBoxInFragment2();
 	}
 }

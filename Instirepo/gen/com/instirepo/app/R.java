@@ -5269,7 +5269,9 @@ containing a value of this type.
         public static final int toolbar_layout=0x7f030054;
         public static final int user_profile_activity_layout=0x7f030055;
         public static final int user_profile_viewed_by_other_fragment_layout=0x7f030056;
-        public static final int z_navigation_drawer_header_layout=0x7f030057;
+        public static final int year_group_level1=0x7f030057;
+        public static final int year_group_level2=0x7f030058;
+        public static final int z_navigation_drawer_header_layout=0x7f030059;
     }
     public static final class menu {
         public static final int posts_sliding_panel_menu=0x7f0d0000;
