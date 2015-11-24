@@ -24,6 +24,7 @@ import com.instirepo.app.extras.ZAnimatorListener;
 import com.instirepo.app.extras.ZCircularAnimatorListener;
 import com.instirepo.app.fragments.CreatePostFragment1OtherCategory;
 import com.instirepo.app.fragments.CreatePostFragment2;
+import com.instirepo.app.fragments.CreatePostSelectBatchFragment;
 import com.instirepo.app.fragments.CreatePostSelectBranchOrYearFragment;
 import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.objects.LoginScreenFragment2Object;
@@ -210,6 +211,14 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 				.commit();
 	}
 
+	public void showFragmentForSelectingBatch(Bundle bundle) {
+		getSupportFragmentManager()
+				.beginTransaction()
+				.add(R.id.fragmtnholder,
+						CreatePostSelectBatchFragment.newInstance(bundle))
+				.addToBackStack("").commit();
+	}
+
 	public void updateBranchesList(long[] checkedItemIds,
 			LoginScreenFragment2Object mData) {
 		branchesArray = new ArrayList<>();
@@ -235,6 +244,14 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 			yearArrayString.add(year.getAdmission_year() + " - "
 					+ year.getPassout_year());
 		}
+		createPostFragment2.updateToTextBoxInFragment2();
+		super.onBackPressed();
+	}
+
+	public void updateBatchesList(ArrayList<String> names,
+			ArrayList<Integer> ids) {
+		batchArray = ids;
+		batchArrayString = names;
 		createPostFragment2.updateToTextBoxInFragment2();
 		super.onBackPressed();
 	}

@@ -10,4 +10,8 @@
     <integer name="z_select_post_tag_holder">0</integer>
     <integer name="z_select_post_tag_position">1</integer>
 
+    <!-- create post select branch -->
+    <integer name="z_batch_tag_id">4</integer>
+    <integer name="z_batch_tag_name">5</integer>
+
 </resources>

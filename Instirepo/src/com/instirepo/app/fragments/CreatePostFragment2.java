@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.instirepo.app.R;
 import com.instirepo.app.activities.CreatePostActivity;
+import com.instirepo.app.objects.LoginScreenFragment2Object.Batches;
 import com.instirepo.app.widgets.CustomFlowLayout;
 import com.instirepo.app.widgets.CustomFlowLayout.LayoutParams;
 
@@ -138,6 +139,25 @@ public class CreatePostFragment2 extends BaseFragment {
 			GradientDrawable categoryBg = (GradientDrawable) tv.getBackground();
 			categoryBg.setColor(getActivity().getResources().getColor(
 					R.color.purple_post));
+			((CreatePostFragment2FragmentSelectNew) fragmentHashMap.get(0)).customFlowLayout
+					.addView(tv);
+		}
+
+		// batches
+		for (String batch : ((CreatePostActivity) getActivity()).batchArrayString) {
+			TextView tv = (TextView) LayoutInflater.from(getActivity())
+					.inflate(R.layout.textview_post_selected_flow, null, false);
+			tv.setText(batch);
+			CustomFlowLayout.LayoutParams params = new CustomFlowLayout.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			int pixels2 = getActivity().getResources().getDimensionPixelSize(
+					R.dimen.z_margin_supermini);
+			params.setMargins(pixels2, pixels2, pixels2, pixels2);
+			tv.setLayoutParams(params);
+
+			GradientDrawable categoryBg = (GradientDrawable) tv.getBackground();
+			categoryBg.setColor(getActivity().getResources().getColor(
+					R.color.orange_post));
 			((CreatePostFragment2FragmentSelectNew) fragmentHashMap.get(0)).customFlowLayout
 					.addView(tv);
 		}
