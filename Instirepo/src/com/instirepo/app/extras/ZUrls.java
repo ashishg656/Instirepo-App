@@ -42,4 +42,7 @@ public interface ZUrls {
 	public String upvoteUser = ZApplication.getBaseUrl()
 			+ "upvote_or_downvote_user/";
 
+	public String getAllPostCategories = ZApplication.getBaseUrl()
+			+ "get_all_post_categories/";
+
 }

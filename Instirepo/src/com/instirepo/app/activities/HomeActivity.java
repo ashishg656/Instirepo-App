@@ -1,13 +1,15 @@
 package com.instirepo.app.activities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,12 +26,21 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 import com.instirepo.app.R;
+import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.circularreveal.SupportAnimator;
 import com.instirepo.app.circularreveal.ViewAnimationUtils;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.ZAnimatorListener;
 import com.instirepo.app.extras.ZCircularAnimatorListener;
+import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.floatingactionbutton.FloatingActionButton;
 import com.instirepo.app.floatingactionbutton.FloatingActionMenu;
 import com.instirepo.app.fragments.CommentsFragment;
@@ -38,11 +49,11 @@ import com.instirepo.app.fragments.PostsByTeachersFragment;
 import com.instirepo.app.fragments.SeenByPeopleFragment;
 import com.instirepo.app.fragments.SelectPostCategoryFragment;
 import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
-import com.instirepo.app.objects.PostCategoriesListObject;
-import com.instirepo.app.objects.PostCategorySinglePostCategory;
+import com.instirepo.app.objects.AllPostCategoriesObject;
+import com.instirepo.app.preferences.ZPreferences;
 
 public class HomeActivity extends BaseActivity implements OnPageChangeListener,
-		AppConstants, OnClickListener {
+		AppConstants, OnClickListener, ZUrls {
 
 	ViewPager viewPager;
 	TabLayout tabLayout;
@@ -59,8 +70,11 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 	int fabRevealMargin;
 	int deviceHeight, deviceWidth;
 	boolean isFabAnimRunning;
-	PostCategoriesListObject postCategoriesData;
 	int maxFloatingActionButtonTranslation;
+	ProgressDialog progressDialog;
+	Snackbar snackbar;
+
+	public AllPostCategoriesObject allPostCategoriesObject;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -377,21 +391,6 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 	void switchToSelectPostCategoryFragment() {
 		Bundle bundle = new Bundle();
 
-		postCategoriesData = new PostCategoriesListObject();
-		List<PostCategorySinglePostCategory> categories = new ArrayList<>();
-
-		PostCategorySinglePostCategory category = new PostCategorySinglePostCategory();
-		category.setType(Z_CATEGORY_TYPE_EVENT);
-		categories.add(category);
-		category.setType(Z_CATEGORY_TYPE_PLACEMENT);
-		categories.add(category);
-		category.setType(Z_CATEGORY_TYPE_POLLS);
-		categories.add(category);
-		for (int i = 0; i < 3; i++)
-			categories.add(new PostCategorySinglePostCategory());
-		postCategoriesData.setCategories(categories);
-
-		bundle.putParcelable("postcategories", postCategoriesData);
 		getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.fragmentcontainer,
@@ -442,12 +441,60 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.createpostbutton:
-			hideFloatingActionMenu();
-			switchToSelectPostCategoryFragment();
+			requestAllPostCategories();
 			break;
 
 		default:
 			break;
 		}
+	}
+
+	private void requestAllPostCategories() {
+		progressDialog = ProgressDialog.show(this, "Loading",
+				"Verifying and getting categories..");
+
+		StringRequest req = new StringRequest(Method.POST,
+				getAllPostCategories, new Listener<String>() {
+
+					@Override
+					public void onResponse(String arg0) {
+						if (progressDialog != null)
+							progressDialog.dismiss();
+
+						AllPostCategoriesObject obj = new Gson().fromJson(arg0,
+								AllPostCategoriesObject.class);
+						HomeActivity.this.allPostCategoriesObject = obj;
+
+						if (obj.isError()) {
+							snackbar = Snackbar.make(
+									findViewById(R.id.coordinatorlayout),
+									obj.getMessage(),
+									Snackbar.LENGTH_INDEFINITE);
+							snackbar.show();
+							hideFloatingActionMenu();
+						} else {
+							hideFloatingActionMenu();
+							switchToSelectPostCategoryFragment();
+						}
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						if (progressDialog != null)
+							progressDialog.dismiss();
+
+						showSnackBar("Error..Check Internet Connection");
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				HashMap<String, String> p = new HashMap<>();
+				p.put("user_id",
+						ZPreferences.getUserProfileID(HomeActivity.this));
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, getAllPostCategories);
 	}
 }

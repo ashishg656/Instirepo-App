@@ -7,14 +7,16 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.instirepo.app.R;
+import com.instirepo.app.activities.HomeActivity;
 import com.instirepo.app.adapters.SelectPostCategoryGridAdapter;
-import com.instirepo.app.objects.PostCategoriesListObject;
+import com.instirepo.app.extras.ZUrls;
+import com.instirepo.app.objects.AllPostCategoriesObject;
 
-public class SelectPostCategoryFragment extends BaseFragment {
+public class SelectPostCategoryFragment extends BaseFragment implements ZUrls {
 
 	GridView gridView;
-	PostCategoriesListObject mData;
 	SelectPostCategoryGridAdapter adapter;
+	AllPostCategoriesObject allPostCategoriesObject;
 
 	public static SelectPostCategoryFragment newInstance(Bundle b) {
 		SelectPostCategoryFragment frg = new SelectPostCategoryFragment();
@@ -31,6 +33,8 @@ public class SelectPostCategoryFragment extends BaseFragment {
 
 		gridView = (GridView) v.findViewById(R.id.selectcategorygrd);
 
+		setProgressLayoutVariablesAndErrorVariables(v);
+
 		return v;
 	}
 
@@ -38,11 +42,13 @@ public class SelectPostCategoryFragment extends BaseFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		mData = getArguments().getParcelable("postcategories");
+		allPostCategoriesObject = ((HomeActivity) getActivity()).allPostCategoriesObject;
 
-		adapter = new SelectPostCategoryGridAdapter(mData.getCategories(),
-				getActivity());
+		hideErrorLayout();
+		hideLoadingLayout();
+
+		adapter = new SelectPostCategoryGridAdapter(
+				allPostCategoriesObject.getCategories(), getActivity());
 		gridView.setAdapter(adapter);
 	}
-
 }

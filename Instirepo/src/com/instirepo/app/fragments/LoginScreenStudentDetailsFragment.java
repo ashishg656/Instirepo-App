@@ -111,8 +111,6 @@ public class LoginScreenStudentDetailsFragment extends BaseFragment implements
 			@Override
 			protected Map<String, String> getParams() throws AuthFailureError {
 				HashMap<String, String> p = new HashMap<>();
-				Log.w("aS", "co "
-						+ ((LoginActivity) getActivity()).collegeIDSelected);
 				p.put("college_id",
 						((LoginActivity) getActivity()).collegeIDSelected + "");
 				return p;

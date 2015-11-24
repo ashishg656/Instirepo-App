@@ -12,4 +12,9 @@ public interface AppConstants {
 	public int Z_CATEGORY_TYPE_EVENT = 1;
 	public int Z_CATEGORY_TYPE_PLACEMENT = 2;
 	public int Z_CATEGORY_TYPE_POLLS = 3;
+
+	public int Z_VISIBILIY_BRANCH = 1;
+	public int Z_VISIBILIY_BATCH = 2;
+	public int Z_VISIBILIY_YEAR = 3;
+	public int Z_VISIBILIY_TEACHER = 4;
 }

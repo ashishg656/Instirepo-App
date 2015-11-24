@@ -1,0 +1,11 @@
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+    android:ellipsize="marquee"
+    android:gravity="center_vertical"
+    android:paddingEnd="7dip"
+    android:paddingStart="12dip"
+    android:textColor="@color/z_text_color_dark"
+    android:textSize="@dimen/z_font_mini" />

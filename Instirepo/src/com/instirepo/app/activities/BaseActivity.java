@@ -16,7 +16,7 @@ import com.instirepo.app.R;
 
 public class BaseActivity extends AppCompatActivity {
 
-	Toolbar toolbar;
+	public Toolbar toolbar;
 	int toolbarHeight;
 
 	ProgressBar progressBar;

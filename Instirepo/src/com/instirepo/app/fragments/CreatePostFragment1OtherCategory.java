@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.IntentSender.SendIntentException;
@@ -15,11 +17,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,18 +37,24 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi.DriveContentsResult;
+import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.MetadataChangeSet;
+import com.google.android.gms.drive.OpenFileActivityBuilder;
 import com.instirepo.app.R;
+import com.instirepo.app.activities.CreatePostActivity;
 import com.instirepo.app.afilechooser.utils.FileUtils;
+import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.widgets.RoundedImageView;
 
 public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
 
-	LinearLayout uploadPicLayout, addAttachmentLayout, removeImageLayout;
+	LinearLayout uploadPicLayout, addAttachmentLayout, removeImageLayout,
+			addedAttachments, companyNameLayout;
+	View addedAttachmentsView;
 	TextView uploadPicText;
 	FrameLayout imageViewHolder;
-	RoundedImageView roundedImageView;
+	public RoundedImageView roundedImageView;
 
 	static final int REQUEST_CODE_RESOLUTION = 155;
 	public static final int REQUEST_CODE_CREATOR = 255;
@@ -52,6 +62,14 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	private static final int SELECT_FILE_FROM_AFILECHOOSER_CODE = 455;
 
 	private GoogleApiClient mGoogleApiClient;
+
+	ArrayList<String> fileNames;
+	public ArrayList<String> fileUrls;
+	String fileName;
+
+	ProgressDialog progressDialog;
+	FloatingActionButton floatingActionButton;
+	public EditText postHeading, postDescription, postCompanyName;
 
 	public static CreatePostFragment1OtherCategory newInstance(Bundle b) {
 		CreatePostFragment1OtherCategory frg = new CreatePostFragment1OtherCategory();
@@ -76,6 +94,15 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 				.findViewById(R.id.crossbuttonimage);
 		imageViewHolder = (FrameLayout) v
 				.findViewById(R.id.createpostimagelayout);
+		addedAttachments = (LinearLayout) v
+				.findViewById(R.id.addadeadttachments);
+		addedAttachmentsView = (View) v.findViewById(R.id.vieforatatchdcdnckl);
+		companyNameLayout = (LinearLayout) v.findViewById(R.id.compaynamlayout);
+		floatingActionButton = (FloatingActionButton) v
+				.findViewById(R.id.createpostfab);
+		postHeading = (EditText) v.findViewById(R.id.postHeading);
+		postDescription = (EditText) v.findViewById(R.id.postdesciption);
+		postCompanyName = (EditText) v.findViewById(R.id.postcomapnyname);
 
 		return v;
 	}
@@ -83,10 +110,18 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		fileNames = new ArrayList<>();
+		fileUrls = new ArrayList<>();
 
 		uploadPicLayout.setOnClickListener(this);
 		addAttachmentLayout.setOnClickListener(this);
 		removeImageLayout.setOnClickListener(this);
+		floatingActionButton.setOnClickListener(this);
+
+		if (((CreatePostActivity) getActivity()).categoryType
+				.equals(AllPostCategoriesObject.categoryPlacement)) {
+			companyNameLayout.setVisibility(View.VISIBLE);
+		}
 	}
 
 	private void connectGoogleApiClient() {
@@ -131,10 +166,26 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		case R.id.crossbuttonimage:
 			removeImageForPost();
 			break;
-
+		case R.id.createpostfab:
+			if (checkIfCanGoNext()) {
+				((CreatePostActivity) getActivity())
+						.setSecondFragmentForPostVisibility();
+			}
+			break;
 		default:
 			break;
 		}
+	}
+
+	boolean checkIfCanGoNext() {
+		if (postHeading.getText().toString().trim().length() == 0) {
+			makeToast("Please enter post heading");
+			return false;
+		} else if (postDescription.getText().toString().trim().length() == 0) {
+			makeToast("Please enter post description");
+			return false;
+		}
+		return true;
 	}
 
 	private void intentForRequestingFileFromBrowser() {
@@ -176,10 +227,41 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 					saveFileToDrive(path, uri);
 				}
 			} else if (requestCode == CreatePostFragment1OtherCategory.REQUEST_CODE_CREATOR) {
+				if (progressDialog != null)
+					progressDialog.dismiss();
+
 				Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT)
 						.show();
+
+				DriveId driveId = (DriveId) data
+						.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
+				Log.w("a", "File created with ID: " + driveId);
+
+				fileNames.add(fileName);
+				fileUrls.add(driveId.toString());
+
+				addFileToFilesList(fileName, driveId.toString());
 			}
 		}
+	}
+
+	private void addFileToFilesList(String fileName, String driveId) {
+		if (addedAttachments.getVisibility() == View.GONE) {
+			addedAttachments.setVisibility(View.VISIBLE);
+			addedAttachmentsView.setVisibility(View.VISIBLE);
+		}
+		TextView textView = new TextView(getActivity());
+		textView.setText(fileName);
+		textView.setTextColor(getActivity().getResources().getColor(
+				R.color.z_text_color_dark));
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
+		params.bottomMargin = getActivity().getResources()
+				.getDimensionPixelSize(R.dimen.z_margin_mini);
+		textView.setLayoutParams(params);
+
+		addedAttachments.addView(textView);
 	}
 
 	private void saveFileToDrive(final String path, final Uri uri) {
@@ -212,6 +294,8 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 
 						}
 
+						fileName = file.getName();
+
 						MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
 								.setMimeType(
 										getActivity().getContentResolver()
@@ -223,6 +307,14 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 								.setInitialDriveContents(
 										result.getDriveContents())
 								.build(mGoogleApiClient);
+
+						if (progressDialog != null
+								&& progressDialog.isShowing())
+							progressDialog.dismiss();
+						progressDialog = ProgressDialog
+								.show(getActivity(), "Processing",
+										"Processing selected file for Google Drive upload");
+
 						try {
 							getActivity().startIntentSenderForResult(
 									intentSender, REQUEST_CODE_CREATOR, null,
@@ -253,6 +345,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 
 	@Override
 	public void onResume() {
+		((CreatePostActivity) getActivity()).isFirstFragmentVisible = true;
 		connectGoogleApiClient();
 		super.onResume();
 	}

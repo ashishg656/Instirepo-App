@@ -2,6 +2,8 @@ package com.instirepo.app.adapters;
 
 import java.util.List;
 
+import serverApi.ImageRequestManager;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,23 +13,27 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.instirepo.app.R;
 import com.instirepo.app.activities.CreatePostActivity;
 import com.instirepo.app.activities.HomeActivity;
+import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.AppConstants;
-import com.instirepo.app.objects.PostCategorySinglePostCategory;
+import com.instirepo.app.objects.AllPostCategoriesObject;
+import com.instirepo.app.widgets.RoundedImageView;
 
 public class SelectPostCategoryGridAdapter extends BaseAdapter implements
 		AppConstants {
 
-	List<PostCategorySinglePostCategory> mData;
+	List<AllPostCategoriesObject.PostCategorySingle> mData;
 	Context context;
 	int imageHeight;
 	MyClickListener clickListener;
 
 	public SelectPostCategoryGridAdapter(
-			List<PostCategorySinglePostCategory> mData, Context context) {
+			List<AllPostCategoriesObject.PostCategorySingle> mData,
+			Context context) {
 		super();
 		this.mData = mData;
 		this.context = context;
@@ -75,16 +81,24 @@ public class SelectPostCategoryGridAdapter extends BaseAdapter implements
 				.setTag(R.integer.z_select_post_tag_position, pos);
 		holder.containerLayout.setOnClickListener(clickListener);
 
+		holder.name.setText(mData.get(pos).getName());
+		ImageRequestManager.get(context).requestImage(context, holder.image,
+				ZApplication.getImageUrl(mData.get(pos).getImage()), -1);
+
 		return convertView;
 	}
 
 	class PostCategoryHolder {
 
 		FrameLayout containerLayout;
+		RoundedImageView image;
+		TextView name;
 
 		public PostCategoryHolder(View v) {
 			containerLayout = (FrameLayout) v
 					.findViewById(R.id.containergridselect);
+			image = (RoundedImageView) v.findViewById(R.id.categoryimage);
+			name = (TextView) v.findViewById(R.id.categoryname);
 		}
 	}
 
@@ -95,22 +109,19 @@ public class SelectPostCategoryGridAdapter extends BaseAdapter implements
 			switch (v.getId()) {
 			case R.id.containergridselect:
 				int pos = (int) v.getTag(R.integer.z_select_post_tag_position);
-				if (mData.get(pos).getType() == Z_CATEGORY_TYPE_EVENT) {
+				Intent i = new Intent(context, CreatePostActivity.class);
+				int location[] = new int[2];
+				v.getLocationInWindow(location);
+				i.putExtra("touchx", location[0] + v.getWidth() / 2);
+				i.putExtra("touchy", location[1] + v.getHeight() / 2);
+				i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				((HomeActivity) context).overridePendingTransition(0, 0);
 
-				} else if (mData.get(pos).getType() == Z_CATEGORY_TYPE_PLACEMENT) {
+				i.putExtra("catname", mData.get(pos).getName());
+				i.putExtra("cattype", mData.get(pos).getType());
+				i.putExtra("catid", mData.get(pos).getId());
 
-				} else if (mData.get(pos).getType() == Z_CATEGORY_TYPE_POLLS) {
-
-				} else {
-					Intent i = new Intent(context, CreatePostActivity.class);
-					int location[] = new int[2];
-					v.getLocationInWindow(location);
-					i.putExtra("touchx", location[0] + v.getWidth() / 2);
-					i.putExtra("touchy", location[1] + v.getHeight() / 2);
-					i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-					((HomeActivity) context).overridePendingTransition(0, 0);
-					context.startActivity(i);
-				}
+				context.startActivity(i);
 				break;
 
 			default:

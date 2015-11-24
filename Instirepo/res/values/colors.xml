@@ -37,4 +37,8 @@
     <color name="z_green_color_primary">#2e7d32</color>
     <color name="z_red_color_primary">#e53935</color>
 
+    <!-- Create post activity -->
+    <color name="purple_post">#9A12B3</color>
+    <color name="orange_post">#F9690E</color>
+
 </resources>
