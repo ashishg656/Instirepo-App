@@ -206,12 +206,24 @@
             android:paddingRight="@dimen/z_margin_medium"
             android:paddingTop="@dimen/z_margin_mini" >
 
-            <ImageView
-                android:id="@+id/upvotepostimage"
-                android:layout_width="@dimen/z_upvote_button_height"
-                android:layout_height="@dimen/z_upvote_button_height"
-                android:background="@drawable/upvote_button_selector"
-                android:clickable="true" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/upvotepostimage"
+                    android:layout_width="@dimen/z_upvote_button_height"
+                    android:layout_height="@dimen/z_upvote_button_height"
+                    android:background="@drawable/upvote_button_selector"
+                    android:clickable="true" />
+
+                <ProgressBar
+                    android:id="@+id/upvotepostprogress"
+                    android:layout_width="@dimen/z_upvote_button_height"
+                    android:layout_height="@dimen/z_upvote_button_height"
+                    android:indeterminate="true"
+                    android:indeterminateOnly="true" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/numberofupvotes"
@@ -223,12 +235,24 @@
                 android:textColor="@color/z_text_color_medium_dark"
                 android:textSize="@dimen/z_font_supermini" />
 
-            <ImageView
-                android:id="@+id/downvotepostimage"
-                android:layout_width="@dimen/z_upvote_button_height"
-                android:layout_height="@dimen/z_upvote_button_height"
-                android:background="@drawable/downvote_button_selector"
-                android:clickable="true" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/downvotepostimage"
+                    android:layout_width="@dimen/z_upvote_button_height"
+                    android:layout_height="@dimen/z_upvote_button_height"
+                    android:background="@drawable/downvote_button_selector"
+                    android:clickable="true" />
+
+                <ProgressBar
+                    android:id="@+id/downvotepostprogress"
+                    android:layout_width="@dimen/z_upvote_button_height"
+                    android:layout_height="@dimen/z_upvote_button_height"
+                    android:indeterminate="true"
+                    android:indeterminateOnly="true" />
+            </FrameLayout>
 
             <View
                 android:layout_width="0dp"

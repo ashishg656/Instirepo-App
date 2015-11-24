@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -149,6 +150,11 @@ public class PostsByTeachersListAdapter extends
 					context.getResources().getDimensionPixelSize(
 							R.dimen.z_one_dp), color);
 			holder.category.setTextColor(color);
+
+			holder.upvotePostProgress.setVisibility(View.GONE);
+			holder.savePostProgress.setVisibility(View.GONE);
+			holder.upvotePostLayout.setVisibility(View.VISIBLE);
+			holder.savePostLayout.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -185,6 +191,7 @@ public class PostsByTeachersListAdapter extends
 				numberOfUpvotes, numberOfSaves, numberOfComments;
 		PEWImageView imagePost;
 		TextView category;
+		ProgressBar upvotePostProgress, savePostProgress;
 
 		public PostsHolderNormal(View v) {
 			super(v);
@@ -209,6 +216,10 @@ public class PostsByTeachersListAdapter extends
 			savePostLayout = (ImageView) v.findViewById(R.id.savepostimage);
 			upvotePostLayout = (ImageView) v.findViewById(R.id.upvotepostimage);
 			category = (TextView) v.findViewById(R.id.postcategoy);
+			upvotePostProgress = (ProgressBar) v
+					.findViewById(R.id.upvotepostprogress);
+			savePostProgress = (ProgressBar) v
+					.findViewById(R.id.savepostprogress);
 		}
 	}
 
@@ -292,6 +303,11 @@ public class PostsByTeachersListAdapter extends
 			upvotePostPostition = pos;
 			upvotePostHolder = holder;
 
+			if (holder != null) {
+				holder.upvotePostProgress.setVisibility(View.VISIBLE);
+				holder.upvotePostLayout.setVisibility(View.GONE);
+			}
+
 			StringRequest req = new StringRequest(Method.POST, upvotePost,
 					new Listener<String>() {
 
@@ -321,6 +337,11 @@ public class PostsByTeachersListAdapter extends
 								else
 									upvotePostHolder.upvotePostLayout
 											.setSelected(false);
+
+								upvotePostHolder.upvotePostProgress
+										.setVisibility(View.GONE);
+								upvotePostHolder.upvotePostLayout
+										.setVisibility(View.VISIBLE);
 							}
 
 							if (obj.isHas_upvoted()) {
@@ -338,6 +359,13 @@ public class PostsByTeachersListAdapter extends
 							isUpotePostRequestRunning = false;
 							((BaseActivity) context)
 									.showSnackBar("Some error occured. Check internet connection");
+
+							if (upvotePostHolder != null) {
+								upvotePostHolder.upvotePostProgress
+										.setVisibility(View.GONE);
+								upvotePostHolder.upvotePostLayout
+										.setVisibility(View.VISIBLE);
+							}
 						}
 					}) {
 				@Override
@@ -362,6 +390,11 @@ public class PostsByTeachersListAdapter extends
 			isMarkImpPostRequestRunning = true;
 			markImportantPosition = pos;
 			markImportantHolder = holder;
+
+			if (holder != null) {
+				holder.savePostProgress.setVisibility(View.VISIBLE);
+				holder.savePostLayout.setVisibility(View.GONE);
+			}
 
 			StringRequest req = new StringRequest(Method.POST,
 					markPostAsImportant, new Listener<String>() {
@@ -391,6 +424,11 @@ public class PostsByTeachersListAdapter extends
 								}
 								markImportantHolder.numberOfSaves.setText(obj
 										.getCount() + "");
+
+								markImportantHolder.savePostProgress
+										.setVisibility(View.GONE);
+								markImportantHolder.savePostLayout
+										.setVisibility(View.VISIBLE);
 							}
 						}
 					}, new ErrorListener() {
@@ -400,6 +438,13 @@ public class PostsByTeachersListAdapter extends
 							isMarkImpPostRequestRunning = false;
 							((BaseActivity) context)
 									.showSnackBar("Some error occured. Check internet connection");
+
+							if (markImportantHolder != null) {
+								markImportantHolder.savePostProgress
+										.setVisibility(View.GONE);
+								markImportantHolder.savePostLayout
+										.setVisibility(View.VISIBLE);
+							}
 						}
 					}) {
 				@Override

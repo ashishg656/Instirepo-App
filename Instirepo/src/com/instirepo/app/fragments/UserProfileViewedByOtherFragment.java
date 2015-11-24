@@ -25,7 +25,9 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -87,6 +89,9 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 	boolean isViewerSameAsUser;
 	private boolean upvoteClickedOrDownvote;
 
+	ProgressBar upvoteProgressBar, downvoteProgressBar;
+	ImageView upvotePostImage, downvotePostImage;
+
 	public static UserProfileViewedByOtherFragment newInstance(Bundle b) {
 		UserProfileViewedByOtherFragment frg = new UserProfileViewedByOtherFragment();
 		frg.setArguments(b);
@@ -138,6 +143,12 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 				.findViewById(R.id.uppvotedownvotes);
 		upvoteButton = (FrameLayout) v.findViewById(R.id.upvotebutton);
 		downVoteButton = (FrameLayout) v.findViewById(R.id.downvotebutton);
+		upvoteProgressBar = (ProgressBar) v
+				.findViewById(R.id.upvotepostprogress);
+		downvoteProgressBar = (ProgressBar) v
+				.findViewById(R.id.downupvotepostprogress);
+		downvotePostImage = (ImageView) v.findViewById(R.id.downvotepostimage);
+		upvotePostImage = (ImageView) v.findViewById(R.id.upvotepostimage);
 
 		return v;
 	}
@@ -532,6 +543,13 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 
 	void makeUpvoteDownvoteRequest(final boolean upvoteClicked) {
 		this.upvoteClickedOrDownvote = upvoteClicked;
+		if (upvoteClicked) {
+			upvotePostImage.setVisibility(View.GONE);
+			upvoteProgressBar.setVisibility(View.VISIBLE);
+		} else {
+			downvotePostImage.setVisibility(View.GONE);
+			downvoteProgressBar.setVisibility(View.VISIBLE);
+		}
 		StringRequest req = new StringRequest(Method.POST, upvoteUser,
 				new Listener<String>() {
 
@@ -565,6 +583,11 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 										+ obj.getDownvotes());
 
 						((BaseActivity) getActivity()).showSnackBar(snackBar);
+
+						upvotePostImage.setVisibility(View.VISIBLE);
+						upvoteProgressBar.setVisibility(View.GONE);
+						downvotePostImage.setVisibility(View.VISIBLE);
+						downvoteProgressBar.setVisibility(View.GONE);
 					}
 				}, new ErrorListener() {
 
@@ -572,6 +595,11 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 					public void onErrorResponse(VolleyError arg0) {
 						((BaseActivity) getActivity())
 								.showSnackBar("Some error occured. Check internet");
+
+						upvotePostImage.setVisibility(View.VISIBLE);
+						upvoteProgressBar.setVisibility(View.GONE);
+						downvotePostImage.setVisibility(View.VISIBLE);
+						downvoteProgressBar.setVisibility(View.GONE);
 					}
 				}) {
 			@Override
