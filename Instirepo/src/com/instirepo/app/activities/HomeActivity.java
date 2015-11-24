@@ -6,6 +6,7 @@ import java.util.Map;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
@@ -32,6 +33,13 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.plus.Plus;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.application.ZApplication;
@@ -53,7 +61,8 @@ import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.preferences.ZPreferences;
 
 public class HomeActivity extends BaseActivity implements OnPageChangeListener,
-		AppConstants, OnClickListener, ZUrls {
+		AppConstants, OnClickListener, ZUrls, ConnectionCallbacks,
+		OnConnectionFailedListener {
 
 	ViewPager viewPager;
 	TabLayout tabLayout;
@@ -75,6 +84,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 	Snackbar snackbar;
 
 	public AllPostCategoriesObject allPostCategoriesObject;
+	private GoogleApiClient mGoogleApiClient;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -89,6 +99,11 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		maxFloatingActionButtonTranslation = getResources()
 				.getDimensionPixelSize(
 						R.dimen.floating_action_button_height_with_margin_bottom_considered);
+
+		mGoogleApiClient = new GoogleApiClient.Builder(this)
+				.addConnectionCallbacks(this)
+				.addOnConnectionFailedListener(this).addApi(Plus.API)
+				.addScope(new Scope(Scopes.PROFILE)).build();
 
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		tabLayout = (TabLayout) findViewById(R.id.indicator);
@@ -144,6 +159,19 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		tabLayout.setupWithViewPager(viewPager);
 	}
 
+	@Override
+	protected void onStart() {
+		mGoogleApiClient.connect();
+		super.onStart();
+	}
+
+	@Override
+	protected void onStop() {
+		if (mGoogleApiClient.isConnected())
+			mGoogleApiClient.disconnect();
+		super.onStop();
+	}
+
 	protected void hideFloatingActionMenu() {
 		if (!isFabAnimRunning) {
 			isFabAnimRunning = true;
@@ -192,9 +220,22 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 						item.setChecked(true);
 						drawerLayout.closeDrawers();
 						switch (item.getItemId()) {
-						// case R.id.wishlist_navdrawer:
-						// openWishlistActivity();
-						// return true;
+						case R.id.logoutfromapp:
+							ZPreferences.setIsUserLogin(HomeActivity.this,
+									false);
+							if (mGoogleApiClient.isConnected()) {
+								Plus.AccountApi
+										.clearDefaultAccount(mGoogleApiClient);
+								mGoogleApiClient.disconnect();
+							}
+							Intent intent = new Intent(HomeActivity.this,
+									LaunchActivity.class);
+							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+									| Intent.FLAG_ACTIVITY_CLEAR_TASK
+									| Intent.FLAG_ACTIVITY_NEW_TASK);
+							startActivity(intent);
+							HomeActivity.this.finish();
+							return true;
 
 						default:
 							return true;
@@ -496,5 +537,20 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 			}
 		};
 		ZApplication.getInstance().addToRequestQueue(req, getAllPostCategories);
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult arg0) {
+
+	}
+
+	@Override
+	public void onConnected(Bundle arg0) {
+
+	}
+
+	@Override
+	public void onConnectionSuspended(int arg0) {
+
 	}
 }

@@ -17,8 +17,8 @@ public interface ZUrls {
 
 	public String teacherPostsUrl = ZApplication.getBaseUrl()
 			+ "get_teacher_posts/";
-
-	public String studentsPostsUrl = ZApplication.getBaseUrl()
+	
+	public String studentPostsUrl = ZApplication.getBaseUrl()
 			+ "get_students_posts/";
 
 	public String getPeopleWhoSawPost = ZApplication.getBaseUrl()

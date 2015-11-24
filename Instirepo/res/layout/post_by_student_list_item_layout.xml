@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
@@ -7,6 +8,7 @@
     android:orientation="vertical" >
 
     <FrameLayout
+        android:id="@+id/openuserprofilepost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -21,6 +23,7 @@
             android:paddingTop="@dimen/z_margin_small" >
 
             <com.instirepo.app.widgets.CircularImageView
+                android:id="@+id/circularimage"
                 android:layout_width="@dimen/z_post_uploader_image_height"
                 android:layout_height="@dimen/z_post_uploader_image_height"
                 android:src="@drawable/test_user" />
@@ -34,6 +37,7 @@
                 android:orientation="vertical" >
 
                 <TextView
+                    android:id="@+id/uploadrname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ashish Goel"
@@ -54,6 +58,7 @@
                         android:src="@drawable/ic_clock" />
 
                     <TextView
+                        android:id="@+id/utime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/z_margin_mini"
@@ -65,6 +70,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/overflowiconpost"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackground"
@@ -96,6 +102,7 @@
             android:paddingTop="@dimen/z_margin_mini" >
 
             <TextView
+                android:id="@+id/uptheading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Post Heading Come Here Isnt this good article must read"
@@ -103,6 +110,7 @@
                 android:textSize="@dimen/z_font_mini" />
 
             <TextView
+                android:id="@+id/uptdesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/z_margin_mini"
@@ -110,6 +118,22 @@
                 android:maxLines="4"
                 android:text="Post description here must be come here is a big one but this is great text lorel ipsum hello world foo bar sheldon barney hello there description here must be come here is a big one but this is great text lorel ipsum hello world foo bar sheldon barney hello there"
                 android:textColor="@color/z_text_color_light"
+                android:textSize="@dimen/z_font_supermini" />
+
+            <TextView
+                android:id="@+id/postcategoy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/post_category_bg"
+                android:includeFontPadding="false"
+                android:paddingBottom="2dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:paddingTop="2dp"
+                android:text="General"
+                android:textAllCaps="true"
                 android:textSize="@dimen/z_font_supermini" />
         </LinearLayout>
     </FrameLayout>
@@ -122,14 +146,18 @@
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground" >
 
-        <ImageView
+        <com.instirepo.app.widgets.PEWImageView
+            android:id="@+id/pewimage"
             android:layout_width="match_parent"
             android:layout_height="@dimen/z_post_image_height"
             android:scaleType="centerCrop"
-            android:src="@drawable/sample" />
+            android:src="@drawable/sample"
+            app:parallax_y="100dp"
+            app:reverse="reverseY" />
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/seenbycontainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -151,6 +179,7 @@
                 android:src="@drawable/ic_user" />
 
             <TextView
+                android:id="@+id/peopleviewednumebr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/z_margin_small"
@@ -178,12 +207,14 @@
             android:paddingTop="@dimen/z_margin_mini" >
 
             <ImageView
+                android:id="@+id/upvotepostimage"
                 android:layout_width="@dimen/z_upvote_button_height"
                 android:layout_height="@dimen/z_upvote_button_height"
                 android:background="@drawable/upvote_button_selector"
                 android:clickable="true" />
 
             <TextView
+                android:id="@+id/numberofupvotes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/z_margin_small"
@@ -193,6 +224,7 @@
                 android:textSize="@dimen/z_font_supermini" />
 
             <ImageView
+                android:id="@+id/downvotepostimage"
                 android:layout_width="@dimen/z_upvote_button_height"
                 android:layout_height="@dimen/z_upvote_button_height"
                 android:background="@drawable/downvote_button_selector"
@@ -204,12 +236,14 @@
                 android:layout_weight="1" />
 
             <ImageView
+                android:id="@+id/commentsviewconatiner"
                 android:layout_width="@dimen/z_upvote_button_height"
                 android:layout_height="@dimen/z_upvote_button_height"
                 android:background="@drawable/comment_button_selector"
                 android:clickable="true" />
 
             <TextView
+                android:id="@+id/numberofcomments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/z_margin_mini"
