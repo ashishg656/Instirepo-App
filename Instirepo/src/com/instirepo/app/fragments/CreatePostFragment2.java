@@ -2,6 +2,7 @@ package com.instirepo.app.fragments;
 
 import java.util.HashMap;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -112,6 +113,31 @@ public class CreatePostFragment2 extends BaseFragment {
 					R.dimen.z_margin_supermini);
 			params.setMargins(pixels2, pixels2, pixels2, pixels2);
 			tv.setLayoutParams(params);
+
+			GradientDrawable categoryBg = (GradientDrawable) tv.getBackground();
+			categoryBg.setColor(getActivity().getResources().getColor(
+					R.color.z_red_color_primary));
+			((CreatePostFragment2FragmentSelectNew) fragmentHashMap.get(0)).customFlowLayout
+					.addView(tv);
+		}
+
+		// years
+		for (int i = 0; i < ((CreatePostActivity) getActivity()).yearArrayString
+				.size(); i++) {
+			TextView tv = (TextView) LayoutInflater.from(getActivity())
+					.inflate(R.layout.textview_post_selected_flow, null, false);
+			tv.setText(((CreatePostActivity) getActivity()).yearArrayString
+					.get(i));
+			CustomFlowLayout.LayoutParams params = new CustomFlowLayout.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			int pixels2 = getActivity().getResources().getDimensionPixelSize(
+					R.dimen.z_margin_supermini);
+			params.setMargins(pixels2, pixels2, pixels2, pixels2);
+			tv.setLayoutParams(params);
+
+			GradientDrawable categoryBg = (GradientDrawable) tv.getBackground();
+			categoryBg.setColor(getActivity().getResources().getColor(
+					R.color.purple_post));
 			((CreatePostFragment2FragmentSelectNew) fragmentHashMap.get(0)).customFlowLayout
 					.addView(tv);
 		}

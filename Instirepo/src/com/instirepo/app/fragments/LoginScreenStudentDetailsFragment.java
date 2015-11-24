@@ -117,7 +117,7 @@ public class LoginScreenStudentDetailsFragment extends BaseFragment implements
 			}
 		};
 		ZApplication.getInstance().addToRequestQueue(req,
-				getAllCollegesAndUniversities);
+				userRegistrationStep1Url);
 	}
 
 	protected void setAdapterData() {

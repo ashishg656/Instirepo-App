@@ -24,9 +24,10 @@ import com.instirepo.app.extras.ZAnimatorListener;
 import com.instirepo.app.extras.ZCircularAnimatorListener;
 import com.instirepo.app.fragments.CreatePostFragment1OtherCategory;
 import com.instirepo.app.fragments.CreatePostFragment2;
-import com.instirepo.app.fragments.CreatePostSelectBranchYearFragment;
+import com.instirepo.app.fragments.CreatePostSelectBranchOrYearFragment;
 import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.objects.LoginScreenFragment2Object;
+import com.instirepo.app.objects.LoginScreenFragment2Object.Years;
 
 @SuppressLint("NewApi")
 public class CreatePostActivity extends BaseActivity implements AppConstants {
@@ -200,12 +201,13 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 		}
 	}
 
-	public void showFragmentForSelectingBranch(Bundle bundle) {
+	public void showFragmentForSelectingBranchOrYear(Bundle bundle) {
 		getSupportFragmentManager()
 				.beginTransaction()
 				.add(R.id.fragmtnholder,
-						CreatePostSelectBranchYearFragment.newInstance(bundle))
-				.addToBackStack("").commit();
+						CreatePostSelectBranchOrYearFragment
+								.newInstance(bundle)).addToBackStack("")
+				.commit();
 	}
 
 	public void updateBranchesList(long[] checkedItemIds,
@@ -217,6 +219,21 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 					.get((int) checkedItemIds[i]).getBranch_id());
 			branchesArrayString.add(mData.getBranches_list()
 					.get((int) checkedItemIds[i]).getBranch_name());
+		}
+		createPostFragment2.updateToTextBoxInFragment2();
+		super.onBackPressed();
+	}
+
+	public void updateYearsList(long[] checkedItemIds,
+			LoginScreenFragment2Object mData) {
+		yearArray = new ArrayList<>();
+		yearArrayString = new ArrayList<>();
+		for (int i = 0; i < checkedItemIds.length; i++) {
+			yearArray.add(mData.getYears_list().get((int) checkedItemIds[i])
+					.getYear_id());
+			Years year = mData.getYears_list().get((int) checkedItemIds[i]);
+			yearArrayString.add(year.getAdmission_year() + " - "
+					+ year.getPassout_year());
 		}
 		createPostFragment2.updateToTextBoxInFragment2();
 		super.onBackPressed();

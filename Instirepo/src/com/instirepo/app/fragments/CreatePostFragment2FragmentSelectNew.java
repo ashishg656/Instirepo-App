@@ -19,7 +19,7 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		implements OnClickListener, ZUrls, AppConstants {
 
 	ImageView batchImage, batchImage1, batchImage2, batchImage3, batchImage4;
-	LinearLayout branchLayout;
+	LinearLayout branchLayout, yearLayout;
 	CustomFlowLayout customFlowLayout;
 
 	public static CreatePostFragment2FragmentSelectNew newInstance(Bundle b) {
@@ -42,6 +42,7 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		batchImage4 = (ImageView) v.findViewById(R.id.batchimage4);
 		branchLayout = (LinearLayout) v.findViewById(R.id.branchlayout);
 		customFlowLayout = (CustomFlowLayout) v.findViewById(R.id.customeflow);
+		yearLayout = (LinearLayout) v.findViewById(R.id.yearlayout);
 
 		return v;
 	}
@@ -51,6 +52,7 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		super.onActivityCreated(savedInstanceState);
 
 		branchLayout.setOnClickListener(this);
+		yearLayout.setOnClickListener(this);
 
 		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) batchImage
 				.getLayoutParams();
@@ -92,7 +94,13 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 			Bundle bundle = new Bundle();
 			bundle.putInt("option", Z_VISIBILIY_BRANCH);
 			((CreatePostActivity) getActivity())
-					.showFragmentForSelectingBranch(bundle);
+					.showFragmentForSelectingBranchOrYear(bundle);
+			break;
+		case R.id.yearlayout:
+			bundle = new Bundle();
+			bundle.putInt("option", Z_VISIBILIY_YEAR);
+			((CreatePostActivity) getActivity())
+					.showFragmentForSelectingBranchOrYear(bundle);
 			break;
 
 		default:
