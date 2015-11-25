@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.instirepo.app.R;
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
 	public Toolbar toolbar;
 	int toolbarHeight;
@@ -52,6 +52,14 @@ public class BaseActivity extends AppCompatActivity {
 
 	void showErrorLayout() {
 		connectionErrorLayout.setVisibility(View.VISIBLE);
+
+		retryDataConnectionLayout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
 
 		connectionFailedCloudImage.setOnClickListener(new OnClickListener() {
 

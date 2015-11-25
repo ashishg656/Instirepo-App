@@ -47,8 +47,10 @@ public class SelectPostCategoryFragment extends BaseFragment implements ZUrls {
 		hideErrorLayout();
 		hideLoadingLayout();
 
-		adapter = new SelectPostCategoryGridAdapter(
-				allPostCategoriesObject.getCategories(), getActivity());
-		gridView.setAdapter(adapter);
+		if (allPostCategoriesObject.getCategories() != null) {
+			adapter = new SelectPostCategoryGridAdapter(
+					allPostCategoriesObject.getCategories(), getActivity());
+			gridView.setAdapter(adapter);
+		}
 	}
 }

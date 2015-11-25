@@ -1,9 +1,14 @@
 package com.instirepo.app.activities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONArray;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,22 +21,34 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.JsonArray;
 import com.instirepo.app.R;
+import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.circularreveal.SupportAnimator;
 import com.instirepo.app.circularreveal.ViewAnimationUtils;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.ZAnimatorListener;
 import com.instirepo.app.extras.ZCircularAnimatorListener;
+import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.fragments.CreatePostFragment1OtherCategory;
 import com.instirepo.app.fragments.CreatePostFragment2;
-import com.instirepo.app.fragments.CreatePostSelectYearOrBatchFragment;
+import com.instirepo.app.fragments.CreatePostSavePostVisibilitiesFragment;
 import com.instirepo.app.fragments.CreatePostSelectBranchFragment;
+import com.instirepo.app.fragments.CreatePostSelectTeacherFragment;
+import com.instirepo.app.fragments.CreatePostSelectYearOrBatchFragment;
 import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.objects.LoginScreenFragment2Object;
-import com.instirepo.app.objects.LoginScreenFragment2Object.Years;
+import com.instirepo.app.preferences.ZPreferences;
 
 @SuppressLint("NewApi")
-public class CreatePostActivity extends BaseActivity implements AppConstants {
+public class CreatePostActivity extends BaseActivity implements AppConstants,
+		ZUrls {
 
 	CreatePostFragment1OtherCategory createPostFragment1OtherCategory;
 	CreatePostFragment2 createPostFragment2;
@@ -50,6 +67,8 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 			teacherArray;
 	public ArrayList<String> branchesArrayString, yearArrayString,
 			batchArrayString, teacherArrayString;
+
+	ProgressDialog progressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -218,6 +237,23 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 				.addToBackStack("").commit();
 	}
 
+	public void showFragmentForSelectingTeacher(Bundle bundle) {
+		getSupportFragmentManager()
+				.beginTransaction()
+				.add(R.id.fragmtnholder,
+						CreatePostSelectTeacherFragment.newInstance(bundle))
+				.addToBackStack("").commit();
+	}
+
+	public void showSavePostVisibilitiesFragment() {
+		getSupportFragmentManager()
+				.beginTransaction()
+				.add(R.id.fragmtnholder,
+						CreatePostSavePostVisibilitiesFragment
+								.newInstance(new Bundle())).addToBackStack("")
+				.commit();
+	}
+
 	public void updateBranchesList(long[] checkedItemIds,
 			LoginScreenFragment2Object mData) {
 		branchesArray = new ArrayList<>();
@@ -240,6 +276,14 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 		super.onBackPressed();
 	}
 
+	public void updateTeachersList(ArrayList<Integer> teacherIds,
+			ArrayList<String> teacherName) {
+		this.teacherArray = teacherIds;
+		this.teacherArrayString = teacherName;
+		createPostFragment2.updateToTextBoxInFragment2();
+		super.onBackPressed();
+	}
+
 	public void updateBatchesList(ArrayList<String> names,
 			ArrayList<Integer> ids) {
 		batchArray = ids;
@@ -250,5 +294,73 @@ public class CreatePostActivity extends BaseActivity implements AppConstants {
 
 	public void callFragmentUpdateCustomFlowBox() {
 		createPostFragment2.updateToTextBoxInFragment2();
+	}
+
+	public int getCountForSelectedVisibilities() {
+		return branchesArray.size() + yearArray.size() + batchArray.size()
+				+ teacherArray.size();
+	}
+
+	public void sendRequestForSavingPostVisibilitiesOnServer(final String name) {
+		progressDialog = ProgressDialog.show(this, null, "Saving data");
+
+		StringRequest req = new StringRequest(Method.POST,
+				savePostVisibilities, new Listener<String>() {
+
+					@Override
+					public void onResponse(String arg0) {
+						((BaseActivity) CreatePostActivity.this)
+								.showSnackBar("Saved Collection");
+
+						if (progressDialog != null)
+							progressDialog.dismiss();
+
+						CreatePostActivity.this.onBackPressed();
+						
+						createPostFragment2.callHideSaveButtonFunction();
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						makeToast("Unable to save data. Please check internet connection");
+
+						if (progressDialog != null)
+							progressDialog.dismiss();
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				HashMap<String, String> p = new HashMap<>();
+				p.put("user_id",
+						ZPreferences.getUserProfileID(CreatePostActivity.this));
+				p.put("name", name);
+
+				JSONArray arrayBatches = new JSONArray();
+				for (int id : batchArray) {
+					arrayBatches.put(id);
+				}
+				JSONArray arrayBranches = new JSONArray();
+				for (int id : branchesArray) {
+					arrayBranches.put(id);
+				}
+				JSONArray arrayYears = new JSONArray();
+				for (int id : yearArray) {
+					arrayYears.put(id);
+				}
+				JSONArray arrayTeachers = new JSONArray();
+				for (int id : teacherArray) {
+					arrayTeachers.put(id);
+				}
+
+				p.put("batches_id", arrayBatches.toString());
+				p.put("branches_id", arrayBranches.toString());
+				p.put("years_id", arrayYears.toString());
+				p.put("teachers_id", arrayTeachers.toString());
+
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, savePostVisibilities);
 	}
 }

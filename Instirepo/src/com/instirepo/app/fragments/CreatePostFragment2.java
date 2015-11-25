@@ -166,5 +166,39 @@ public class CreatePostFragment2 extends BaseFragment {
 			((CreatePostFragment2FragmentSelectNew) fragmentHashMap.get(0)).customFlowLayout
 					.addView(tv);
 		}
+
+		// teachers
+		for (String teacher : ((CreatePostActivity) getActivity()).teacherArrayString) {
+			TextView tv = (TextView) LayoutInflater.from(getActivity())
+					.inflate(R.layout.textview_post_selected_flow, null, false);
+			tv.setText(teacher);
+			CustomFlowLayout.LayoutParams params = new CustomFlowLayout.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			int pixels2 = getActivity().getResources().getDimensionPixelSize(
+					R.dimen.z_margin_supermini);
+			params.setMargins(pixels2, pixels2, pixels2, pixels2);
+			tv.setLayoutParams(params);
+
+			GradientDrawable categoryBg = (GradientDrawable) tv.getBackground();
+			categoryBg.setColor(getActivity().getResources().getColor(
+					R.color.PrimaryDarkColor));
+			((CreatePostFragment2FragmentSelectNew) fragmentHashMap.get(0)).customFlowLayout
+					.addView(tv);
+		}
+
+		int count = ((CreatePostActivity) getActivity())
+				.getCountForSelectedVisibilities();
+		if (count > 1) {
+			((CreatePostFragment2FragmentSelectNew) fragmentHashMap.get(0)).saveVisibility
+					.setVisibility(View.VISIBLE);
+		} else {
+			((CreatePostFragment2FragmentSelectNew) fragmentHashMap.get(0)).saveVisibility
+					.setVisibility(View.GONE);
+		}
+	}
+
+	public void callHideSaveButtonFunction() {
+		((CreatePostFragment2FragmentSelectNew) fragmentHashMap.get(0)).saveVisibility
+				.setVisibility(View.GONE);
 	}
 }

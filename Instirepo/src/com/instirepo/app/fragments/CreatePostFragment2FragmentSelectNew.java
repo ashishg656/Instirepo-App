@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.instirepo.app.R;
 import com.instirepo.app.activities.CreatePostActivity;
@@ -19,8 +20,9 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		implements OnClickListener, ZUrls, AppConstants {
 
 	ImageView batchImage, batchImage1, batchImage2, batchImage3, batchImage4;
-	LinearLayout branchLayout, yearLayout, batchLayout;
+	LinearLayout branchLayout, yearLayout, batchLayout, teacherLayout;
 	CustomFlowLayout customFlowLayout;
+	TextView saveVisibility;
 
 	public static CreatePostFragment2FragmentSelectNew newInstance(Bundle b) {
 		CreatePostFragment2FragmentSelectNew frg = new CreatePostFragment2FragmentSelectNew();
@@ -44,6 +46,8 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		customFlowLayout = (CustomFlowLayout) v.findViewById(R.id.customeflow);
 		yearLayout = (LinearLayout) v.findViewById(R.id.yearlayout);
 		batchLayout = (LinearLayout) v.findViewById(R.id.batchlayout);
+		teacherLayout = (LinearLayout) v.findViewById(R.id.teacherseelc);
+		saveVisibility = (TextView) v.findViewById(R.id.savevis);
 
 		return v;
 	}
@@ -55,6 +59,8 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		branchLayout.setOnClickListener(this);
 		yearLayout.setOnClickListener(this);
 		batchLayout.setOnClickListener(this);
+		teacherLayout.setOnClickListener(this);
+		saveVisibility.setOnClickListener(this);
 
 		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) batchImage
 				.getLayoutParams();
@@ -88,6 +94,10 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		categoryBg.setColor(getActivity().getResources().getColor(
 				R.color.orange_post));
 
+		categoryBg = (GradientDrawable) batchImage4.getBackground();
+		categoryBg.setColor(getActivity().getResources().getColor(
+				R.color.PrimaryDarkColor));
+
 		((CreatePostActivity) getActivity()).callFragmentUpdateCustomFlowBox();
 	}
 
@@ -111,6 +121,16 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 			bundle.putInt("option", Z_VISIBILIY_BATCH);
 			((CreatePostActivity) getActivity())
 					.showFragmentForSelectingYearOrBatch(bundle);
+			break;
+		case R.id.teacherseelc:
+			bundle = new Bundle();
+			bundle.putInt("option", Z_VISIBILIY_BATCH);
+			((CreatePostActivity) getActivity())
+					.showFragmentForSelectingTeacher(bundle);
+			break;
+		case R.id.savevis:
+			((CreatePostActivity) getActivity())
+					.showSavePostVisibilitiesFragment();
 			break;
 
 		default:

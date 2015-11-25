@@ -17,7 +17,7 @@ public interface ZUrls {
 
 	public String teacherPostsUrl = ZApplication.getBaseUrl()
 			+ "get_teacher_posts/";
-	
+
 	public String studentPostsUrl = ZApplication.getBaseUrl()
 			+ "get_students_posts/";
 
@@ -44,5 +44,11 @@ public interface ZUrls {
 
 	public String getAllPostCategories = ZApplication.getBaseUrl()
 			+ "get_all_post_categories/";
+
+	public String getAllTeachersList = ZApplication.getBaseUrl()
+			+ "get_all_teachers_list/";
+
+	public String savePostVisibilities = ZApplication.getBaseUrl()
+			+ "save_post_visibility/";
 
 }

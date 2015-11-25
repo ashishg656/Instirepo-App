@@ -20,24 +20,44 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/z_margin_large" >
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/z_margin_large" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/z_margin_medium"
+                            android:text="TO"
+                            android:textColor="@color/z_text_color_light"
+                            android:textSize="@dimen/z_font_supermini"
+                            android:textStyle="bold" />
+
+                        <com.instirepo.app.widgets.CustomFlowLayout
+                            android:id="@+id/customeflow"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" >
+                        </com.instirepo.app.widgets.CustomFlowLayout>
+                    </LinearLayout>
 
                     <TextView
+                        android:id="@+id/savevis"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/z_margin_medium"
-                        android:text="TO"
-                        android:textColor="@color/z_text_color_light"
-                        android:textSize="@dimen/z_font_supermini"
-                        android:textStyle="bold" />
-
-                    <com.instirepo.app.widgets.CustomFlowLayout
-                        android:id="@+id/customeflow"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" >
-                    </com.instirepo.app.widgets.CustomFlowLayout>
+                        android:layout_gravity="right"
+                        android:layout_marginRight="@dimen/z_margin_large"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:padding="@dimen/z_margin_large"
+                        android:text="SAVE THIS LIST"
+                        android:textColor="@color/PrimaryColor"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <View
@@ -176,6 +196,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/teacherseelc"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
