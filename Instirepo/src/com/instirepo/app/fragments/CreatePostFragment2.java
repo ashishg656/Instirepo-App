@@ -23,8 +23,8 @@ public class CreatePostFragment2 extends BaseFragment {
 
 	TabLayout tabLayout;
 	MyPagerAdapter pagerAdapter;
-	ViewPager viewPager;
-	HashMap<Integer, Fragment> fragmentHashMap;
+	public ViewPager viewPager;
+	public HashMap<Integer, Fragment> fragmentHashMap;
 
 	public static CreatePostFragment2 newInstance(Bundle b) {
 		CreatePostFragment2 frg = new CreatePostFragment2();
@@ -200,5 +200,7 @@ public class CreatePostFragment2 extends BaseFragment {
 	public void callHideSaveButtonFunction() {
 		((CreatePostFragment2FragmentSelectNew) fragmentHashMap.get(0)).saveVisibility
 				.setVisibility(View.GONE);
+		((CreatePostFragment2FragmentCollection) fragmentHashMap.get(1))
+				.loadData();
 	}
 }

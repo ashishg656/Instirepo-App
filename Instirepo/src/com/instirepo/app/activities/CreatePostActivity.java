@@ -22,12 +22,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.gson.JsonArray;
 import com.instirepo.app.R;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.circularreveal.SupportAnimator;
@@ -316,7 +315,7 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 							progressDialog.dismiss();
 
 						CreatePostActivity.this.onBackPressed();
-						
+
 						createPostFragment2.callHideSaveButtonFunction();
 					}
 				}, new ErrorListener() {
@@ -362,5 +361,11 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 			}
 		};
 		ZApplication.getInstance().addToRequestQueue(req, savePostVisibilities);
+	}
+
+	public void clickOnCreateNewCollectionButtonFromAllCollectionsFragment() {
+		createPostFragment2.viewPager.setCurrentItem(0, true);
+		((BaseActivity) this)
+				.showSnackBar("Select more than one options using the checkboxes and then click on save button here.");
 	}
 }
