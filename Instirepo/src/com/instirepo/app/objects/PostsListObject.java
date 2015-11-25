@@ -6,6 +6,15 @@ public class PostsListObject {
 
 	List<PostListSinglePostObject> posts;
 	Integer next_page;
+	Boolean is_by_teacher;
+
+	public Boolean getIs_by_teacher() {
+		return is_by_teacher;
+	}
+
+	public void setIs_by_teacher(Boolean is_by_teacher) {
+		this.is_by_teacher = is_by_teacher;
+	}
 
 	public Integer getNext_page() {
 		return next_page;

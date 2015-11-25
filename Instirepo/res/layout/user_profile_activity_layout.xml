@@ -3,12 +3,58 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/z_grey_shade_2"
     android:orientation="vertical" >
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager_launch"
         android:layout_width="match_parent"
         android:layout_height="fill_parent" />
+
+    <FrameLayout
+        android:id="@+id/actualheader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sample" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/z_toolbar_height"
+            android:orientation="horizontal" >
+
+            <FrameLayout
+                android:layout_width="@dimen/z_toolbar_height"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center" >
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_navigation_arrow_back_white" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/indicator2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/z_button_height"
+            android:layout_gravity="bottom"
+            android:background="@android:color/transparent"
+            app:tabGravity="center"
+            app:tabIndicatorColor="@color/z_white"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/z_white"
+            app:tabTextColor="@color/z_white_transparency" />
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/appbarlayoutcontainer"
@@ -34,12 +80,24 @@
                 android:id="@+id/indicator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/z_button_height"
-                app:tabGravity="fill"
+                app:tabGravity="center"
                 app:tabIndicatorColor="@color/z_white"
-                app:tabMode="fixed"
+                app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/z_white"
                 app:tabTextColor="@color/z_white_transparency" />
         </android.support.design.widget.AppBarLayout>
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </android.support.design.widget.CoordinatorLayout>
 
 </FrameLayout>

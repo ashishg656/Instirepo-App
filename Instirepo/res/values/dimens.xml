@@ -26,6 +26,7 @@
     <!-- material -->
     <dimen name="z_button_height">48dp</dimen>
     <dimen name="z_toolbar_height">56dp</dimen>
+    <dimen name="z_appbar_layout_height">104dp</dimen>
 
     <!-- launch screen -->
     <dimen name="z_launch_app_icon_margin">210dp</dimen>

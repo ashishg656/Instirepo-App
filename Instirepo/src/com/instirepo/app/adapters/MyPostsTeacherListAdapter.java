@@ -31,7 +31,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.BaseActivity;
-import com.instirepo.app.activities.HomeActivity;
 import com.instirepo.app.activities.UserProfileActivity;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.bottomsheet.BottomSheet;
@@ -89,7 +88,7 @@ public class MyPostsTeacherListAdapter extends
 		if (position == 0) {
 			return Z_USER_PROFILE_ITEM_HEADER;
 		} else {
-			if (position > mData.size() - 1)
+			if (position > mData.size() - 1 + 1)
 				return Z_RECYCLER_VIEW_ITEM_LOADING;
 			return Z_RECYCLER_VIEW_ITEM_NORMAL;
 		}
@@ -99,6 +98,7 @@ public class MyPostsTeacherListAdapter extends
 	public void onBindViewHolder(ViewHolder holderCom, int pos) {
 		pos = holderCom.getAdapterPosition();
 		if (getItemViewType(pos) == Z_RECYCLER_VIEW_ITEM_NORMAL) {
+			pos = pos - 1;
 			PostsHolderNormal holder = (PostsHolderNormal) holderCom;
 
 			holder.overflowIcon.setTag(holder);
@@ -255,36 +255,36 @@ public class MyPostsTeacherListAdapter extends
 			switch (v.getId()) {
 			case R.id.overflowiconpost:
 				PostsHolderNormal holder = (PostsHolderNormal) v.getTag();
-				int pos = holder.getAdapterPosition();
+				int pos = holder.getAdapterPosition() - 1;
 				showOverflowIconContent(mData.get(pos).getHeading(),
 						mData.get(pos).getId(), mData.get(pos).isIs_saved(),
 						pos, holder);
 				break;
 			case R.id.seenbycontainer:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition() - 1;
 				showSeenByPeople(mData.get(pos).getId());
 				break;
 			case R.id.commentsviewconatiner:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition() - 1;
 				showCommentsFragment(mData.get(pos).getId());
 				break;
 			case R.id.openuserprofilepost:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition() - 1;
 				openUserProfileFragment(mData.get(pos).getUser_id(),
 						mData.get(pos).getUser_name(), mData.get(pos)
 								.getUser_image());
 				break;
 			case R.id.upvotepostimage:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition() - 1;
 				upvotePost(mData.get(pos).getId(), pos, holder);
 				break;
 			case R.id.savepostimage:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition() - 1;
 				markPostImportant(mData.get(pos).getId(), pos, holder);
 				break;
 			default:
@@ -296,7 +296,7 @@ public class MyPostsTeacherListAdapter extends
 
 	public void showOverflowIconContent(String message, final int postid,
 			boolean isSaved, final int pos, final PostsHolderNormal holder) {
-		BottomSheet sheet = new BottomSheet.Builder((HomeActivity) context)
+		BottomSheet sheet = new BottomSheet.Builder((BaseActivity) context)
 				.title(message).sheet(R.menu.posts_sliding_panel_menu)
 				.listener(new DialogInterface.OnClickListener() {
 					@Override
@@ -487,15 +487,15 @@ public class MyPostsTeacherListAdapter extends
 	}
 
 	public void showSeenByPeople(int postid) {
-		((HomeActivity) context).switchToSeenByPeopleFragment(postid);
+		((UserProfileActivity) context).switchToSeenByPeopleFragment(postid);
 	}
 
 	public void showCommentsFragment(int postid) {
-		((HomeActivity) context).switchToCommentsFragment(postid);
+		((UserProfileActivity) context).switchToCommentsFragment(postid);
 	}
 
 	void openUserProfileFragment(int id, String name, String image) {
-		((HomeActivity) context).switchToUserProfileViewedByOtherFragment(id,
-				name, image);
+		((UserProfileActivity) context)
+				.switchToUserProfileViewedByOtherFragment(id, name, image);
 	}
 }

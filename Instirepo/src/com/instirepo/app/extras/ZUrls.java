@@ -54,4 +54,7 @@ public interface ZUrls {
 	public String getSavedPostVisibilities = ZApplication.getBaseUrl()
 			+ "get_saved_post_visibilities/";
 
+	public String getPostsPostedByUser = ZApplication.getBaseUrl()
+			+ "get_posts_posted_by_user/";
+
 }

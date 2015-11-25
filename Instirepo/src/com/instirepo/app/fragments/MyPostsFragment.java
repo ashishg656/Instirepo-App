@@ -18,7 +18,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
-import com.instirepo.app.activities.HomeActivity;
+import com.instirepo.app.activities.UserProfileActivity;
+import com.instirepo.app.adapters.MyPostsStudentsListAdapter;
 import com.instirepo.app.adapters.MyPostsTeacherListAdapter;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.ZUrls;
@@ -27,13 +28,14 @@ import com.instirepo.app.preferences.ZPreferences;
 
 public class MyPostsFragment extends BaseFragment implements ZUrls {
 
-	RecyclerView recyclerView;
-	LinearLayoutManager layoutManager;
+	public RecyclerView recyclerView;
+	public LinearLayoutManager layoutManager;
 	RecyclerView.Adapter<RecyclerView.ViewHolder> adapter;
 
 	boolean isRequestRunning;
 	Integer nextPage = 1;
 	boolean isMoreAllowed = true;
+	private Boolean isTeacherProfile;
 
 	public static MyPostsFragment newInstance(Bundle v) {
 		MyPostsFragment frg = new MyPostsFragment();
@@ -70,19 +72,19 @@ public class MyPostsFragment extends BaseFragment implements ZUrls {
 				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
 					int pos = layoutManager.findFirstVisibleItemPosition();
 					if (pos == 0) {
-						((HomeActivity) getActivity())
+						((UserProfileActivity) getActivity())
 								.setToolbarTranslation(recyclerView
 										.getChildAt(0));
 					} else
-						((HomeActivity) getActivity())
+						((UserProfileActivity) getActivity())
 								.scrollToolbarAfterTouchEnds();
 				}
 				super.onScrollStateChanged(recyclerView, newState);
 			}
 
 			@Override
-			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-				((HomeActivity) getActivity()).scrollToolbarBy(-dy);
+			public void onScrolled(RecyclerView r, int dx, int dy) {
+				super.onScrolled(recyclerView, dx, dy);
 				if (recyclerView.getAdapter() != null) {
 					int lastitem = layoutManager.findLastVisibleItemPosition();
 					int totalitems = recyclerView.getAdapter().getItemCount();
@@ -91,7 +93,13 @@ public class MyPostsFragment extends BaseFragment implements ZUrls {
 						loadData();
 					}
 				}
-				super.onScrolled(recyclerView, dx, dy);
+
+				((UserProfileActivity) getActivity()).scrollToolbarBy(-dy);
+
+				((UserProfileActivity) getActivity()).scrollFragmentRecycler(
+						layoutManager.findFirstVisibleItemPosition(),
+						recyclerView.getChildAt(0).getTop(), dy,
+						recyclerView.getScrollY());
 			}
 		});
 
@@ -103,7 +111,7 @@ public class MyPostsFragment extends BaseFragment implements ZUrls {
 			showLoadingLayout();
 			hideErrorLayout();
 		}
-		String url = teacherPostsUrl + "?pagenumber=" + nextPage;
+		String url = getPostsPostedByUser + "?pagenumber=" + nextPage;
 		StringRequest req = new StringRequest(Method.POST, url,
 				new Listener<String>() {
 
@@ -144,12 +152,23 @@ public class MyPostsFragment extends BaseFragment implements ZUrls {
 			isMoreAllowed = false;
 		}
 		if (adapter == null) {
-			adapter = new MyPostsTeacherListAdapter(getActivity(),
-					obj.getPosts(), isMoreAllowed);
+			isTeacherProfile = obj.getIs_by_teacher();
+			if (isTeacherProfile) {
+				adapter = new MyPostsTeacherListAdapter(getActivity(),
+						obj.getPosts(), isMoreAllowed);
+			} else {
+				adapter = new MyPostsStudentsListAdapter(getActivity(),
+						obj.getPosts(), isMoreAllowed);
+			}
 			recyclerView.setAdapter(adapter);
 		} else {
-			((MyPostsTeacherListAdapter) adapter).addData(obj.getPosts(),
-					isMoreAllowed);
+			if (isTeacherProfile) {
+				((MyPostsTeacherListAdapter) adapter).addData(obj.getPosts(),
+						isMoreAllowed);
+			} else {
+				((MyPostsStudentsListAdapter) adapter).addData(obj.getPosts(),
+						isMoreAllowed);
+			}
 		}
 	}
 }

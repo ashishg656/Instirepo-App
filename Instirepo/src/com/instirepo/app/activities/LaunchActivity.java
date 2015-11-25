@@ -572,8 +572,6 @@ public class LaunchActivity extends BaseActivity implements
 								Toast.LENGTH_SHORT).show();
 						if (progressDialog != null)
 							progressDialog.dismiss();
-						Log.w("as", arg0.toString() + arg0.getStackTrace()
-								+ arg0.networkResponse.data);
 					}
 				}) {
 			@Override
