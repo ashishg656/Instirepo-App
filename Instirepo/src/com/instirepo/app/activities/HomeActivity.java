@@ -3,10 +3,13 @@ package com.instirepo.app.activities;
 import java.util.HashMap;
 import java.util.Map;
 
+import serverApi.ImageRequestManager;
+import serverApi.ImageRequestManager.RequestBitmap;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
@@ -26,6 +29,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request.Method;
@@ -59,6 +66,7 @@ import com.instirepo.app.fragments.SelectPostCategoryFragment;
 import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
 import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.preferences.ZPreferences;
+import com.instirepo.app.widgets.CircularImageView;
 
 public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		AppConstants, OnClickListener, ZUrls, ConnectionCallbacks,
@@ -69,6 +77,10 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 	MyPagerAdapter adapter;
 	DrawerLayout drawerLayout;
 	NavigationView navigationView;
+	TextView navigationDrawerUserName, navigationDrawerEmail;
+	CircularImageView navigationDrawerImageUser;
+	ImageView navigationDrawerImageDefault;
+	LinearLayout navigationDrawerHeaderLayout;
 	public static final int TRANSLATION_DURATION = 200;
 	boolean isToolbarAnimRunning;
 	AppBarLayout appBarLayout;
@@ -114,6 +126,11 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		floatingActionMenu = (FloatingActionMenu) findViewById(R.id.fabmenuy);
 		fabBackground = (View) findViewById(R.id.revealviewfab);
 		createPostButton = (FloatingActionButton) findViewById(R.id.createpostbutton);
+		navigationDrawerEmail = (TextView) findViewById(R.id.navdraweremail);
+		navigationDrawerImageUser = (CircularImageView) findViewById(R.id.avatar);
+		navigationDrawerImageDefault = (ImageView) findViewById(R.id.avatardefault);
+		navigationDrawerUserName = (TextView) findViewById(R.id.navdrawerusername);
+		navigationDrawerHeaderLayout = (LinearLayout) findViewById(R.id.navigationdrawerheader);
 
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -149,6 +166,27 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 						toolbarHeight = toolbar.getHeight();
 					}
 				});
+
+		if (ZPreferences.isUserLogIn(this)) {
+			navigationDrawerEmail.setText(ZPreferences.getUserEmail(this));
+			navigationDrawerUserName.setText(ZPreferences.getUserName(this));
+			ImageRequestManager.get(this).requestImage2(this,
+					navigationDrawerImageUser,
+					ZPreferences.getUserImageURL(this), new RequestBitmap() {
+
+						@Override
+						public void onRequestCompleted(Bitmap bitmap) {
+							navigationDrawerImageUser.setImageBitmap(bitmap);
+							navigationDrawerImageDefault
+									.setVisibility(View.GONE);
+						}
+					}, -1);
+		} else {
+			navigationDrawerEmail.setText("Please Login");
+			navigationDrawerUserName.setText("BookNCart");
+			navigationDrawerImageUser.setVisibility(View.GONE);
+		}
+		navigationDrawerHeaderLayout.setOnClickListener(this);
 
 		setDrawerActionBarToggle();
 		setDrawerItemClickListener();
@@ -223,6 +261,8 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 						case R.id.logoutfromapp:
 							ZPreferences.setIsUserLogin(HomeActivity.this,
 									false);
+							ZPreferences.setUserProfileID(HomeActivity.this,
+									null);
 							if (mGoogleApiClient.isConnected()) {
 								Plus.AccountApi
 										.clearDefaultAccount(mGoogleApiClient);
@@ -484,7 +524,16 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		case R.id.createpostbutton:
 			requestAllPostCategories();
 			break;
-
+		case R.id.navigationdrawerheader:
+			if (ZPreferences.isUserLogIn(this)) {
+				Intent intent = new Intent(this, UserProfileActivity.class);
+				startActivity(intent);
+			} else {
+				makeToast("Please Login");
+				Intent i = new Intent(this, LaunchActivity.class);
+				startActivity(i);
+			}
+			break;
 		default:
 			break;
 		}

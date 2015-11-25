@@ -17,4 +17,6 @@ public interface AppConstants {
 	public int Z_VISIBILIY_BATCH = 2;
 	public int Z_VISIBILIY_YEAR = 3;
 	public int Z_VISIBILIY_TEACHER = 4;
+
+	public int Z_USER_PROFILE_ITEM_HEADER = 2;
 }
