@@ -67,7 +67,10 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 	public ArrayList<String> branchesArrayString, yearArrayString,
 			batchArrayString, teacherArrayString;
 
+	boolean isSavePostVisibilityCollectionRequestRunning;
 	ProgressDialog progressDialog;
+	
+	public LoginScreenFragment2Object loginScreenFragment2Object;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -301,66 +304,73 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 	}
 
 	public void sendRequestForSavingPostVisibilitiesOnServer(final String name) {
-		progressDialog = ProgressDialog.show(this, null, "Saving data");
+		if (!isSavePostVisibilityCollectionRequestRunning) {
+			isSavePostVisibilityCollectionRequestRunning = true;
+			progressDialog = ProgressDialog.show(this, null, "Saving data");
 
-		StringRequest req = new StringRequest(Method.POST,
-				savePostVisibilities, new Listener<String>() {
+			StringRequest req = new StringRequest(Method.POST,
+					savePostVisibilities, new Listener<String>() {
 
-					@Override
-					public void onResponse(String arg0) {
-						((BaseActivity) CreatePostActivity.this)
-								.showSnackBar("Saved Collection");
+						@Override
+						public void onResponse(String arg0) {
+							isSavePostVisibilityCollectionRequestRunning = false;
+							((BaseActivity) CreatePostActivity.this)
+									.showSnackBar("Saved Collection");
 
-						if (progressDialog != null)
-							progressDialog.dismiss();
+							if (progressDialog != null)
+								progressDialog.dismiss();
 
-						CreatePostActivity.this.onBackPressed();
+							CreatePostActivity.this.onBackPressed();
 
-						createPostFragment2.callHideSaveButtonFunction();
+							createPostFragment2.callHideSaveButtonFunction();
+						}
+					}, new ErrorListener() {
+
+						@Override
+						public void onErrorResponse(VolleyError arg0) {
+							isSavePostVisibilityCollectionRequestRunning = false;
+							makeToast("Unable to save data. Please check internet connection");
+
+							if (progressDialog != null)
+								progressDialog.dismiss();
+						}
+					}) {
+				@Override
+				protected Map<String, String> getParams()
+						throws AuthFailureError {
+					HashMap<String, String> p = new HashMap<>();
+					p.put("user_id", ZPreferences
+							.getUserProfileID(CreatePostActivity.this));
+					p.put("name", name);
+
+					JSONArray arrayBatches = new JSONArray();
+					for (int id : batchArray) {
+						arrayBatches.put(id);
 					}
-				}, new ErrorListener() {
-
-					@Override
-					public void onErrorResponse(VolleyError arg0) {
-						makeToast("Unable to save data. Please check internet connection");
-
-						if (progressDialog != null)
-							progressDialog.dismiss();
+					JSONArray arrayBranches = new JSONArray();
+					for (int id : branchesArray) {
+						arrayBranches.put(id);
 					}
-				}) {
-			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				HashMap<String, String> p = new HashMap<>();
-				p.put("user_id",
-						ZPreferences.getUserProfileID(CreatePostActivity.this));
-				p.put("name", name);
+					JSONArray arrayYears = new JSONArray();
+					for (int id : yearArray) {
+						arrayYears.put(id);
+					}
+					JSONArray arrayTeachers = new JSONArray();
+					for (int id : teacherArray) {
+						arrayTeachers.put(id);
+					}
 
-				JSONArray arrayBatches = new JSONArray();
-				for (int id : batchArray) {
-					arrayBatches.put(id);
-				}
-				JSONArray arrayBranches = new JSONArray();
-				for (int id : branchesArray) {
-					arrayBranches.put(id);
-				}
-				JSONArray arrayYears = new JSONArray();
-				for (int id : yearArray) {
-					arrayYears.put(id);
-				}
-				JSONArray arrayTeachers = new JSONArray();
-				for (int id : teacherArray) {
-					arrayTeachers.put(id);
-				}
+					p.put("batches_id", arrayBatches.toString());
+					p.put("branches_id", arrayBranches.toString());
+					p.put("years_id", arrayYears.toString());
+					p.put("teachers_id", arrayTeachers.toString());
 
-				p.put("batches_id", arrayBatches.toString());
-				p.put("branches_id", arrayBranches.toString());
-				p.put("years_id", arrayYears.toString());
-				p.put("teachers_id", arrayTeachers.toString());
-
-				return p;
-			}
-		};
-		ZApplication.getInstance().addToRequestQueue(req, savePostVisibilities);
+					return p;
+				}
+			};
+			ZApplication.getInstance().addToRequestQueue(req,
+					savePostVisibilities);
+		}
 	}
 
 	public void clickOnCreateNewCollectionButtonFromAllCollectionsFragment() {

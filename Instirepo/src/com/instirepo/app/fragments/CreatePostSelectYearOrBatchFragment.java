@@ -86,42 +86,55 @@ public class CreatePostSelectYearOrBatchFragment extends BaseFragment implements
 		showLoadingLayout();
 		hideErrorLayout();
 
-		StringRequest req = new StringRequest(Method.POST,
-				userRegistrationStep1Url, new Listener<String>() {
-					@Override
-					public void onResponse(String res) {
-						mData = new Gson().fromJson(res,
-								LoginScreenFragment2Object.class);
+		if (getActivity() != null
+				&& ((CreatePostActivity) getActivity()).loginScreenFragment2Object != null) {
+			mData = ((CreatePostActivity) getActivity()).loginScreenFragment2Object;
+			setAdapterData();
+		} else {
+			StringRequest req = new StringRequest(Method.POST,
+					userRegistrationStep1Url, new Listener<String>() {
+						@Override
+						public void onResponse(String res) {
+							mData = new Gson().fromJson(res,
+									LoginScreenFragment2Object.class);
 
-						if (getActivity() != null) {
-							if (postVisibilityOption == Z_VISIBILIY_BATCH) {
-								expandableListViewParent
-										.setAdapter(new ParentLevel());
-							} else if (postVisibilityOption == Z_VISIBILIY_YEAR) {
-								expandableListViewParent
-										.setAdapter(new YearsExpandableListAdapter());
-							}
+							((CreatePostActivity) getActivity()).loginScreenFragment2Object = mData;
+
+							setAdapterData();
 						}
+					}, new ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError arg0) {
+							hideLoadingLayout();
+							showErrorLayout();
+						}
+					}) {
+				@Override
+				protected Map<String, String> getParams()
+						throws AuthFailureError {
+					HashMap<String, String> p = new HashMap<>();
+					p.put("user_id",
+							ZPreferences.getUserProfileID(getActivity()));
+					return p;
+				}
+			};
+			ZApplication.getInstance().addToRequestQueue(req,
+					userRegistrationStep1Url);
+		}
+	}
 
-						hideErrorLayout();
-						hideLoadingLayout();
-					}
-				}, new ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError arg0) {
-						hideLoadingLayout();
-						showErrorLayout();
-					}
-				}) {
-			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				HashMap<String, String> p = new HashMap<>();
-				p.put("user_id", ZPreferences.getUserProfileID(getActivity()));
-				return p;
+	protected void setAdapterData() {
+		if (getActivity() != null) {
+			if (postVisibilityOption == Z_VISIBILIY_BATCH) {
+				expandableListViewParent.setAdapter(new ParentLevel());
+			} else if (postVisibilityOption == Z_VISIBILIY_YEAR) {
+				expandableListViewParent
+						.setAdapter(new YearsExpandableListAdapter());
 			}
-		};
-		ZApplication.getInstance().addToRequestQueue(req,
-				userRegistrationStep1Url);
+		}
+
+		hideErrorLayout();
+		hideLoadingLayout();
 	}
 
 	class YearsExpandableListAdapter extends BaseExpandableListAdapter {
