@@ -23,6 +23,7 @@
             android:src="@drawable/sample" />
 
         <LinearLayout
+            android:id="@+id/faketoolbalayouy"
             android:layout_width="match_parent"
             android:layout_height="@dimen/z_toolbar_height"
             android:orientation="horizontal" >
@@ -43,17 +44,15 @@
             </FrameLayout>
         </LinearLayout>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/indicator2"
+        <com.instirepo.app.widgets.PagerSlidingTabStrip
+            android:id="@+id/tab_strip_category"
             android:layout_width="match_parent"
             android:layout_height="@dimen/z_button_height"
             android:layout_gravity="bottom"
-            android:background="@android:color/transparent"
-            app:tabGravity="center"
-            app:tabIndicatorColor="@color/z_white"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/z_white"
-            app:tabTextColor="@color/z_white_transparency" />
+            app:pstsIndicatorColor="@color/z_white"
+            app:pstsPaddingMiddle="true"
+            app:pstsTextAllCaps="true"
+            app:pstsTextColorSelected="@color/z_white" />
     </FrameLayout>
 
     <LinearLayout
@@ -78,8 +77,9 @@
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/indicator"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/z_button_height"
+                android:layout_gravity="center_horizontal"
                 app:tabGravity="center"
                 app:tabIndicatorColor="@color/z_white"
                 app:tabMode="scrollable"

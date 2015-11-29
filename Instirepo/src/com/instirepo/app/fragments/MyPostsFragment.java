@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request.Method;
@@ -36,6 +38,7 @@ public class MyPostsFragment extends BaseFragment implements ZUrls {
 	Integer nextPage = 1;
 	boolean isMoreAllowed = true;
 	private Boolean isTeacherProfile;
+	LinearLayout progressSuperContainer;
 
 	public static MyPostsFragment newInstance(Bundle v) {
 		MyPostsFragment frg = new MyPostsFragment();
@@ -46,11 +49,14 @@ public class MyPostsFragment extends BaseFragment implements ZUrls {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.posts_by_teacher_fragment_layout,
-				container, false);
+		View v = inflater.inflate(
+				R.layout.my_posts_user_profile_fragment_layout, container,
+				false);
 
 		recyclerView = (RecyclerView) v
 				.findViewById(R.id.postsbyreachersrecyclef);
+		progressSuperContainer = (LinearLayout) v
+				.findViewById(R.id.progressupercontainer);
 		setProgressLayoutVariablesAndErrorVariables(v);
 
 		return v;
@@ -170,5 +176,38 @@ public class MyPostsFragment extends BaseFragment implements ZUrls {
 						isMoreAllowed);
 			}
 		}
+	}
+
+	@Override
+	void setProgressLayoutVariablesAndErrorVariables(View v) {
+		progressBar = (ProgressBar) v.findViewById(R.id.progressbarloading);
+		progressBarContainer = (LinearLayout) v
+				.findViewById(R.id.progressbarcontainer);
+
+		connectionErrorLayout = (LinearLayout) v
+				.findViewById(R.id.connection_error_layout);
+		retryDataConnectionLayout = (LinearLayout) v
+				.findViewById(R.id.retrylayoutconnectionerror);
+	}
+
+	void showLoadingLayout() {
+		progressBar.setVisibility(View.VISIBLE);
+		progressBarContainer.setVisibility(View.VISIBLE);
+		progressSuperContainer.setVisibility(View.VISIBLE);
+	}
+
+	void hideLoadingLayout() {
+		progressSuperContainer.setVisibility(View.GONE);
+		progressBar.setVisibility(View.GONE);
+		progressBarContainer.setVisibility(View.GONE);
+	}
+
+	void showErrorLayout() {
+		connectionErrorLayout.setVisibility(View.VISIBLE);
+	}
+
+	void hideErrorLayout() {
+		if (connectionErrorLayout != null)
+			connectionErrorLayout.setVisibility(View.GONE);
 	}
 }

@@ -12,7 +12,7 @@
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <item name="windowActionBarOverlay">true</item>
-        <item name="android:typeface">serif</item>
+        <item name="android:typeface">normal</item>
         <item name="colorPrimary">@color/PrimaryColor</item>
         <item name="colorPrimaryDark">@color/PrimaryDarkColor</item>
     </style>
@@ -24,7 +24,7 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:typeface">serif</item>
+        <item name="android:typeface">normal</item>
         <item name="colorPrimary">@color/PrimaryColor</item>
         <item name="colorPrimaryDark">@color/PrimaryDarkColor</item>
     </style>
@@ -42,8 +42,7 @@
         <item name="windowActionBar">false</item>
         <item name="android:typeface">serif</item>
         <item name="colorPrimary">@color/PrimaryColor</item>
-        <item name="colorPrimaryDark">@color/PrimaryDarkColor</item>
-        -->
+        <item name="colorPrimaryDark">@color/PrimaryDarkColor</item>        -->
 
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -51,7 +50,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:typeface">serif</item>
+        <item name="android:typeface">normal</item>
         <item name="colorPrimary">@color/PrimaryColor</item>
         <item name="colorPrimaryDark">@color/PrimaryDarkColor</item>
     </style>
@@ -59,7 +58,7 @@
     <style name="BNCNoActionBar" parent="@style/AppTheme">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:typeface">serif</item>
+        <item name="android:typeface">normal</item>
         <item name="colorPrimary">@color/PrimaryColor</item>
         <item name="colorPrimaryDark">@color/PrimaryDarkColor</item>
     </style>
@@ -67,7 +66,7 @@
     <style name="NoActionBarThemeTransparentStatusBar" parent="@style/AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:typeface">serif</item>
+        <item name="android:typeface">normal</item>
         <item name="colorPrimary">@color/PrimaryColor</item>
         <item name="colorPrimaryDark">@color/PrimaryDarkColor</item>
     </style>

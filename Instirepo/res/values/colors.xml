@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="psts_background_tab_pressed">#1AFFFFFF</color>
     <color name="PrimaryColor">#4490c7</color>
     <color name="PrimaryDarkColor">#136aa9</color>
     <color name="z_white">#ffffff</color>

@@ -165,7 +165,7 @@ public class MyPostsStudentsListAdapter extends
 		} else if (getItemViewType(pos) == Z_USER_PROFILE_ITEM_HEADER) {
 			FakeHeaderHolder holder = (FakeHeaderHolder) holderCom;
 			ViewGroup.LayoutParams params = holder.header.getLayoutParams();
-			params.height = ((UserProfileActivity) context).headerHeight -context.getResources().getDimensionPixelSize(R.dimen.z_margin_large);
+			params.height = ((UserProfileActivity) context).headerHeight;
 			holder.header.setLayoutParams(params);
 		}
 	}

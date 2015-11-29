@@ -513,6 +513,8 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 				super.onBackPressed();
 		} else if (fabBackground.getVisibility() == View.VISIBLE) {
 			hideFloatingActionMenu();
+		} else if (drawerLayout.isDrawerVisible(navigationView)) {
+			drawerLayout.closeDrawers();
 		} else
 			super.onBackPressed();
 	}

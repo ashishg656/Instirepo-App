@@ -60,4 +60,10 @@
     <dimen name="list_padding">0dp</dimen>
     <dimen name="list_item_padding">16dp</dimen>
 
+    <!-- swipe refresh -->
+    <dimen name="z_swipe_refresh_start_pos">90dp</dimen>
+    <dimen name="z_swipe_refresh_rest_pos">130dp</dimen>
+    <dimen name="z_swipe_refresh_start_pos_small">40dp</dimen>
+    <dimen name="z_swipe_refresh_rest_pos_small">80dp</dimen>
+
 </resources>

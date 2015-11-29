@@ -29,13 +29,15 @@ import com.instirepo.app.fragments.CommentsFragment;
 import com.instirepo.app.fragments.MyPostsFragment;
 import com.instirepo.app.fragments.SeenByPeopleFragment;
 import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
+import com.instirepo.app.widgets.PagerSlidingTabStrip;
 
 public class UserProfileActivity extends BaseActivity implements AppConstants,
 		OnPageChangeListener {
 
 	public int headerHeight, deviceHeight;
 	ViewPager viewPager;
-	TabLayout tabLayout, tabLayoutFake;
+	TabLayout tabLayout;
+	PagerSlidingTabStrip pagerSlidingTabStripFake;
 	MyPagerAdapter adapter;
 	public static final int TRANSLATION_DURATION = 200;
 	boolean isToolbarAnimRunning;
@@ -46,6 +48,7 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 	FrameLayout actualHeader;
 	int height48dp;
 	boolean isAppbarAlpharunning;
+	LinearLayout fakeToolbarLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +67,12 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		tabLayout = (TabLayout) findViewById(R.id.indicator);
-		tabLayoutFake = (TabLayout) findViewById(R.id.indicator2);
+		pagerSlidingTabStripFake = (PagerSlidingTabStrip) findViewById(R.id.tab_strip_category);
 		viewPager = (ViewPager) findViewById(R.id.pager_launch);
 		appBarLayout = (AppBarLayout) findViewById(R.id.appbarlayout);
 		appbarContainer = (LinearLayout) findViewById(R.id.appbarlayoutcontainer);
 		actualHeader = (FrameLayout) findViewById(R.id.actualheader);
+		fakeToolbarLayout = (LinearLayout) findViewById(R.id.faketoolbalayouy);
 
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -78,7 +82,9 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 		viewPager.setAdapter(adapter);
 		viewPager.setOffscreenPageLimit(3);
 		tabLayout.setupWithViewPager(viewPager);
-		tabLayoutFake.setupWithViewPager(viewPager);
+		pagerSlidingTabStripFake.setTextColor(getResources().getColor(
+				R.color.z_white));
+		pagerSlidingTabStripFake.setViewPager(viewPager);
 
 		appbarContainer.setVisibility(View.GONE);
 
@@ -87,7 +93,7 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 		params.height = headerHeight;
 		actualHeader.setLayoutParams(params);
 
-		viewPager.setOnPageChangeListener(this);
+		pagerSlidingTabStripFake.setOnPageChangeListener(this);
 	}
 
 	class MyPagerAdapter extends FragmentStatePagerAdapter {
@@ -100,11 +106,13 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 		public Fragment getItem(int pos) {
 			Bundle bundle = new Bundle();
 			if (pos == 0)
-				return MyPostsFragment.newInstance(bundle);
+				fragmentHashMap.put(pos, MyPostsFragment.newInstance(bundle));
 			else if (pos == 1)
-				return MyPostsFragment.newInstance(bundle);
+				fragmentHashMap.put(pos, MyPostsFragment.newInstance(bundle));
 			else
-				return MyPostsFragment.newInstance(bundle);
+				fragmentHashMap.put(pos, MyPostsFragment.newInstance(bundle));
+
+			return fragmentHashMap.get(pos);
 		}
 
 		@Override
@@ -205,6 +213,13 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 					appbarContainer.startAnimation(anim);
 				}
 			}
+
+			if (-top > headerHeight - appbarLayoutHeight) {
+
+			} else {
+				float trans = -top;
+				fakeToolbarLayout.setTranslationY(trans);
+			}
 		} else {
 			appbarContainer.setAlpha(1f);
 			appbarContainer.setVisibility(View.VISIBLE);
@@ -275,17 +290,35 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
-
+		if (arg0 == ViewPager.SCROLL_STATE_IDLE) {
+			makeHeightsOfRecyclerViewsEqualOnPageScroll();
+		} else if (arg0 == ViewPager.SCROLL_STATE_DRAGGING) {
+			makeHeightsOfRecyclerViewsEqualOnPageScroll();
+		}
 	}
 
 	@Override
 	public void onPageScrolled(int pos, float arg1, int arg2) {
+		// makeHeightsOfRecyclerViewsEqualOnPageScroll();
+	}
 
+	private void makeHeightsOfRecyclerViewsEqualOnPageScroll() {
+		for (int i = 0; i < 3; i++) {
+			if (i != viewPager.getCurrentItem()) {
+				((MyPostsFragment) fragmentHashMap.get(i)).layoutManager
+						.scrollToPositionWithOffset(0,
+								(int) actualHeader.getTranslationY());
+			}
+		}
 	}
 
 	@Override
 	public void onPageSelected(int arg0) {
-
+		for (int i = 0; i < 3; i++) {
+			((MyPostsFragment) fragmentHashMap.get(i)).layoutManager
+					.scrollToPositionWithOffset(0,
+							(int) actualHeader.getTranslationY());
+		}
 	}
 
 }

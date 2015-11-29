@@ -2,13 +2,18 @@ package com.instirepo.app.fragments;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request.Method;
@@ -25,11 +30,13 @@ import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.objects.PostsListObject;
 import com.instirepo.app.preferences.ZPreferences;
 
-public class PostsByStudentsFragment extends BaseFragment implements ZUrls {
+public class PostsByStudentsFragment extends BaseFragment implements ZUrls,
+		OnRefreshListener {
 
 	RecyclerView recyclerView;
 	LinearLayoutManager layoutManager;
 	PostsByStudentsListAdapter adapter;
+	SwipeRefreshLayout swipeRefreshLayout;
 
 	boolean isRequestRunning;
 	Integer nextPage = 1;
@@ -50,6 +57,8 @@ public class PostsByStudentsFragment extends BaseFragment implements ZUrls {
 		recyclerView = (RecyclerView) v
 				.findViewById(R.id.postsbyreachersrecyclef);
 		setProgressLayoutVariablesAndErrorVariables(v);
+		swipeRefreshLayout = (SwipeRefreshLayout) v
+				.findViewById(R.id.swipe_refresh_layout);
 
 		return v;
 	}
@@ -59,6 +68,17 @@ public class PostsByStudentsFragment extends BaseFragment implements ZUrls {
 		super.onActivityCreated(savedInstanceState);
 		layoutManager = new LinearLayoutManager(getActivity());
 		recyclerView.setLayoutManager(layoutManager);
+
+		swipeRefreshLayout.setOnRefreshListener(this);
+		swipeRefreshLayout.setColorSchemeResources(R.color.z_red_color_primary,
+				R.color.PrimaryDarkColor, R.color.z_green_color_primary,
+				R.color.purple_post);
+		swipeRefreshLayout.setProgressViewOffset(
+				false,
+				getResources().getDimensionPixelSize(
+						R.dimen.z_swipe_refresh_start_pos),
+				getResources().getDimensionPixelSize(
+						R.dimen.z_swipe_refresh_rest_pos));
 
 		recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 			@Override
@@ -147,5 +167,23 @@ public class PostsByStudentsFragment extends BaseFragment implements ZUrls {
 		} else {
 			adapter.addData(obj.getPosts(), isMoreAllowed);
 		}
+	}
+
+	@Override
+	public void onRefresh() {
+		swipeRefreshLayout.setRefreshing(true);
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(getActivity(), "Done",
+								Toast.LENGTH_SHORT).show();
+						swipeRefreshLayout.setRefreshing(false);
+					}
+				});
+			}
+		}, 2000);
 	}
 }

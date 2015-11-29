@@ -1,7 +1,6 @@
 package com.instirepo.app.adapters;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
