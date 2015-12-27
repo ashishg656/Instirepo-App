@@ -123,17 +123,9 @@ public class PostsByStudentsListAdapter extends
 				holder.imagePost.setVisibility(View.GONE);
 			} else {
 				holder.imagePost.setVisibility(View.VISIBLE);
-				ImageRequestManager.get(context).requestImage2(context,
+				ImageRequestManager.get(context).requestImage(context,
 						holder.imagePost,
-						ZApplication.getImageUrl(obj.getImage()),
-						new RequestBitmap() {
-
-							@Override
-							public void onRequestCompleted(Bitmap bitmap) {
-								holder.imagePost.requestLayout();
-								holder.imagePost.invalidate();
-							}
-						}, -1);
+						ZApplication.getImageUrl(obj.getImage()), -1);
 			}
 			ImageRequestManager.get(context).requestImage(context,
 					holder.userImage, obj.getUser_image(), -1);

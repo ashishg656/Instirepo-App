@@ -270,6 +270,8 @@ public class PEWImageView extends ImageView {
 				setMyScrollY((int) (Math.min(
 						Math.max((0.5f - interpolatedScrollDeltaY), -0.5f),
 						0.5f) * scrollSpaceY));
+		} else {
+			setMyScrollY(0);
 		}
 
 		if (scrollSpaceX != 0) {
@@ -289,6 +291,8 @@ public class PEWImageView extends ImageView {
 						Math.max((0.5f - interpolatedScrollDeltaX), -0.5f),
 						0.5f) * scrollSpaceX));
 			}
+		} else {
+			setMyScrollX(0);
 		}
 	}
 
