@@ -3,7 +3,6 @@ package com.instirepo.app.adapters;
 import java.util.List;
 
 import serverApi.ImageRequestManager;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

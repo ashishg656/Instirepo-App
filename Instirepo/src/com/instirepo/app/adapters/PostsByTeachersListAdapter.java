@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import serverApi.ImageRequestManager;
+import serverApi.ImageRequestManager.RequestBitmap;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
@@ -23,10 +25,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
@@ -94,7 +96,7 @@ public class PostsByTeachersListAdapter extends
 	public void onBindViewHolder(ViewHolder holderCom, int pos) {
 		pos = holderCom.getAdapterPosition();
 		if (getItemViewType(pos) == Z_RECYCLER_VIEW_ITEM_NORMAL) {
-			PostsHolderNormal holder = (PostsHolderNormal) holderCom;
+			final PostsHolderNormal holder = (PostsHolderNormal) holderCom;
 
 			holder.overflowIcon.setTag(holder);
 			holder.overflowIcon.setOnClickListener(clickListener);
@@ -118,9 +120,17 @@ public class PostsByTeachersListAdapter extends
 				holder.imagePost.setVisibility(View.GONE);
 			} else {
 				holder.imagePost.setVisibility(View.VISIBLE);
-				ImageRequestManager.get(context).requestImage(context,
+				ImageRequestManager.get(context).requestImage2(context,
 						holder.imagePost,
-						ZApplication.getImageUrl(obj.getImage()), -1);
+						ZApplication.getImageUrl(obj.getImage()),
+						new RequestBitmap() {
+
+							@Override
+							public void onRequestCompleted(Bitmap bitmap) {
+								holder.imagePost.requestLayout();
+								holder.imagePost.invalidate();
+							}
+						}, -1);
 			}
 			ImageRequestManager.get(context).requestImage(context,
 					holder.userImage, obj.getUser_image(), -1);

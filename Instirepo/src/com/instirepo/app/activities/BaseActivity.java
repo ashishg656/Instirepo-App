@@ -96,4 +96,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 			Snackbar.make(findViewById(R.id.coordinatorlayout), text,
 					Snackbar.LENGTH_SHORT).show();
 	}
+
+	void openMessagesListActivity() {
+		Intent i = new Intent(this, AllMessagesActivity.class);
+		startActivity(i);
+	}
 }

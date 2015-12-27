@@ -25,8 +25,7 @@
             <com.instirepo.app.widgets.CircularImageView
                 android:id="@+id/circularimage"
                 android:layout_width="@dimen/z_post_uploader_image_height"
-                android:layout_height="@dimen/z_post_uploader_image_height"
-                android:src="@drawable/test_user" />
+                android:layout_height="@dimen/z_post_uploader_image_height" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -151,7 +150,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/z_post_image_height"
             android:scaleType="centerCrop"
-            android:src="@drawable/sample"
             app:parallax_y="100dp"
             app:reverse="reverseY" />
     </FrameLayout>

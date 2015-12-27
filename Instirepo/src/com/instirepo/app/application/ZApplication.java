@@ -3,7 +3,6 @@ package com.instirepo.app.application;
 import java.io.File;
 
 import serverApi.NutraBaseImageDecoder;
-
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
@@ -61,7 +60,6 @@ public class ZApplication extends Application {
 				.cacheOnDisk(true).imageScaleType(ImageScaleType.IN_SAMPLE_INT)
 				.showImageOnLoading(R.drawable.symphony)
 				.decodingOptions(decodingOptions)
-
 				.bitmapConfig(Bitmap.Config.ARGB_8888).build();
 
 		final int memClass = ((ActivityManager) context

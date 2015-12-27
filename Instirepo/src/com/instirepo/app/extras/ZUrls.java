@@ -57,4 +57,7 @@ public interface ZUrls {
 	public String getPostsPostedByUser = ZApplication.getBaseUrl()
 			+ "get_posts_posted_by_user/";
 
+	public String getAllMessagesList = ZApplication.getBaseUrl()
+			+ "get_all_messages_list/";
+
 }

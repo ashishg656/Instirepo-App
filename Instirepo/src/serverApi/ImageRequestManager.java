@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.instirepo.app.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -25,7 +26,7 @@ public class ImageRequestManager {
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
 				.resetViewBeforeLoading(true).cacheInMemory(true)
 				.cacheOnDisk(true).imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-
+				.showImageOnLoading(R.drawable.symphony)
 				.bitmapConfig(Bitmap.Config.ARGB_8888).build();
 		if (position == -1) {
 			/*
@@ -99,7 +100,7 @@ public class ImageRequestManager {
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
 				.resetViewBeforeLoading(true).cacheInMemory(true)
 				.cacheOnDisk(true).imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-
+				.showImageOnLoading(R.drawable.symphony)
 				.bitmapConfig(Bitmap.Config.ARGB_8888).build();
 		/*
 		 * imageView.setBackgroundColor(context.getResources().getColor(
@@ -111,9 +112,9 @@ public class ImageRequestManager {
 					@Override
 					public void onLoadingComplete(String imageUri, View view,
 							Bitmap bitmap) {
+						requestBitmap.onRequestCompleted(bitmap);
 						imageView.setImageBitmap(bitmap);
 						// imageView.setBackgroundColor(0);
-						requestBitmap.onRequestCompleted(bitmap);
 					}
 
 					@Override

@@ -66,4 +66,7 @@
     <dimen name="z_swipe_refresh_start_pos_small">40dp</dimen>
     <dimen name="z_swipe_refresh_rest_pos_small">80dp</dimen>
 
+    <!-- Messages screen list -->
+    <dimen name="z_message_list_user_img_height">60dp</dimen>
+
 </resources>
