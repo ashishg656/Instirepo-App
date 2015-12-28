@@ -53,7 +53,7 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 		recyclerView = (RecyclerView) findViewById(R.id.mesaagelistrecycelr);
 
 		setSupportActionBar(toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 		layoutManager = new LinearLayoutManager(this,

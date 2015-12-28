@@ -83,7 +83,7 @@ public class MessageListAdapter extends
 
 			try {
 				if (TimeUtils.getSimpleDate(mData.get(pos).getTime()).equals(
-						mData.get(pos + 1))) {
+						TimeUtils.getSimpleDate(mData.get(pos + 1).getTime()))) {
 					holder.dateLayout.setVisibility(View.GONE);
 				} else {
 					holder.dateLayout.setVisibility(View.VISIBLE);

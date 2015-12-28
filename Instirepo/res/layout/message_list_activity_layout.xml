@@ -44,15 +44,17 @@
                     android:layout_marginRight="@dimen/z_margin_mini"
                     android:hint="Enter Message"
                     android:maxLines="5"
+                    android:scrollbars="vertical"
                     android:textColor="@color/z_text_color_dark"
                     android:textColorHint="@color/z_text_color_light"
-                    android:textSize="@dimen/z_font_mini" />
+                    android:textSize="@dimen/z_font_small" />
             </LinearLayout>
 
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/z_margin_mini"
+                android:src="@drawable/ic_send_white_fab"
                 app:backgroundTint="@color/PrimaryColor"
                 app:fabSize="mini" />
         </LinearLayout>

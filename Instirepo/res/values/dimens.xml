@@ -70,7 +70,7 @@
     <dimen name="z_message_list_user_img_height">60dp</dimen>
 
     <!-- Message list screen -->
-    <dimen name="z_message_list_toolbar_image_radius">50dp</dimen>
+    <dimen name="z_message_list_toolbar_image_radius">45dp</dimen>
     <dimen name="z_message_list_item_margin">60dp</dimen>
 
 </resources>

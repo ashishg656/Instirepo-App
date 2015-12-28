@@ -16,9 +16,22 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="@dimen/z_button_height"
+                android:layout_height="match_parent"
+                android:background="@drawable/z_user_profile_article_bg_selector"
+                android:clickable="true"
+                android:gravity="center" >
+
+                <ImageView
+                    android:layout_width="@dimen/z_margin_large"
+                    android:layout_height="@dimen/z_margin_large"
+                    android:src="@drawable/ic_navigation_arrow_back_white" />
+            </LinearLayout>
 
             <com.instirepo.app.widgets.CircularImageView
                 android:id="@+id/toolbarimagecircular"
@@ -32,6 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/z_margin_small"
+                android:singleLine="true"
                 android:text="Ashish Goel"
                 android:textColor="@color/z_white"
                 android:textSize="@dimen/z_font_medium"
