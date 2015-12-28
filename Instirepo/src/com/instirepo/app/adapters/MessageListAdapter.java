@@ -100,6 +100,30 @@ public class MessageListAdapter extends
 		}
 	}
 
+	public void addListItemAtBeginningOfList(String message, int localId) {
+		SingleMessage msg = new MessageListObject().new SingleMessage();
+		msg.setIs_by_user(true);
+		msg.setMessage(message);
+		msg.setTime(TimeUtils.getCurrentTimeString());
+		msg.setLocal_id(localId);
+
+		mData.add(0, msg);
+		notifyDataSetChanged();
+	}
+
+	public void notifyMessageResponseAsCorrectAndAddTickAndServerId(
+			String local_id_str, int server_id) {
+		int local_id = Integer.parseInt(local_id_str);
+		for (int i = 0; i < mData.size(); i++) {
+			if (mData.get(i).getLocal_id() != null
+					&& mData.get(i).getLocal_id() == local_id) {
+				mData.get(i).setNot_delivered(false);
+				mData.get(i).setServer_id(server_id);
+				notifyDataSetChanged();
+			}
+		}
+	}
+
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup vg, int type) {
 		if (type == Z_MESSAGE_LIST_TYPE_LAODING) {
@@ -144,5 +168,4 @@ public class MessageListAdapter extends
 			super(v);
 		}
 	}
-
 }

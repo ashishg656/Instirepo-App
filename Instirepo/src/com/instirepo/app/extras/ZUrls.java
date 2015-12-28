@@ -63,4 +63,7 @@ public interface ZUrls {
 	public String getMessagesForOneChat = ZApplication.getBaseUrl()
 			+ "get_messages_for_one_user/";
 
+	public String addMessageToChats = ZApplication.getBaseUrl()
+			+ "add_message_to_chats/";
+
 }

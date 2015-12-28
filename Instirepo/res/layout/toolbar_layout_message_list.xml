@@ -6,51 +6,43 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/z_toolbar_height"
         android:gravity="center_vertical"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+        android:orientation="horizontal" >
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:background="@drawable/z_user_profile_article_bg_selector"
+            android:clickable="true"
+            android:gravity="center" >
 
-            <LinearLayout
-                android:layout_width="@dimen/z_button_height"
-                android:layout_height="match_parent"
-                android:background="@drawable/z_user_profile_article_bg_selector"
-                android:clickable="true"
-                android:gravity="center" >
-
-                <ImageView
-                    android:layout_width="@dimen/z_margin_large"
-                    android:layout_height="@dimen/z_margin_large"
-                    android:src="@drawable/ic_navigation_arrow_back_white" />
-            </LinearLayout>
-
-            <com.instirepo.app.widgets.CircularImageView
-                android:id="@+id/toolbarimagecircular"
-                android:layout_width="@dimen/z_message_list_toolbar_image_radius"
-                android:layout_height="@dimen/z_message_list_toolbar_image_radius"
-                app:border="false"
-                app:shadow="false" />
-
-            <TextView
-                android:id="@+id/toolbartextname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/z_margin_small"
-                android:singleLine="true"
-                android:text="Ashish Goel"
-                android:textColor="@color/z_white"
-                android:textSize="@dimen/z_font_medium"
-                android:textStyle="bold" />
+            <ImageView
+                android:layout_width="@dimen/z_margin_large"
+                android:layout_height="@dimen/z_margin_large"
+                android:layout_marginLeft="@dimen/z_margin_supermini"
+                android:src="@drawable/ic_navigation_arrow_back_white" />
         </LinearLayout>
-    </android.support.v7.widget.Toolbar>
+
+        <com.instirepo.app.widgets.CircularImageView
+            android:id="@+id/toolbarimagecircular"
+            android:layout_width="@dimen/z_message_list_toolbar_image_radius"
+            android:layout_height="@dimen/z_message_list_toolbar_image_radius"
+            app:border="false"
+            app:shadow="false" />
+
+        <TextView
+            android:id="@+id/toolbartextname"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/z_margin_small"
+            android:singleLine="true"
+            android:text="Ashish Goel"
+            android:textColor="@color/z_white"
+            android:textSize="@dimen/z_font_medium"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </android.support.design.widget.AppBarLayout>

@@ -38,12 +38,13 @@
                 android:padding="@dimen/z_margin_mini" >
 
                 <EditText
+                    android:id="@+id/sendmessagedittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/z_margin_mini"
                     android:layout_marginRight="@dimen/z_margin_mini"
                     android:hint="Enter Message"
-                    android:maxLines="5"
+                    android:maxLines="4"
                     android:scrollbars="vertical"
                     android:textColor="@color/z_text_color_dark"
                     android:textColorHint="@color/z_text_color_light"
@@ -51,6 +52,7 @@
             </LinearLayout>
 
             <android.support.design.widget.FloatingActionButton
+                android:id="@+id/sendmessagebfab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/z_margin_mini"

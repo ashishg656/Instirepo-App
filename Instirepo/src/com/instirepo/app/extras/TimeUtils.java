@@ -13,6 +13,12 @@ import android.text.style.StyleSpan;
 
 public class TimeUtils {
 
+	public static String getCurrentTimeString() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		return sdf.format(date);
+	}
+
 	public static CharSequence getPostTime(String timestamp) {
 		try {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
@@ -63,14 +69,21 @@ public class TimeUtils {
 
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTimeInMillis(date.getTime());
+
 			String am_or_pm = calendar.get(Calendar.AM_PM) == Calendar.AM ? " AM"
 					: " PM";
+
 			String minutes = Integer.toString(calendar.get(Calendar.MINUTE));
+
 			if (calendar.get(Calendar.MINUTE) < 10) {
 				minutes = "0" + Integer.toString(calendar.get(Calendar.MINUTE));
 			}
-			String simpleDate = Integer.toString(calendar.get(Calendar.HOUR))
-					+ ":" + minutes + am_or_pm;
+
+			String hour = Integer.toString(calendar.get(Calendar.HOUR));
+			if (hour.equals("0"))
+				hour = "12";
+
+			String simpleDate = hour + ":" + minutes + am_or_pm;
 			return simpleDate;
 		} catch (Exception e) {
 			e.printStackTrace();
