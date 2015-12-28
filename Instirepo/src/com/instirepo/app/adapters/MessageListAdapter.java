@@ -8,9 +8,13 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.instirepo.app.R;
 import com.instirepo.app.extras.AppConstants;
+import com.instirepo.app.extras.TimeUtils;
 import com.instirepo.app.objects.MessageListObject;
 import com.instirepo.app.objects.MessageListObject.SingleMessage;
 
@@ -56,10 +60,41 @@ public class MessageListAdapter extends
 
 	@Override
 	public void onBindViewHolder(ViewHolder holdercom, int pos) {
+		pos = holdercom.getAdapterPosition();
 		if (getItemViewType(pos) == Z_MESSAGE_LIST_TYPE_CHAT_BY_PERSON
 				|| getItemViewType(pos) == Z_MESSAGE_LIST_TYPE_CHAT_BY_USER) {
 			MessageHolder holder = (MessageHolder) holdercom;
-			
+			SingleMessage obj = mData.get(pos);
+
+			if (obj.isIs_by_user() && obj.getServer_id() != null) {
+				holder.tickImage.setVisibility(View.VISIBLE);
+			} else {
+				holder.tickImage.setVisibility(View.GONE);
+			}
+
+			if (obj.isNot_delivered()) {
+				holder.retryLayout.setVisibility(View.VISIBLE);
+			} else {
+				holder.retryLayout.setVisibility(View.GONE);
+			}
+
+			holder.messageText.setText(obj.getMessage());
+			holder.messageTime.setText(TimeUtils.getChatTime(obj.getTime()));
+
+			try {
+				if (TimeUtils.getSimpleDate(mData.get(pos).getTime()).equals(
+						mData.get(pos + 1))) {
+					holder.dateLayout.setVisibility(View.GONE);
+				} else {
+					holder.dateLayout.setVisibility(View.VISIBLE);
+					holder.dateText.setText(TimeUtils.getChatDateDisplayed(obj
+							.getTime()));
+				}
+			} catch (Exception e) {
+				holder.dateLayout.setVisibility(View.VISIBLE);
+				holder.dateText.setText(TimeUtils.getChatDateDisplayed(obj
+						.getTime()));
+			}
 		} else {
 
 		}
@@ -88,8 +123,18 @@ public class MessageListAdapter extends
 
 	class MessageHolder extends RecyclerView.ViewHolder {
 
+		TextView messageText, messageTime, dateText;
+		ImageView tickImage;
+		LinearLayout dateLayout, retryLayout;
+
 		public MessageHolder(View v) {
 			super(v);
+			messageText = (TextView) v.findViewById(R.id.messagetext);
+			dateText = (TextView) v.findViewById(R.id.datetext);
+			dateLayout = (LinearLayout) v.findViewById(R.id.datelayout);
+			messageTime = (TextView) v.findViewById(R.id.messagetime);
+			tickImage = (ImageView) v.findViewById(R.id.tickmessage);
+			retryLayout = (LinearLayout) v.findViewById(R.id.retrybuttonmesg);
 		}
 	}
 
