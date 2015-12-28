@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import serverApi.ImageRequestManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -29,6 +31,7 @@ import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.objects.AddMessageResponseObject;
 import com.instirepo.app.objects.MessageListObject;
+import com.instirepo.app.objects.MessageListObject.SingleMessage;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.CircularImageView;
 
@@ -102,6 +105,22 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 				LinearLayoutManager.VERTICAL, true);
 		recyclerView.setLayoutManager(layoutManager);
 
+		recyclerView.addOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+				super.onScrolled(recyclerView, dx, dy);
+				if (recyclerView.getAdapter() != null) {
+					int lastitem = layoutManager.findLastVisibleItemPosition();
+					int totalitems = recyclerView.getAdapter().getItemCount();
+					int diff = totalitems - lastitem;
+					if (diff < 6 && !isRequestRunning && isMoreAllowed) {
+						loadData();
+					}
+				}
+			}
+		});
+
 		personName = getIntent().getStringExtra("person_name");
 		personImage = getIntent().getStringExtra("person_image");
 		personID = getIntent().getExtras().getInt("person_id") + "";
@@ -125,7 +144,7 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 		sendButton.setImageResource(R.drawable.ic_send_grey_fab);
 	}
 
-	private void sendPostMessageRequestToServer(final int localId2,
+	public void sendPostMessageRequestToServer(final int localId2,
 			final String messageText) {
 		StringRequest req = new StringRequest(Method.POST, addMessageToChats,
 				new Listener<String>() {
@@ -142,7 +161,7 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 
 					@Override
 					public void onErrorResponse(VolleyError arg0) {
-
+						adapter.notifyThatRequestFailed();
 					}
 				}) {
 			@Override
@@ -217,6 +236,25 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 			recyclerView.setAdapter(adapter);
 		} else {
 			adapter.addData(isMoreAllowed, obj.getMessages());
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (adapter != null) {
+			Intent data = new Intent();
+			data.putExtra("person_id", personID);
+			for (SingleMessage msg : adapter.mData) {
+				if (msg.getServer_id() != null) {
+					data.putExtra("last_message", msg.getMessage());
+					data.putExtra("time", msg.getTime());
+					break;
+				}
+			}
+			setResult(RESULT_OK, data);
+			finish();
+		} else {
+			finish();
 		}
 	}
 }

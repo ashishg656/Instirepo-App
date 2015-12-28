@@ -15,9 +15,12 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.instirepo.app.R;
+import com.instirepo.app.activities.AllMessagesActivity;
 import com.instirepo.app.activities.MessageListActivity;
+import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.TimeUtils;
 import com.instirepo.app.objects.AllMessagesListObject;
+import com.instirepo.app.objects.AllMessagesListObject.SingleMessageListObj;
 import com.instirepo.app.widgets.CircularImageView;
 
 public class AllMessageListAdapter extends BaseAdapter {
@@ -101,7 +104,23 @@ public class AllMessageListAdapter extends BaseAdapter {
 			i.putExtra("person_id", mData.get(pos).getPersonid());
 			i.putExtra("person_name", mData.get(pos).getName());
 			i.putExtra("person_image", mData.get(pos).getImage());
-			context.startActivity(i);
+			((AllMessagesActivity) context).startActivityForResult(i,
+					AppConstants.Z_REQUEST_CODE_MESSAGES_ACTIVITY);
+		}
+	}
+
+	public void updateEntryAfterBackPress(String personID, String message,
+			String time) {
+		int id = Integer.parseInt(personID);
+		for (SingleMessageListObj msg : mData) {
+			if (msg.getPersonid() == id) {
+				if (!msg.getLastmessage().equals(message)) {
+					msg.setLastmessage(message);
+					msg.setTime(time);
+					notifyDataSetChanged();
+				}
+				break;
+			}
 		}
 	}
 

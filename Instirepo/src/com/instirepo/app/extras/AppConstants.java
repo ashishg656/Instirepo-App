@@ -23,4 +23,6 @@ public interface AppConstants {
 	public int Z_MESSAGE_LIST_TYPE_LAODING = 1;
 	public int Z_MESSAGE_LIST_TYPE_CHAT_BY_USER = 2;
 	public int Z_MESSAGE_LIST_TYPE_CHAT_BY_PERSON = 3;
+
+	public static int Z_REQUEST_CODE_MESSAGES_ACTIVITY = 4578;
 }

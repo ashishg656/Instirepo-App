@@ -28,7 +28,7 @@ public class AllMessagesFragment extends BaseFragment implements ZUrls,
 		AppConstants {
 
 	ListView listView;
-	AllMessageListAdapter adapter;
+	public AllMessageListAdapter adapter;
 
 	public static AllMessagesFragment newInstance(Bundle b) {
 		AllMessagesFragment frg = new AllMessagesFragment();

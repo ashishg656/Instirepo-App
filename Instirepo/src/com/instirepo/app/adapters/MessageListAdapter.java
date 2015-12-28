@@ -7,12 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.instirepo.app.R;
+import com.instirepo.app.activities.MessageListActivity;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.TimeUtils;
 import com.instirepo.app.objects.MessageListObject;
@@ -21,9 +23,10 @@ import com.instirepo.app.objects.MessageListObject.SingleMessage;
 public class MessageListAdapter extends
 		RecyclerView.Adapter<RecyclerView.ViewHolder> implements AppConstants {
 
-	List<MessageListObject.SingleMessage> mData;
+	public List<MessageListObject.SingleMessage> mData;
 	boolean isMoreAllowed;
 	Context context;
+	MyClickListener clickListener;
 
 	public MessageListAdapter(List<SingleMessage> mData, boolean isMoreAllowed,
 			Context context) {
@@ -31,6 +34,7 @@ public class MessageListAdapter extends
 		this.mData = mData;
 		this.isMoreAllowed = isMoreAllowed;
 		this.context = context;
+		clickListener = new MyClickListener();
 	}
 
 	public void addData(boolean isMore, List<SingleMessage> data) {
@@ -78,6 +82,12 @@ public class MessageListAdapter extends
 				holder.retryLayout.setVisibility(View.GONE);
 			}
 
+			holder.retryLayout
+					.setTag(R.integer.z_select_post_tag_position, pos);
+			holder.retryLayout.setTag(R.integer.z_select_post_tag_holder,
+					holder);
+			holder.retryLayout.setOnClickListener(clickListener);
+
 			holder.messageText.setText(obj.getMessage());
 			holder.messageTime.setText(TimeUtils.getChatTime(obj.getTime()));
 
@@ -114,14 +124,23 @@ public class MessageListAdapter extends
 	public void notifyMessageResponseAsCorrectAndAddTickAndServerId(
 			String local_id_str, int server_id) {
 		int local_id = Integer.parseInt(local_id_str);
-		for (int i = 0; i < mData.size(); i++) {
-			if (mData.get(i).getLocal_id() != null
-					&& mData.get(i).getLocal_id() == local_id) {
-				mData.get(i).setNot_delivered(false);
-				mData.get(i).setServer_id(server_id);
+		for (SingleMessage msg : mData) {
+			if (msg.getLocal_id() != null && msg.getLocal_id() == local_id) {
+				msg.setNot_delivered(false);
+				msg.setServer_id(server_id);
 				notifyDataSetChanged();
+				break;
 			}
 		}
+	}
+
+	public void notifyThatRequestFailed() {
+		for (SingleMessage msg : mData) {
+			if (msg.getServer_id() == null) {
+				msg.setNot_delivered(true);
+			}
+		}
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -166,6 +185,24 @@ public class MessageListAdapter extends
 
 		public PostHolderLoading(View v) {
 			super(v);
+		}
+	}
+
+	class MyClickListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			int pos = (int) v.getTag(R.integer.z_select_post_tag_position);
+			MessageHolder holder = (MessageHolder) v
+					.getTag(R.integer.z_select_post_tag_holder);
+			if (holder != null) {
+				holder.retryLayout.setVisibility(View.GONE);
+			}
+			SingleMessage msg = mData.get(pos);
+			if (msg.getServer_id() == null && msg.isNot_delivered()) {
+				((MessageListActivity) context).sendPostMessageRequestToServer(
+						msg.getLocal_id(), msg.getMessage());
+			}
 		}
 	}
 }
