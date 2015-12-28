@@ -1,6 +1,12 @@
 package com.instirepo.app.adapters;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import serverApi.ImageRequestManager;
 import android.content.Context;
@@ -114,9 +120,33 @@ public class AllMessageListAdapter extends BaseAdapter {
 		int id = Integer.parseInt(personID);
 		for (SingleMessageListObj msg : mData) {
 			if (msg.getPersonid() == id) {
-				if (!msg.getLastmessage().equals(message)) {
+				if (!msg.getLastmessage().equals(message)
+						&& !msg.getTime().equals(time)) {
 					msg.setLastmessage(message);
 					msg.setTime(time);
+
+					Collections.sort(mData,
+							new Comparator<SingleMessageListObj>() {
+
+								@Override
+								public int compare(SingleMessageListObj a,
+										SingleMessageListObj b) {
+									SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+											TimeUtils.PARSER_FORMAT_FOR_DATES,
+											Locale.US);
+									Date dateLHS = null, dateRHS = null;
+									try {
+										dateLHS = simpleDateFormat.parse(a
+												.getTime());
+										dateRHS = simpleDateFormat.parse(b
+												.getTime());
+									} catch (ParseException e) {
+									}
+
+									return dateLHS.compareTo(dateRHS);
+								}
+							});
+
 					notifyDataSetChanged();
 				}
 				break;

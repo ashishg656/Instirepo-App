@@ -13,16 +13,18 @@ import android.text.style.StyleSpan;
 
 public class TimeUtils {
 
+	public static final String PARSER_FORMAT_FOR_DATES = "yyyy-MM-dd'T'HH:mm:ss";
+
 	public static String getCurrentTimeString() {
 		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat(PARSER_FORMAT_FOR_DATES);
 		return sdf.format(date);
 	}
 
 	public static CharSequence getPostTime(String timestamp) {
 		try {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+					PARSER_FORMAT_FOR_DATES, Locale.US);
 			Date date = simpleDateFormat.parse(timestamp);
 
 			Calendar calendar = Calendar.getInstance();
@@ -45,7 +47,7 @@ public class TimeUtils {
 	public static String getSimpleDate(String timestamp) {
 		try {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+					PARSER_FORMAT_FOR_DATES, Locale.US);
 			Date date = simpleDateFormat.parse(timestamp);
 
 			Calendar calendar = Calendar.getInstance();
@@ -64,7 +66,7 @@ public class TimeUtils {
 	public static String getChatTime(String timestamp) {
 		try {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+					PARSER_FORMAT_FOR_DATES, Locale.US);
 			Date date = simpleDateFormat.parse(timestamp);
 
 			Calendar calendar = Calendar.getInstance();
@@ -94,7 +96,7 @@ public class TimeUtils {
 	public static String getChatDateDisplayed(String timestamp) {
 		try {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+					PARSER_FORMAT_FOR_DATES, Locale.US);
 			Date dateObj = simpleDateFormat.parse(timestamp);
 
 			Calendar calendar = Calendar.getInstance();
