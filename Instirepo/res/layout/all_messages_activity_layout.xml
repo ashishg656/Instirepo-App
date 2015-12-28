@@ -5,6 +5,8 @@
     android:background="@color/z_white"
     android:orientation="vertical" >
 
+    <include layout="@layout/toolbar_layout" />
+
     <FrameLayout
         android:id="@+id/fragmentcontainer"
         android:layout_width="match_parent"

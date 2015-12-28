@@ -60,4 +60,7 @@ public interface ZUrls {
 	public String getAllMessagesList = ZApplication.getBaseUrl()
 			+ "get_all_messages_list/";
 
+	public String getMessagesForOneChat = ZApplication.getBaseUrl()
+			+ "get_messages_for_one_user/";
+
 }

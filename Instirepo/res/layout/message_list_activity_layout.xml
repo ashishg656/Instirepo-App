@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.instirepo.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/z_grey_shade_2"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <include layout="@layout/toolbar_layout_message_list" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mesaagelistrecycelr"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/z_toolbar_height"
+            android:scrollbars="vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/z_margin_mini"
+            android:orientation="horizontal"
+            android:padding="@dimen/z_margin_mini" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/z_margin_supermini"
+                android:layout_weight="1"
+                android:background="@drawable/chat_self_bubble"
+                android:padding="@dimen/z_margin_mini" >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/z_margin_mini"
+                    android:layout_marginRight="@dimen/z_margin_mini"
+                    android:hint="Enter Message"
+                    android:textColor="@color/z_text_color_dark"
+                    android:textColorHint="@color/z_text_color_light"
+                    android:textSize="@dimen/z_font_mini" />
+            </LinearLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/z_margin_mini"
+                app:backgroundTint="@color/PrimaryColor"
+                app:fabSize="mini" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/progress_layout" />
+
+    <include layout="@layout/error_layout" />
+
+</FrameLayout>

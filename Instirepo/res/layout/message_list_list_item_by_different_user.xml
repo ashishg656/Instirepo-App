@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/z_margin_large"
+        android:background="@drawable/chat_date_bubble"
+        android:padding="@dimen/z_margin_small" >
+
+        <TextView
+            android:id="@+id/datetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5 jan 2018"
+            android:textColor="@color/z_white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/z_margin_mini"
+            android:layout_marginLeft="@dimen/z_margin_mini"
+            android:layout_weight="1"
+            android:background="@drawable/chat_other_bubble" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:padding="@dimen/z_margin_small" >
+
+                <TextView
+                    android:id="@+id/messagetext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Some text here"
+                    android:textColor="@color/z_white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/z_margin_mini"
+                    android:gravity="right"
+                    android:text="10:00 am"
+                    android:textColor="@color/z_grey_shade_2"
+                    android:textSize="@dimen/z_font_supermini" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/z_message_list_item_margin"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

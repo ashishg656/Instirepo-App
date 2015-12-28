@@ -6,6 +6,7 @@
     android:orientation="vertical" >
 
     <FrameLayout
+        android:id="@+id/messagelistriplebg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -14,15 +15,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingLeft="@dimen/z_margin_large" >
+            android:paddingBottom="@dimen/z_margin_small"
+            android:paddingLeft="@dimen/z_margin_small"
+            android:paddingRight="@dimen/z_margin_small"
+            android:paddingTop="@dimen/z_margin_small" >
 
             <com.instirepo.app.widgets.CircularImageView
                 android:id="@+id/circularimage"
                 android:layout_width="@dimen/z_message_list_user_img_height"
-                android:layout_height="@dimen/z_message_list_user_img_height"
-                android:layout_marginTop="10dp" />
+                android:layout_height="@dimen/z_message_list_user_img_height" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -34,23 +37,18 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:orientation="horizontal" >
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/uploadrname"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:id="@+id/uploadrname"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ashish Goel"
-                            android:textColor="@color/z_text_color_dark"
-                            android:textStyle="bold" />
-                    </LinearLayout>
+                        android:singleLine="true"
+                        android:text="Ashish Goel"
+                        android:textColor="@color/z_text_color_dark"
+                        android:textSize="@dimen/z_font_small"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/time"
@@ -66,8 +64,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/z_margin_large"
-                    android:layout_marginTop="@dimen/z_margin_supermini"
-                    android:text="Ashish Goel commented this line out He is best known as an early employee and key technical contributor at the original Napster, the file-sharing service created by"
+                    android:layout_marginTop="@dimen/z_margin_mini"
+                    android:singleLine="true"
                     android:textColor="@color/z_text_color_dark" />
             </LinearLayout>
         </LinearLayout>

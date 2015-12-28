@@ -19,4 +19,8 @@ public interface AppConstants {
 	public int Z_VISIBILIY_TEACHER = 4;
 
 	public int Z_USER_PROFILE_ITEM_HEADER = 2;
+
+	public int Z_MESSAGE_LIST_TYPE_LAODING = 1;
+	public int Z_MESSAGE_LIST_TYPE_CHAT_BY_USER = 2;
+	public int Z_MESSAGE_LIST_TYPE_CHAT_BY_PERSON = 3;
 }
