@@ -44,7 +44,7 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 	RecyclerView recyclerView;
 	LinearLayoutManager layoutManager;
 
-	MessageListAdapter adapter;
+	public MessageListAdapter adapter;
 
 	boolean isMoreAllowed, isRequestRunning;
 	int nextPage = 1;
@@ -53,6 +53,30 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 	FloatingActionButton sendButton;
 
 	int localId = 0;
+
+	public static MessageListActivity sInstance;
+	public static String personIDStatic;
+
+	@Override
+	protected void onResume() {
+		sInstance = this;
+		personIDStatic = personID;
+		super.onResume();
+	}
+
+	@Override
+	protected void onStop() {
+		sInstance = null;
+		personIDStatic = null;
+		super.onStop();
+	}
+
+	@Override
+	protected void onDestroy() {
+		sInstance = null;
+		personIDStatic = null;
+		super.onDestroy();
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +148,7 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 		personName = getIntent().getStringExtra("person_name");
 		personImage = getIntent().getStringExtra("person_image");
 		personID = getIntent().getExtras().getInt("person_id") + "";
+		personIDStatic = personID;
 
 		ImageRequestManager.get(this).requestImage(this, personImageView,
 				personImage, -1);
@@ -143,7 +168,7 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 		sendMessageEditText.setText("");
 		sendButton.setImageResource(R.drawable.ic_send_grey_fab);
 	}
-
+	
 	public void sendPostMessageRequestToServer(final int localId2,
 			final String messageText) {
 		StringRequest req = new StringRequest(Method.POST, addMessageToChats,

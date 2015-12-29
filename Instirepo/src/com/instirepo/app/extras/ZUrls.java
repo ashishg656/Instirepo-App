@@ -66,4 +66,7 @@ public interface ZUrls {
 	public String addMessageToChats = ZApplication.getBaseUrl()
 			+ "add_message_to_chats/";
 
+	public String addGCMTokenToServer = ZApplication.getBaseUrl()
+			+ "add_gcm_token_for_user";
+
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
@@ -27,6 +28,7 @@ import com.instirepo.app.activities.HomeActivity;
 import com.instirepo.app.adapters.PostsByTeachersListAdapter;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.ZUrls;
+import com.instirepo.app.gcm.RegistrationIntentService;
 import com.instirepo.app.objects.PostsListObject;
 import com.instirepo.app.preferences.ZPreferences;
 
@@ -129,6 +131,12 @@ public class PostsByTeachersFragment extends BaseFragment implements ZUrls,
 						if (adapter == null) {
 							hideErrorLayout();
 							hideLoadingLayout();
+
+							if (ZPreferences.isUserLogIn(getActivity())) {
+								Intent intent = new Intent(getActivity(),
+										RegistrationIntentService.class);
+								getActivity().startService(intent);
+							}
 						}
 						PostsListObject obj = new Gson().fromJson(res,
 								PostsListObject.class);

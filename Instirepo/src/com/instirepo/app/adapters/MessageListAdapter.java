@@ -121,6 +121,18 @@ public class MessageListAdapter extends
 		notifyDataSetChanged();
 	}
 
+	public void addDataAtBegginingWhenReceicedThroughGCM(String message,
+			int messageId) {
+		SingleMessage msg = new MessageListObject().new SingleMessage();
+		msg.setIs_by_user(false);
+		msg.setMessage(message);
+		msg.setTime(TimeUtils.getCurrentTimeString());
+		msg.setServer_id(messageId);
+
+		mData.add(0, msg);
+		notifyDataSetChanged();
+	}
+
 	public void notifyMessageResponseAsCorrectAndAddTickAndServerId(
 			String local_id_str, int server_id) {
 		int local_id = Integer.parseInt(local_id_str);
