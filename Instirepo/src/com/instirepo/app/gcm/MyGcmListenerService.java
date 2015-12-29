@@ -21,8 +21,10 @@ public class MyGcmListenerService extends GcmListenerService {
 	@Override
 	public void onMessageReceived(String from, Bundle data) {
 		final String message = data.getString("message");
-		int senderId = data.getInt("sender_id");
-		final int messageId = data.getInt("id");
+		String senderIdStr = data.getString("sender_id");
+		int senderId = Integer.parseInt(senderIdStr);
+		final String messageIdStr = data.getString("id");
+		final int messageId = Integer.parseInt(messageIdStr);
 		String senderName = data.getString("sender_name");
 
 		if (MessageListActivity.sInstance != null
