@@ -34,7 +34,7 @@ public class CreatePostSelectTeacherFragment extends BaseFragment implements
 	RecyclerView recyclerView;
 	LinearLayoutManager layoutManager;
 	CreatePostSelectTeacherListAdapter adapter;
-	TextView okButton;
+	TextView okButton, dialogHeading;
 
 	boolean isRequestRunning;
 	boolean isMoreAllowed = true;
@@ -57,6 +57,8 @@ public class CreatePostSelectTeacherFragment extends BaseFragment implements
 				.findViewById(R.id.postsbyreachersrecyclef);
 		okButton = (TextView) v.findViewById(R.id.okbuttonseen);
 		setProgressLayoutVariablesAndErrorVariables(v);
+		dialogHeading = (TextView) v
+				.findViewById(R.id.seenbydialogheadingofrdelectteacher);
 
 		return v;
 	}
@@ -67,6 +69,9 @@ public class CreatePostSelectTeacherFragment extends BaseFragment implements
 
 		layoutManager = new LinearLayoutManager(getActivity());
 		recyclerView.setLayoutManager(layoutManager);
+
+		dialogHeading.setText(getActivity().getResources().getString(
+				R.string.z_select_teacher));
 
 		okButton.setOnClickListener(this);
 

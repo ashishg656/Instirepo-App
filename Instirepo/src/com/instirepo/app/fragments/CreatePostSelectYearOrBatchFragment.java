@@ -43,7 +43,7 @@ public class CreatePostSelectYearOrBatchFragment extends BaseFragment implements
 
 	ExpandableListView expandableListViewParent;
 	LoginScreenFragment2Object mData;
-	TextView okButton;
+	TextView okButton, dialogHeading;
 	ArrayList<Integer> batches, years;
 	ArrayList<String> batchesString, yearsString;
 	int postVisibilityOption;
@@ -65,6 +65,7 @@ public class CreatePostSelectYearOrBatchFragment extends BaseFragment implements
 				.findViewById(R.id.exlvlevel1);
 		setProgressLayoutVariablesAndErrorVariables(v);
 		okButton = (TextView) v.findViewById(R.id.okbuttonseen);
+		dialogHeading = (TextView) v.findViewById(R.id.dialogheadingselext);
 
 		return v;
 	}
@@ -78,6 +79,13 @@ public class CreatePostSelectYearOrBatchFragment extends BaseFragment implements
 		batchesString = ((CreatePostActivity) getActivity()).batchArrayString;
 		years = ((CreatePostActivity) getActivity()).yearArray;
 		yearsString = ((CreatePostActivity) getActivity()).yearArrayString;
+
+		if (postVisibilityOption == Z_VISIBILIY_BATCH)
+			dialogHeading.setText(getActivity().getResources().getString(
+					R.string.z_select_batch));
+		else if (postVisibilityOption == Z_VISIBILIY_YEAR)
+			dialogHeading.setText(getActivity().getResources().getString(
+					R.string.z_select_year));
 
 		loadData();
 	}

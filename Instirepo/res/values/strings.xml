@@ -24,4 +24,10 @@
     <string name="error_selecting_file">Error selecting File</string>
     <string name="internal_storage">Internal storage</string>
 
+    <!-- Create POST Activity -->
+    <string name="z_select_teacher">Select Professors</string>
+    <string name="z_select_branch">Select Branches</string>
+    <string name="z_select_batch">Select Batches</string>
+    <string name="z_select_year">Select Academic Years</string>
+
 </resources>

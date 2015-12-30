@@ -69,7 +69,7 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 
 	boolean isSavePostVisibilityCollectionRequestRunning;
 	ProgressDialog progressDialog;
-	
+
 	public LoginScreenFragment2Object loginScreenFragment2Object;
 
 	@Override
@@ -323,6 +323,8 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 							CreatePostActivity.this.onBackPressed();
 
 							createPostFragment2.callHideSaveButtonFunction();
+
+							changeToSecondViewPagerTabAfterSavingACollection();
 						}
 					}, new ErrorListener() {
 
@@ -371,6 +373,12 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 			ZApplication.getInstance().addToRequestQueue(req,
 					savePostVisibilities);
 		}
+	}
+
+	protected void changeToSecondViewPagerTabAfterSavingACollection() {
+		createPostFragment2.viewPager.setCurrentItem(1, true);
+		((BaseActivity) this)
+				.showSnackBar("Now select one option from your collections/shortcuts to publish post");
 	}
 
 	public void clickOnCreateNewCollectionButtonFromAllCollectionsFragment() {

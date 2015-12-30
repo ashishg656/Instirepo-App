@@ -32,7 +32,7 @@ public class CreatePostSelectBranchFragment extends BaseFragment implements
 
 	LoginScreenFragment2Object mData;
 	ListView listView;
-	TextView okButton;
+	TextView okButton, dialogHeading;
 
 	public static CreatePostSelectBranchFragment newInstance(Bundle b) {
 		CreatePostSelectBranchFragment frg = new CreatePostSelectBranchFragment();
@@ -50,6 +50,7 @@ public class CreatePostSelectBranchFragment extends BaseFragment implements
 		listView = (ListView) v.findViewById(R.id.postsbyreachersrecyclef);
 		setProgressLayoutVariablesAndErrorVariables(v);
 		okButton = (TextView) v.findViewById(R.id.okbuttonseen);
+		dialogHeading = (TextView) v.findViewById(R.id.dialohgexnjksnbkj);
 
 		return v;
 	}
@@ -59,6 +60,8 @@ public class CreatePostSelectBranchFragment extends BaseFragment implements
 		super.onActivityCreated(savedInstanceState);
 		okButton.setOnClickListener(this);
 
+		dialogHeading.setText(getActivity().getResources().getString(
+				R.string.z_select_branch));
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
 		loadData();
