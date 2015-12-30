@@ -11,7 +11,15 @@ public class UserProfileViewedByOtherObject {
 	int upvotes;
 	int downvotes;
 	boolean has_upvoted;
-	boolean has_downvoted;
+	boolean has_downvoted, is_blocked;
+
+	public boolean isIs_blocked() {
+		return is_blocked;
+	}
+
+	public void setIs_blocked(boolean is_blocked) {
+		this.is_blocked = is_blocked;
+	}
 
 	public boolean isIs_professor() {
 		return is_professor;

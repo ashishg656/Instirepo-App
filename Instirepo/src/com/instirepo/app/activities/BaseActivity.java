@@ -101,4 +101,18 @@ public abstract class BaseActivity extends AppCompatActivity {
 		Intent i = new Intent(this, AllMessagesActivity.class);
 		startActivity(i);
 	}
+
+	public void openUserProfileActivity() {
+		Intent i = new Intent(this, UserProfileActivity.class);
+		startActivity(i);
+	}
+
+	public void openUserChatWithPersonUserActivity(int id, String name,
+			String image) {
+		Intent i = new Intent(this, MessageListActivity.class);
+		i.putExtra("person_id", id);
+		i.putExtra("person_name", name);
+		i.putExtra("person_image", image);
+		startActivity(i);
+	}
 }

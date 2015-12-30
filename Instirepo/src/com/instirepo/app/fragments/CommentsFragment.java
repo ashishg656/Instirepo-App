@@ -45,6 +45,7 @@ import com.instirepo.app.objects.AddCommentObject;
 import com.instirepo.app.objects.CommentsListObject;
 import com.instirepo.app.objects.CommentsListObject.CommentObject;
 import com.instirepo.app.preferences.ZPreferences;
+import com.instirepo.app.widgets.CustomGoogleFloatingActionButton;
 
 @SuppressLint("NewApi")
 public class CommentsFragment extends BaseFragment implements OnClickListener,
@@ -52,7 +53,7 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 
 	ListView listView;
 	CommentListAdapter adapter;
-	FloatingActionButton addCommentFab;
+	CustomGoogleFloatingActionButton addCommentFab;
 	public LinearLayout addCommentLayout;
 	int dimen16, dimen56;
 	private int deviceWidth;
@@ -86,7 +87,7 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 				false);
 
 		listView = (ListView) v.findViewById(R.id.commentlist);
-		addCommentFab = (FloatingActionButton) v
+		addCommentFab = (CustomGoogleFloatingActionButton) v
 				.findViewById(R.id.adddocmmentfab);
 		addCommentLayout = (LinearLayout) v.findViewById(R.id.commentlayoutadd);
 		setProgressLayoutVariablesAndErrorVariables(v);

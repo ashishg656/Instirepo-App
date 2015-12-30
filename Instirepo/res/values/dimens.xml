@@ -73,4 +73,7 @@
     <dimen name="z_message_list_toolbar_image_radius">45dp</dimen>
     <dimen name="z_message_list_item_margin">60dp</dimen>
 
+    <!-- FAB -->
+    <dimen name="z_fab_margin_0_for_v21">0dp</dimen>
+
 </resources>

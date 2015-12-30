@@ -44,6 +44,7 @@ import com.instirepo.app.R;
 import com.instirepo.app.activities.CreatePostActivity;
 import com.instirepo.app.afilechooser.utils.FileUtils;
 import com.instirepo.app.objects.AllPostCategoriesObject;
+import com.instirepo.app.widgets.CustomGoogleFloatingActionButton;
 import com.instirepo.app.widgets.RoundedImageView;
 
 public class CreatePostFragment1OtherCategory extends BaseFragment implements
@@ -68,7 +69,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	String fileName;
 
 	ProgressDialog progressDialog;
-	FloatingActionButton floatingActionButton;
+	CustomGoogleFloatingActionButton floatingActionButton;
 	public EditText postHeading, postDescription, postCompanyName;
 
 	public static CreatePostFragment1OtherCategory newInstance(Bundle b) {
@@ -98,7 +99,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 				.findViewById(R.id.addadeadttachments);
 		addedAttachmentsView = (View) v.findViewById(R.id.vieforatatchdcdnckl);
 		companyNameLayout = (LinearLayout) v.findViewById(R.id.compaynamlayout);
-		floatingActionButton = (FloatingActionButton) v
+		floatingActionButton = (CustomGoogleFloatingActionButton) v
 				.findViewById(R.id.createpostfab);
 		postHeading = (EditText) v.findViewById(R.id.postHeading);
 		postDescription = (EditText) v.findViewById(R.id.postdesciption);

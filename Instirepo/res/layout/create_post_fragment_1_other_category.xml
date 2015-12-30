@@ -230,12 +230,12 @@
         </LinearLayout>
     </ScrollView>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.instirepo.app.widgets.CustomGoogleFloatingActionButton
         android:id="@+id/createpostfab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_margin="@dimen/z_margin_large"
+        android:layout_margin="@dimen/z_fab_margin_0_for_v21"
         android:src="@drawable/ic_send_white_fab"
         app:backgroundTint="@color/PrimaryColor"
         app:fabSize="normal" />

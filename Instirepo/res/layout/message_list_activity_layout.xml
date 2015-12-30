@@ -50,7 +50,7 @@
                     android:textSize="@dimen/z_font_small" />
             </LinearLayout>
 
-            <android.support.design.widget.FloatingActionButton
+            <com.instirepo.app.widgets.CustomGoogleFloatingActionButton
                 android:id="@+id/sendmessagebfab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

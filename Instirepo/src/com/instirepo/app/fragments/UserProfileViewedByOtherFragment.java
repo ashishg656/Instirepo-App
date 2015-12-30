@@ -78,6 +78,8 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 	int userId;
 	String name, image;
 
+	UserProfileViewedByOtherObject mData;
+
 	TextView userName, designation, about, branch, batch, year, numberOfPosts,
 			numberOfUpvotes, numberOfDownvotes, editProfile, blockUser,
 			messageOnInstirepo, emailUser, callUser,
@@ -256,6 +258,8 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 					}
 				});
 
+		setTouchListenersOnScrollView();
+
 		loadData();
 	}
 
@@ -300,6 +304,7 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 	}
 
 	protected void setScrollViewData(UserProfileViewedByOtherObject obj) {
+		mData = obj;
 		mainContentLayout.setVisibility(View.VISIBLE);
 		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) progressLayoutContainer
 				.getLayoutParams();
@@ -327,6 +332,11 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 			editProfile.setVisibility(View.GONE);
 		}
 
+		editProfile.setOnClickListener(this);
+		blockUser.setOnClickListener(this);
+
+		setTextInBlockUserTextViewBasedOnBoolean();
+
 		if (obj.getResume() == null) {
 			resumeLayout.setVisibility(View.GONE);
 		}
@@ -347,6 +357,10 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 			contactUserLayout.setVisibility(View.GONE);
 		}
 
+		messageOnInstirepo
+				.setText("Message " + obj.getName() + " on INSTIREPO");
+		messageOnInstirepo.setOnClickListener(this);
+
 		if (obj.isHas_downvoted()) {
 			downVoteButton.setSelected(true);
 		} else if (obj.isHas_upvoted()) {
@@ -359,8 +373,6 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		if (obj.isIs_professor() || obj.isIs_senior_professor()) {
 			downVoteButton.setVisibility(View.GONE);
 		}
-
-		setTouchListenersOnScrollView();
 	}
 
 	void setTouchListenersOnScrollView() {
@@ -535,9 +547,61 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		case R.id.downvotebutton:
 			makeUpvoteDownvoteRequest(false);
 			break;
+		case R.id.viewfullprofile:
+			((BaseActivity) getActivity()).openUserProfileActivity();
+			break;
+		case R.id.blockuser:
+			makeRequestToBlockUser();
+			break;
+		case R.id.messageoninstiepo:
+			((BaseActivity) getActivity()).openUserChatWithPersonUserActivity(
+					userId, mData.getName(), mData.getImage());
+			break;
 
 		default:
 			break;
+		}
+	}
+
+	private void makeRequestToBlockUser() {
+		if (mData == null)
+			return;
+
+		mData.setIs_blocked(!mData.isIs_blocked());
+		setTextInBlockUserTextViewBasedOnBoolean();
+
+		StringRequest req = new StringRequest(Method.POST, blockUserRequestUrl,
+				new Listener<String>() {
+
+					@Override
+					public void onResponse(String arg0) {
+						Log.w("As", "blocked user");
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						mData.setIs_blocked(!mData.isIs_blocked());
+						setTextInBlockUserTextViewBasedOnBoolean();
+						makeToast("Unable to send request to block user. Check internet");
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				Map<String, String> p = new HashMap<>();
+				p.put("user_id", ZPreferences.getUserProfileID(getActivity()));
+				p.put("person_id", userId + "");
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, blockUserRequestUrl);
+	}
+
+	void setTextInBlockUserTextViewBasedOnBoolean() {
+		if (mData.isIs_blocked()) {
+			blockUser.setText("UNBLOCK USER");
+		} else {
+			blockUser.setText("BLOCK USER");
 		}
 	}
 

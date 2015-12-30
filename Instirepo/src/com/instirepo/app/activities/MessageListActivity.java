@@ -34,6 +34,7 @@ import com.instirepo.app.objects.MessageListObject;
 import com.instirepo.app.objects.MessageListObject.SingleMessage;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.CircularImageView;
+import com.instirepo.app.widgets.CustomGoogleFloatingActionButton;
 
 public class MessageListActivity extends BaseActivity implements AppConstants,
 		ZUrls {
@@ -50,7 +51,7 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 	int nextPage = 1;
 
 	EditText sendMessageEditText;
-	FloatingActionButton sendButton;
+	CustomGoogleFloatingActionButton sendButton;
 
 	int localId = 0;
 
@@ -89,7 +90,7 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 		toolbarText = (TextView) findViewById(R.id.toolbartextname);
 		recyclerView = (RecyclerView) findViewById(R.id.mesaagelistrecycelr);
 		sendMessageEditText = (EditText) findViewById(R.id.sendmessagedittext);
-		sendButton = (FloatingActionButton) findViewById(R.id.sendmessagebfab);
+		sendButton = (CustomGoogleFloatingActionButton) findViewById(R.id.sendmessagebfab);
 
 		sendButton.setImageResource(R.drawable.ic_send_grey_fab);
 
@@ -168,7 +169,7 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 		sendMessageEditText.setText("");
 		sendButton.setImageResource(R.drawable.ic_send_grey_fab);
 	}
-	
+
 	public void sendPostMessageRequestToServer(final int localId2,
 			final String messageText) {
 		StringRequest req = new StringRequest(Method.POST, addMessageToChats,
