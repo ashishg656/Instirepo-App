@@ -6,6 +6,7 @@
     android:orientation="vertical" >
 
     <FrameLayout
+        android:id="@+id/commentlayouttoopenuserprofile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -61,6 +62,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/commentflaglayou"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="@dimen/z_margin_mini"
@@ -69,6 +71,7 @@
                         android:gravity="center" >
 
                         <ImageView
+                            android:id="@+id/commentflgimage"
                             android:layout_width="@dimen/z_margin_large"
                             android:layout_height="@dimen/z_margin_large"
                             android:src="@drawable/flag_button_selector" />
@@ -81,7 +84,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/z_margin_large"
                     android:layout_marginTop="@dimen/z_margin_supermini"
-                    android:text="Ashish Goel commented this line out He is best known as an early employee and key technical contributor at the original Napster, the file-sharing service created by"
                     android:textColor="@color/z_text_color_dark" />
             </LinearLayout>
         </LinearLayout>

@@ -504,8 +504,15 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG);
 		Fragment fragmentComments = getSupportFragmentManager()
 				.findFragmentByTag(Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG);
+		Fragment fragmentUserProfileOpenedFromCommentsListAdapter = getSupportFragmentManager()
+				.findFragmentByTag(
+						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG_FROM_COMMENT_LIST_ADAPTER);
 
-		if (fragmentUserProfile != null
+		if (fragmentUserProfileOpenedFromCommentsListAdapter != null
+				&& !((UserProfileViewedByOtherFragment) fragmentUserProfileOpenedFromCommentsListAdapter).fragmentDestroyed) {
+			((UserProfileViewedByOtherFragment) fragmentUserProfileOpenedFromCommentsListAdapter)
+					.dismissScrollViewDownCalledFromActivityBackPressed();
+		} else if (fragmentUserProfile != null
 				&& !((UserProfileViewedByOtherFragment) fragmentUserProfile).fragmentDestroyed) {
 			((UserProfileViewedByOtherFragment) fragmentUserProfile)
 					.dismissScrollViewDownCalledFromActivityBackPressed();

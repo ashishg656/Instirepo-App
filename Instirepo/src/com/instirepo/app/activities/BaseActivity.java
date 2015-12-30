@@ -87,7 +87,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 			connectionErrorLayout.setVisibility(View.GONE);
 	}
 
-	void makeToast(String text) {
+	public void makeToast(String text) {
 		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 	}
 

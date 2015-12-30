@@ -72,4 +72,7 @@ public interface ZUrls {
 	public String blockUserRequestUrl = ZApplication.getBaseUrl()
 			+ "block_user_request/";
 
+	public String flagCommentOnPost = ZApplication.getBaseUrl()
+			+ "flag_comment_on_post/";
+
 }

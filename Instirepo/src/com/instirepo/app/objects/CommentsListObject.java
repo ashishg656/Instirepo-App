@@ -11,7 +11,24 @@ public class CommentsListObject {
 	public class CommentObject {
 		int id;
 		String comment, time, user_name, user_image;
-		boolean is_by_user, is_different_color;
+		int user_id;
+		boolean is_by_user, is_different_color, is_flagged;
+
+		public int getUser_id() {
+			return user_id;
+		}
+
+		public void setUser_id(int user_id) {
+			this.user_id = user_id;
+		}
+
+		public boolean isIs_flagged() {
+			return is_flagged;
+		}
+
+		public void setIs_flagged(boolean is_flagged) {
+			this.is_flagged = is_flagged;
+		}
 
 		public boolean isIs_different_color() {
 			return is_different_color;
