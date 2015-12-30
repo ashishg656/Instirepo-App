@@ -43,6 +43,7 @@ public class CommentListAdapter extends BaseAdapter implements ZUrls,
 	MyClickListener clickListener;
 
 	int flagCommentPosition;
+	CommentHolder flagCommentHolder;
 
 	public CommentListAdapter(Context context, List<CommentObject> mData) {
 		super();
@@ -145,15 +146,24 @@ public class CommentListAdapter extends BaseAdapter implements ZUrls,
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.commentflaglayou:
-				int pos = (int) v.getTag(R.integer.z_select_post_tag_position);
-				mData.get(pos).setIs_flagged(!mData.get(pos).isIs_flagged());
-				flagCommentPosition = pos;
-				notifyDataSetChanged();
+				flagCommentHolder = (CommentHolder) v
+						.getTag(R.integer.z_select_post_tag_holder);
+				flagCommentPosition = (int) v
+						.getTag(R.integer.z_select_post_tag_position);
+				mData.get(flagCommentPosition).setIs_flagged(
+						!mData.get(flagCommentPosition).isIs_flagged());
+
+				if (flagCommentHolder != null) {
+					if (mData.get(flagCommentPosition).isIs_flagged())
+						flagCommentHolder.commentFlagImage.setSelected(true);
+					else
+						flagCommentHolder.commentFlagImage.setSelected(false);
+				}
 
 				sendFlagCommentRequestToServer();
 				break;
 			case R.id.commentlayouttoopenuserprofile:
-				pos = (int) v.getTag();
+				int pos = (int) v.getTag();
 				openUserProfileViewedByOtherFragment(pos);
 				break;
 			default:
@@ -212,7 +222,12 @@ public class CommentListAdapter extends BaseAdapter implements ZUrls,
 		mData.get(flagCommentPosition).setIs_flagged(
 				!mData.get(flagCommentPosition).isIs_flagged());
 
-		notifyDataSetChanged();
+		if (flagCommentHolder != null) {
+			if (mData.get(flagCommentPosition).isIs_flagged())
+				flagCommentHolder.commentFlagImage.setSelected(true);
+			else
+				flagCommentHolder.commentFlagImage.setSelected(false);
+		}
 	}
 
 }

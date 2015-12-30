@@ -25,6 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 	LinearLayout connectionErrorLayout;
 	LinearLayout retryDataConnectionLayout;
 	LinearLayout connectionFailedCloudImage;
+	Toast toast;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 	}
 
 	public void makeToast(String text) {
-		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+		if (toast != null)
+			toast.cancel();
+		if (this != null) {
+			toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+			toast.show();
+		}
 	}
 
 	public void showSnackBar(String text) {

@@ -192,10 +192,7 @@ public class LaunchActivity extends BaseActivity implements
 				GooglePlayServicesUtil.getErrorDialog(resultCode, this,
 						PLAY_SERVICES_RESOLUTION_REQUEST).show();
 			} else {
-				Toast.makeText(
-						this,
-						"This device doesn't support Play services, App will not work normally",
-						Toast.LENGTH_LONG).show();
+				makeToast("This device doesn't support Play services, App will not work normally");
 				finish();
 			}
 			return false;
@@ -411,11 +408,8 @@ public class LaunchActivity extends BaseActivity implements
 			} else {
 				if (progressDialog != null)
 					progressDialog.dismiss();
-				Toast.makeText(
-						this,
-						"Login error...Please try again and check your internet connection"
-								+ connectionResult.describeContents(),
-						Toast.LENGTH_SHORT).show();
+				makeToast("Login error...Please try again and check your internet connection "
+						+ connectionResult.describeContents());
 			}
 		} else {
 			if (progressDialog != null)
@@ -566,9 +560,7 @@ public class LaunchActivity extends BaseActivity implements
 
 					@Override
 					public void onErrorResponse(VolleyError arg0) {
-						Toast.makeText(LaunchActivity.this,
-								"Some error occured.Try again",
-								Toast.LENGTH_SHORT).show();
+						makeToast("Some error occured.Try again");
 						if (progressDialog != null)
 							progressDialog.dismiss();
 					}

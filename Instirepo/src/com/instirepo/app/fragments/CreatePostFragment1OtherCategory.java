@@ -231,8 +231,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 				if (progressDialog != null)
 					progressDialog.dismiss();
 
-				Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT)
-						.show();
+				makeToast("success");
 
 				DriveId driveId = (DriveId) data
 						.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);

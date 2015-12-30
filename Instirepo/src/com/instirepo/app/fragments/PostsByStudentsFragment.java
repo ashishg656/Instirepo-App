@@ -178,8 +178,7 @@ public class PostsByStudentsFragment extends BaseFragment implements ZUrls,
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						Toast.makeText(getActivity(), "Done",
-								Toast.LENGTH_SHORT).show();
+						makeToast("Content Refreshed");
 						swipeRefreshLayout.setRefreshing(false);
 					}
 				});
