@@ -40,6 +40,8 @@ public class MyPostsFragment extends BaseFragment implements ZUrls {
 	private Boolean isTeacherProfile;
 	LinearLayout progressSuperContainer;
 
+	boolean canScrollViewPagerHeader;
+
 	public static MyPostsFragment newInstance(Bundle v) {
 		MyPostsFragment frg = new MyPostsFragment();
 		frg.setArguments(v);
@@ -91,21 +93,28 @@ public class MyPostsFragment extends BaseFragment implements ZUrls {
 			@Override
 			public void onScrolled(RecyclerView r, int dx, int dy) {
 				super.onScrolled(recyclerView, dx, dy);
-				if (recyclerView.getAdapter() != null) {
-					int lastitem = layoutManager.findLastVisibleItemPosition();
-					int totalitems = recyclerView.getAdapter().getItemCount();
-					int diff = totalitems - lastitem;
-					if (diff < 6 && !isRequestRunning && isMoreAllowed) {
-						loadData();
+				if (canScrollViewPagerHeader) {
+					if (recyclerView.getAdapter() != null) {
+						int lastitem = layoutManager
+								.findLastVisibleItemPosition();
+						int totalitems = recyclerView.getAdapter()
+								.getItemCount();
+						int diff = totalitems - lastitem;
+						if (diff < 6 && !isRequestRunning && isMoreAllowed) {
+							loadData();
+						}
 					}
+
+					((UserProfileActivity) getActivity()).scrollToolbarBy(-dy);
+
+					((UserProfileActivity) getActivity())
+							.scrollFragmentRecycler(layoutManager
+									.findFirstVisibleItemPosition(),
+									recyclerView.getChildAt(0).getTop(), dy,
+									recyclerView.getScrollY());
+				} else {
+					canScrollViewPagerHeader = true;
 				}
-
-				((UserProfileActivity) getActivity()).scrollToolbarBy(-dy);
-
-				((UserProfileActivity) getActivity()).scrollFragmentRecycler(
-						layoutManager.findFirstVisibleItemPosition(),
-						recyclerView.getChildAt(0).getTop(), dy,
-						recyclerView.getScrollY());
 			}
 		});
 
