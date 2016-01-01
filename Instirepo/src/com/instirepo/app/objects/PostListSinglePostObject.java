@@ -1,6 +1,9 @@
 package com.instirepo.app.objects;
 
-public class PostListSinglePostObject {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class PostListSinglePostObject implements Parcelable {
 
 	int id;
 	String description;
@@ -18,8 +21,79 @@ public class PostListSinglePostObject {
 	String category;
 	String category_color;
 	int saves;
-	boolean is_saved, is_following, is_reported;
+	boolean is_saved;
+	boolean is_following;
+	boolean is_reported;
 	int user_id;
+
+	public PostListSinglePostObject() {
+
+	}
+
+	protected PostListSinglePostObject(Parcel in) {
+		id = in.readInt();
+		description = in.readString();
+		heading = in.readString();
+		image = in.readString();
+		time = in.readString();
+		user_image = in.readString();
+		user_name = in.readString();
+		upvotes = in.readInt();
+		downvotes = in.readInt();
+		has_upvoted = in.readByte() != 0x00;
+		has_downvoted = in.readByte() != 0x00;
+		comment = in.readInt();
+		seens = in.readInt();
+		category = in.readString();
+		category_color = in.readString();
+		saves = in.readInt();
+		is_saved = in.readByte() != 0x00;
+		is_following = in.readByte() != 0x00;
+		is_reported = in.readByte() != 0x00;
+		user_id = in.readInt();
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(id);
+		dest.writeString(description);
+		dest.writeString(heading);
+		dest.writeString(image);
+		dest.writeString(time);
+		dest.writeString(user_image);
+		dest.writeString(user_name);
+		dest.writeInt(upvotes);
+		dest.writeInt(downvotes);
+		dest.writeByte((byte) (has_upvoted ? 0x01 : 0x00));
+		dest.writeByte((byte) (has_downvoted ? 0x01 : 0x00));
+		dest.writeInt(comment);
+		dest.writeInt(seens);
+		dest.writeString(category);
+		dest.writeString(category_color);
+		dest.writeInt(saves);
+		dest.writeByte((byte) (is_saved ? 0x01 : 0x00));
+		dest.writeByte((byte) (is_following ? 0x01 : 0x00));
+		dest.writeByte((byte) (is_reported ? 0x01 : 0x00));
+		dest.writeInt(user_id);
+	}
+
+	@SuppressWarnings("unused")
+	public static final Parcelable.Creator<PostListSinglePostObject> CREATOR = new Parcelable.Creator<PostListSinglePostObject>() {
+		@Override
+		public PostListSinglePostObject createFromParcel(Parcel in) {
+			return new PostListSinglePostObject(in);
+		}
+
+		@Override
+		public PostListSinglePostObject[] newArray(int size) {
+			return new PostListSinglePostObject[size];
+		}
+	};
 
 	public boolean isIs_reported() {
 		return is_reported;
@@ -180,5 +254,4 @@ public class PostListSinglePostObject {
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
-
 }
