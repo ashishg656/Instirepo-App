@@ -43,6 +43,7 @@ import com.instirepo.app.fragments.CreatePostSelectBranchFragment;
 import com.instirepo.app.fragments.CreatePostSelectTeacherFragment;
 import com.instirepo.app.fragments.CreatePostSelectYearOrBatchFragment;
 import com.instirepo.app.objects.AllPostCategoriesObject;
+import com.instirepo.app.objects.CreatePostDataToSendToServer;
 import com.instirepo.app.objects.LoginScreenFragment2Object;
 import com.instirepo.app.preferences.ZPreferences;
 
@@ -72,6 +73,8 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 	ProgressDialog progressDialog;
 
 	public LoginScreenFragment2Object loginScreenFragment2Object;
+
+	CreatePostDataToSendToServer createPostDataToSendToServer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -389,7 +392,7 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 	}
 
 	public void showDialogConfirmationBeforeSendingPost(
-			int SELECTED_MODE_TO_CREATE_POST) {
+			final int SELECTED_MODE_TO_CREATE_POST) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		if (SELECTED_MODE_TO_CREATE_POST == Z_CREATE_POST_SELECTED_PEOPLE) {
 			builder.setMessage("Are you sure you want to upload this post, which will be visible to the people you selected above?");
@@ -397,7 +400,7 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 
 		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				CreatePostActivity.this.finish();
+				createPostRequestToServerForPublishingPost(SELECTED_MODE_TO_CREATE_POST);
 			}
 		});
 		builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -406,5 +409,10 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 		});
 		AlertDialog dialog = builder.create();
 		dialog.show();
+	}
+
+	protected void createPostRequestToServerForPublishingPost(
+			int sELECTED_MODE_TO_CREATE_POST) {
+
 	}
 }
