@@ -32,6 +32,7 @@ import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.BaseActivity;
 import com.instirepo.app.activities.HomeActivity;
+import com.instirepo.app.adapters.PostsByTeachersListAdapter.PostsHolderNormal;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.bottomsheet.BottomSheet;
 import com.instirepo.app.extras.AppConstants;
@@ -112,6 +113,10 @@ public class PostsByStudentsListAdapter extends
 			holder.upvotePostLayout.setOnClickListener(clickListener);
 			holder.downvotePostLayout.setTag(holder);
 			holder.downvotePostLayout.setOnClickListener(clickListener);
+			holder.postHeadingContainer.setTag(holder);
+			holder.postHeadingContainer.setOnClickListener(clickListener);
+			holder.postImageContainer.setTag(holder);
+			holder.postImageContainer.setOnClickListener(clickListener);
 
 			PostListSinglePostObject obj = mData.get(pos);
 
@@ -197,6 +202,7 @@ public class PostsByStudentsListAdapter extends
 		PEWImageView imagePost;
 		TextView category;
 		ProgressBar upvotePostProgress, downvotePostProgress;
+		FrameLayout postHeadingContainer, postImageContainer;
 
 		public PostsHolderNormal(View v) {
 			super(v);
@@ -225,6 +231,10 @@ public class PostsByStudentsListAdapter extends
 					.findViewById(R.id.upvotepostprogress);
 			downvotePostProgress = (ProgressBar) v
 					.findViewById(R.id.downvotepostprogress);
+			postHeadingContainer = (FrameLayout) v
+					.findViewById(R.id.postheadingdesccontainer);
+			postImageContainer = (FrameLayout) v
+					.findViewById(R.id.postpewimageviewcontainer);
 		}
 	}
 
@@ -272,6 +282,16 @@ public class PostsByStudentsListAdapter extends
 				holder = (PostsHolderNormal) v.getTag();
 				pos = holder.getAdapterPosition();
 				upvotePost(mData.get(pos).getId(), pos, holder, false);
+				break;
+			case R.id.postheadingdesccontainer:
+				holder = (PostsHolderNormal) v.getTag();
+				pos = holder.getAdapterPosition();
+				((BaseActivity) context).openPostDetailActivity(mData.get(pos));
+				break;
+			case R.id.postpewimageviewcontainer:
+				holder = (PostsHolderNormal) v.getTag();
+				pos = holder.getAdapterPosition();
+				((BaseActivity) context).openPostDetailActivity(mData.get(pos));
 				break;
 			default:
 				break;

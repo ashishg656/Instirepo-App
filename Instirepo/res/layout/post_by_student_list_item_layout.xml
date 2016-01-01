@@ -86,6 +86,7 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/postheadingdesccontainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -138,6 +139,7 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/postpewimageviewcontainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/z_margin_small"

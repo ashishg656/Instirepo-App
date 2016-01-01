@@ -111,6 +111,10 @@ public class PostsByTeachersListAdapter extends
 			holder.upvotePostLayout.setOnClickListener(clickListener);
 			holder.savePostLayout.setTag(holder);
 			holder.savePostLayout.setOnClickListener(clickListener);
+			holder.postHeadingContainer.setTag(holder);
+			holder.postHeadingContainer.setOnClickListener(clickListener);
+			holder.postImageContainer.setTag(holder);
+			holder.postImageContainer.setOnClickListener(clickListener);
 
 			PostListSinglePostObject obj = mData.get(pos);
 
@@ -195,6 +199,7 @@ public class PostsByTeachersListAdapter extends
 		PEWImageView imagePost;
 		TextView category;
 		ProgressBar upvotePostProgress, savePostProgress;
+		FrameLayout postHeadingContainer, postImageContainer;
 
 		public PostsHolderNormal(View v) {
 			super(v);
@@ -223,6 +228,10 @@ public class PostsByTeachersListAdapter extends
 					.findViewById(R.id.upvotepostprogress);
 			savePostProgress = (ProgressBar) v
 					.findViewById(R.id.savepostprogress);
+			postHeadingContainer = (FrameLayout) v
+					.findViewById(R.id.postheadingdesccontainer);
+			postImageContainer = (FrameLayout) v
+					.findViewById(R.id.postpewimageviewcontainer);
 		}
 	}
 
@@ -265,6 +274,16 @@ public class PostsByTeachersListAdapter extends
 				holder = (PostsHolderNormal) v.getTag();
 				pos = holder.getAdapterPosition();
 				markPostImportant(mData.get(pos).getId(), pos, holder);
+				break;
+			case R.id.postheadingdesccontainer:
+				holder = (PostsHolderNormal) v.getTag();
+				pos = holder.getAdapterPosition();
+				((BaseActivity) context).openPostDetailActivity(mData.get(pos));
+				break;
+			case R.id.postpewimageviewcontainer:
+				holder = (PostsHolderNormal) v.getTag();
+				pos = holder.getAdapterPosition();
+				((BaseActivity) context).openPostDetailActivity(mData.get(pos));
 				break;
 			default:
 				break;

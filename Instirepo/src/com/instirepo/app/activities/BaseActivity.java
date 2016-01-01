@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.instirepo.app.R;
+import com.instirepo.app.objects.PostListSinglePostObject;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -124,6 +125,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 		i.putExtra("person_id", id);
 		i.putExtra("person_name", name);
 		i.putExtra("person_image", image);
+		startActivity(i);
+	}
+
+	public void openPostDetailActivity(
+			PostListSinglePostObject postListSinglePostObject) {
+		Intent i = new Intent(this, PostDetailActivity.class);
+		i.putExtra("postobj", postListSinglePostObject);
 		startActivity(i);
 	}
 }
