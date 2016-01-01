@@ -1,5 +1,6 @@
 package com.instirepo.app.fragments;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,7 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
-import android.support.design.widget.FloatingActionButton;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -246,6 +246,14 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			if (progressDialog != null)
 				progressDialog.dismiss();
 		}
+	}
+
+	public String getStringImage(Bitmap bmp) {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+		byte[] imageBytes = baos.toByteArray();
+		String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+		return encodedImage;
 	}
 
 	private void addFileToFilesList(String fileName, String driveId) {

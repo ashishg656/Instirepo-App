@@ -15,6 +15,7 @@ import com.instirepo.app.activities.CreatePostActivity;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.widgets.CustomFlowLayout;
+import com.instirepo.app.widgets.CustomGoogleFloatingActionButton;
 
 public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		implements OnClickListener, ZUrls, AppConstants {
@@ -23,6 +24,7 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 	LinearLayout branchLayout, yearLayout, batchLayout, teacherLayout;
 	CustomFlowLayout customFlowLayout;
 	TextView saveVisibility;
+	public CustomGoogleFloatingActionButton uploadButton;
 
 	public static CreatePostFragment2FragmentSelectNew newInstance(Bundle b) {
 		CreatePostFragment2FragmentSelectNew frg = new CreatePostFragment2FragmentSelectNew();
@@ -48,6 +50,8 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		batchLayout = (LinearLayout) v.findViewById(R.id.batchlayout);
 		teacherLayout = (LinearLayout) v.findViewById(R.id.teacherseelc);
 		saveVisibility = (TextView) v.findViewById(R.id.savevis);
+		uploadButton = (CustomGoogleFloatingActionButton) v
+				.findViewById(R.id.createpostfinalsetep);
 
 		return v;
 	}
@@ -61,6 +65,7 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		batchLayout.setOnClickListener(this);
 		teacherLayout.setOnClickListener(this);
 		saveVisibility.setOnClickListener(this);
+		uploadButton.setOnClickListener(this);
 
 		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) batchImage
 				.getLayoutParams();
@@ -131,6 +136,9 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		case R.id.savevis:
 			((CreatePostActivity) getActivity())
 					.showSavePostVisibilitiesFragment();
+			break;
+		case R.id.createpostfinalsetep:
+			((CreatePostActivity)getActivity()).showDialogConfirmationBeforeSendingPost(Z_CREATE_POST_SELECTED_PEOPLE);
 			break;
 
 		default:

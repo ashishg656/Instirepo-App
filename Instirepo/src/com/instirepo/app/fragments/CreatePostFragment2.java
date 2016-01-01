@@ -16,10 +16,11 @@ import android.widget.TextView;
 
 import com.instirepo.app.R;
 import com.instirepo.app.activities.CreatePostActivity;
+import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.widgets.CustomFlowLayout;
 import com.instirepo.app.widgets.CustomFlowLayout.LayoutParams;
 
-public class CreatePostFragment2 extends BaseFragment {
+public class CreatePostFragment2 extends BaseFragment implements AppConstants{
 
 	TabLayout tabLayout;
 	MyPagerAdapter pagerAdapter;
@@ -193,6 +194,14 @@ public class CreatePostFragment2 extends BaseFragment {
 					.setVisibility(View.VISIBLE);
 		} else {
 			((CreatePostFragment2FragmentSelectNew) fragmentHashMap.get(0)).saveVisibility
+					.setVisibility(View.GONE);
+		}
+
+		if (count > 0) {
+			((CreatePostFragment2FragmentSelectNew) fragmentHashMap.get(0)).uploadButton
+					.setVisibility(View.VISIBLE);
+		} else {
+			((CreatePostFragment2FragmentSelectNew) fragmentHashMap.get(0)).uploadButton
 					.setVisibility(View.GONE);
 		}
 	}

@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -45,7 +46,7 @@ import com.instirepo.app.widgets.PagerSlidingTabStrip;
 public class UserProfileActivity extends BaseActivity implements AppConstants,
 		OnPageChangeListener {
 
-	public int headerHeight, deviceHeight;
+	public int headerHeight, deviceHeight, deviceWidth;
 	ViewPager viewPager;
 	TabLayout tabLayout;
 	PagerSlidingTabStrip pagerSlidingTabStripFake;
@@ -64,7 +65,7 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 	CircularImageView circularHeaderImage;
 	View kenburnsImageBg, circularRevealView;
 	SupportAnimator animator;
-	int alpha;
+	float alpha;
 	private int CIRCULAR_REVEAL_ANIMATION_DURATION = 700;
 	private boolean isCircularRevealShown = true;
 
@@ -75,6 +76,7 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 		fragmentHashMap = new HashMap<>();
 
 		deviceHeight = getResources().getDisplayMetrics().heightPixels;
+		deviceWidth = getResources().getDisplayMetrics().widthPixels;
 		headerHeight = (int) (deviceHeight / 2.1);
 		toolbarHeight = getResources().getDimensionPixelSize(
 				R.dimen.z_toolbar_height);
@@ -120,11 +122,19 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 
 		pagerSlidingTabStripFake.setOnPageChangeListener(this);
 
+		try {
+			int position = getIntent().getExtras().getInt("position");
+			if (position != 0)
+				isCircularRevealShown = false;
+			viewPager.setCurrentItem(position, false);
+		} catch (Exception e) {
+		}
+
 		setDataBeforeLoadingFromServer();
 	}
 
 	private void setDataBeforeLoadingFromServer() {
-		ImageRequestManager.get(this).requestImage(this, circularImageView,
+		ImageRequestManager.get(this).requestImage(this, circularHeaderImage,
 				ZPreferences.getUserImageURL(this), -1);
 	}
 
@@ -222,6 +232,7 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 				});
 	}
 
+	@SuppressLint("NewApi")
 	public void scrollFragmentRecycler(int findFirstVisibleItemPosition,
 			int top, int dy, int scrollY) {
 		if (findFirstVisibleItemPosition == 0) {
@@ -232,7 +243,7 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 					isAppbarAlpharunning = true;
 					AlphaAnimation anim = new AlphaAnimation(
 							appbarContainer.getAlpha(), 0f);
-					anim.setDuration(300);
+					anim.setDuration(200);
 					anim.setInterpolator(new AccelerateDecelerateInterpolator());
 					anim.setAnimationListener(new ZAnimationListener() {
 						@Override
@@ -257,6 +268,15 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 			appbarContainer.setVisibility(View.VISIBLE);
 			actualHeader.setTranslationY(-headerHeight);
 		}
+
+		alpha = headerHeight == 0 ? 255 : (int) (255 - 2 * (actualHeader
+				.getTranslationY() / headerHeight * 255 * -1));
+		if (alpha < 0)
+			alpha = 0;
+		else if (alpha > 255)
+			alpha = 255;
+		alpha = (float) alpha / 255.0f;
+		((View) circularHeaderImage).setAlpha(alpha);
 	}
 
 	public void switchToSeenByPeopleFragment(int postid) {
@@ -344,7 +364,6 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 	}
 
 	void pageSelectedAnimation(int color, int lightColor,
-			final int circularimagebg, final int circularimage,
 			final int circularrevealcolor) {
 		setStatusBarColor(color);
 		kenburnsImageBg.setBackgroundColor(lightColor);
@@ -355,15 +374,12 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 			circularHeaderImage.startAnimation(anim);
 			anim.setAnimationListener(new ZAnimationListener() {
 
+				@SuppressLint("NewApi")
 				@Override
 				public void onAnimationEnd(Animation animation) {
-					circularHeaderImage.setBackgroundResource(circularimagebg);
-					circularHeaderImage.setImageResource(circularimage);
-					circularHeaderImage.setImageAlpha(alpha);
-					circularHeaderImage.getBackground().setAlpha(alpha);
-					Animation anim1 = AnimationUtils
-							.loadAnimation(UserProfileActivity.this,
-									R.anim.scale_up_anim);
+					((View) circularHeaderImage).setAlpha(alpha);
+					Animation anim1 = AnimationUtils.loadAnimation(
+							UserProfileActivity.this, R.anim.scale_up_anim);
 					circularHeaderImage.startAnimation(anim1);
 				}
 			});
@@ -372,7 +388,7 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 					.getRight()) / 2;
 			int cy = (circularRevealView.getTop() + circularRevealView
 					.getBottom()) / 2;
-			int finalRadius = Math.max(maxHeaderHeight, maxHeaderWidth);
+			int finalRadius = Math.max(headerHeight, deviceWidth);
 
 			animator = ViewAnimationUtils.createCircularReveal(
 					circularRevealView, cx, cy, 0, finalRadius);
@@ -401,8 +417,6 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 			animator.start();
 		} else {
 			isCircularRevealShown = true;
-			circularHeaderImage.setBackgroundResource(circularimagebg);
-			circularHeaderImage.setImageResource(circularimage);
 		}
 	}
 
@@ -417,11 +431,37 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 	}
 
 	@Override
-	public void onPageSelected(int arg0) {
+	public void onPageSelected(int pos) {
 		for (int i = 0; i < 3; i++) {
 			((MyPostsFragment) fragmentHashMap.get(i)).layoutManager
 					.scrollToPositionWithOffset(0,
 							(int) actualHeader.getTranslationY());
+		}
+
+		if (pos == 0) {
+			pageSelectedAnimation(
+					getResources()
+							.getColor(R.color.bnc_shop_by_category_color1),
+					getResources().getColor(
+							R.color.bnc_shop_by_category_color1_light),
+					getResources().getColor(
+							R.color.bnc_shop_by_category_color1_lightdiff));
+		} else if (pos == 1) {
+			pageSelectedAnimation(
+					getResources()
+							.getColor(R.color.bnc_shop_by_category_color2),
+					getResources().getColor(
+							R.color.bnc_shop_by_category_color2_light),
+					getResources().getColor(
+							R.color.bnc_shop_by_category_color2_lightdiff));
+		} else {
+			pageSelectedAnimation(
+					getResources()
+							.getColor(R.color.bnc_shop_by_category_color3),
+					getResources().getColor(
+							R.color.bnc_shop_by_category_color3_light),
+					getResources().getColor(
+							R.color.bnc_shop_by_category_color3_lightdiff));
 		}
 	}
 

@@ -26,4 +26,8 @@ public interface AppConstants {
 	public int Z_MESSAGE_LIST_TYPE_CHAT_BY_PERSON = 3;
 
 	public static int Z_REQUEST_CODE_MESSAGES_ACTIVITY = 4578;
+
+	public static int Z_CREATE_POST_PUBLIC = 0;
+	public static int Z_CREATE_POST_SELECTED_PEOPLE = 1;
+	public static int Z_CREATE_POST_SAVED_COLLECTION = 2;
 }

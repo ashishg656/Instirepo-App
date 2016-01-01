@@ -234,6 +234,14 @@
         </ScrollView>
     </LinearLayout>
 
+    <com.instirepo.app.widgets.CustomGoogleFloatingActionButton
+        android:id="@+id/createpostfinalsetep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/z_fab_margin_0_for_v21"
+        android:src="@drawable/ic_double_tick"/>
+
     <FrameLayout
         android:id="@+id/fragmtnholder"
         android:layout_width="match_parent"

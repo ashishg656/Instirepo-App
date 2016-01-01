@@ -151,8 +151,11 @@ public class CreatePostSelectTeacherFragment extends BaseFragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.okbuttonseen:
-			((CreatePostActivity) getActivity()).updateTeachersList(
-					adapter.teacherIds, adapter.teacherName);
+			try {
+				((CreatePostActivity) getActivity()).updateTeachersList(
+						adapter.teacherIds, adapter.teacherName);
+			} catch (Exception e) {
+			}
 			break;
 
 		default:

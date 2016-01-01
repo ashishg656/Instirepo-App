@@ -8,6 +8,7 @@ import org.json.JSONArray;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -385,5 +386,25 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 		createPostFragment2.viewPager.setCurrentItem(0, true);
 		((BaseActivity) this)
 				.showSnackBar("Select more than one options using the checkboxes and then click on save button here.");
+	}
+
+	public void showDialogConfirmationBeforeSendingPost(
+			int SELECTED_MODE_TO_CREATE_POST) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		if (SELECTED_MODE_TO_CREATE_POST == Z_CREATE_POST_SELECTED_PEOPLE) {
+			builder.setMessage("Are you sure you want to upload this post, which will be visible to the people you selected above?");
+		}
+
+		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				CreatePostActivity.this.finish();
+			}
+		});
+		builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+			}
+		});
+		AlertDialog dialog = builder.create();
+		dialog.show();
 	}
 }
