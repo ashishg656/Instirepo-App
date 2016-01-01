@@ -22,7 +22,8 @@
             android:scaleType="centerCrop"
             android:src="@drawable/navigation_drawer_header_bg_image" />
 
-        <ImageView
+        <com.instirepo.app.notboringactionbar.KenBurnsSupportView
+            android:id="@+id/kenburnssupoortview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />

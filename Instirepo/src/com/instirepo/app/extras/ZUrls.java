@@ -81,4 +81,6 @@ public interface ZUrls {
 	public String followPostRequest = ZApplication.getBaseUrl()
 			+ "follow_post/";
 
+	public String reportPostUrl = ZApplication.getBaseUrl() + "report_post/";
+
 }

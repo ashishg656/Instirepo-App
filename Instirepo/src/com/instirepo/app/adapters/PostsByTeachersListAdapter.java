@@ -60,6 +60,7 @@ public class PostsByTeachersListAdapter extends
 	PostsHolderNormal upvotePostHolder;
 
 	int followPostPosition;
+	int reportPostPosition;
 
 	boolean isUpotePostRequestRunning, isMarkImpPostRequestRunning;
 
@@ -235,7 +236,8 @@ public class PostsByTeachersListAdapter extends
 				int pos = holder.getAdapterPosition();
 				showOverflowIconContent(mData.get(pos).getHeading(),
 						mData.get(pos).getId(), mData.get(pos).isIs_saved(),
-						pos, holder, mData.get(pos).isIs_following());
+						pos, holder, mData.get(pos).isIs_following(), mData
+								.get(pos).isIs_reported());
 				break;
 			case R.id.seenbycontainer:
 				holder = (PostsHolderNormal) v.getTag();
@@ -273,7 +275,7 @@ public class PostsByTeachersListAdapter extends
 
 	public void showOverflowIconContent(String message, final int postid,
 			boolean isSaved, final int pos, final PostsHolderNormal holder,
-			boolean isFollowing) {
+			boolean isFollowing, boolean isReported) {
 		BottomSheet sheet = new BottomSheet.Builder((HomeActivity) context)
 				.title(message).sheet(R.menu.posts_sliding_panel_menu)
 				.listener(new DialogInterface.OnClickListener() {
@@ -285,6 +287,9 @@ public class PostsByTeachersListAdapter extends
 							break;
 						case R.id.followpostmenusliding:
 							followPostRequest(postid, pos);
+							break;
+						case R.id.erportpostslidingmeny:
+							reportPostRequest(postid, pos);
 							break;
 						}
 					}
@@ -310,6 +315,16 @@ public class PostsByTeachersListAdapter extends
 			menu.getItem(2).setIcon(R.drawable.ic_social_notifications_blue);
 			menu.getItem(2).setTitle(
 					context.getResources().getString(R.string.following_post));
+		}
+
+		if (!isReported) {
+			menu.getItem(0).setIcon(R.drawable.ic_flag_normal);
+			menu.getItem(0).setTitle(
+					context.getResources().getString(R.string.report_post));
+		} else {
+			menu.getItem(0).setIcon(R.drawable.ic_flag_selected);
+			menu.getItem(0).setTitle(
+					context.getResources().getString(R.string.reported_post));
 		}
 	}
 
@@ -351,6 +366,44 @@ public class PostsByTeachersListAdapter extends
 			}
 		};
 		ZApplication.getInstance().addToRequestQueue(req, followPostRequest);
+	}
+
+	protected void reportPostRequest(final int postid, int pos) {
+		reportPostPosition = pos;
+		mData.get(pos).setIs_reported(!mData.get(pos).isIs_reported());
+
+		if (mData.get(pos).isIs_reported()) {
+			((BaseActivity) context).makeToast("Reported Post");
+		} else {
+			((BaseActivity) context).makeToast("Undo report Post");
+		}
+
+		StringRequest req = new StringRequest(Method.POST, reportPostUrl,
+				new Listener<String>() {
+					@Override
+					public void onResponse(String arg0) {
+
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						((BaseActivity) context)
+								.makeToast("Unable to report/unreport post. Check internet and try agin");
+
+						mData.get(reportPostPosition).setIs_reported(
+								!mData.get(reportPostPosition).isIs_reported());
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				HashMap<String, String> p = new HashMap<>();
+				p.put("user_id", ZPreferences.getUserProfileID(context));
+				p.put("post_id", postid + "");
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, reportPostUrl);
 	}
 
 	public void upvotePost(final int id, int pos, PostsHolderNormal holder) {

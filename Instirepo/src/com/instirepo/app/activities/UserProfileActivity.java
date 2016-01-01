@@ -29,6 +29,7 @@ import com.instirepo.app.fragments.CommentsFragment;
 import com.instirepo.app.fragments.MyPostsFragment;
 import com.instirepo.app.fragments.SeenByPeopleFragment;
 import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
+import com.instirepo.app.notboringactionbar.KenBurnsSupportView;
 import com.instirepo.app.widgets.PagerSlidingTabStrip;
 
 public class UserProfileActivity extends BaseActivity implements AppConstants,
@@ -49,6 +50,7 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 	int height48dp;
 	boolean isAppbarAlpharunning;
 	LinearLayout fakeToolbarLayout;
+	KenBurnsSupportView kenBurnsSupportView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 		appbarContainer = (LinearLayout) findViewById(R.id.appbarlayoutcontainer);
 		actualHeader = (FrameLayout) findViewById(R.id.actualheader);
 		fakeToolbarLayout = (LinearLayout) findViewById(R.id.faketoolbalayouy);
+		kenBurnsSupportView = (KenBurnsSupportView) findViewById(R.id.kenburnssupoortview);
 
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);

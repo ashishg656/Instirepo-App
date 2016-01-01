@@ -18,6 +18,8 @@
     <string name="menu_marked_important">Marked Important</string>
     <string name="following_post">Following Post</string>
     <string name="follow_post">Follow Post</string>
+    <string name="report_post">Report Post</string>
+    <string name="reported_post">Reported Post</string>
 
     <!-- afilechooser -->
     <string name="empty_directory">Empty Directory</string>
