@@ -29,6 +29,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -79,7 +80,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 	TextView navigationDrawerUserName, navigationDrawerEmail;
 	CircularImageView navigationDrawerImageUser;
 	ImageView navigationDrawerImageDefault;
-	LinearLayout navigationDrawerHeaderLayout;
+	FrameLayout navigationDrawerHeaderLayout;
 	public static final int TRANSLATION_DURATION = 200;
 	boolean isToolbarAnimRunning;
 	AppBarLayout appBarLayout;
@@ -129,7 +130,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		navigationDrawerImageUser = (CircularImageView) findViewById(R.id.avatar);
 		navigationDrawerImageDefault = (ImageView) findViewById(R.id.avatardefault);
 		navigationDrawerUserName = (TextView) findViewById(R.id.navdrawerusername);
-		navigationDrawerHeaderLayout = (LinearLayout) findViewById(R.id.navigationdrawerheader);
+		navigationDrawerHeaderLayout = (FrameLayout) findViewById(R.id.navigationdrawerheader);
 
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);

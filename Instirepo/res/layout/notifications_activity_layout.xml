@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:divider="@null"
-        android:paddingTop="60dp"
+        android:paddingTop="62dp"
         android:scrollbars="none" />
 
     <include layout="@layout/toolbar_layout" />

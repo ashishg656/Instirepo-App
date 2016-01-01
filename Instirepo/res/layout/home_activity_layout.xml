@@ -128,7 +128,7 @@
         android:layout_gravity="start"
         android:background="@color/z_white"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/z_navigation_drawer_header_layout"
+        app:headerLayout="@layout/navigation_drawer_header_layout"
         app:itemBackground="@null"
         app:menu="@menu/z_drawer_items_menu" />
 
