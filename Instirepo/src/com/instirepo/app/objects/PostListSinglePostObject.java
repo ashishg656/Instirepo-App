@@ -18,8 +18,16 @@ public class PostListSinglePostObject {
 	String category;
 	String category_color;
 	int saves;
-	boolean is_saved;
+	boolean is_saved, is_following;
 	int user_id;
+
+	public boolean isIs_following() {
+		return is_following;
+	}
+
+	public void setIs_following(boolean is_following) {
+		this.is_following = is_following;
+	}
 
 	public int getUser_id() {
 		return user_id;

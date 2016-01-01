@@ -112,6 +112,11 @@
             android:theme="@style/Theme.Transparent" >
         </activity>
         <activity
+            android:name="com.instirepo.app.activities.NotificationsActivity"
+            android:label="@string/app_name"
+            android:theme="@style/BNCNoActionBar" >
+        </activity>
+        <activity
             android:name="com.instirepo.app.activities.UserProfileActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"

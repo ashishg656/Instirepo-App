@@ -75,4 +75,10 @@ public interface ZUrls {
 	public String flagCommentOnPost = ZApplication.getBaseUrl()
 			+ "flag_comment_on_post/";
 
+	public String getNotificationsForUser = ZApplication.getBaseUrl()
+			+ "get_notifications_for_user/";
+
+	public String followPostRequest = ZApplication.getBaseUrl()
+			+ "follow_post/";
+
 }

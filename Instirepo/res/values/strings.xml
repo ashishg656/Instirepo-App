@@ -13,9 +13,11 @@
     <!--  -->
     <string name="dropbox_app_key">ku1kknp8f14k7a6</string>
 
-    <!--  -->
+    <!-- Sliding menu posts list -->
     <string name="menu_mark_important">Mark Important</string>
     <string name="menu_marked_important">Marked Important</string>
+    <string name="following_post">Following Post</string>
+    <string name="follow_post">Follow Post</string>
 
     <!-- afilechooser -->
     <string name="empty_directory">Empty Directory</string>

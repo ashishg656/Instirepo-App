@@ -278,6 +278,9 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 						case R.id.allmessagesactivity:
 							openMessagesListActivity();
 							return true;
+						case R.id.opennotificaton:
+							openNotificationsActivity();
+							return true;
 						default:
 							return true;
 						}

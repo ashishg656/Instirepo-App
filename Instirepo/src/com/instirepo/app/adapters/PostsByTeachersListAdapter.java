@@ -5,10 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import serverApi.ImageRequestManager;
-import serverApi.ImageRequestManager.RequestBitmap;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
@@ -60,6 +58,8 @@ public class PostsByTeachersListAdapter extends
 
 	int upvotePostPostition;
 	PostsHolderNormal upvotePostHolder;
+
+	int followPostPosition;
 
 	boolean isUpotePostRequestRunning, isMarkImpPostRequestRunning;
 
@@ -235,7 +235,7 @@ public class PostsByTeachersListAdapter extends
 				int pos = holder.getAdapterPosition();
 				showOverflowIconContent(mData.get(pos).getHeading(),
 						mData.get(pos).getId(), mData.get(pos).isIs_saved(),
-						pos, holder);
+						pos, holder, mData.get(pos).isIs_following());
 				break;
 			case R.id.seenbycontainer:
 				holder = (PostsHolderNormal) v.getTag();
@@ -272,7 +272,8 @@ public class PostsByTeachersListAdapter extends
 	}
 
 	public void showOverflowIconContent(String message, final int postid,
-			boolean isSaved, final int pos, final PostsHolderNormal holder) {
+			boolean isSaved, final int pos, final PostsHolderNormal holder,
+			boolean isFollowing) {
 		BottomSheet sheet = new BottomSheet.Builder((HomeActivity) context)
 				.title(message).sheet(R.menu.posts_sliding_panel_menu)
 				.listener(new DialogInterface.OnClickListener() {
@@ -281,6 +282,9 @@ public class PostsByTeachersListAdapter extends
 						switch (which) {
 						case R.id.markimportant:
 							markPostImportant(postid, pos, holder);
+							break;
+						case R.id.followpostmenusliding:
+							followPostRequest(postid, pos);
 							break;
 						}
 					}
@@ -297,6 +301,56 @@ public class PostsByTeachersListAdapter extends
 					context.getResources().getString(
 							R.string.menu_marked_important));
 		}
+
+		if (!isFollowing) {
+			menu.getItem(2).setIcon(R.drawable.ic_social_notifications_grey);
+			menu.getItem(2).setTitle(
+					context.getResources().getString(R.string.follow_post));
+		} else {
+			menu.getItem(2).setIcon(R.drawable.ic_social_notifications_blue);
+			menu.getItem(2).setTitle(
+					context.getResources().getString(R.string.following_post));
+		}
+	}
+
+	protected void followPostRequest(final int postid, int pos) {
+		followPostPosition = pos;
+		mData.get(pos).setIs_following(!mData.get(pos).isIs_following());
+
+		if (mData.get(pos).isIs_following()) {
+			((BaseActivity) context).makeToast("Following Post");
+		} else {
+			((BaseActivity) context).makeToast("Unfollowed Post");
+		}
+
+		StringRequest req = new StringRequest(Method.POST, followPostRequest,
+				new Listener<String>() {
+					@Override
+					public void onResponse(String arg0) {
+
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						((BaseActivity) context)
+								.makeToast("Unable to follow/unfollow post. Check internet and try agin");
+
+						mData.get(followPostPosition)
+								.setIs_following(
+										!mData.get(followPostPosition)
+												.isIs_following());
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				HashMap<String, String> p = new HashMap<>();
+				p.put("user_id", ZPreferences.getUserProfileID(context));
+				p.put("post_id", postid + "");
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, followPostRequest);
 	}
 
 	public void upvotePost(final int id, int pos, PostsHolderNormal holder) {

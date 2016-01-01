@@ -10,8 +10,9 @@
             android:icon="@drawable/ic_launcher"
             android:title="Home"/>
         <item
+            android:id="@+id/opennotificaton"
             android:icon="@drawable/ic_launcher"
-            android:title="Home"/>
+            android:title="Notifications"/>
         <item
             android:id="@+id/allmessagesactivity"
             android:icon="@drawable/ic_launcher"

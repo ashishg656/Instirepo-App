@@ -8,6 +8,7 @@
         android:icon="@drawable/star_button_selector"
         android:title="Mark Important"/>
     <item
+        android:id="@+id/followpostmenusliding"
         android:icon="@drawable/follow_button_selector"
         android:title="Follow Post"/>
 

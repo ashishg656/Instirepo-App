@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.instirepo.app"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="@dimen/z_margin_mini"
+        android:layout_marginRight="@dimen/z_margin_mini"
+        android:background="@drawable/ic_cart_bg_shadow"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <com.instirepo.app.widgets.RoundedImageView
+                android:id="@+id/notiftopimage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:riv_corner_radius_top_left="@dimen/z_margin_supermini"
+                app:riv_corner_radius_top_right="@dimen/z_margin_supermini" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/z_margin_large" >
+
+                <ImageView
+                    android:id="@+id/notifsideimage"
+                    android:layout_width="@dimen/z_notification_image_height"
+                    android:layout_height="@dimen/z_notification_image_height"
+                    android:layout_marginRight="@dimen/z_margin_small"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:id="@+id/notiftext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="Some notifF"
+                    android:textColor="@color/z_text_color_dark"
+                    android:textSize="@dimen/z_font_mini" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

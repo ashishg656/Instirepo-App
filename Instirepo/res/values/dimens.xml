@@ -76,4 +76,7 @@
     <!-- FAB -->
     <dimen name="z_fab_margin_0_for_v21">0dp</dimen>
 
+    <!-- notifications -->
+    <dimen name="z_notification_image_height">80dp</dimen>
+
 </resources>

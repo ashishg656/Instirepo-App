@@ -113,6 +113,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 		startActivity(i);
 	}
 
+	public void openNotificationsActivity() {
+		Intent i = new Intent(this, NotificationsActivity.class);
+		startActivity(i);
+	}
+
 	public void openUserChatWithPersonUserActivity(int id, String name,
 			String image) {
 		Intent i = new Intent(this, MessageListActivity.class);
