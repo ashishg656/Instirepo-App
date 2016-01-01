@@ -28,6 +28,29 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />
 
+        <com.instirepo.app.circularreveal.RevealFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <View
+                android:id="@+id/image_overlay_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bnc_shop_by_category_color1_light" />
+
+            <View
+                android:id="@+id/circular_reveal_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.instirepo.app.circularreveal.RevealFrameLayout>
+
+        <com.instirepo.app.widgets.CircularImageView
+            android:id="@+id/userprofileimage"
+            android:layout_width="@dimen/z_user_profile_activity_image_height"
+            android:layout_height="@dimen/z_user_profile_activity_image_height"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop" />
+
         <LinearLayout
             android:id="@+id/faketoolbalayouy"
             android:layout_width="match_parent"

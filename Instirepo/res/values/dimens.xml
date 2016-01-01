@@ -45,7 +45,7 @@
     <dimen name="z_upvote_button_height">35dp</dimen>
     <dimen name="z_post_image_height">200dp</dimen>
 
-    <!-- User profile -->
+    <!-- User profile Fragment -->
     <dimen name="z_user_profile_image_height">120dp</dimen>
     <dimen name="z_user_profile_image_height_half">60dp</dimen>
     <dimen name="z_user_profile_image_height_half_large">80dp</dimen>
@@ -78,5 +78,8 @@
 
     <!-- notifications -->
     <dimen name="z_notification_image_height">80dp</dimen>
+
+    <!-- User profile activity -->
+    <dimen name="z_user_profile_activity_image_height">100dp</dimen>
 
 </resources>

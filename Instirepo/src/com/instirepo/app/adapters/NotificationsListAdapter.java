@@ -6,6 +6,7 @@ import serverApi.ImageRequestManager;
 
 import com.instirepo.app.R;
 import com.instirepo.app.application.ZApplication;
+import com.instirepo.app.extras.TimeUtils;
 import com.instirepo.app.objects.NotificationsListObject.NotificationsSingleObj;
 import com.instirepo.app.widgets.RoundedImageView;
 
@@ -97,6 +98,8 @@ public class NotificationsListAdapter extends BaseAdapter {
 					+ obj.getPost_name() + "', authored by '"
 					+ obj.getUploader_name() + "', has new comments");
 		}
+		
+		holder.time.setText(TimeUtils.getPostTime(obj.getTime()));
 
 		return convertView;
 	}
@@ -105,12 +108,13 @@ public class NotificationsListAdapter extends BaseAdapter {
 
 		RoundedImageView topImage;
 		ImageView leftImage;
-		TextView text;
+		TextView text,time;
 
 		public NotificationHolder(View v) {
 			topImage = (RoundedImageView) v.findViewById(R.id.notiftopimage);
 			leftImage = (ImageView) v.findViewById(R.id.notifsideimage);
 			text = (TextView) v.findViewById(R.id.notiftext);
+			time = (TextView) v.findViewById(R.id.notiftexttime);
 		}
 
 	}

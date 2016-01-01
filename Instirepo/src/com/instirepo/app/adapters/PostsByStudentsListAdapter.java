@@ -315,6 +315,9 @@ public class PostsByStudentsListAdapter extends
 						case R.id.followpostmenusliding:
 							followPostRequest(postid, pos);
 							break;
+						case R.id.erportpostslidingmeny:
+							reportPostRequest(postid, pos);
+							break;
 						}
 					}
 				}).show();

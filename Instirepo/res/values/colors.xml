@@ -42,4 +42,16 @@
     <color name="purple_post">#9A12B3</color>
     <color name="orange_post">#F9690E</color>
 
+    <!-- user profile activity -->
+    <!-- Shop by category colors -->
+    <color name="bnc_shop_by_category_color1">#5363fe</color>
+    <color name="bnc_shop_by_category_color2">#009688</color>
+    <color name="bnc_shop_by_category_color3">#7e57c2</color>
+    <color name="bnc_shop_by_category_color1_light">#805363fe</color>
+    <color name="bnc_shop_by_category_color2_light">#80009688</color>
+    <color name="bnc_shop_by_category_color3_light">#807e57c2</color>
+    <color name="bnc_shop_by_category_color1_lightdiff">#CC6053fe</color>
+    <color name="bnc_shop_by_category_color2_lightdiff">#CC007f96</color>
+    <color name="bnc_shop_by_category_color3_lightdiff">#CC9957c2</color>
+
 </resources>

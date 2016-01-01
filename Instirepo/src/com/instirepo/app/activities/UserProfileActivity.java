@@ -2,8 +2,11 @@ package com.instirepo.app.activities;
 
 import java.util.HashMap;
 
+import serverApi.ImageRequestManager;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -14,14 +17,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.instirepo.app.R;
+import com.instirepo.app.circularreveal.SupportAnimator;
+import com.instirepo.app.circularreveal.ViewAnimationUtils;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.ZAnimationListener;
 import com.instirepo.app.extras.ZAnimatorListener;
@@ -30,6 +38,8 @@ import com.instirepo.app.fragments.MyPostsFragment;
 import com.instirepo.app.fragments.SeenByPeopleFragment;
 import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
 import com.instirepo.app.notboringactionbar.KenBurnsSupportView;
+import com.instirepo.app.preferences.ZPreferences;
+import com.instirepo.app.widgets.CircularImageView;
 import com.instirepo.app.widgets.PagerSlidingTabStrip;
 
 public class UserProfileActivity extends BaseActivity implements AppConstants,
@@ -51,6 +61,12 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 	boolean isAppbarAlpharunning;
 	LinearLayout fakeToolbarLayout;
 	KenBurnsSupportView kenBurnsSupportView;
+	CircularImageView circularHeaderImage;
+	View kenburnsImageBg, circularRevealView;
+	SupportAnimator animator;
+	int alpha;
+	private int CIRCULAR_REVEAL_ANIMATION_DURATION = 700;
+	private boolean isCircularRevealShown = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +92,16 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 		actualHeader = (FrameLayout) findViewById(R.id.actualheader);
 		fakeToolbarLayout = (LinearLayout) findViewById(R.id.faketoolbalayouy);
 		kenBurnsSupportView = (KenBurnsSupportView) findViewById(R.id.kenburnssupoortview);
+		circularHeaderImage = (CircularImageView) findViewById(R.id.userprofileimage);
+		circularRevealView = (View) findViewById(R.id.circular_reveal_view);
+		kenburnsImageBg = (View) findViewById(R.id.image_overlay_bg);
 
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+		setStatusBarColor(getResources().getColor(
+				R.color.bnc_shop_by_category_color1));
 
 		adapter = new MyPagerAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(adapter);
@@ -97,6 +119,13 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 		actualHeader.setLayoutParams(params);
 
 		pagerSlidingTabStripFake.setOnPageChangeListener(this);
+
+		setDataBeforeLoadingFromServer();
+	}
+
+	private void setDataBeforeLoadingFromServer() {
+		ImageRequestManager.get(this).requestImage(this, circularImageView,
+				ZPreferences.getUserImageURL(this), -1);
 	}
 
 	class MyPagerAdapter extends FragmentStatePagerAdapter {
@@ -291,6 +320,15 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 			super.onBackPressed();
 	}
 
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	void setStatusBarColor(int color) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			Window window = getWindow();
+			window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+			window.setStatusBarColor(color);
+		}
+	}
+
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
 		if (arg0 == ViewPager.SCROLL_STATE_IDLE) {
@@ -303,6 +341,69 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 	@Override
 	public void onPageScrolled(int pos, float arg1, int arg2) {
 		// makeHeightsOfRecyclerViewsEqualOnPageScroll();
+	}
+
+	void pageSelectedAnimation(int color, int lightColor,
+			final int circularimagebg, final int circularimage,
+			final int circularrevealcolor) {
+		setStatusBarColor(color);
+		kenburnsImageBg.setBackgroundColor(lightColor);
+		if (isCircularRevealShown) {
+			makeHeightsOfRecyclerViewsEqualOnPageScroll();
+			Animation anim = AnimationUtils.loadAnimation(this,
+					R.anim.scale_down_anim);
+			circularHeaderImage.startAnimation(anim);
+			anim.setAnimationListener(new ZAnimationListener() {
+
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					circularHeaderImage.setBackgroundResource(circularimagebg);
+					circularHeaderImage.setImageResource(circularimage);
+					circularHeaderImage.setImageAlpha(alpha);
+					circularHeaderImage.getBackground().setAlpha(alpha);
+					Animation anim1 = AnimationUtils
+							.loadAnimation(UserProfileActivity.this,
+									R.anim.scale_up_anim);
+					circularHeaderImage.startAnimation(anim1);
+				}
+			});
+
+			int cx = (circularRevealView.getLeft() + circularRevealView
+					.getRight()) / 2;
+			int cy = (circularRevealView.getTop() + circularRevealView
+					.getBottom()) / 2;
+			int finalRadius = Math.max(maxHeaderHeight, maxHeaderWidth);
+
+			animator = ViewAnimationUtils.createCircularReveal(
+					circularRevealView, cx, cy, 0, finalRadius);
+			animator.setInterpolator(new AccelerateDecelerateInterpolator());
+			animator.setDuration(CIRCULAR_REVEAL_ANIMATION_DURATION);
+			animator.addListener(new SupportAnimator.AnimatorListener() {
+				@Override
+				public void onAnimationStart() {
+					circularRevealView.setBackgroundColor(circularrevealcolor);
+				}
+
+				@Override
+				public void onAnimationRepeat() {
+				}
+
+				@Override
+				public void onAnimationEnd() {
+					circularRevealView.setBackgroundColor(getResources()
+							.getColor(android.R.color.transparent));
+				}
+
+				@Override
+				public void onAnimationCancel() {
+				}
+			});
+			animator.start();
+		} else {
+			isCircularRevealShown = true;
+			circularHeaderImage.setBackgroundResource(circularimagebg);
+			circularHeaderImage.setImageResource(circularimage);
+		}
 	}
 
 	private void makeHeightsOfRecyclerViewsEqualOnPageScroll() {
