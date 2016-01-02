@@ -3,8 +3,6 @@ package com.instirepo.app.activities;
 import java.util.HashMap;
 import java.util.Map;
 
-import serverApi.ImageRequestManager;
-import serverApi.ImageRequestManager.RequestBitmap;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -66,6 +64,8 @@ import com.instirepo.app.fragments.SelectPostCategoryFragment;
 import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
 import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.preferences.ZPreferences;
+import com.instirepo.app.serverApi.ImageRequestManager;
+import com.instirepo.app.serverApi.ImageRequestManager.RequestBitmap;
 import com.instirepo.app.widgets.CircularImageView;
 
 public class HomeActivity extends BaseActivity implements OnPageChangeListener,

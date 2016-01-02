@@ -3,7 +3,6 @@ package com.instirepo.app.activities;
 import java.util.HashMap;
 import java.util.Map;
 
-import serverApi.ImageRequestManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -33,6 +32,7 @@ import com.instirepo.app.objects.AddMessageResponseObject;
 import com.instirepo.app.objects.MessageListObject;
 import com.instirepo.app.objects.MessageListObject.SingleMessage;
 import com.instirepo.app.preferences.ZPreferences;
+import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.CircularImageView;
 import com.instirepo.app.widgets.CustomGoogleFloatingActionButton;
 

@@ -21,7 +21,8 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		implements OnClickListener, ZUrls, AppConstants {
 
 	ImageView batchImage, batchImage1, batchImage2, batchImage3, batchImage4;
-	LinearLayout branchLayout, yearLayout, batchLayout, teacherLayout;
+	LinearLayout branchLayout, yearLayout, batchLayout, teacherLayout,
+			publicLayout;
 	CustomFlowLayout customFlowLayout;
 	TextView saveVisibility;
 	public CustomGoogleFloatingActionButton uploadButton;
@@ -52,6 +53,8 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		saveVisibility = (TextView) v.findViewById(R.id.savevis);
 		uploadButton = (CustomGoogleFloatingActionButton) v
 				.findViewById(R.id.createpostfinalsetep);
+		publicLayout = (LinearLayout) v
+				.findViewById(R.id.publiclayoutcretaepostbutton);
 
 		return v;
 	}
@@ -66,6 +69,7 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 		teacherLayout.setOnClickListener(this);
 		saveVisibility.setOnClickListener(this);
 		uploadButton.setOnClickListener(this);
+		publicLayout.setOnClickListener(this);
 
 		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) batchImage
 				.getLayoutParams();
@@ -138,7 +142,12 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 					.showSavePostVisibilitiesFragment();
 			break;
 		case R.id.createpostfinalsetep:
-			((CreatePostActivity)getActivity()).showDialogConfirmationBeforeSendingPost(Z_CREATE_POST_SELECTED_PEOPLE);
+			((CreatePostActivity) getActivity())
+					.showDialogConfirmationBeforeSendingPost(Z_CREATE_POST_SELECTED_PEOPLE);
+			break;
+		case R.id.publiclayoutcretaepostbutton:
+			((CreatePostActivity) getActivity())
+					.showDialogConfirmationBeforeSendingPost(Z_CREATE_POST_PUBLIC);
 			break;
 
 		default:

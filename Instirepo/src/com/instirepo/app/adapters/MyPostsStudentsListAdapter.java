@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import serverApi.ImageRequestManager;
-import serverApi.ImageRequestManager.RequestBitmap;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -43,6 +41,8 @@ import com.instirepo.app.objects.MarkPostImportantObject;
 import com.instirepo.app.objects.PostListSinglePostObject;
 import com.instirepo.app.objects.UpvotePostObject;
 import com.instirepo.app.preferences.ZPreferences;
+import com.instirepo.app.serverApi.ImageRequestManager;
+import com.instirepo.app.serverApi.ImageRequestManager.RequestBitmap;
 import com.instirepo.app.widgets.CircularImageView;
 import com.instirepo.app.widgets.PEWImageView;
 

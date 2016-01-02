@@ -3,8 +3,6 @@ package com.instirepo.app.fragments;
 import java.util.HashMap;
 import java.util.Map;
 
-import serverApi.ImageRequestManager;
-import serverApi.ImageRequestManager.RequestBitmap;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
@@ -48,6 +46,8 @@ import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.objects.UpvotePostObject;
 import com.instirepo.app.objects.UserProfileViewedByOtherObject;
 import com.instirepo.app.preferences.ZPreferences;
+import com.instirepo.app.serverApi.ImageRequestManager;
+import com.instirepo.app.serverApi.ImageRequestManager.RequestBitmap;
 import com.instirepo.app.widgets.CircularImageView;
 import com.instirepo.app.widgets.ObservableScrollView;
 import com.instirepo.app.widgets.ObservableScrollViewListener;

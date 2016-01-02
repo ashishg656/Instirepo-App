@@ -83,4 +83,6 @@ public interface ZUrls {
 
 	public String reportPostUrl = ZApplication.getBaseUrl() + "report_post/";
 
+	public String uploadPostUrl = ZApplication.getBaseUrl() + "upload_post/";
+
 }

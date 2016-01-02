@@ -44,6 +44,7 @@ import com.instirepo.app.R;
 import com.instirepo.app.activities.CreatePostActivity;
 import com.instirepo.app.afilechooser.utils.FileUtils;
 import com.instirepo.app.objects.AllPostCategoriesObject;
+import com.instirepo.app.objects.CreatePostDataToSendToServer;
 import com.instirepo.app.widgets.CustomGoogleFloatingActionButton;
 import com.instirepo.app.widgets.RoundedImageView;
 
@@ -71,6 +72,8 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	ProgressDialog progressDialog;
 	CustomGoogleFloatingActionButton floatingActionButton;
 	public EditText postHeading, postDescription, postCompanyName;
+
+	String imageToSend;
 
 	public static CreatePostFragment1OtherCategory newInstance(Bundle b) {
 		CreatePostFragment1OtherCategory frg = new CreatePostFragment1OtherCategory();
@@ -136,12 +139,14 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	}
 
 	public void setImageForPost(Bitmap bitmap) {
+		imageToSend = getStringImage(bitmap);
 		imageViewHolder.setVisibility(View.VISIBLE);
 		roundedImageView.setImageBitmap(bitmap);
 		uploadPicText.setText("Change Post Cover Pic");
 	}
 
 	void removeImageForPost() {
+		imageToSend = null;
 		uploadPicText.setText("Upload Post Cover Pic (optional)");
 		roundedImageView.setImageBitmap(null);
 		imageViewHolder.setVisibility(View.GONE);
@@ -169,13 +174,22 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			break;
 		case R.id.createpostfab:
 			if (checkIfCanGoNext()) {
-				((CreatePostActivity) getActivity())
-						.setSecondFragmentForPostVisibility();
+				moveToSecondFragmentForSelectingPostVisibility();
 			}
 			break;
 		default:
 			break;
 		}
+	}
+
+	private void moveToSecondFragmentForSelectingPostVisibility() {
+		CreatePostDataToSendToServer data = new CreatePostDataToSendToServer(
+				postHeading.getText().toString().trim(), postDescription
+						.getText().toString().trim(), postCompanyName.getText()
+						.toString().trim(), imageToSend, -1, -1);
+
+		((CreatePostActivity) getActivity())
+				.setSecondFragmentForPostVisibility(data);
 	}
 
 	boolean checkIfCanGoNext() {

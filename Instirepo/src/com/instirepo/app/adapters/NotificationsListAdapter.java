@@ -2,12 +2,12 @@ package com.instirepo.app.adapters;
 
 import java.util.List;
 
-import serverApi.ImageRequestManager;
 
 import com.instirepo.app.R;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.TimeUtils;
 import com.instirepo.app.objects.NotificationsListObject.NotificationsSingleObj;
+import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.RoundedImageView;
 
 import android.content.Context;

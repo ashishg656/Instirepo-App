@@ -2,7 +2,6 @@ package com.instirepo.app.adapters;
 
 import java.util.List;
 
-import serverApi.ImageRequestManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +20,7 @@ import com.instirepo.app.activities.HomeActivity;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.objects.AllPostCategoriesObject;
+import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.RoundedImageView;
 
 public class SelectPostCategoryGridAdapter extends BaseAdapter implements

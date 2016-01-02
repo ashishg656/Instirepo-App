@@ -2,7 +2,6 @@ package com.instirepo.app.activities;
 
 import java.util.HashMap;
 
-import serverApi.ImageRequestManager;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -40,6 +39,7 @@ import com.instirepo.app.fragments.SeenByPeopleFragment;
 import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
 import com.instirepo.app.notboringactionbar.KenBurnsSupportView;
 import com.instirepo.app.preferences.ZPreferences;
+import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.CircularImageView;
 import com.instirepo.app.widgets.PagerSlidingTabStrip;
 

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import serverApi.ImageRequestManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,6 +32,7 @@ import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
 import com.instirepo.app.objects.CommentsListObject;
 import com.instirepo.app.objects.CommentsListObject.CommentObject;
 import com.instirepo.app.preferences.ZPreferences;
+import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.CircularImageView;
 
 public class CommentListAdapter extends BaseAdapter implements ZUrls,

@@ -2,7 +2,6 @@ package com.instirepo.app.adapters;
 
 import java.util.List;
 
-import serverApi.ImageRequestManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -21,6 +20,7 @@ import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.TimeUtils;
 import com.instirepo.app.objects.AllMessagesListObject;
 import com.instirepo.app.objects.AllMessagesListObject.SingleMessageListObj;
+import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.CircularImageView;
 
 public class AllMessageListAdapter extends BaseAdapter {

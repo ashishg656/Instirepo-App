@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import serverApi.CommonLib;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +20,7 @@ import com.google.android.gms.iid.InstanceID;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.preferences.ZPreferences;
+import com.instirepo.app.serverApi.CommonLib;
 
 public class RegistrationIntentService extends IntentService implements ZUrls {
 

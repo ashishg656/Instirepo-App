@@ -2,7 +2,6 @@ package com.instirepo.app.adapters;
 
 import java.util.List;
 
-import serverApi.ImageRequestManager;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -16,6 +15,7 @@ import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.TimeUtils;
 import com.instirepo.app.objects.SeenByPeopleObject;
 import com.instirepo.app.objects.SeenByPeopleObject.PeopleSeenPost;
+import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.CircularImageView;
 
 public class SeenByPeopleListAdapter extends

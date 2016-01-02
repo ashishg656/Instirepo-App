@@ -28,6 +28,6 @@ public interface AppConstants {
 	public static int Z_REQUEST_CODE_MESSAGES_ACTIVITY = 4578;
 
 	public static int Z_CREATE_POST_PUBLIC = 0;
-	public static int Z_CREATE_POST_SELECTED_PEOPLE = 1;
-	public static int Z_CREATE_POST_SAVED_COLLECTION = 2;
+	public static int Z_CREATE_POST_SELECTED_PEOPLE = 2;
+	public static int Z_CREATE_POST_SAVED_COLLECTION = 1;
 }

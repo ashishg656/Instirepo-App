@@ -1,4 +1,4 @@
-package serverApi;
+package com.instirepo.app.serverApi;
 
 public class CommonLib {
 

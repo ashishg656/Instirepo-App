@@ -1,4 +1,4 @@
-package serverApi;
+package com.instirepo.app.serverApi;
 
 import java.io.IOException;
 import java.io.InputStream;

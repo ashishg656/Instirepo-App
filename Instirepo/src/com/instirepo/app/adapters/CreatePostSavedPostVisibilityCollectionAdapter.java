@@ -17,10 +17,11 @@ import android.widget.TextView;
 
 import com.instirepo.app.R;
 import com.instirepo.app.activities.CreatePostActivity;
+import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.objects.SavedPostVisibilityCollectionObject;
 
 public class CreatePostSavedPostVisibilityCollectionAdapter extends
-		RecyclerView.Adapter<RecyclerView.ViewHolder> {
+		RecyclerView.Adapter<RecyclerView.ViewHolder> implements AppConstants {
 
 	Context context;
 	SavedPostVisibilityCollectionObject mData;
@@ -118,7 +119,10 @@ public class CreatePostSavedPostVisibilityCollectionAdapter extends
 					((CreatePostActivity) context)
 							.clickOnCreateNewCollectionButtonFromAllCollectionsFragment();
 				} else {
-
+					((CreatePostActivity) context)
+							.showDialogConfirmationBeforeSendingPost(
+									Z_CREATE_POST_SAVED_COLLECTION, mData
+											.getVisibilities().get(pos).getId());
 				}
 			}
 		}

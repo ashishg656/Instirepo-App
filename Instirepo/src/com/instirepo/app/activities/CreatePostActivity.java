@@ -8,7 +8,6 @@ import org.json.JSONArray;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +22,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
@@ -167,7 +167,12 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 				.commit();
 	}
 
-	public void setSecondFragmentForPostVisibility() {
+	public void setSecondFragmentForPostVisibility(
+			CreatePostDataToSendToServer data) {
+		createPostDataToSendToServer = data;
+
+		createPostDataToSendToServer.setCategoryId(categoryId);
+
 		createPostFragment2 = CreatePostFragment2.newInstance(new Bundle());
 		getSupportFragmentManager().beginTransaction()
 				.add(R.id.fragmtnholder, createPostFragment2)
@@ -392,15 +397,23 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 	}
 
 	public void showDialogConfirmationBeforeSendingPost(
-			final int SELECTED_MODE_TO_CREATE_POST) {
+			final int SELECTED_MODE_TO_CREATE_POST, int savedCollectionId) {
+		createPostDataToSendToServer
+				.setTypeOfPostVisibilty(SELECTED_MODE_TO_CREATE_POST);
+		createPostDataToSendToServer.setSavedCollectionId(savedCollectionId);
+
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		if (SELECTED_MODE_TO_CREATE_POST == Z_CREATE_POST_SELECTED_PEOPLE) {
 			builder.setMessage("Are you sure you want to upload this post, which will be visible to the people you selected above?");
+		} else if (SELECTED_MODE_TO_CREATE_POST == Z_CREATE_POST_PUBLIC) {
+			builder.setMessage("Are you sure you want to upload this post, which will be visible to all (Public)?");
+		} else if (SELECTED_MODE_TO_CREATE_POST == Z_CREATE_POST_SAVED_COLLECTION) {
+			builder.setMessage("Are you sure you want to upload this post, which will be visible to the selected people/groups in the saved collection?");
 		}
 
 		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				createPostRequestToServerForPublishingPost(SELECTED_MODE_TO_CREATE_POST);
+				makeRequestToUploadPoostToServer();
 			}
 		});
 		builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -411,8 +424,69 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 		dialog.show();
 	}
 
-	protected void createPostRequestToServerForPublishingPost(
-			int sELECTED_MODE_TO_CREATE_POST) {
+	private void makeRequestToUploadPoostToServer() {
+		if (progressDialog != null)
+			progressDialog.dismiss();
 
+		progressDialog = ProgressDialog.show(this, "Creating Post",
+				"Publishing post on server", false, false);
+
+		StringRequest req = new StringRequest(Method.POST, uploadPostUrl,
+				new Listener<String>() {
+
+					@Override
+					public void onResponse(String arg0) {
+						if (progressDialog != null) {
+							progressDialog.dismiss();
+						}
+
+						makeToast("Success");
+						Intent i = new Intent(CreatePostActivity.this,
+								HomeActivity.class);
+						startActivity(i);
+						CreatePostActivity.this.finish();
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						if (progressDialog != null) {
+							progressDialog.dismiss();
+						}
+
+						makeToast("Error..Please Try again");
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				HashMap<String, String> p = new HashMap<>();
+				p.put("user_id",
+						ZPreferences.getUserProfileID(CreatePostActivity.this));
+				p.put("heading", createPostDataToSendToServer.getHeading());
+				p.put("description",
+						createPostDataToSendToServer.getDescription());
+				p.put("company_name",
+						createPostDataToSendToServer.getCompanyName());
+				p.put("category_id",
+						createPostDataToSendToServer.getCategoryId() + "");
+				if (createPostDataToSendToServer.getCoverPicImage() != null) {
+					p.put("cover_image",
+							createPostDataToSendToServer.getCoverPicImage());
+				}
+				p.put("type_of_visibility",
+						createPostDataToSendToServer.getTypeOfPostVisibilty()
+								+ "");
+				if (createPostDataToSendToServer.getTypeOfPostVisibilty() == Z_CREATE_POST_SAVED_COLLECTION) {
+					p.put("saved_collection_id",
+							createPostDataToSendToServer.getSavedCollectionId()
+									+ "");
+				}
+				return p;
+			}
+		};
+		req.setShouldCache(false);
+		req.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
+				DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+		ZApplication.getInstance().addToRequestQueue(req, uploadPostUrl);
 	}
 }

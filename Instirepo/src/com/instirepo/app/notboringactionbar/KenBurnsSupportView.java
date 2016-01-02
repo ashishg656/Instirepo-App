@@ -2,7 +2,6 @@ package com.instirepo.app.notboringactionbar;
 
 import java.util.Random;
 
-import serverApi.ImageRequestManager;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -13,6 +12,7 @@ import android.widget.ImageView;
 
 import com.instirepo.app.R;
 import com.instirepo.app.application.ZApplication;
+import com.instirepo.app.serverApi.ImageRequestManager;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;

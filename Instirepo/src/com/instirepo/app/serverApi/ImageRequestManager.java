@@ -1,4 +1,4 @@
-package serverApi;
+package com.instirepo.app.serverApi;
 
 import android.content.Context;
 import android.graphics.Bitmap;
