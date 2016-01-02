@@ -122,7 +122,8 @@ public class CreatePostSavedPostVisibilityCollectionAdapter extends
 					((CreatePostActivity) context)
 							.showDialogConfirmationBeforeSendingPost(
 									Z_CREATE_POST_SAVED_COLLECTION, mData
-											.getVisibilities().get(pos).getId());
+											.getVisibilities().get(pos + 1)
+											.getId());
 				}
 			}
 		}
