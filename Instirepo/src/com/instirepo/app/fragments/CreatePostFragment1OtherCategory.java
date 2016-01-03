@@ -31,7 +31,6 @@ import com.dropbox.client2.DropboxAPI.DropboxLink;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.ProgressListener;
 import com.dropbox.client2.android.AndroidAuthSession;
-import com.dropbox.client2.exception.DropboxException;
 import com.dropbox.client2.exception.DropboxUnlinkedException;
 import com.dropbox.client2.session.AppKeyPair;
 import com.instirepo.app.R;
@@ -167,6 +166,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 
 	public void onResume() {
 		super.onResume();
+		((CreatePostActivity) getActivity()).isFirstFragmentVisible = true;
 		if (mDBApi.getSession().authenticationSuccessful()) {
 			try {
 				mDBApi.getSession().finishAuthentication();
@@ -191,7 +191,8 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		CreatePostDataToSendToServer data = new CreatePostDataToSendToServer(
 				postHeading.getText().toString().trim(), postDescription
 						.getText().toString().trim(), postCompanyName.getText()
-						.toString().trim(), imageToSend, -1, -1);
+						.toString().trim(), imageToSend, -1, -1,
+				dropboxFilesList);
 
 		((CreatePostActivity) getActivity())
 				.setSecondFragmentForPostVisibility(data);
@@ -317,7 +318,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			super.onPostExecute(obj);
 			dropboxProgressDialog.dismiss();
 			if (obj == null) {
-				((BaseActivity) getActivity()).makeToast("Error occured");
+				((BaseActivity) getActivity()).makeToast("Error occured.Please login to Dropbox");
 			} else {
 				((BaseActivity) getActivity())
 						.makeToast("Success uploading dropbox file");

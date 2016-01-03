@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
@@ -28,6 +30,7 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.circularreveal.SupportAnimator;
@@ -44,6 +47,7 @@ import com.instirepo.app.fragments.CreatePostSelectTeacherFragment;
 import com.instirepo.app.fragments.CreatePostSelectYearOrBatchFragment;
 import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.objects.CreatePostDataToSendToServer;
+import com.instirepo.app.objects.DropboxFilesObject;
 import com.instirepo.app.objects.LoginScreenFragment2Object;
 import com.instirepo.app.preferences.ZPreferences;
 
@@ -475,6 +479,24 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 					p.put("saved_collection_id",
 							createPostDataToSendToServer.getSavedCollectionId()
 									+ "");
+				}
+
+				if (createPostDataToSendToServer.getDropboxFilesObject() != null
+						&& createPostDataToSendToServer.getDropboxFilesObject()
+								.size() > 0) {
+					JSONArray dropboxFiles = new JSONArray();
+
+					for (DropboxFilesObject dropfile : createPostDataToSendToServer
+							.getDropboxFilesObject()) {
+						String jsonString = new Gson().toJson(dropfile);
+						try {
+							JSONObject request = new JSONObject(jsonString);
+							dropboxFiles.put(request);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+					p.put("dropbox_files", dropboxFiles.toString());
 				}
 				return p;
 			}

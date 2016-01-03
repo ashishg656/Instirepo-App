@@ -29,7 +29,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -227,6 +226,18 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 			});
 			anim.start();
 			floatingActionMenu.toggle(true);
+		}
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		adapter = new MyPagerAdapter(getSupportFragmentManager());
+		viewPager.setAdapter(adapter);
+		Fragment fragment = getSupportFragmentManager().findFragmentByTag(
+				Z_HOME_ACTIVITY_SLECT_CATEGORY_FRAGMENT_TAG);
+		if (fragment != null) {
+			onBackPressed();
 		}
 	}
 
@@ -482,8 +493,10 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.fragmentcontainer,
-						SelectPostCategoryFragment.newInstance(bundle))
-				.addToBackStack("").commit();
+						SelectPostCategoryFragment.newInstance(bundle),
+						Z_HOME_ACTIVITY_SLECT_CATEGORY_FRAGMENT_TAG)
+				.addToBackStack(Z_HOME_ACTIVITY_SLECT_CATEGORY_FRAGMENT_TAG)
+				.commit();
 	}
 
 	public void switchToUserProfileViewedByOtherFragment(int userid,

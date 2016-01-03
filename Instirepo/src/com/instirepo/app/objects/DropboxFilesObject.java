@@ -7,13 +7,13 @@ public class DropboxFilesObject {
 	String fileName, parentPath, path, mimeType, modified, rev, size;
 	String fileLink;
 	Long bytes;
-	Date expires;
+	String expires;
 
-	public Date getExpires() {
+	public String getExpires() {
 		return expires;
 	}
 
-	public void setExpires(Date expires) {
+	public void setExpires(String expires) {
 		this.expires = expires;
 	}
 
@@ -30,7 +30,7 @@ public class DropboxFilesObject {
 		this.size = size;
 		this.fileLink = fileLink;
 		this.bytes = bytes;
-		this.expires = expires;
+		this.expires = expires.toString();
 	}
 
 	public String getFileName() {
