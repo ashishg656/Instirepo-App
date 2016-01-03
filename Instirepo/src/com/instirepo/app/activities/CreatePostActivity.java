@@ -225,6 +225,11 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		if (createPostFragment1OtherCategory != null
+				&& requestCode == CreatePostFragment1OtherCategory.REQUEST_CODE_CREATOR) {
+			createPostFragment1OtherCategory.onActivityResult(requestCode,
+					resultCode, data);
+		}
 	}
 
 	public void showFragmentForSelectingBranch(Bundle bundle) {
