@@ -262,17 +262,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		return encodedImage;
 	}
 
-	private void addFileToFilesList(Entry entry) {
-		DropboxLink link = null;
-		try {
-			link = mDBApi.share(entry.path);
-		} catch (DropboxException e) {
-			e.printStackTrace();
-		}
-
-		DropboxFilesObject obj = new DropboxFilesObject(entry.fileName(),
-				entry.parentPath(), entry.path, entry.mimeType, entry.modified,
-				entry.rev, entry.size, link.url, entry.bytes, link.expires);
+	private void addFileToFilesList(DropboxFilesObject obj) {
 		dropboxFilesList.add(obj);
 
 		if (addedAttachments.getVisibility() == View.GONE) {
@@ -280,7 +270,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			addedAttachmentsView.setVisibility(View.VISIBLE);
 		}
 		TextView textView = new TextView(getActivity());
-		textView.setText(entry.fileName());
+		textView.setText(obj.getFileName());
 		textView.setTextColor(getActivity().getResources().getColor(
 				R.color.z_text_color_dark));
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -303,7 +293,8 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		return cursor.getString(column_index);
 	}
 
-	public class UploadFileAsyncTask extends AsyncTask<String, Long, Entry> {
+	public class UploadFileAsyncTask extends
+			AsyncTask<String, Long, DropboxFilesObject> {
 
 		@Override
 		protected void onPreExecute() {
@@ -322,21 +313,21 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		}
 
 		@Override
-		protected void onPostExecute(Entry response) {
-			super.onPostExecute(response);
+		protected void onPostExecute(DropboxFilesObject obj) {
+			super.onPostExecute(obj);
 			dropboxProgressDialog.dismiss();
-			if (response == null) {
+			if (obj == null) {
 				((BaseActivity) getActivity()).makeToast("Error occured");
 			} else {
 				((BaseActivity) getActivity())
 						.makeToast("Success uploading dropbox file");
-				
-				addFileToFilesList(response);
+
+				addFileToFilesList(obj);
 			}
 		}
 
 		@Override
-		protected Entry doInBackground(String... params) {
+		protected DropboxFilesObject doInBackground(String... params) {
 			try {
 				String path = params[0];
 				final File file = new File(path);
@@ -354,7 +345,16 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 				Log.i("DbExampleLog", "The uploaded file's rev is: "
 						+ response.rev);
 
-				return response;
+				DropboxLink link = mDBApi.share(response.path);
+				;
+
+				DropboxFilesObject obj = new DropboxFilesObject(
+						response.fileName(), response.parentPath(),
+						response.path, response.mimeType, response.modified,
+						response.rev, response.size, link.url, response.bytes,
+						link.expires);
+
+				return obj;
 			} catch (DropboxUnlinkedException e) {
 				e.printStackTrace();
 				ZPreferences.setDropboxToken(getActivity(), null);
