@@ -3,14 +3,10 @@ package com.instirepo.app.fragments;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.IntentSender;
-import android.content.IntentSender.SendIntentException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,27 +25,26 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi.DriveContentsResult;
-import com.google.android.gms.drive.DriveId;
-import com.google.android.gms.drive.MetadataChangeSet;
-import com.google.android.gms.drive.OpenFileActivityBuilder;
+import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.ProgressListener;
+import com.dropbox.client2.DropboxAPI.Entry;
+import com.dropbox.client2.android.AndroidAuthSession;
+import com.dropbox.client2.session.AppKeyPair;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.CreatePostActivity;
 import com.instirepo.app.afilechooser.utils.FileUtils;
 import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.objects.CreatePostDataToSendToServer;
+import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.CustomGoogleFloatingActionButton;
 import com.instirepo.app.widgets.RoundedImageView;
 
 public class CreatePostFragment1OtherCategory extends BaseFragment implements
-		OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
+		OnClickListener {
+
+	final static private String APP_KEY = "ku1kknp8f14k7a6";
+	final static private String APP_SECRET = "INSERT_APP_SECRET";
+	private DropboxAPI<AndroidAuthSession> mDBApi;
 
 	LinearLayout uploadPicLayout, addAttachmentLayout, removeImageLayout,
 			addedAttachments, companyNameLayout;
@@ -58,12 +53,8 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	FrameLayout imageViewHolder;
 	public RoundedImageView roundedImageView;
 
-	static final int REQUEST_CODE_RESOLUTION = 155;
-	public static final int REQUEST_CODE_CREATOR = 255;
 	public static int SELECT_POST_COVER_PIC = 355;
 	private static final int SELECT_FILE_FROM_AFILECHOOSER_CODE = 455;
-
-	private GoogleApiClient mGoogleApiClient;
 
 	ArrayList<String> fileNames;
 	public ArrayList<String> fileUrls;
@@ -114,6 +105,10 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		AppKeyPair appKeys = new AppKeyPair(APP_KEY, APP_SECRET);
+		AndroidAuthSession session = new AndroidAuthSession(appKeys);
+		mDBApi = new DropboxAPI<AndroidAuthSession>(session);
+
 		fileNames = new ArrayList<>();
 		fileUrls = new ArrayList<>();
 
@@ -126,16 +121,6 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 				.equals(AllPostCategoriesObject.categoryPlacement)) {
 			companyNameLayout.setVisibility(View.VISIBLE);
 		}
-	}
-
-	private void connectGoogleApiClient() {
-		if (mGoogleApiClient == null) {
-			mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-					.addApi(Drive.API).addScope(Drive.SCOPE_FILE)
-					.addConnectionCallbacks(this)
-					.addOnConnectionFailedListener(this).build();
-		}
-		mGoogleApiClient.connect();
 	}
 
 	public void setImageForPost(Bitmap bitmap) {
@@ -163,11 +148,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			startActivityForResult(intent, SELECT_POST_COVER_PIC);
 			break;
 		case R.id.googledrivebutton:
-			if (mGoogleApiClient.isConnected()) {
-				intentForRequestingFileFromBrowser();
-			} else {
-				connectGoogleApiClient();
-			}
+			checkIfUserAuthenticatedDropbox();
 			break;
 		case R.id.crossbuttonimage:
 			removeImageForPost();
@@ -179,6 +160,28 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			break;
 		default:
 			break;
+		}
+	}
+
+	public void onResume() {
+		super.onResume();
+		if (mDBApi.getSession().authenticationSuccessful()) {
+			try {
+				mDBApi.getSession().finishAuthentication();
+				String accessToken = mDBApi.getSession().getOAuth2AccessToken();
+				ZPreferences.setDropboxToken(getActivity(), accessToken);
+			} catch (IllegalStateException e) {
+				Log.i("DbAuthLog", "Error authenticating", e);
+			}
+		}
+	}
+
+	private void checkIfUserAuthenticatedDropbox() {
+		if (ZPreferences.getDropboxToken(getActivity()) == null) {
+			mDBApi.getSession().startOAuth2Authentication(
+					(CreatePostActivity) getActivity());
+		} else {
+			intentForRequestingFileFromBrowser();
 		}
 	}
 
@@ -239,26 +242,37 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 
 				String path = FileUtils.getPath(getActivity(), uri);
 				if (path != null && FileUtils.isLocal(path)) {
-					saveFileToDrive(path, uri);
+					saveFileToDropbox(path, uri);
 				}
-			} else if (requestCode == CreatePostFragment1OtherCategory.REQUEST_CODE_CREATOR) {
-				if (progressDialog != null)
-					progressDialog.dismiss();
-
-				makeToast("success");
-
-				DriveId driveId = (DriveId) data
-						.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
-				Log.w("a", "File created with ID: " + driveId);
-
-				fileNames.add(fileName);
-				fileUrls.add(driveId.toString());
-
-				addFileToFilesList(fileName, driveId.toString());
 			}
-		} else if (requestCode == CreatePostFragment1OtherCategory.REQUEST_CODE_CREATOR) {
-			if (progressDialog != null)
-				progressDialog.dismiss();
+		}
+	}
+
+	private void saveFileToDropbox(String path, Uri uri) {
+		String fileNameTemp = null;
+		try {
+			File file = new File(path);
+			fileNameTemp = file.getName();
+			FileInputStream inputStream = new FileInputStream(file);
+			Entry response = mDBApi.putFile(file.getName(), inputStream,
+					file.length(), null, new ProgressListener() {
+
+						@Override
+						public void onProgress(long arg0, long arg1) {
+							Log.w("As", "arg0 " + arg0 + "  arg1  " + arg1);
+						}
+					});
+			Log.i("DbExampleLog", "The uploaded file's rev is: " + response.rev);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			Entry existingEntry = mDBApi.metadata(fileNameTemp, 1, null, false,
+					null);
+			Log.i("DbExampleLog", "The file's rev is now: " + existingEntry.rev);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -289,68 +303,6 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		addedAttachments.addView(textView);
 	}
 
-	private void saveFileToDrive(final String path, final Uri uri) {
-		Drive.DriveApi.newDriveContents(mGoogleApiClient).setResultCallback(
-				new ResultCallback<DriveContentsResult>() {
-
-					@Override
-					public void onResult(DriveContentsResult result) {
-						if (!result.getStatus().isSuccess()) {
-							Log.i("tag", "Failed to create new contents.");
-							return;
-						}
-						Log.i("tag", "New contents created.");
-						OutputStream outputStream = result.getDriveContents()
-								.getOutputStream();
-
-						File file = new File(path);
-
-						try {
-							byte[] byteArray = new byte[(int) file.length()];
-							FileInputStream fileInputStream = new FileInputStream(
-									file);
-							fileInputStream.read(byteArray);
-							fileInputStream.close();
-
-							outputStream.write(byteArray);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						} finally {
-
-						}
-
-						fileName = file.getName();
-
-						MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
-								.setMimeType(
-										getActivity().getContentResolver()
-												.getType(uri))
-								.setTitle(file.getName()).build();
-						IntentSender intentSender = Drive.DriveApi
-								.newCreateFileActivityBuilder()
-								.setInitialMetadata(metadataChangeSet)
-								.setInitialDriveContents(
-										result.getDriveContents())
-								.build(mGoogleApiClient);
-
-						if (progressDialog != null
-								&& progressDialog.isShowing())
-							progressDialog.dismiss();
-						progressDialog = ProgressDialog
-								.show(getActivity(), "Processing",
-										"Processing selected file for Google Drive upload");
-
-						try {
-							getActivity().startIntentSenderForResult(
-									intentSender, REQUEST_CODE_CREATOR, null,
-									0, 0, 0);
-						} catch (SendIntentException e) {
-							Log.i("tag", "Failed to launch file chooser.");
-						}
-					}
-				});
-	}
-
 	public String getPathFromUri(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
 		Cursor cursor = getActivity().getContentResolver().query(uri,
@@ -359,46 +311,6 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 				.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 		cursor.moveToFirst();
 		return cursor.getString(column_index);
-	}
-
-	@Override
-	public void onPause() {
-		if (mGoogleApiClient != null)
-			mGoogleApiClient.disconnect();
-		super.onPause();
-	}
-
-	@Override
-	public void onResume() {
-		((CreatePostActivity) getActivity()).isFirstFragmentVisible = true;
-		connectGoogleApiClient();
-		super.onResume();
-	}
-
-	@Override
-	public void onConnected(Bundle arg0) {
-		Log.i("as", "API client connected.");
-	}
-
-	@Override
-	public void onConnectionSuspended(int arg0) {
-		Log.i("TAG", "GoogleApiClient connection suspended");
-	}
-
-	@Override
-	public void onConnectionFailed(ConnectionResult result) {
-		if (!result.hasResolution()) {
-			GoogleApiAvailability.getInstance()
-					.getErrorDialog(getActivity(), result.getErrorCode(), 0)
-					.show();
-			return;
-		}
-		try {
-			result.startResolutionForResult(getActivity(),
-					REQUEST_CODE_RESOLUTION);
-		} catch (SendIntentException e) {
-			Log.e("tag", "Exception while starting resolution activity", e);
-		}
 	}
 
 }

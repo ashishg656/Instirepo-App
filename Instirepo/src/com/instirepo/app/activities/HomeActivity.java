@@ -263,6 +263,8 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 									false);
 							ZPreferences.setUserProfileID(HomeActivity.this,
 									null);
+							ZPreferences.setDropboxToken(HomeActivity.this,
+									null);
 							if (mGoogleApiClient.isConnected()) {
 								Plus.AccountApi
 										.clearDefaultAccount(mGoogleApiClient);

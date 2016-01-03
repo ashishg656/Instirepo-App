@@ -153,6 +153,25 @@
             </intent-filter>
         </activity>
         <!-- end File chooser activity -->
+
+
+        <!-- Dropbox -->
+
+        <activity
+            android:name="com.dropbox.client2.android.AuthActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <data android:scheme="db-ku1kknp8f14k7a6" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- End Dropbox -->
     </application>
 
 </manifest>
