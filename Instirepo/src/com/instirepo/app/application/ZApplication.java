@@ -3,11 +3,11 @@ package com.instirepo.app.application;
 import java.io.File;
 
 import android.app.ActivityManager;
-import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory.Options;
 import android.support.annotation.NonNull;
+import android.support.multidex.MultiDexApplication;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,7 +22,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
-public class ZApplication extends Application {
+public class ZApplication extends MultiDexApplication {
 
 	static ZApplication sInstance;
 	private RequestQueue mRequestQueue;
@@ -92,5 +92,4 @@ public class ZApplication extends Application {
 	public static String getImageUrl(String s) {
 		return "http://hola-instirepo.rhcloud.com" + s;
 	}
-
 }
