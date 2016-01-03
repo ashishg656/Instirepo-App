@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
@@ -26,15 +27,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dropbox.client2.DropboxAPI;
-import com.dropbox.client2.ProgressListener;
+import com.dropbox.client2.DropboxAPI.DropboxLink;
 import com.dropbox.client2.DropboxAPI.Entry;
+import com.dropbox.client2.ProgressListener;
 import com.dropbox.client2.android.AndroidAuthSession;
+import com.dropbox.client2.exception.DropboxException;
+import com.dropbox.client2.exception.DropboxUnlinkedException;
 import com.dropbox.client2.session.AppKeyPair;
 import com.instirepo.app.R;
+import com.instirepo.app.activities.BaseActivity;
 import com.instirepo.app.activities.CreatePostActivity;
 import com.instirepo.app.afilechooser.utils.FileUtils;
 import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.objects.CreatePostDataToSendToServer;
+import com.instirepo.app.objects.DropboxFilesObject;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.CustomGoogleFloatingActionButton;
 import com.instirepo.app.widgets.RoundedImageView;
@@ -56,15 +62,13 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	public static int SELECT_POST_COVER_PIC = 355;
 	private static final int SELECT_FILE_FROM_AFILECHOOSER_CODE = 455;
 
-	ArrayList<String> fileNames;
-	public ArrayList<String> fileUrls;
-	String fileName;
-
-	ProgressDialog progressDialog;
+	ProgressDialog progressDialog, dropboxProgressDialog;
 	CustomGoogleFloatingActionButton floatingActionButton;
 	public EditText postHeading, postDescription, postCompanyName;
 
 	String imageToSend;
+
+	public ArrayList<DropboxFilesObject> dropboxFilesList;
 
 	public static CreatePostFragment1OtherCategory newInstance(Bundle b) {
 		CreatePostFragment1OtherCategory frg = new CreatePostFragment1OtherCategory();
@@ -105,12 +109,10 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		dropboxFilesList = new ArrayList<>();
 		AppKeyPair appKeys = new AppKeyPair(APP_KEY, APP_SECRET);
 		AndroidAuthSession session = new AndroidAuthSession(appKeys);
 		mDBApi = new DropboxAPI<AndroidAuthSession>(session);
-
-		fileNames = new ArrayList<>();
-		fileUrls = new ArrayList<>();
 
 		uploadPicLayout.setOnClickListener(this);
 		addAttachmentLayout.setOnClickListener(this);
@@ -248,32 +250,8 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		}
 	}
 
-	private void saveFileToDropbox(String path, Uri uri) {
-		String fileNameTemp = null;
-		try {
-			File file = new File(path);
-			fileNameTemp = file.getName();
-			FileInputStream inputStream = new FileInputStream(file);
-			Entry response = mDBApi.putFile(file.getName(), inputStream,
-					file.length(), null, new ProgressListener() {
-
-						@Override
-						public void onProgress(long arg0, long arg1) {
-							Log.w("As", "arg0 " + arg0 + "  arg1  " + arg1);
-						}
-					});
-			Log.i("DbExampleLog", "The uploaded file's rev is: " + response.rev);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			Entry existingEntry = mDBApi.metadata(fileNameTemp, 1, null, false,
-					null);
-			Log.i("DbExampleLog", "The file's rev is now: " + existingEntry.rev);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	private void saveFileToDropbox(final String path, Uri uri) {
+		new UploadFileAsyncTask().execute(path);
 	}
 
 	public String getStringImage(Bitmap bmp) {
@@ -284,20 +262,32 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		return encodedImage;
 	}
 
-	private void addFileToFilesList(String fileName, String driveId) {
+	private void addFileToFilesList(Entry entry) {
+		DropboxLink link = null;
+		try {
+			link = mDBApi.share(entry.path);
+		} catch (DropboxException e) {
+			e.printStackTrace();
+		}
+
+		DropboxFilesObject obj = new DropboxFilesObject(entry.fileName(),
+				entry.parentPath(), entry.path, entry.mimeType, entry.modified,
+				entry.rev, entry.size, link.url, entry.bytes, link.expires);
+		dropboxFilesList.add(obj);
+
 		if (addedAttachments.getVisibility() == View.GONE) {
 			addedAttachments.setVisibility(View.VISIBLE);
 			addedAttachmentsView.setVisibility(View.VISIBLE);
 		}
 		TextView textView = new TextView(getActivity());
-		textView.setText(fileName);
+		textView.setText(entry.fileName());
 		textView.setTextColor(getActivity().getResources().getColor(
 				R.color.z_text_color_dark));
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.WRAP_CONTENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT);
 		params.bottomMargin = getActivity().getResources()
-				.getDimensionPixelSize(R.dimen.z_margin_mini);
+				.getDimensionPixelSize(R.dimen.z_margin_small);
 		textView.setLayoutParams(params);
 
 		addedAttachments.addView(textView);
@@ -313,4 +303,74 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		return cursor.getString(column_index);
 	}
 
+	public class UploadFileAsyncTask extends AsyncTask<String, Long, Entry> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (dropboxProgressDialog != null)
+				dropboxProgressDialog.dismiss();
+			dropboxProgressDialog = new ProgressDialog(getActivity());
+			dropboxProgressDialog.setMessage("Uplaoding file to dropbox");
+			dropboxProgressDialog
+					.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			dropboxProgressDialog.setIndeterminate(false);
+			dropboxProgressDialog.setProgress(0);
+			dropboxProgressDialog.setCancelable(false);
+			dropboxProgressDialog.setCanceledOnTouchOutside(false);
+			dropboxProgressDialog.show();
+		}
+
+		@Override
+		protected void onPostExecute(Entry response) {
+			super.onPostExecute(response);
+			dropboxProgressDialog.dismiss();
+			if (response == null) {
+				((BaseActivity) getActivity()).makeToast("Error occured");
+			} else {
+				((BaseActivity) getActivity())
+						.makeToast("Success uploading dropbox file");
+				
+				addFileToFilesList(response);
+			}
+		}
+
+		@Override
+		protected Entry doInBackground(String... params) {
+			try {
+				String path = params[0];
+				final File file = new File(path);
+				FileInputStream inputStream = new FileInputStream(file);
+				Entry response = mDBApi.putFile(file.getName(), inputStream,
+						file.length(), null, new ProgressListener() {
+
+							@Override
+							public void onProgress(long arg0, long arg1) {
+								Log.w("As", "arg0 " + arg0 + "  arg1  " + arg1);
+								float progess = (float) arg0 / arg1 * 100.0f;
+								publishProgress((long) progess);
+							}
+						});
+				Log.i("DbExampleLog", "The uploaded file's rev is: "
+						+ response.rev);
+
+				return response;
+			} catch (DropboxUnlinkedException e) {
+				e.printStackTrace();
+				ZPreferences.setDropboxToken(getActivity(), null);
+				checkIfUserAuthenticatedDropbox();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onProgressUpdate(Long... values) {
+			super.onProgressUpdate(values);
+			int value = (int) (long) values[0];
+			dropboxProgressDialog.setProgress(value);
+		}
+	}
 }

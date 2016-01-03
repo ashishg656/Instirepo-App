@@ -209,7 +209,7 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 					|| getEdittextLength(createPostFragment1OtherCategory.postCompanyName)
 					|| createPostFragment1OtherCategory.roundedImageView
 							.getDrawable() != null
-					|| createPostFragment1OtherCategory.fileUrls.size() != 0) {
+					|| createPostFragment1OtherCategory.dropboxFilesList.size() != 0) {
 				return true;
 			}
 		}
