@@ -143,11 +143,13 @@ public class CreatePostFragment2FragmentSelectNew extends BaseFragment
 			break;
 		case R.id.createpostfinalsetep:
 			((CreatePostActivity) getActivity())
-					.showDialogConfirmationBeforeSendingPost(Z_CREATE_POST_SELECTED_PEOPLE);
+					.showDialogConfirmationBeforeSendingPost(
+							Z_CREATE_POST_SELECTED_PEOPLE, -1);
 			break;
 		case R.id.publiclayoutcretaepostbutton:
 			((CreatePostActivity) getActivity())
-					.showDialogConfirmationBeforeSendingPost(Z_CREATE_POST_PUBLIC);
+					.showDialogConfirmationBeforeSendingPost(
+							Z_CREATE_POST_PUBLIC, -1);
 			break;
 
 		default:
