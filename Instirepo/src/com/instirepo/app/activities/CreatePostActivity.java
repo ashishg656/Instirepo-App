@@ -479,6 +479,29 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 					p.put("saved_collection_id",
 							createPostDataToSendToServer.getSavedCollectionId()
 									+ "");
+				} else if (createPostDataToSendToServer
+						.getTypeOfPostVisibilty() == Z_CREATE_POST_SELECTED_PEOPLE) {
+					JSONArray arrayBatches = new JSONArray();
+					for (int id : batchArray) {
+						arrayBatches.put(id);
+					}
+					JSONArray arrayBranches = new JSONArray();
+					for (int id : branchesArray) {
+						arrayBranches.put(id);
+					}
+					JSONArray arrayYears = new JSONArray();
+					for (int id : yearArray) {
+						arrayYears.put(id);
+					}
+					JSONArray arrayTeachers = new JSONArray();
+					for (int id : teacherArray) {
+						arrayTeachers.put(id);
+					}
+
+					p.put("batches_id", arrayBatches.toString());
+					p.put("branches_id", arrayBranches.toString());
+					p.put("years_id", arrayYears.toString());
+					p.put("teachers_id", arrayTeachers.toString());
 				}
 
 				if (createPostDataToSendToServer.getDropboxFilesObject() != null

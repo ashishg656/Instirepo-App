@@ -116,6 +116,7 @@ public class PostsByStudentsFragment extends BaseFragment implements ZUrls,
 	}
 
 	private void loadData() {
+		isRequestRunning = true;
 		if (adapter == null) {
 			showLoadingLayout();
 			hideErrorLayout();
@@ -126,6 +127,7 @@ public class PostsByStudentsFragment extends BaseFragment implements ZUrls,
 
 					@Override
 					public void onResponse(String res) {
+						isRequestRunning = false;
 						if (adapter == null) {
 							hideErrorLayout();
 							hideLoadingLayout();
@@ -138,6 +140,7 @@ public class PostsByStudentsFragment extends BaseFragment implements ZUrls,
 
 					@Override
 					public void onErrorResponse(VolleyError err) {
+						isRequestRunning = false;
 						System.out.print(err.networkResponse);
 						if (adapter == null) {
 							showErrorLayout();
@@ -152,7 +155,7 @@ public class PostsByStudentsFragment extends BaseFragment implements ZUrls,
 				return p;
 			}
 		};
-		ZApplication.getInstance().addToRequestQueue(req, teacherPostsUrl);
+		ZApplication.getInstance().addToRequestQueue(req, studentPostsUrl);
 	}
 
 	protected void setAdapterData(PostsListObject obj) {

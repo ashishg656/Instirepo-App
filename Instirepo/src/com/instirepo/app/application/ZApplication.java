@@ -13,6 +13,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.instirepo.app.R;
+import com.instirepo.app.extras.FontsOverride;
 import com.instirepo.app.serverApi.NutraBaseImageDecoder;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -37,6 +38,8 @@ public class ZApplication extends Application {
 		cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(),
 				"instirepo");
 		initImageLoader(getApplicationContext());
+
+		// setFonts("Hind-Light.ttf");
 	}
 
 	public synchronized static ZApplication getInstance() {
@@ -91,6 +94,14 @@ public class ZApplication extends Application {
 
 	public static String getImageUrl(String s) {
 		return "http://hola-instirepo.rhcloud.com" + s;
+	}
+
+	void setFonts(String font) {
+		String[] types = { "DEFAULT", "MONOSPACE", "SERIF", "SANS_SERIF" };
+		for (int i = 0; i < types.length; i++) {
+			FontsOverride.setDefaultFont(getApplicationContext(), types[i],
+					"fonts/" + font);
+		}
 	}
 
 }

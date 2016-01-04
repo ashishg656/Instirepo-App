@@ -118,6 +118,7 @@ public class PostsByTeachersFragment extends BaseFragment implements ZUrls,
 	}
 
 	private void loadData() {
+		isRequestRunning = true;
 		if (adapter == null) {
 			showLoadingLayout();
 			hideErrorLayout();
@@ -128,6 +129,7 @@ public class PostsByTeachersFragment extends BaseFragment implements ZUrls,
 
 					@Override
 					public void onResponse(String res) {
+						isRequestRunning = false;
 						if (adapter == null) {
 							hideErrorLayout();
 							hideLoadingLayout();
@@ -146,6 +148,7 @@ public class PostsByTeachersFragment extends BaseFragment implements ZUrls,
 
 					@Override
 					public void onErrorResponse(VolleyError err) {
+						isRequestRunning = false;
 						System.out.print(err.networkResponse);
 						if (adapter == null) {
 							showErrorLayout();
