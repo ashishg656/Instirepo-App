@@ -14,9 +14,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
@@ -130,16 +131,6 @@ public class PostsByTeachersFragment extends BaseFragment implements ZUrls,
 					@Override
 					public void onResponse(String res) {
 						isRequestRunning = false;
-						if (adapter == null) {
-							hideErrorLayout();
-							hideLoadingLayout();
-
-							if (ZPreferences.isUserLogIn(getActivity())) {
-								Intent intent = new Intent(getActivity(),
-										RegistrationIntentService.class);
-								getActivity().startService(intent);
-							}
-						}
 						PostsListObject obj = new Gson().fromJson(res,
 								PostsListObject.class);
 						setAdapterData(obj);
@@ -149,10 +140,20 @@ public class PostsByTeachersFragment extends BaseFragment implements ZUrls,
 					@Override
 					public void onErrorResponse(VolleyError err) {
 						isRequestRunning = false;
-						System.out.print(err.networkResponse);
-						if (adapter == null) {
-							showErrorLayout();
-							hideLoadingLayout();
+						try {
+							Cache cache = ZApplication.getInstance()
+									.getRequestQueue().getCache();
+							Entry entry = cache.get(teacherPostsUrl
+									+ "?pagenumber=" + nextPage);
+							String data = new String(entry.data, "UTF-8");
+							PostsListObject obj = new Gson().fromJson(data,
+									PostsListObject.class);
+							setAdapterData(obj);
+						} catch (Exception e) {
+							if (adapter == null) {
+								showErrorLayout();
+								hideLoadingLayout();
+							}
 						}
 					}
 				}) {
@@ -175,6 +176,15 @@ public class PostsByTeachersFragment extends BaseFragment implements ZUrls,
 			adapter = new PostsByTeachersListAdapter(getActivity(),
 					obj.getPosts(), isMoreAllowed);
 			recyclerView.setAdapter(adapter);
+
+			hideErrorLayout();
+			hideLoadingLayout();
+
+			if (ZPreferences.isUserLogIn(getActivity())) {
+				Intent intent = new Intent(getActivity(),
+						RegistrationIntentService.class);
+				getActivity().startService(intent);
+			}
 		} else {
 			adapter.addData(obj.getPosts(), isMoreAllowed);
 		}

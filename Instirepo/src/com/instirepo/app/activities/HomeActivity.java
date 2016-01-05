@@ -182,7 +182,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 					}, -1);
 		} else {
 			navigationDrawerEmail.setText("Please Login");
-			navigationDrawerUserName.setText("BookNCart");
+			navigationDrawerUserName.setText("Instirepo");
 			navigationDrawerImageUser.setVisibility(View.GONE);
 		}
 		navigationDrawerHeaderLayout.setOnClickListener(this);
