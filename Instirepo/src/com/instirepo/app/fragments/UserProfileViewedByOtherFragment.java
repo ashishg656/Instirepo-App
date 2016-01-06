@@ -29,6 +29,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
@@ -268,14 +270,12 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		showLoadingLayout();
 		mainContentLayout.setVisibility(View.GONE);
 
-		StringRequest req = new StringRequest(Method.POST,
-				userProfileViewedByOther, new Listener<String>() {
+		String url = userProfileViewedByOther + "?profile_viewing_id=" + userId;
+		StringRequest req = new StringRequest(Method.POST, url,
+				new Listener<String>() {
 
 					@Override
 					public void onResponse(String arg0) {
-						hideErrorLayout();
-						hideLoadingLayout();
-
 						UserProfileViewedByOtherObject obj = new Gson()
 								.fromJson(arg0,
 										UserProfileViewedByOtherObject.class);
@@ -285,10 +285,24 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 
 					@Override
 					public void onErrorResponse(VolleyError arg0) {
-						hideLoadingLayout();
-						showErrorLayout();
+						try {
+							Cache cache = ZApplication.getInstance()
+									.getRequestQueue().getCache();
+							Entry entry = cache.get(userProfileViewedByOther
+									+ "?profile_viewing_id=" + userId);
+							String data = new String(entry.data, "UTF-8");
 
-						setTouchListenersOnScrollView();
+							UserProfileViewedByOtherObject obj = new Gson()
+									.fromJson(
+											data,
+											UserProfileViewedByOtherObject.class);
+							setScrollViewData(obj);
+						} catch (Exception e) {
+							hideLoadingLayout();
+							showErrorLayout();
+
+							setTouchListenersOnScrollView();
+						}
 					}
 				}) {
 			@Override
@@ -304,6 +318,9 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 	}
 
 	protected void setScrollViewData(UserProfileViewedByOtherObject obj) {
+		hideErrorLayout();
+		hideLoadingLayout();
+
 		mData = obj;
 		mainContentLayout.setVisibility(View.VISIBLE);
 		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) progressLayoutContainer

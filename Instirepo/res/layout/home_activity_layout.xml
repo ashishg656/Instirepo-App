@@ -43,9 +43,9 @@
                     android:id="@+id/indicator"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/z_button_height"
-                    app:tabGravity="fill"
+                    app:tabGravity="center"
                     app:tabIndicatorColor="@color/z_white"
-                    app:tabMode="fixed"
+                    app:tabMode="scrollable"
                     app:tabSelectedTextColor="@color/z_white"
                     app:tabTextColor="@color/z_white_transparency" />
             </android.support.design.widget.AppBarLayout>

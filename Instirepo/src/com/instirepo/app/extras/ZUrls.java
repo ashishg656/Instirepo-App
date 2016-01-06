@@ -85,4 +85,7 @@ public interface ZUrls {
 
 	public String uploadPostUrl = ZApplication.getBaseUrl() + "upload_post/";
 
+	public String userProfileViewedByHimself = ZApplication.getBaseUrl()
+			+ "user_profile_viewed_by_himself/";
+
 }

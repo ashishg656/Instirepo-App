@@ -15,7 +15,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,6 +35,8 @@ import com.instirepo.app.extras.ZAnimatorListener;
 import com.instirepo.app.fragments.CommentsFragment;
 import com.instirepo.app.fragments.MyPostsFragment;
 import com.instirepo.app.fragments.SeenByPeopleFragment;
+import com.instirepo.app.fragments.UserProfileBaseFragment;
+import com.instirepo.app.fragments.UserProfileEditProfileFragment;
 import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
 import com.instirepo.app.notboringactionbar.KenBurnsSupportView;
 import com.instirepo.app.preferences.ZPreferences;
@@ -148,7 +149,8 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 		public Fragment getItem(int pos) {
 			Bundle bundle = new Bundle();
 			if (pos == 0)
-				fragmentHashMap.put(pos, MyPostsFragment.newInstance(bundle));
+				fragmentHashMap.put(pos,
+						UserProfileEditProfileFragment.newInstance(bundle));
 			else if (pos == 1)
 				fragmentHashMap.put(pos, MyPostsFragment.newInstance(bundle));
 			else
@@ -423,7 +425,7 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 	private void makeHeightsOfRecyclerViewsEqualOnPageScroll() {
 		for (int i = 0; i < 3; i++) {
 			if (i != viewPager.getCurrentItem()) {
-				((MyPostsFragment) fragmentHashMap.get(i)).layoutManager
+				((UserProfileBaseFragment) fragmentHashMap.get(i)).layoutManager
 						.scrollToPositionWithOffset(0,
 								(int) actualHeader.getTranslationY());
 			}
@@ -433,7 +435,7 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 	@Override
 	public void onPageSelected(int pos) {
 		for (int i = 0; i < 3; i++) {
-			((MyPostsFragment) fragmentHashMap.get(i)).layoutManager
+			((UserProfileBaseFragment) fragmentHashMap.get(i)).layoutManager
 					.scrollToPositionWithOffset(0,
 							(int) actualHeader.getTranslationY());
 		}
