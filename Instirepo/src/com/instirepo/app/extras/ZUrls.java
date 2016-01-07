@@ -88,4 +88,13 @@ public interface ZUrls {
 	public String userProfileViewedByHimself = ZApplication.getBaseUrl()
 			+ "user_profile_viewed_by_himself/";
 
+	public String changeEmailVisibility = ZApplication.getBaseUrl()
+			+ "change_email_visibility/";
+
+	public String changePhoneVisibility = ZApplication.getBaseUrl()
+			+ "change_phone_visibility/";
+
+	public String deleteResumeRequest = ZApplication.getBaseUrl()
+			+ "delete_resume/";
+
 }
