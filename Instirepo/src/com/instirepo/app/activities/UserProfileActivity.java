@@ -1,6 +1,7 @@
 package com.instirepo.app.activities;
 
 import java.util.HashMap;
+import java.util.List;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
@@ -105,6 +106,10 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 
 		setStatusBarColor(getResources().getColor(
 				R.color.bnc_shop_by_category_color1));
+		toolbar.setBackgroundColor(getResources().getColor(
+				R.color.bnc_shop_by_category_color1_toolbar));
+		appBarLayout.setBackgroundColor(getResources().getColor(
+				R.color.bnc_shop_by_category_color1_toolbar));
 
 		adapter = new MyPagerAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(adapter);
@@ -366,8 +371,10 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 	}
 
 	void pageSelectedAnimation(int color, int lightColor,
-			final int circularrevealcolor) {
+			final int circularrevealcolor, int toolbarColor) {
 		setStatusBarColor(color);
+		toolbar.setBackgroundColor(toolbarColor);
+		appBarLayout.setBackgroundColor(toolbarColor);
 		kenburnsImageBg.setBackgroundColor(lightColor);
 		if (isCircularRevealShown) {
 			makeHeightsOfRecyclerViewsEqualOnPageScroll();
@@ -422,12 +429,20 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 		}
 	}
 
+	public void setKunburnsViewImages(List<String> images) {
+		kenBurnsSupportView.setResourceIds(images.get(0), images.get(1));
+	}
+
 	private void makeHeightsOfRecyclerViewsEqualOnPageScroll() {
 		for (int i = 0; i < 3; i++) {
 			if (i != viewPager.getCurrentItem()) {
-				((UserProfileBaseFragment) fragmentHashMap.get(i)).layoutManager
-						.scrollToPositionWithOffset(0,
-								(int) actualHeader.getTranslationY());
+				try {
+					((UserProfileBaseFragment) fragmentHashMap.get(i)).layoutManager
+							.scrollToPositionWithOffset(0,
+									(int) actualHeader.getTranslationY());
+				} catch (Exception e) {
+
+				}
 			}
 		}
 	}
@@ -435,9 +450,13 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 	@Override
 	public void onPageSelected(int pos) {
 		for (int i = 0; i < 3; i++) {
-			((UserProfileBaseFragment) fragmentHashMap.get(i)).layoutManager
-					.scrollToPositionWithOffset(0,
-							(int) actualHeader.getTranslationY());
+			try {
+				((UserProfileBaseFragment) fragmentHashMap.get(i)).layoutManager
+						.scrollToPositionWithOffset(0,
+								(int) actualHeader.getTranslationY());
+			} catch (Exception e) {
+
+			}
 		}
 
 		if (pos == 0) {
@@ -447,7 +466,9 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 					getResources().getColor(
 							R.color.bnc_shop_by_category_color1_light),
 					getResources().getColor(
-							R.color.bnc_shop_by_category_color1_lightdiff));
+							R.color.bnc_shop_by_category_color1_lightdiff),
+					getResources().getColor(
+							R.color.bnc_shop_by_category_color1_toolbar));
 		} else if (pos == 1) {
 			pageSelectedAnimation(
 					getResources()
@@ -455,7 +476,9 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 					getResources().getColor(
 							R.color.bnc_shop_by_category_color2_light),
 					getResources().getColor(
-							R.color.bnc_shop_by_category_color2_lightdiff));
+							R.color.bnc_shop_by_category_color2_lightdiff),
+					getResources().getColor(
+							R.color.bnc_shop_by_category_color2_toolbar));
 		} else {
 			pageSelectedAnimation(
 					getResources()
@@ -463,7 +486,9 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 					getResources().getColor(
 							R.color.bnc_shop_by_category_color3_light),
 					getResources().getColor(
-							R.color.bnc_shop_by_category_color3_lightdiff));
+							R.color.bnc_shop_by_category_color3_lightdiff),
+					getResources().getColor(
+							R.color.bnc_shop_by_category_color3_toolbar));
 		}
 	}
 

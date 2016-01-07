@@ -12,11 +12,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.UserProfileActivity;
 import com.instirepo.app.adapters.UserProfileEditProfileListAdapter;
@@ -109,13 +112,27 @@ public class UserProfileEditProfileFragment extends UserProfileBaseFragment
 
 					@Override
 					public void onResponse(String res) {
-						setAdapterData(null);
+						UserProfileEditProfileObject obj = new Gson().fromJson(
+								res, UserProfileEditProfileObject.class);
+						setAdapterData(obj);
 					}
 				}, new ErrorListener() {
 
 					@Override
 					public void onErrorResponse(VolleyError err) {
-
+						try {
+							Cache cache = ZApplication.getInstance()
+									.getRequestQueue().getCache();
+							Entry entry = cache.get(userProfileViewedByHimself);
+							String data = new String(entry.data, "UTF-8");
+							UserProfileEditProfileObject obj = new Gson()
+									.fromJson(data,
+											UserProfileEditProfileObject.class);
+							setAdapterData(obj);
+						} catch (Exception e) {
+							showErrorLayout();
+							hideLoadingLayout();
+						}
 					}
 				}) {
 			@Override
@@ -130,6 +147,8 @@ public class UserProfileEditProfileFragment extends UserProfileBaseFragment
 	}
 
 	void setAdapterData(UserProfileEditProfileObject obj) {
+		((UserProfileActivity) getActivity()).setKunburnsViewImages(obj
+				.getImages_header_send());
 		hideLoadingLayout();
 		hideErrorLayout();
 		adapter = new UserProfileEditProfileListAdapter(getActivity(), obj);

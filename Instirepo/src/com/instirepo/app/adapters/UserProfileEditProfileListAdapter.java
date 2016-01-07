@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.instirepo.app.R;
 import com.instirepo.app.activities.UserProfileActivity;
@@ -53,7 +55,29 @@ public class UserProfileEditProfileListAdapter extends
 			params.height = ((UserProfileActivity) context).headerHeight;
 			holder.header.setLayoutParams(params);
 		} else {
+			EditProfileHolder holder = (EditProfileHolder) holderCom;
+			holder.name.setText("Name : " + mData.getName());
+			holder.branch.setText("Branch : " + mData.getBranch());
+			holder.batch.setText("Batch : " + mData.getBatch());
+			holder.year.setText("Year : " + mData.getYear());
+			holder.enrollmentNumber.setText("Enrollment Number : "
+					+ mData.getEnrollment_number());
+			holder.email.setText("Email : " + mData.getEmail());
+			holder.aboutText.setText(mData.getAbout());
+			holder.numberOfPosts.setText("Number of Posts Posted : "
+					+ mData.getNumber_of_posts());
+			holder.numberOfUpvotes.setText("Number of Upvotes Received : "
+					+ mData.getUpvotes());
+			holder.numberOfDownvotes.setText("Number of Downvotes Received : "
+					+ mData.getDownvotes());
+			if (mData.getPhone() == null || mData.getPhone().isEmpty()) {
+				holder.mobile.setText("Phone : -");
+			} else
+				holder.mobile.setText("Phone : " + mData.getPhone());
 
+			holder.checkBoxEmail.setChecked(mData.isIs_email_shown_to_others());
+			holder.checkBoxPhone
+					.setChecked(mData.isIs_mobile_shown_to_others());
 		}
 	}
 
@@ -86,8 +110,25 @@ public class UserProfileEditProfileListAdapter extends
 
 	class EditProfileHolder extends RecyclerView.ViewHolder {
 
+		TextView name, enrollmentNumber, branch, batch, year, numberOfPosts,
+				numberOfUpvotes, numberOfDownvotes, aboutText, email, mobile;
+		CheckBox checkBoxEmail, checkBoxPhone;
+
 		public EditProfileHolder(View v) {
 			super(v);
+			name = (TextView) v.findViewById(R.id.name);
+			enrollmentNumber = (TextView) v.findViewById(R.id.enrollment);
+			branch = (TextView) v.findViewById(R.id.branch);
+			batch = (TextView) v.findViewById(R.id.batch);
+			year = (TextView) v.findViewById(R.id.year);
+			numberOfPosts = (TextView) v.findViewById(R.id.posts);
+			numberOfUpvotes = (TextView) v.findViewById(R.id.upvotes);
+			numberOfDownvotes = (TextView) v.findViewById(R.id.downvotes);
+			aboutText = (TextView) v.findViewById(R.id.about);
+			email = (TextView) v.findViewById(R.id.emailuser);
+			mobile = (TextView) v.findViewById(R.id.calluser);
+			checkBoxEmail = (CheckBox) v.findViewById(R.id.emailvisible);
+			checkBoxPhone = (CheckBox) v.findViewById(R.id.phonevisible);
 		}
 	}
 

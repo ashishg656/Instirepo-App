@@ -53,5 +53,8 @@
     <color name="bnc_shop_by_category_color1_lightdiff">#CC6053fe</color>
     <color name="bnc_shop_by_category_color2_lightdiff">#CC007f96</color>
     <color name="bnc_shop_by_category_color3_lightdiff">#CC9957c2</color>
+    <color name="bnc_shop_by_category_color1_toolbar">#5371fe</color>
+    <color name="bnc_shop_by_category_color2_toolbar">#00967c</color>
+    <color name="bnc_shop_by_category_color3_toolbar">#7557c2</color>
 
 </resources>
