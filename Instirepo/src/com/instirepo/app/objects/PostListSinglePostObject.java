@@ -25,6 +25,15 @@ public class PostListSinglePostObject implements Parcelable {
 	boolean is_following;
 	boolean is_reported;
 	int user_id;
+	boolean is_by_teacher;
+
+	public boolean isIs_by_teacher() {
+		return is_by_teacher;
+	}
+
+	public void setIs_by_teacher(boolean is_by_teacher) {
+		this.is_by_teacher = is_by_teacher;
+	}
 
 	public PostListSinglePostObject() {
 
@@ -51,6 +60,7 @@ public class PostListSinglePostObject implements Parcelable {
 		is_following = in.readByte() != 0x00;
 		is_reported = in.readByte() != 0x00;
 		user_id = in.readInt();
+		is_by_teacher = in.readByte() != 0x00;
 	}
 
 	@Override
@@ -80,6 +90,7 @@ public class PostListSinglePostObject implements Parcelable {
 		dest.writeByte((byte) (is_following ? 0x01 : 0x00));
 		dest.writeByte((byte) (is_reported ? 0x01 : 0x00));
 		dest.writeInt(user_id);
+		dest.writeByte((byte) (is_by_teacher ? 0x01 : 0x00));
 	}
 
 	@SuppressWarnings("unused")

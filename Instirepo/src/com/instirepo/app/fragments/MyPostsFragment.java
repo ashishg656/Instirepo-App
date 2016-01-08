@@ -20,7 +20,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.UserProfileActivity;
-import com.instirepo.app.adapters.MyPostsStudentsListAdapter;
 import com.instirepo.app.adapters.MyPostsTeacherListAdapter;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.ZUrls;
@@ -32,7 +31,6 @@ public class MyPostsFragment extends UserProfileBaseFragment implements ZUrls {
 	boolean isRequestRunning;
 	Integer nextPage = 1;
 	boolean isMoreAllowed = true;
-	private Boolean isTeacherProfile;
 
 	boolean canScrollViewPagerHeader;
 
@@ -116,6 +114,7 @@ public class MyPostsFragment extends UserProfileBaseFragment implements ZUrls {
 	}
 
 	private void loadData() {
+		isRequestRunning = true;
 		if (adapter == null) {
 			showLoadingLayout();
 			hideErrorLayout();
@@ -126,10 +125,7 @@ public class MyPostsFragment extends UserProfileBaseFragment implements ZUrls {
 
 					@Override
 					public void onResponse(String res) {
-						if (adapter == null) {
-							hideErrorLayout();
-							hideLoadingLayout();
-						}
+						isRequestRunning = false;
 						PostsListObject obj = new Gson().fromJson(res,
 								PostsListObject.class);
 						setAdapterData(obj);
@@ -138,7 +134,7 @@ public class MyPostsFragment extends UserProfileBaseFragment implements ZUrls {
 
 					@Override
 					public void onErrorResponse(VolleyError err) {
-						System.out.print(err.networkResponse);
+						isRequestRunning = false;
 						if (adapter == null) {
 							showErrorLayout();
 							hideLoadingLayout();
@@ -161,23 +157,14 @@ public class MyPostsFragment extends UserProfileBaseFragment implements ZUrls {
 			isMoreAllowed = false;
 		}
 		if (adapter == null) {
-			isTeacherProfile = obj.getIs_by_teacher();
-			if (isTeacherProfile) {
-				adapter = new MyPostsTeacherListAdapter(getActivity(),
-						obj.getPosts(), isMoreAllowed);
-			} else {
-				adapter = new MyPostsStudentsListAdapter(getActivity(),
-						obj.getPosts(), isMoreAllowed);
-			}
+			hideErrorLayout();
+			hideLoadingLayout();
+			adapter = new MyPostsTeacherListAdapter(getActivity(),
+					obj.getPosts(), isMoreAllowed);
 			recyclerView.setAdapter(adapter);
 		} else {
-			if (isTeacherProfile) {
-				((MyPostsTeacherListAdapter) adapter).addData(obj.getPosts(),
-						isMoreAllowed);
-			} else {
-				((MyPostsStudentsListAdapter) adapter).addData(obj.getPosts(),
-						isMoreAllowed);
-			}
+			((MyPostsTeacherListAdapter) adapter).addData(obj.getPosts(),
+					isMoreAllowed);
 		}
 	}
 

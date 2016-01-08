@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -27,7 +25,6 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.BaseActivity;
 import com.instirepo.app.activities.HomeActivity;
@@ -36,9 +33,7 @@ import com.instirepo.app.bottomsheet.BottomSheet;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.TimeUtils;
 import com.instirepo.app.extras.ZUrls;
-import com.instirepo.app.objects.MarkPostImportantObject;
 import com.instirepo.app.objects.PostListSinglePostObject;
-import com.instirepo.app.objects.UpvotePostObject;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.CircularImageView;
@@ -54,15 +49,10 @@ public class PostsByTeachersListAdapter extends
 	boolean isMoreAllowed;
 
 	int markImportantPosition;
-	PostsHolderNormal markImportantHolder;
-
 	int upvotePostPostition;
-	PostsHolderNormal upvotePostHolder;
-
+	boolean isUpvoteClicked;
 	int followPostPosition;
 	int reportPostPosition;
-
-	boolean isUpotePostRequestRunning, isMarkImpPostRequestRunning;
 
 	public PostsByTeachersListAdapter(Context context,
 			List<PostListSinglePostObject> mData, boolean isMoreAllowed) {
@@ -115,12 +105,15 @@ public class PostsByTeachersListAdapter extends
 			holder.postHeadingContainer.setOnClickListener(clickListener);
 			holder.postImageContainer.setTag(holder);
 			holder.postImageContainer.setOnClickListener(clickListener);
+			holder.downvotePostLayout.setTag(holder);
+			holder.downvotePostLayout.setOnClickListener(clickListener);
 
 			PostListSinglePostObject obj = mData.get(pos);
 
 			holder.userName.setText(obj.getUser_name());
 			holder.heading.setText(obj.getHeading());
 			holder.description.setText(obj.getDescription());
+
 			if (obj.getImage() == null) {
 				holder.imagePost.setVisibility(View.GONE);
 			} else {
@@ -137,12 +130,19 @@ public class PostsByTeachersListAdapter extends
 					+ " people viewed");
 			holder.numberOfComments.setText("" + obj.getComment());
 			holder.numberOfSaves.setText("" + obj.getSaves());
-			holder.numberOfUpvotes.setText("" + obj.getUpvotes());
+			holder.numberOfUpvotes.setText(""
+					+ (obj.getUpvotes() - obj.getDownvotes()));
 
-			if (obj.isHas_upvoted())
+			if (obj.isHas_upvoted()) {
 				holder.upvotePostLayout.setSelected(true);
-			else
+				holder.downvotePostLayout.setSelected(false);
+			} else if (obj.isHas_downvoted()) {
 				holder.upvotePostLayout.setSelected(false);
+				holder.downvotePostLayout.setSelected(true);
+			} else {
+				holder.upvotePostLayout.setSelected(false);
+				holder.downvotePostLayout.setSelected(false);
+			}
 
 			if (obj.isIs_saved())
 				holder.savePostLayout.setSelected(true);
@@ -158,10 +158,13 @@ public class PostsByTeachersListAdapter extends
 							R.dimen.z_one_dp), color);
 			holder.category.setTextColor(color);
 
-			holder.upvotePostProgress.setVisibility(View.GONE);
-			holder.savePostProgress.setVisibility(View.GONE);
-			holder.upvotePostLayout.setVisibility(View.VISIBLE);
-			holder.savePostLayout.setVisibility(View.VISIBLE);
+			if (obj.isIs_by_teacher()) {
+				holder.downvotePostLayout.setVisibility(View.GONE);
+				holder.savePostLayout.setVisibility(View.VISIBLE);
+			} else {
+				holder.savePostLayout.setVisibility(View.GONE);
+				holder.downvotePostLayout.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 
@@ -192,13 +195,13 @@ public class PostsByTeachersListAdapter extends
 
 		LinearLayout overflowIcon;
 		FrameLayout seenByContainerLayout, openUserProfile;
-		ImageView commentsLayout, savePostLayout, upvotePostLayout;
+		ImageView commentsLayout, savePostLayout, upvotePostLayout,
+				downvotePostLayout;
 		CircularImageView userImage;
 		TextView userName, time, heading, description, numberOfPeopleViewed,
 				numberOfUpvotes, numberOfSaves, numberOfComments;
 		PEWImageView imagePost;
 		TextView category;
-		ProgressBar upvotePostProgress, savePostProgress;
 		FrameLayout postHeadingContainer, postImageContainer;
 
 		public PostsHolderNormal(View v) {
@@ -224,14 +227,12 @@ public class PostsByTeachersListAdapter extends
 			savePostLayout = (ImageView) v.findViewById(R.id.savepostimage);
 			upvotePostLayout = (ImageView) v.findViewById(R.id.upvotepostimage);
 			category = (TextView) v.findViewById(R.id.postcategoy);
-			upvotePostProgress = (ProgressBar) v
-					.findViewById(R.id.upvotepostprogress);
-			savePostProgress = (ProgressBar) v
-					.findViewById(R.id.savepostprogress);
 			postHeadingContainer = (FrameLayout) v
 					.findViewById(R.id.postheadingdesccontainer);
 			postImageContainer = (FrameLayout) v
 					.findViewById(R.id.postpewimageviewcontainer);
+			downvotePostLayout = (ImageView) v
+					.findViewById(R.id.downvotepostimage);
 		}
 	}
 
@@ -268,7 +269,7 @@ public class PostsByTeachersListAdapter extends
 			case R.id.upvotepostimage:
 				holder = (PostsHolderNormal) v.getTag();
 				pos = holder.getAdapterPosition();
-				upvotePost(mData.get(pos).getId(), pos, holder);
+				upvotePost(mData.get(pos).getId(), pos, holder, true);
 				break;
 			case R.id.savepostimage:
 				holder = (PostsHolderNormal) v.getTag();
@@ -284,6 +285,11 @@ public class PostsByTeachersListAdapter extends
 				holder = (PostsHolderNormal) v.getTag();
 				pos = holder.getAdapterPosition();
 				((BaseActivity) context).openPostDetailActivity(mData.get(pos));
+				break;
+			case R.id.downvotepostimage:
+				holder = (PostsHolderNormal) v.getTag();
+				pos = holder.getAdapterPosition();
+				upvotePost(mData.get(pos).getId(), pos, holder, false);
 				break;
 			default:
 				break;
@@ -425,168 +431,125 @@ public class PostsByTeachersListAdapter extends
 		ZApplication.getInstance().addToRequestQueue(req, reportPostUrl);
 	}
 
-	public void upvotePost(final int id, int pos, PostsHolderNormal holder) {
-		if (!isUpotePostRequestRunning) {
-			isUpotePostRequestRunning = true;
-			upvotePostPostition = pos;
-			upvotePostHolder = holder;
+	public void upvotePost(final int id, int pos, PostsHolderNormal holder,
+			boolean isUpvoteClicked) {
+		upvotePostPostition = pos;
+		this.isUpvoteClicked = isUpvoteClicked;
 
-			if (holder != null) {
-				holder.upvotePostProgress.setVisibility(View.VISIBLE);
-				holder.upvotePostLayout.setVisibility(View.GONE);
-			}
-
-			StringRequest req = new StringRequest(Method.POST, upvotePost,
-					new Listener<String>() {
-
-						@Override
-						public void onResponse(String arg0) {
-							isUpotePostRequestRunning = false;
-							UpvotePostObject obj = new Gson().fromJson(arg0,
-									UpvotePostObject.class);
-
-							Log.w("as", "msg " + obj.getMessage());
-
-							mData.get(upvotePostPostition).setUpvotes(
-									obj.getUpvotes());
-							mData.get(upvotePostPostition).setDownvotes(
-									obj.getDownvotes());
-							mData.get(upvotePostPostition).setHas_downvoted(
-									obj.isHas_downvoted());
-							mData.get(upvotePostPostition).setHas_upvoted(
-									obj.isHas_upvoted());
-
-							if (upvotePostHolder != null) {
-								upvotePostHolder.numberOfUpvotes.setText(""
-										+ obj.getUpvotes());
-								if (obj.isHas_upvoted())
-									upvotePostHolder.upvotePostLayout
-											.setSelected(true);
-								else
-									upvotePostHolder.upvotePostLayout
-											.setSelected(false);
-
-								upvotePostHolder.upvotePostProgress
-										.setVisibility(View.GONE);
-								upvotePostHolder.upvotePostLayout
-										.setVisibility(View.VISIBLE);
-							}
-
-							if (obj.isHas_upvoted()) {
-								((BaseActivity) context)
-										.showSnackBar("Successfully upvoted post");
-							} else {
-								((BaseActivity) context)
-										.showSnackBar("Removed upvote from post");
-							}
-						}
-					}, new ErrorListener() {
-
-						@Override
-						public void onErrorResponse(VolleyError arg0) {
-							isUpotePostRequestRunning = false;
-							((BaseActivity) context)
-									.showSnackBar("Some error occured. Check internet connection");
-
-							if (upvotePostHolder != null) {
-								upvotePostHolder.upvotePostProgress
-										.setVisibility(View.GONE);
-								upvotePostHolder.upvotePostLayout
-										.setVisibility(View.VISIBLE);
-							}
-						}
-					}) {
-				@Override
-				protected Map<String, String> getParams()
-						throws AuthFailureError {
-					HashMap<String, String> p = new HashMap<>();
-					p.put("user_id", ZPreferences.getUserProfileID(context));
-					p.put("post_id", id + "");
-					p.put("is_upvote_clicked", Boolean.toString(!mData.get(
-							upvotePostPostition).isHas_upvoted()));
-					return p;
-				}
-			};
-			ZApplication.getInstance().addToRequestQueue(req,
-					markPostAsImportant);
+		if (mData.get(pos).isHas_upvoted() && isUpvoteClicked) {
+			((BaseActivity) context).showSnackBar("Already Upvoted");
+			return;
+		} else if (mData.get(pos).isHas_downvoted() && !isUpvoteClicked) {
+			((BaseActivity) context).showSnackBar("Already Downvoted");
+			return;
 		}
+
+		if (mData.get(pos).isHas_downvoted() || mData.get(pos).isHas_upvoted()) {
+			if (mData.get(pos).isHas_upvoted() && !isUpvoteClicked) {
+				mData.get(pos).setHas_upvoted(false);
+				mData.get(pos).setUpvotes(mData.get(pos).getUpvotes() - 1);
+			} else if (mData.get(pos).isHas_downvoted() && isUpvoteClicked) {
+				mData.get(pos).setHas_downvoted(false);
+				mData.get(pos).setDownvotes(mData.get(pos).getDownvotes() - 1);
+			}
+			((BaseActivity) context)
+					.showSnackBar("Neither Upvoted nor Downvoted");
+		} else {
+			if (isUpvoteClicked) {
+				mData.get(pos).setHas_upvoted(true);
+				mData.get(pos).setUpvotes(mData.get(pos).getUpvotes() + 1);
+				((BaseActivity) context).showSnackBar("Upvoted post");
+			} else {
+				mData.get(pos).setHas_downvoted(true);
+				mData.get(pos).setDownvotes(mData.get(pos).getDownvotes() + 1);
+				((BaseActivity) context).showSnackBar("Downvoted post");
+			}
+		}
+
+		StringRequest req = new StringRequest(Method.POST, upvotePost,
+				new Listener<String>() {
+
+					@Override
+					public void onResponse(String arg0) {
+
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						((BaseActivity) context)
+								.showSnackBar("Some error occured. Check internet connection");
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				HashMap<String, String> p = new HashMap<>();
+				p.put("user_id", ZPreferences.getUserProfileID(context));
+				p.put("post_id", id + "");
+				p.put("is_upvote_clicked", Boolean.toString(!mData.get(
+						upvotePostPostition).isHas_upvoted()));
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, markPostAsImportant);
 	}
 
 	public void markPostImportant(final int id, int pos,
 			PostsHolderNormal holder) {
-		if (!isMarkImpPostRequestRunning) {
-			isMarkImpPostRequestRunning = true;
-			markImportantPosition = pos;
-			markImportantHolder = holder;
-
-			if (holder != null) {
-				holder.savePostProgress.setVisibility(View.VISIBLE);
-				holder.savePostLayout.setVisibility(View.GONE);
-			}
-
-			StringRequest req = new StringRequest(Method.POST,
-					markPostAsImportant, new Listener<String>() {
-
-						@Override
-						public void onResponse(String arg0) {
-							isMarkImpPostRequestRunning = false;
-							MarkPostImportantObject obj = new Gson().fromJson(
-									arg0, MarkPostImportantObject.class);
-
-							mData.get(markImportantPosition).setSaves(
-									obj.getCount());
-							mData.get(markImportantPosition).setIs_saved(
-									obj.isIs_saved());
-
-							if (markImportantHolder != null) {
-								if (obj.isIs_saved()) {
-									((BaseActivity) context)
-											.showSnackBar("Marked Post As Important");
-									markImportantHolder.savePostLayout
-											.setSelected(true);
-								} else {
-									((BaseActivity) context)
-											.showSnackBar("Removed Post From Important Posts List");
-									markImportantHolder.savePostLayout
-											.setSelected(false);
-								}
-								markImportantHolder.numberOfSaves.setText(obj
-										.getCount() + "");
-
-								markImportantHolder.savePostProgress
-										.setVisibility(View.GONE);
-								markImportantHolder.savePostLayout
-										.setVisibility(View.VISIBLE);
-							}
-						}
-					}, new ErrorListener() {
-
-						@Override
-						public void onErrorResponse(VolleyError arg0) {
-							isMarkImpPostRequestRunning = false;
-							((BaseActivity) context)
-									.showSnackBar("Some error occured. Check internet connection");
-
-							if (markImportantHolder != null) {
-								markImportantHolder.savePostProgress
-										.setVisibility(View.GONE);
-								markImportantHolder.savePostLayout
-										.setVisibility(View.VISIBLE);
-							}
-						}
-					}) {
-				@Override
-				protected Map<String, String> getParams()
-						throws AuthFailureError {
-					HashMap<String, String> p = new HashMap<>();
-					p.put("user_id", ZPreferences.getUserProfileID(context));
-					p.put("post_id", id + "");
-					return p;
-				}
-			};
-			ZApplication.getInstance().addToRequestQueue(req,
-					markPostAsImportant);
+		markImportantPosition = pos;
+		if (mData.get(markImportantPosition).isIs_saved()) {
+			mData.get(markImportantPosition).setSaves(
+					mData.get(markImportantPosition).getSaves() - 1);
+			mData.get(markImportantPosition).setIs_saved(false);
+			((BaseActivity) context)
+					.showSnackBar("Removed From important Posts");
+		} else {
+			mData.get(markImportantPosition).setSaves(
+					mData.get(markImportantPosition).getSaves() + 1);
+			mData.get(markImportantPosition).setIs_saved(true);
+			((BaseActivity) context).showSnackBar("Market Post As Important");
 		}
+		notifyItemChanged(markImportantPosition);
+
+		StringRequest req = new StringRequest(Method.POST, markPostAsImportant,
+				new Listener<String>() {
+
+					@Override
+					public void onResponse(String arg0) {
+
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						((BaseActivity) context)
+								.showSnackBar("Some error occured. Check internet connection");
+
+						if (mData.get(markImportantPosition).isIs_saved()) {
+							mData.get(markImportantPosition)
+									.setSaves(
+											mData.get(markImportantPosition)
+													.getSaves() - 1);
+							mData.get(markImportantPosition).setIs_saved(false);
+						} else {
+							mData.get(markImportantPosition)
+									.setSaves(
+											mData.get(markImportantPosition)
+													.getSaves() + 1);
+							mData.get(markImportantPosition).setIs_saved(true);
+						}
+						notifyItemChanged(markImportantPosition);
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				HashMap<String, String> p = new HashMap<>();
+				p.put("user_id", ZPreferences.getUserProfileID(context));
+				p.put("post_id", id + "");
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, markPostAsImportant);
 	}
 
 	public void showSeenByPeople(int postid) {
