@@ -229,68 +229,51 @@
                 android:id="@+id/numberofupvotes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/z_margin_mini"
+                android:layout_marginLeft="@dimen/z_margin_small"
+                android:layout_marginRight="@dimen/z_margin_small"
                 android:text="10"
                 android:textColor="@color/z_text_color_medium_dark"
                 android:textSize="@dimen/z_font_supermini" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center" >
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <ImageView
-                        android:id="@+id/savepostimage"
-                        android:layout_width="@dimen/z_upvote_button_height"
-                        android:layout_height="@dimen/z_upvote_button_height"
-                        android:background="@drawable/star_button_selector"
-                        android:clickable="true" />
-
-                    <ProgressBar
-                        android:id="@+id/savepostprogress"
-                        android:layout_width="@dimen/z_upvote_button_height"
-                        android:layout_height="@dimen/z_upvote_button_height"
-                        android:indeterminate="true"
-                        android:indeterminateOnly="true" />
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/numberofsavs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/z_margin_mini"
-                    android:text="10"
-                    android:textColor="@color/z_text_color_medium_dark"
-                    android:textSize="@dimen/z_font_supermini" />
-            </LinearLayout>
-
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal" >
+                android:layout_height="wrap_content" >
 
                 <ImageView
-                    android:id="@+id/commentsviewconatiner"
+                    android:id="@+id/downvotepostimage"
                     android:layout_width="@dimen/z_upvote_button_height"
                     android:layout_height="@dimen/z_upvote_button_height"
-                    android:background="@drawable/comment_button_selector"
+                    android:background="@drawable/downvote_button_selector"
                     android:clickable="true" />
 
-                <TextView
-                    android:id="@+id/numberofcomments"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/z_margin_mini"
-                    android:text="10"
-                    android:textColor="@color/z_text_color_medium_dark"
-                    android:textSize="@dimen/z_font_supermini" />
-            </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/downvotepostprogress"
+                    android:layout_width="@dimen/z_upvote_button_height"
+                    android:layout_height="@dimen/z_upvote_button_height"
+                    android:indeterminate="true"
+                    android:indeterminateOnly="true" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/commentsviewconatiner"
+                android:layout_width="@dimen/z_upvote_button_height"
+                android:layout_height="@dimen/z_upvote_button_height"
+                android:background="@drawable/comment_button_selector"
+                android:clickable="true" />
+
+            <TextView
+                android:id="@+id/numberofcomments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/z_margin_mini"
+                android:text="10"
+                android:textColor="@color/z_text_color_medium_dark"
+                android:textSize="@dimen/z_font_supermini" />
         </LinearLayout>
     </FrameLayout>
 

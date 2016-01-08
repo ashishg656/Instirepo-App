@@ -30,7 +30,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.BaseActivity;
-import com.instirepo.app.activities.HomeActivity;
+import com.instirepo.app.activities.UserProfileActivity;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.bottomsheet.BottomSheet;
 import com.instirepo.app.extras.AppConstants;
@@ -44,7 +44,7 @@ import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.CircularImageView;
 import com.instirepo.app.widgets.PEWImageView;
 
-public class PostsByTeachersListAdapter extends
+public class MyPostsStudentsListAdapter extends
 		RecyclerView.Adapter<RecyclerView.ViewHolder> implements AppConstants,
 		ZUrls {
 
@@ -59,12 +59,10 @@ public class PostsByTeachersListAdapter extends
 	int upvotePostPostition;
 	PostsHolderNormal upvotePostHolder;
 
-	int followPostPosition;
-	int reportPostPosition;
-
 	boolean isUpotePostRequestRunning, isMarkImpPostRequestRunning;
+	private boolean isUpvoteClickedButton;
 
-	public PostsByTeachersListAdapter(Context context,
+	public MyPostsStudentsListAdapter(Context context,
 			List<PostListSinglePostObject> mData, boolean isMoreAllowed) {
 		super();
 		this.context = context;
@@ -82,21 +80,26 @@ public class PostsByTeachersListAdapter extends
 	@Override
 	public int getItemCount() {
 		if (isMoreAllowed == true)
-			return mData.size() + 1;
-		return mData.size();
+			return mData.size() + 1 + 1;
+		return mData.size() + 1;
 	}
 
 	@Override
 	public int getItemViewType(int position) {
-		if (position > mData.size() - 1)
-			return Z_RECYCLER_VIEW_ITEM_LOADING;
-		return Z_RECYCLER_VIEW_ITEM_NORMAL;
+		if (position == 0) {
+			return Z_USER_PROFILE_ITEM_HEADER;
+		} else {
+			if (position > mData.size() - 1 + 1)
+				return Z_RECYCLER_VIEW_ITEM_LOADING;
+			return Z_RECYCLER_VIEW_ITEM_NORMAL;
+		}
 	}
 
 	@Override
 	public void onBindViewHolder(ViewHolder holderCom, int pos) {
 		pos = holderCom.getAdapterPosition();
 		if (getItemViewType(pos) == Z_RECYCLER_VIEW_ITEM_NORMAL) {
+			pos = pos - 1;
 			final PostsHolderNormal holder = (PostsHolderNormal) holderCom;
 
 			holder.overflowIcon.setTag(holder);
@@ -109,12 +112,8 @@ public class PostsByTeachersListAdapter extends
 			holder.openUserProfile.setOnClickListener(clickListener);
 			holder.upvotePostLayout.setTag(holder);
 			holder.upvotePostLayout.setOnClickListener(clickListener);
-			holder.savePostLayout.setTag(holder);
-			holder.savePostLayout.setOnClickListener(clickListener);
-			holder.postHeadingContainer.setTag(holder);
-			holder.postHeadingContainer.setOnClickListener(clickListener);
-			holder.postImageContainer.setTag(holder);
-			holder.postImageContainer.setOnClickListener(clickListener);
+			holder.downvotePostLayout.setTag(holder);
+			holder.downvotePostLayout.setOnClickListener(clickListener);
 
 			PostListSinglePostObject obj = mData.get(pos);
 
@@ -136,18 +135,19 @@ public class PostsByTeachersListAdapter extends
 			holder.numberOfPeopleViewed.setText(obj.getSeens()
 					+ " people viewed");
 			holder.numberOfComments.setText("" + obj.getComment());
-			holder.numberOfSaves.setText("" + obj.getSaves());
-			holder.numberOfUpvotes.setText("" + obj.getUpvotes());
+			holder.numberOfUpvotes.setText(""
+					+ (obj.getUpvotes() - obj.getDownvotes()));
 
-			if (obj.isHas_upvoted())
+			if (obj.isHas_upvoted()) {
 				holder.upvotePostLayout.setSelected(true);
-			else
+				holder.downvotePostLayout.setSelected(false);
+			} else if (obj.isHas_downvoted()) {
 				holder.upvotePostLayout.setSelected(false);
-
-			if (obj.isIs_saved())
-				holder.savePostLayout.setSelected(true);
-			else
-				holder.savePostLayout.setSelected(false);
+				holder.downvotePostLayout.setSelected(true);
+			} else {
+				holder.upvotePostLayout.setSelected(false);
+				holder.downvotePostLayout.setSelected(false);
+			}
 
 			holder.category.setText(obj.getCategory());
 			GradientDrawable categoryBg = (GradientDrawable) holder.category
@@ -159,9 +159,14 @@ public class PostsByTeachersListAdapter extends
 			holder.category.setTextColor(color);
 
 			holder.upvotePostProgress.setVisibility(View.GONE);
-			holder.savePostProgress.setVisibility(View.GONE);
+			holder.downvotePostProgress.setVisibility(View.GONE);
 			holder.upvotePostLayout.setVisibility(View.VISIBLE);
-			holder.savePostLayout.setVisibility(View.VISIBLE);
+			holder.downvotePostLayout.setVisibility(View.VISIBLE);
+		} else if (getItemViewType(pos) == Z_USER_PROFILE_ITEM_HEADER) {
+			FakeHeaderHolder holder = (FakeHeaderHolder) holderCom;
+			ViewGroup.LayoutParams params = holder.header.getLayoutParams();
+			params.height = ((UserProfileActivity) context).headerHeight;
+			holder.header.setLayoutParams(params);
 		}
 	}
 
@@ -169,7 +174,7 @@ public class PostsByTeachersListAdapter extends
 	public ViewHolder onCreateViewHolder(ViewGroup arg0, int type) {
 		if (type == Z_RECYCLER_VIEW_ITEM_NORMAL) {
 			View v = LayoutInflater.from(context).inflate(
-					R.layout.post_by_teacher_list_item_layout, arg0, false);
+					R.layout.post_by_student_list_item_layout, arg0, false);
 			PostsHolderNormal holder = new PostsHolderNormal(v);
 			return holder;
 		} else if (type == Z_RECYCLER_VIEW_ITEM_LOADING) {
@@ -177,8 +182,23 @@ public class PostsByTeachersListAdapter extends
 					R.layout.loading_more, arg0, false);
 			PostHolderLoading holder = new PostHolderLoading(v);
 			return holder;
+		} else if (type == Z_USER_PROFILE_ITEM_HEADER) {
+			View v = LayoutInflater.from(context).inflate(
+					R.layout.fake_header_user_profile, arg0, false);
+			FakeHeaderHolder holder = new FakeHeaderHolder(v);
+			return holder;
 		}
 		return null;
+	}
+
+	class FakeHeaderHolder extends RecyclerView.ViewHolder {
+
+		LinearLayout header;
+
+		public FakeHeaderHolder(View v) {
+			super(v);
+			header = (LinearLayout) v.findViewById(R.id.fakehader);
+		}
 	}
 
 	class PostHolderLoading extends RecyclerView.ViewHolder {
@@ -192,14 +212,13 @@ public class PostsByTeachersListAdapter extends
 
 		LinearLayout overflowIcon;
 		FrameLayout seenByContainerLayout, openUserProfile;
-		ImageView commentsLayout, savePostLayout, upvotePostLayout;
+		ImageView commentsLayout, upvotePostLayout, downvotePostLayout;
 		CircularImageView userImage;
 		TextView userName, time, heading, description, numberOfPeopleViewed,
-				numberOfUpvotes, numberOfSaves, numberOfComments;
+				numberOfUpvotes, numberOfComments;
 		PEWImageView imagePost;
 		TextView category;
-		ProgressBar upvotePostProgress, savePostProgress;
-		FrameLayout postHeadingContainer, postImageContainer;
+		ProgressBar upvotePostProgress, downvotePostProgress;
 
 		public PostsHolderNormal(View v) {
 			super(v);
@@ -219,19 +238,15 @@ public class PostsByTeachersListAdapter extends
 			numberOfPeopleViewed = (TextView) v
 					.findViewById(R.id.peopleviewednumebr);
 			numberOfComments = (TextView) v.findViewById(R.id.numberofcomments);
-			numberOfSaves = (TextView) v.findViewById(R.id.numberofsavs);
 			numberOfUpvotes = (TextView) v.findViewById(R.id.numberofupvotes);
-			savePostLayout = (ImageView) v.findViewById(R.id.savepostimage);
 			upvotePostLayout = (ImageView) v.findViewById(R.id.upvotepostimage);
 			category = (TextView) v.findViewById(R.id.postcategoy);
+			downvotePostLayout = (ImageView) v
+					.findViewById(R.id.downvotepostimage);
 			upvotePostProgress = (ProgressBar) v
 					.findViewById(R.id.upvotepostprogress);
-			savePostProgress = (ProgressBar) v
-					.findViewById(R.id.savepostprogress);
-			postHeadingContainer = (FrameLayout) v
-					.findViewById(R.id.postheadingdesccontainer);
-			postImageContainer = (FrameLayout) v
-					.findViewById(R.id.postpewimageviewcontainer);
+			downvotePostProgress = (ProgressBar) v
+					.findViewById(R.id.downvotepostprogress);
 		}
 	}
 
@@ -242,48 +257,42 @@ public class PostsByTeachersListAdapter extends
 			switch (v.getId()) {
 			case R.id.overflowiconpost:
 				PostsHolderNormal holder = (PostsHolderNormal) v.getTag();
-				int pos = holder.getAdapterPosition();
+				int pos = holder.getAdapterPosition() - 1;
 				showOverflowIconContent(mData.get(pos).getHeading(),
 						mData.get(pos).getId(), mData.get(pos).isIs_saved(),
-						pos, holder, mData.get(pos).isIs_following(), mData
-								.get(pos).isIs_reported());
+						pos, holder);
 				break;
 			case R.id.seenbycontainer:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition() - 1;
 				showSeenByPeople(mData.get(pos).getId());
 				break;
 			case R.id.commentsviewconatiner:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition() - 1;
 				showCommentsFragment(mData.get(pos).getId());
 				break;
 			case R.id.openuserprofilepost:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition() - 1;
 				openUserProfileFragment(mData.get(pos).getUser_id(),
 						mData.get(pos).getUser_name(), mData.get(pos)
 								.getUser_image());
 				break;
 			case R.id.upvotepostimage:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
-				upvotePost(mData.get(pos).getId(), pos, holder);
+				pos = holder.getAdapterPosition() - 1;
+				upvotePost(mData.get(pos).getId(), pos, holder, true);
 				break;
 			case R.id.savepostimage:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition() - 1;
 				markPostImportant(mData.get(pos).getId(), pos, holder);
 				break;
-			case R.id.postheadingdesccontainer:
+			case R.id.downvotepostimage:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
-				((BaseActivity) context).openPostDetailActivity(mData.get(pos));
-				break;
-			case R.id.postpewimageviewcontainer:
-				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
-				((BaseActivity) context).openPostDetailActivity(mData.get(pos));
+				pos = holder.getAdapterPosition() - 1;
+				upvotePost(mData.get(pos).getId(), pos, holder, false);
 				break;
 			default:
 				break;
@@ -293,9 +302,8 @@ public class PostsByTeachersListAdapter extends
 	}
 
 	public void showOverflowIconContent(String message, final int postid,
-			boolean isSaved, final int pos, final PostsHolderNormal holder,
-			boolean isFollowing, boolean isReported) {
-		BottomSheet sheet = new BottomSheet.Builder((HomeActivity) context)
+			boolean isSaved, final int pos, final PostsHolderNormal holder) {
+		BottomSheet sheet = new BottomSheet.Builder((BaseActivity) context)
 				.title(message).sheet(R.menu.posts_sliding_panel_menu)
 				.listener(new DialogInterface.OnClickListener() {
 					@Override
@@ -303,12 +311,6 @@ public class PostsByTeachersListAdapter extends
 						switch (which) {
 						case R.id.markimportant:
 							markPostImportant(postid, pos, holder);
-							break;
-						case R.id.followpostmenusliding:
-							followPostRequest(postid, pos);
-							break;
-						case R.id.erportpostslidingmeny:
-							reportPostRequest(postid, pos);
 							break;
 						}
 					}
@@ -325,115 +327,22 @@ public class PostsByTeachersListAdapter extends
 					context.getResources().getString(
 							R.string.menu_marked_important));
 		}
-
-		if (!isFollowing) {
-			menu.getItem(2).setIcon(R.drawable.ic_social_notifications_grey);
-			menu.getItem(2).setTitle(
-					context.getResources().getString(R.string.follow_post));
-		} else {
-			menu.getItem(2).setIcon(R.drawable.ic_social_notifications_blue);
-			menu.getItem(2).setTitle(
-					context.getResources().getString(R.string.following_post));
-		}
-
-		if (!isReported) {
-			menu.getItem(0).setIcon(R.drawable.ic_flag_normal);
-			menu.getItem(0).setTitle(
-					context.getResources().getString(R.string.report_post));
-		} else {
-			menu.getItem(0).setIcon(R.drawable.ic_flag_selected);
-			menu.getItem(0).setTitle(
-					context.getResources().getString(R.string.reported_post));
-		}
 	}
 
-	protected void followPostRequest(final int postid, int pos) {
-		followPostPosition = pos;
-		mData.get(pos).setIs_following(!mData.get(pos).isIs_following());
-
-		if (mData.get(pos).isIs_following()) {
-			((BaseActivity) context).makeToast("Following Post");
-		} else {
-			((BaseActivity) context).makeToast("Unfollowed Post");
-		}
-
-		StringRequest req = new StringRequest(Method.POST, followPostRequest,
-				new Listener<String>() {
-					@Override
-					public void onResponse(String arg0) {
-
-					}
-				}, new ErrorListener() {
-
-					@Override
-					public void onErrorResponse(VolleyError arg0) {
-						((BaseActivity) context)
-								.makeToast("Unable to follow/unfollow post. Check internet and try agin");
-
-						mData.get(followPostPosition)
-								.setIs_following(
-										!mData.get(followPostPosition)
-												.isIs_following());
-					}
-				}) {
-			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				HashMap<String, String> p = new HashMap<>();
-				p.put("user_id", ZPreferences.getUserProfileID(context));
-				p.put("post_id", postid + "");
-				return p;
-			}
-		};
-		ZApplication.getInstance().addToRequestQueue(req, followPostRequest);
-	}
-
-	protected void reportPostRequest(final int postid, int pos) {
-		reportPostPosition = pos;
-		mData.get(pos).setIs_reported(!mData.get(pos).isIs_reported());
-
-		if (mData.get(pos).isIs_reported()) {
-			((BaseActivity) context).makeToast("Reported Post");
-		} else {
-			((BaseActivity) context).makeToast("Undo report Post");
-		}
-
-		StringRequest req = new StringRequest(Method.POST, reportPostUrl,
-				new Listener<String>() {
-					@Override
-					public void onResponse(String arg0) {
-
-					}
-				}, new ErrorListener() {
-
-					@Override
-					public void onErrorResponse(VolleyError arg0) {
-						((BaseActivity) context)
-								.makeToast("Unable to report/unreport post. Check internet and try agin");
-
-						mData.get(reportPostPosition).setIs_reported(
-								!mData.get(reportPostPosition).isIs_reported());
-					}
-				}) {
-			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				HashMap<String, String> p = new HashMap<>();
-				p.put("user_id", ZPreferences.getUserProfileID(context));
-				p.put("post_id", postid + "");
-				return p;
-			}
-		};
-		ZApplication.getInstance().addToRequestQueue(req, reportPostUrl);
-	}
-
-	public void upvotePost(final int id, int pos, PostsHolderNormal holder) {
+	public void upvotePost(final int id, int pos, PostsHolderNormal holder,
+			final boolean isUpvoteClicked) {
 		if (!isUpotePostRequestRunning) {
 			isUpotePostRequestRunning = true;
 			upvotePostPostition = pos;
 			upvotePostHolder = holder;
+			isUpvoteClickedButton = isUpvoteClicked;
 
-			if (holder != null) {
-				holder.upvotePostProgress.setVisibility(View.VISIBLE);
+			if (holder != null && isUpvoteClicked) {
 				holder.upvotePostLayout.setVisibility(View.GONE);
+				holder.upvotePostProgress.setVisibility(View.VISIBLE);
+			} else if (holder != null) {
+				holder.downvotePostLayout.setVisibility(View.GONE);
+				holder.downvotePostProgress.setVisibility(View.VISIBLE);
 			}
 
 			StringRequest req = new StringRequest(Method.POST, upvotePost,
@@ -458,26 +367,45 @@ public class PostsByTeachersListAdapter extends
 
 							if (upvotePostHolder != null) {
 								upvotePostHolder.numberOfUpvotes.setText(""
-										+ obj.getUpvotes());
-								if (obj.isHas_upvoted())
+										+ (obj.getUpvotes() - obj
+												.getDownvotes()));
+
+								if (obj.isHas_upvoted()) {
 									upvotePostHolder.upvotePostLayout
 											.setSelected(true);
-								else
+									upvotePostHolder.downvotePostLayout
+											.setSelected(false);
+								} else if (obj.isHas_downvoted()) {
 									upvotePostHolder.upvotePostLayout
 											.setSelected(false);
+									upvotePostHolder.downvotePostLayout
+											.setSelected(true);
+								} else {
+									upvotePostHolder.upvotePostLayout
+											.setSelected(false);
+									upvotePostHolder.downvotePostLayout
+											.setSelected(false);
+								}
 
-								upvotePostHolder.upvotePostProgress
-										.setVisibility(View.GONE);
 								upvotePostHolder.upvotePostLayout
 										.setVisibility(View.VISIBLE);
+								upvotePostHolder.upvotePostProgress
+										.setVisibility(View.GONE);
+								upvotePostHolder.downvotePostLayout
+										.setVisibility(View.VISIBLE);
+								upvotePostHolder.downvotePostProgress
+										.setVisibility(View.GONE);
 							}
 
 							if (obj.isHas_upvoted()) {
 								((BaseActivity) context)
 										.showSnackBar("Successfully upvoted post");
+							} else if (obj.isHas_downvoted()) {
+								((BaseActivity) context)
+										.showSnackBar("Successfully downvoted post");
 							} else {
 								((BaseActivity) context)
-										.showSnackBar("Removed upvote from post");
+										.showSnackBar("Removed vote from post");
 							}
 						}
 					}, new ErrorListener() {
@@ -489,10 +417,14 @@ public class PostsByTeachersListAdapter extends
 									.showSnackBar("Some error occured. Check internet connection");
 
 							if (upvotePostHolder != null) {
-								upvotePostHolder.upvotePostProgress
-										.setVisibility(View.GONE);
 								upvotePostHolder.upvotePostLayout
 										.setVisibility(View.VISIBLE);
+								upvotePostHolder.upvotePostProgress
+										.setVisibility(View.GONE);
+								upvotePostHolder.downvotePostLayout
+										.setVisibility(View.VISIBLE);
+								upvotePostHolder.downvotePostProgress
+										.setVisibility(View.GONE);
 							}
 						}
 					}) {
@@ -502,8 +434,8 @@ public class PostsByTeachersListAdapter extends
 					HashMap<String, String> p = new HashMap<>();
 					p.put("user_id", ZPreferences.getUserProfileID(context));
 					p.put("post_id", id + "");
-					p.put("is_upvote_clicked", Boolean.toString(!mData.get(
-							upvotePostPostition).isHas_upvoted()));
+					p.put("is_upvote_clicked",
+							Boolean.toString(isUpvoteClicked));
 					return p;
 				}
 			};
@@ -518,11 +450,6 @@ public class PostsByTeachersListAdapter extends
 			isMarkImpPostRequestRunning = true;
 			markImportantPosition = pos;
 			markImportantHolder = holder;
-
-			if (holder != null) {
-				holder.savePostProgress.setVisibility(View.VISIBLE);
-				holder.savePostLayout.setVisibility(View.GONE);
-			}
 
 			StringRequest req = new StringRequest(Method.POST,
 					markPostAsImportant, new Listener<String>() {
@@ -542,21 +469,10 @@ public class PostsByTeachersListAdapter extends
 								if (obj.isIs_saved()) {
 									((BaseActivity) context)
 											.showSnackBar("Marked Post As Important");
-									markImportantHolder.savePostLayout
-											.setSelected(true);
 								} else {
 									((BaseActivity) context)
 											.showSnackBar("Removed Post From Important Posts List");
-									markImportantHolder.savePostLayout
-											.setSelected(false);
 								}
-								markImportantHolder.numberOfSaves.setText(obj
-										.getCount() + "");
-
-								markImportantHolder.savePostProgress
-										.setVisibility(View.GONE);
-								markImportantHolder.savePostLayout
-										.setVisibility(View.VISIBLE);
 							}
 						}
 					}, new ErrorListener() {
@@ -566,13 +482,6 @@ public class PostsByTeachersListAdapter extends
 							isMarkImpPostRequestRunning = false;
 							((BaseActivity) context)
 									.showSnackBar("Some error occured. Check internet connection");
-
-							if (markImportantHolder != null) {
-								markImportantHolder.savePostProgress
-										.setVisibility(View.GONE);
-								markImportantHolder.savePostLayout
-										.setVisibility(View.VISIBLE);
-							}
 						}
 					}) {
 				@Override
@@ -590,15 +499,15 @@ public class PostsByTeachersListAdapter extends
 	}
 
 	public void showSeenByPeople(int postid) {
-		((HomeActivity) context).switchToSeenByPeopleFragment(postid);
+		((UserProfileActivity) context).switchToSeenByPeopleFragment(postid);
 	}
 
 	public void showCommentsFragment(int postid) {
-		((HomeActivity) context).switchToCommentsFragment(postid);
+		((UserProfileActivity) context).switchToCommentsFragment(postid);
 	}
 
 	void openUserProfileFragment(int id, String name, String image) {
-		((HomeActivity) context).switchToUserProfileViewedByOtherFragment(id,
-				name, image);
+		((UserProfileActivity) context)
+				.switchToUserProfileViewedByOtherFragment(id, name, image);
 	}
 }
