@@ -17,7 +17,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,6 +35,7 @@ import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.ZAnimationListener;
 import com.instirepo.app.extras.ZAnimatorListener;
 import com.instirepo.app.fragments.CommentsFragment;
+import com.instirepo.app.fragments.FavouritePostsFragment;
 import com.instirepo.app.fragments.MyPostsFragment;
 import com.instirepo.app.fragments.SeenByPeopleFragment;
 import com.instirepo.app.fragments.UserProfileBaseFragment;
@@ -161,7 +161,8 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 			else if (pos == 1)
 				fragmentHashMap.put(pos, MyPostsFragment.newInstance(bundle));
 			else
-				fragmentHashMap.put(pos, MyPostsFragment.newInstance(bundle));
+				fragmentHashMap.put(pos,
+						FavouritePostsFragment.newInstance(bundle));
 
 			return fragmentHashMap.get(pos);
 		}

@@ -63,6 +63,7 @@ public class PostsByTeachersListAdapter extends
 	int reportPostPosition;
 
 	boolean isUpotePostRequestRunning, isMarkImpPostRequestRunning;
+	boolean isUpvoteClickedButton;
 
 	public PostsByTeachersListAdapter(Context context,
 			List<PostListSinglePostObject> mData, boolean isMoreAllowed) {
@@ -115,6 +116,8 @@ public class PostsByTeachersListAdapter extends
 			holder.postHeadingContainer.setOnClickListener(clickListener);
 			holder.postImageContainer.setTag(holder);
 			holder.postImageContainer.setOnClickListener(clickListener);
+			holder.downvotePostLayout.setTag(holder);
+			holder.downvotePostLayout.setOnClickListener(clickListener);
 
 			PostListSinglePostObject obj = mData.get(pos);
 
@@ -137,17 +140,19 @@ public class PostsByTeachersListAdapter extends
 					+ " people viewed");
 			holder.numberOfComments.setText("" + obj.getComment());
 			holder.numberOfSaves.setText("" + obj.getSaves());
-			holder.numberOfUpvotes.setText("" + obj.getUpvotes());
+			holder.numberOfUpvotes.setText(""
+					+ (obj.getUpvotes() - obj.getDownvotes()));
 
-			if (obj.isHas_upvoted())
+			if (obj.isHas_upvoted()) {
 				holder.upvotePostLayout.setSelected(true);
-			else
+				holder.downvotePostLayout.setSelected(false);
+			} else if (obj.isHas_downvoted()) {
 				holder.upvotePostLayout.setSelected(false);
-
-			if (obj.isIs_saved())
-				holder.savePostLayout.setSelected(true);
-			else
-				holder.savePostLayout.setSelected(false);
+				holder.downvotePostLayout.setSelected(true);
+			} else {
+				holder.upvotePostLayout.setSelected(false);
+				holder.downvotePostLayout.setSelected(false);
+			}
 
 			holder.category.setText(obj.getCategory());
 			GradientDrawable categoryBg = (GradientDrawable) holder.category
@@ -162,6 +167,17 @@ public class PostsByTeachersListAdapter extends
 			holder.savePostProgress.setVisibility(View.GONE);
 			holder.upvotePostLayout.setVisibility(View.VISIBLE);
 			holder.savePostLayout.setVisibility(View.VISIBLE);
+			holder.downvotePostProgress.setVisibility(View.GONE);
+			holder.downvotePostLayout.setVisibility(View.VISIBLE);
+
+			if (obj.isIs_by_teacher()) {
+				holder.savePostContainer.setVisibility(View.VISIBLE);
+				holder.downvotePostContainer.setVisibility(View.GONE);
+			} else {
+				holder.numberOfSaves.setText(null);
+				holder.savePostContainer.setVisibility(View.GONE);
+				holder.downvotePostContainer.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 
@@ -191,14 +207,16 @@ public class PostsByTeachersListAdapter extends
 	class PostsHolderNormal extends RecyclerView.ViewHolder {
 
 		LinearLayout overflowIcon;
-		FrameLayout seenByContainerLayout, openUserProfile;
-		ImageView commentsLayout, savePostLayout, upvotePostLayout;
+		FrameLayout seenByContainerLayout, openUserProfile,
+				downvotePostContainer, savePostContainer;
+		ImageView commentsLayout, savePostLayout, upvotePostLayout,
+				downvotePostLayout;
 		CircularImageView userImage;
 		TextView userName, time, heading, description, numberOfPeopleViewed,
 				numberOfUpvotes, numberOfSaves, numberOfComments;
 		PEWImageView imagePost;
 		TextView category;
-		ProgressBar upvotePostProgress, savePostProgress;
+		ProgressBar upvotePostProgress, savePostProgress, downvotePostProgress;
 		FrameLayout postHeadingContainer, postImageContainer;
 
 		public PostsHolderNormal(View v) {
@@ -232,6 +250,14 @@ public class PostsByTeachersListAdapter extends
 					.findViewById(R.id.postheadingdesccontainer);
 			postImageContainer = (FrameLayout) v
 					.findViewById(R.id.postpewimageviewcontainer);
+			downvotePostLayout = (ImageView) v
+					.findViewById(R.id.downvotepostimage);
+			downvotePostProgress = (ProgressBar) v
+					.findViewById(R.id.downvotepostprogress);
+			downvotePostContainer = (FrameLayout) v
+					.findViewById(R.id.downvotepostframe);
+			savePostContainer = (FrameLayout) v
+					.findViewById(R.id.savepostframeF);
 		}
 	}
 
@@ -268,7 +294,12 @@ public class PostsByTeachersListAdapter extends
 			case R.id.upvotepostimage:
 				holder = (PostsHolderNormal) v.getTag();
 				pos = holder.getAdapterPosition();
-				upvotePost(mData.get(pos).getId(), pos, holder);
+				upvotePost(mData.get(pos).getId(), pos, holder, true);
+				break;
+			case R.id.downvotepostimage:
+				holder = (PostsHolderNormal) v.getTag();
+				pos = holder.getAdapterPosition();
+				upvotePost(mData.get(pos).getId(), pos, holder, false);
 				break;
 			case R.id.savepostimage:
 				holder = (PostsHolderNormal) v.getTag();
@@ -425,15 +456,20 @@ public class PostsByTeachersListAdapter extends
 		ZApplication.getInstance().addToRequestQueue(req, reportPostUrl);
 	}
 
-	public void upvotePost(final int id, int pos, PostsHolderNormal holder) {
+	public void upvotePost(final int id, int pos, PostsHolderNormal holder,
+			final boolean isUpvoteClicked) {
 		if (!isUpotePostRequestRunning) {
 			isUpotePostRequestRunning = true;
 			upvotePostPostition = pos;
 			upvotePostHolder = holder;
+			isUpvoteClickedButton = isUpvoteClicked;
 
-			if (holder != null) {
-				holder.upvotePostProgress.setVisibility(View.VISIBLE);
+			if (holder != null && isUpvoteClicked) {
 				holder.upvotePostLayout.setVisibility(View.GONE);
+				holder.upvotePostProgress.setVisibility(View.VISIBLE);
+			} else if (holder != null) {
+				holder.downvotePostLayout.setVisibility(View.GONE);
+				holder.downvotePostProgress.setVisibility(View.VISIBLE);
 			}
 
 			StringRequest req = new StringRequest(Method.POST, upvotePost,
@@ -458,26 +494,45 @@ public class PostsByTeachersListAdapter extends
 
 							if (upvotePostHolder != null) {
 								upvotePostHolder.numberOfUpvotes.setText(""
-										+ obj.getUpvotes());
-								if (obj.isHas_upvoted())
+										+ (obj.getUpvotes() - obj
+												.getDownvotes()));
+
+								if (obj.isHas_upvoted()) {
 									upvotePostHolder.upvotePostLayout
 											.setSelected(true);
-								else
+									upvotePostHolder.downvotePostLayout
+											.setSelected(false);
+								} else if (obj.isHas_downvoted()) {
 									upvotePostHolder.upvotePostLayout
 											.setSelected(false);
+									upvotePostHolder.downvotePostLayout
+											.setSelected(true);
+								} else {
+									upvotePostHolder.upvotePostLayout
+											.setSelected(false);
+									upvotePostHolder.downvotePostLayout
+											.setSelected(false);
+								}
 
-								upvotePostHolder.upvotePostProgress
-										.setVisibility(View.GONE);
 								upvotePostHolder.upvotePostLayout
 										.setVisibility(View.VISIBLE);
+								upvotePostHolder.upvotePostProgress
+										.setVisibility(View.GONE);
+								upvotePostHolder.downvotePostLayout
+										.setVisibility(View.VISIBLE);
+								upvotePostHolder.downvotePostProgress
+										.setVisibility(View.GONE);
 							}
 
 							if (obj.isHas_upvoted()) {
 								((BaseActivity) context)
 										.showSnackBar("Successfully upvoted post");
+							} else if (obj.isHas_downvoted()) {
+								((BaseActivity) context)
+										.showSnackBar("Successfully downvoted post");
 							} else {
 								((BaseActivity) context)
-										.showSnackBar("Removed upvote from post");
+										.showSnackBar("Removed vote from post");
 							}
 						}
 					}, new ErrorListener() {
@@ -489,10 +544,14 @@ public class PostsByTeachersListAdapter extends
 									.showSnackBar("Some error occured. Check internet connection");
 
 							if (upvotePostHolder != null) {
-								upvotePostHolder.upvotePostProgress
-										.setVisibility(View.GONE);
 								upvotePostHolder.upvotePostLayout
 										.setVisibility(View.VISIBLE);
+								upvotePostHolder.upvotePostProgress
+										.setVisibility(View.GONE);
+								upvotePostHolder.downvotePostLayout
+										.setVisibility(View.VISIBLE);
+								upvotePostHolder.downvotePostProgress
+										.setVisibility(View.GONE);
 							}
 						}
 					}) {
@@ -502,8 +561,8 @@ public class PostsByTeachersListAdapter extends
 					HashMap<String, String> p = new HashMap<>();
 					p.put("user_id", ZPreferences.getUserProfileID(context));
 					p.put("post_id", id + "");
-					p.put("is_upvote_clicked", Boolean.toString(!mData.get(
-							upvotePostPostition).isHas_upvoted()));
+					p.put("is_upvote_clicked",
+							Boolean.toString(isUpvoteClicked));
 					return p;
 				}
 			};

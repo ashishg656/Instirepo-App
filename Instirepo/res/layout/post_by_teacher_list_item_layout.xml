@@ -229,10 +229,31 @@
                 android:id="@+id/numberofupvotes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/z_margin_mini"
+                android:layout_marginLeft="@dimen/z_margin_small"
+                android:layout_marginRight="@dimen/z_margin_small"
                 android:text="10"
                 android:textColor="@color/z_text_color_medium_dark"
                 android:textSize="@dimen/z_font_supermini" />
+
+            <FrameLayout
+                android:id="@+id/downvotepostframe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/downvotepostimage"
+                    android:layout_width="@dimen/z_upvote_button_height"
+                    android:layout_height="@dimen/z_upvote_button_height"
+                    android:background="@drawable/downvote_button_selector"
+                    android:clickable="true" />
+
+                <ProgressBar
+                    android:id="@+id/downvotepostprogress"
+                    android:layout_width="@dimen/z_upvote_button_height"
+                    android:layout_height="@dimen/z_upvote_button_height"
+                    android:indeterminate="true"
+                    android:indeterminateOnly="true" />
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -241,6 +262,7 @@
                 android:gravity="center" >
 
                 <FrameLayout
+                    android:id="@+id/savepostframeF"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 

@@ -100,4 +100,7 @@ public interface ZUrls {
 	public String uploadResumeRequest = ZApplication.getBaseUrl()
 			+ "upload_resume_request/";
 
+	public String getFavouritePosts = ZApplication.getBaseUrl()
+			+ "get_posts_marked_important_by_user/";
+
 }

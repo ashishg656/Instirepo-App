@@ -25,7 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.HomeActivity;
-import com.instirepo.app.adapters.PostsByStudentsListAdapter;
+import com.instirepo.app.adapters.PostsByTeachersListAdapter;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.objects.PostsListObject;
@@ -36,7 +36,7 @@ public class PostsByStudentsFragment extends BaseFragment implements ZUrls,
 
 	RecyclerView recyclerView;
 	LinearLayoutManager layoutManager;
-	PostsByStudentsListAdapter adapter;
+	PostsByTeachersListAdapter adapter;
 	SwipeRefreshLayout swipeRefreshLayout;
 
 	boolean isRequestRunning;
@@ -173,7 +173,7 @@ public class PostsByStudentsFragment extends BaseFragment implements ZUrls,
 		if (adapter == null) {
 			hideErrorLayout();
 			hideLoadingLayout();
-			adapter = new PostsByStudentsListAdapter(getActivity(),
+			adapter = new PostsByTeachersListAdapter(getActivity(),
 					obj.getPosts(), isMoreAllowed);
 			recyclerView.setAdapter(adapter);
 		} else {
