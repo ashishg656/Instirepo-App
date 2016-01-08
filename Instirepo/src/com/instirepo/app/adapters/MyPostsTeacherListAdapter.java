@@ -294,7 +294,7 @@ public class MyPostsTeacherListAdapter extends
 			switch (v.getId()) {
 			case R.id.overflowiconpost:
 				PostsHolderNormal holder = (PostsHolderNormal) v.getTag();
-				int pos = holder.getAdapterPosition();
+				int pos = holder.getAdapterPosition()-1;
 				showOverflowIconContent(mData.get(pos).getHeading(),
 						mData.get(pos).getId(), mData.get(pos).isIs_saved(),
 						pos, holder, mData.get(pos).isIs_following(), mData
@@ -302,44 +302,44 @@ public class MyPostsTeacherListAdapter extends
 				break;
 			case R.id.seenbycontainer:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition()-1;
 				showSeenByPeople(mData.get(pos).getId());
 				break;
 			case R.id.commentsviewconatiner:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition()-1;
 				showCommentsFragment(mData.get(pos).getId());
 				break;
 			case R.id.openuserprofilepost:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition()-1;
 				openUserProfileFragment(mData.get(pos).getUser_id(),
 						mData.get(pos).getUser_name(), mData.get(pos)
 								.getUser_image());
 				break;
 			case R.id.upvotepostimage:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition()-1;
 				upvotePost(mData.get(pos).getId(), pos, holder, true);
 				break;
 			case R.id.downvotepostimage:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition()-1;
 				upvotePost(mData.get(pos).getId(), pos, holder, false);
 				break;
 			case R.id.savepostimage:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition()-1;
 				markPostImportant(mData.get(pos).getId(), pos, holder);
 				break;
 			case R.id.postheadingdesccontainer:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition()-1;
 				((BaseActivity) context).openPostDetailActivity(mData.get(pos));
 				break;
 			case R.id.postpewimageviewcontainer:
 				holder = (PostsHolderNormal) v.getTag();
-				pos = holder.getAdapterPosition();
+				pos = holder.getAdapterPosition()-1;
 				((BaseActivity) context).openPostDetailActivity(mData.get(pos));
 				break;
 			default:
