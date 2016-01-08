@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/z_white"
     android:orientation="vertical" >
 
     <com.instirepo.app.widgets.ObservableScrollView
@@ -18,13 +19,92 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/symphony" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:padding="@dimen/z_margin_large" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Post Heading"
+                    android:textColor="@color/z_text_color_dark"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/z_margin_large"
+                    android:text="Post Description"
+                    android:textColor="@color/z_text_color_dark" />
             </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/openuserprofilepost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/z_margin_large"
+                    android:paddingRight="@dimen/z_margin_large"
+                    android:paddingBottom="@dimen/z_margin_large" >
+
+                    <com.instirepo.app.widgets.CircularImageView
+                        android:id="@+id/circularimage"
+                        android:layout_width="@dimen/z_post_uploader_image_height"
+                        android:layout_height="@dimen/z_post_uploader_image_height" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/z_margin_small"
+                        android:layout_weight="1"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/uploadrname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ashish Goel"
+                            android:textColor="@color/z_text_color_medium_dark"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/z_margin_mini"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" >
+
+                            <ImageView
+                                android:layout_width="@dimen/z_margin_medium"
+                                android:layout_height="@dimen/z_margin_medium"
+                                android:alpha="0.6"
+                                android:src="@drawable/ic_clock" />
+
+                            <TextView
+                                android:id="@+id/utime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/z_margin_mini"
+                                android:includeFontPadding="false"
+                                android:text="3 days ago"
+                                android:textColor="@color/z_text_color_light"
+                                android:textSize="@dimen/z_font_supermini" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
     </com.instirepo.app.widgets.ObservableScrollView>
 

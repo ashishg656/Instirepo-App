@@ -318,7 +318,8 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			super.onPostExecute(obj);
 			dropboxProgressDialog.dismiss();
 			if (obj == null) {
-				((BaseActivity) getActivity()).makeToast("Error occured.Please login to Dropbox");
+				((BaseActivity) getActivity())
+						.makeToast("Error occured.Please login to Dropbox");
 			} else {
 				((BaseActivity) getActivity())
 						.makeToast("Success uploading dropbox file");
@@ -347,7 +348,6 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 						+ response.rev);
 
 				DropboxLink link = mDBApi.share(response.path);
-				;
 
 				DropboxFilesObject obj = new DropboxFilesObject(
 						response.fileName(), response.parentPath(),

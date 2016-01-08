@@ -97,4 +97,7 @@ public interface ZUrls {
 	public String deleteResumeRequest = ZApplication.getBaseUrl()
 			+ "delete_resume/";
 
+	public String uploadResumeRequest = ZApplication.getBaseUrl()
+			+ "upload_resume_request/";
+
 }

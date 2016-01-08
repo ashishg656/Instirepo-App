@@ -3,6 +3,7 @@ package com.instirepo.app.fragments;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -153,6 +154,19 @@ public class UserProfileEditProfileFragment extends UserProfileBaseFragment
 		hideErrorLayout();
 		adapter = new UserProfileEditProfileListAdapter(getActivity(), obj);
 		recyclerView.setAdapter(adapter);
+	}
+
+	public void notifyOnActivityResultFromActivity(int requestCode,
+			int resultCode, Intent data) {
+		((UserProfileEditProfileListAdapter) adapter)
+				.notifyOnActivityResultFromActivity(requestCode, resultCode,
+						data);
+	}
+
+	public void notifyOnResumeCalled() {
+		if (adapter != null)
+			((UserProfileEditProfileListAdapter) adapter)
+					.notifyOnResumeCalled();
 	}
 
 }

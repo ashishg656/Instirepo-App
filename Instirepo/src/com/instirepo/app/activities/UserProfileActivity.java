@@ -6,6 +6,7 @@ import java.util.List;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -16,6 +17,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -489,6 +491,25 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 							R.color.bnc_shop_by_category_color3_lightdiff),
 					getResources().getColor(
 							R.color.bnc_shop_by_category_color3_toolbar));
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		((UserProfileEditProfileFragment) fragmentHashMap.get(0))
+				.notifyOnActivityResultFromActivity(requestCode, resultCode,
+						data);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		try {
+			((UserProfileEditProfileFragment) fragmentHashMap.get(0))
+					.notifyOnResumeCalled();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
