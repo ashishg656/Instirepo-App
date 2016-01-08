@@ -54,6 +54,8 @@ public class PostsByTeachersListAdapter extends
 	int followPostPosition;
 	int reportPostPosition;
 
+	PostsHolderNormal upvotePostHolder, savePostHolder;
+
 	public PostsByTeachersListAdapter(Context context,
 			List<PostListSinglePostObject> mData, boolean isMoreAllowed) {
 		super();
@@ -133,21 +135,10 @@ public class PostsByTeachersListAdapter extends
 			holder.numberOfUpvotes.setText(""
 					+ (obj.getUpvotes() - obj.getDownvotes()));
 
-			if (obj.isHas_upvoted()) {
-				holder.upvotePostLayout.setSelected(true);
-				holder.downvotePostLayout.setSelected(false);
-			} else if (obj.isHas_downvoted()) {
-				holder.upvotePostLayout.setSelected(false);
-				holder.downvotePostLayout.setSelected(true);
-			} else {
-				holder.upvotePostLayout.setSelected(false);
-				holder.downvotePostLayout.setSelected(false);
-			}
+			holder.upvotePostLayout.setSelected(obj.isHas_upvoted());
+			holder.downvotePostLayout.setSelected(obj.isHas_downvoted());
 
-			if (obj.isIs_saved())
-				holder.savePostLayout.setSelected(true);
-			else
-				holder.savePostLayout.setSelected(false);
+			holder.savePostLayout.setSelected(obj.isIs_saved());
 
 			holder.category.setText(obj.getCategory());
 			GradientDrawable categoryBg = (GradientDrawable) holder.category
@@ -163,6 +154,7 @@ public class PostsByTeachersListAdapter extends
 				holder.savePostLayout.setVisibility(View.VISIBLE);
 			} else {
 				holder.savePostLayout.setVisibility(View.GONE);
+				holder.numberOfSaves.setText(null);
 				holder.downvotePostLayout.setVisibility(View.VISIBLE);
 			}
 		}
@@ -434,6 +426,7 @@ public class PostsByTeachersListAdapter extends
 	public void upvotePost(final int id, int pos, PostsHolderNormal holder,
 			boolean isUpvoteClicked) {
 		upvotePostPostition = pos;
+		upvotePostHolder = holder;
 		this.isUpvoteClicked = isUpvoteClicked;
 
 		if (mData.get(pos).isHas_upvoted() && isUpvoteClicked) {
@@ -466,6 +459,18 @@ public class PostsByTeachersListAdapter extends
 			}
 		}
 
+		if (upvotePostHolder != null) {
+			upvotePostHolder.upvotePostLayout.setSelected(mData.get(pos)
+					.isHas_upvoted());
+			upvotePostHolder.downvotePostLayout.setSelected(mData.get(pos)
+					.isHas_downvoted());
+			upvotePostHolder.numberOfUpvotes.setText(""
+					+ (mData.get(pos).getUpvotes() - mData.get(pos)
+							.getDownvotes()));
+		} else {
+			notifyItemChanged(upvotePostPostition);
+		}
+
 		StringRequest req = new StringRequest(Method.POST, upvotePost,
 				new Listener<String>() {
 
@@ -479,6 +484,22 @@ public class PostsByTeachersListAdapter extends
 					public void onErrorResponse(VolleyError arg0) {
 						((BaseActivity) context)
 								.showSnackBar("Some error occured. Check internet connection");
+
+						if (upvotePostHolder != null) {
+							upvotePostHolder.upvotePostLayout.setSelected(mData
+									.get(upvotePostPostition).isHas_upvoted());
+							upvotePostHolder.downvotePostLayout
+									.setSelected(mData.get(upvotePostPostition)
+											.isHas_downvoted());
+							upvotePostHolder.numberOfUpvotes
+									.setText(""
+											+ (mData.get(upvotePostPostition)
+													.getUpvotes() - mData.get(
+													upvotePostPostition)
+													.getDownvotes()));
+						} else {
+							notifyItemChanged(upvotePostPostition);
+						}
 					}
 				}) {
 			@Override
@@ -486,8 +507,8 @@ public class PostsByTeachersListAdapter extends
 				HashMap<String, String> p = new HashMap<>();
 				p.put("user_id", ZPreferences.getUserProfileID(context));
 				p.put("post_id", id + "");
-				p.put("is_upvote_clicked", Boolean.toString(!mData.get(
-						upvotePostPostition).isHas_upvoted()));
+				p.put("is_upvote_clicked",
+						Boolean.toString(PostsByTeachersListAdapter.this.isUpvoteClicked));
 				return p;
 			}
 		};
@@ -497,6 +518,8 @@ public class PostsByTeachersListAdapter extends
 	public void markPostImportant(final int id, int pos,
 			PostsHolderNormal holder) {
 		markImportantPosition = pos;
+		savePostHolder = holder;
+
 		if (mData.get(markImportantPosition).isIs_saved()) {
 			mData.get(markImportantPosition).setSaves(
 					mData.get(markImportantPosition).getSaves() - 1);
@@ -509,7 +532,12 @@ public class PostsByTeachersListAdapter extends
 			mData.get(markImportantPosition).setIs_saved(true);
 			((BaseActivity) context).showSnackBar("Market Post As Important");
 		}
-		notifyItemChanged(markImportantPosition);
+		if (savePostHolder != null) {
+			savePostHolder.savePostLayout.setSelected(mData.get(
+					markImportantPosition).isIs_saved());
+		} else {
+			notifyItemChanged(markImportantPosition);
+		}
 
 		StringRequest req = new StringRequest(Method.POST, markPostAsImportant,
 				new Listener<String>() {
@@ -538,7 +566,12 @@ public class PostsByTeachersListAdapter extends
 													.getSaves() + 1);
 							mData.get(markImportantPosition).setIs_saved(true);
 						}
-						notifyItemChanged(markImportantPosition);
+
+						if (savePostHolder != null) {
+							savePostHolder.savePostLayout.setSelected(mData
+									.get(markImportantPosition).isIs_saved());
+						} else
+							notifyItemChanged(markImportantPosition);
 					}
 				}) {
 			@Override
