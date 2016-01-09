@@ -31,6 +31,7 @@ import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.BaseActivity;
 import com.instirepo.app.activities.HomeActivity;
+import com.instirepo.app.adapters.MyPostsTeacherListAdapter.PostsHolderNormal;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.bottomsheet.BottomSheet;
 import com.instirepo.app.extras.AppConstants;
@@ -124,6 +125,7 @@ public class PostsByTeachersListAdapter extends
 			holder.userName.setText(obj.getUser_name());
 			holder.heading.setText(obj.getHeading());
 			holder.description.setText(obj.getDescription());
+
 			if (obj.getImage() == null) {
 				holder.imagePost.setVisibility(View.GONE);
 			} else {
@@ -143,16 +145,10 @@ public class PostsByTeachersListAdapter extends
 			holder.numberOfUpvotes.setText(""
 					+ (obj.getUpvotes() - obj.getDownvotes()));
 
-			if (obj.isHas_upvoted()) {
-				holder.upvotePostLayout.setSelected(true);
-				holder.downvotePostLayout.setSelected(false);
-			} else if (obj.isHas_downvoted()) {
-				holder.upvotePostLayout.setSelected(false);
-				holder.downvotePostLayout.setSelected(true);
-			} else {
-				holder.upvotePostLayout.setSelected(false);
-				holder.downvotePostLayout.setSelected(false);
-			}
+			holder.upvotePostLayout.setSelected(obj.isHas_upvoted());
+			holder.downvotePostLayout.setSelected(obj.isHas_downvoted());
+
+			holder.savePostLayout.setSelected(obj.isIs_saved());
 
 			holder.category.setText(obj.getCategory());
 			GradientDrawable categoryBg = (GradientDrawable) holder.category
