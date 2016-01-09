@@ -31,7 +31,6 @@ import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.BaseActivity;
 import com.instirepo.app.activities.HomeActivity;
-import com.instirepo.app.adapters.MyPostsTeacherListAdapter.PostsHolderNormal;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.bottomsheet.BottomSheet;
 import com.instirepo.app.extras.AppConstants;

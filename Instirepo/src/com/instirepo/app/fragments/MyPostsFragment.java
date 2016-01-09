@@ -160,7 +160,7 @@ public class MyPostsFragment extends UserProfileBaseFragment implements ZUrls {
 			hideErrorLayout();
 			hideLoadingLayout();
 			adapter = new MyPostsTeacherListAdapter(getActivity(),
-					obj.getPosts(), isMoreAllowed);
+					obj.getPosts(), isMoreAllowed, false);
 			recyclerView.setAdapter(adapter);
 		} else {
 			((MyPostsTeacherListAdapter) adapter).addData(obj.getPosts(),

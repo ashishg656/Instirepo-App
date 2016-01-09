@@ -66,12 +66,16 @@ public class MyPostsTeacherListAdapter extends
 	boolean isUpotePostRequestRunning, isMarkImpPostRequestRunning;
 	boolean isUpvoteClickedButton;
 
+	boolean removePostFromListAfterRemovingFromFavourites;
+
 	public MyPostsTeacherListAdapter(Context context,
-			List<PostListSinglePostObject> mData, boolean isMoreAllowed) {
+			List<PostListSinglePostObject> mData, boolean isMoreAllowed,
+			boolean removePostFromListAfterRemovingFromFavourites) {
 		super();
 		this.context = context;
 		this.mData = mData;
 		this.isMoreAllowed = isMoreAllowed;
+		this.removePostFromListAfterRemovingFromFavourites = removePostFromListAfterRemovingFromFavourites;
 		clickListener = new MyClickListener();
 	}
 
@@ -637,6 +641,12 @@ public class MyPostsTeacherListAdapter extends
 										.setVisibility(View.GONE);
 								markImportantHolder.savePostLayout
 										.setVisibility(View.VISIBLE);
+							}
+
+							if (removePostFromListAfterRemovingFromFavourites
+									&& !obj.isIs_saved()) {
+								mData.remove(markImportantPosition);
+								notifyItemRemoved(markImportantPosition);
 							}
 						}
 					}, new ErrorListener() {

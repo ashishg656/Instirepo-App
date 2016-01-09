@@ -161,7 +161,7 @@ public class FavouritePostsFragment extends UserProfileBaseFragment implements
 			hideErrorLayout();
 			hideLoadingLayout();
 			adapter = new MyPostsTeacherListAdapter(getActivity(),
-					obj.getPosts(), isMoreAllowed);
+					obj.getPosts(), isMoreAllowed, true);
 			recyclerView.setAdapter(adapter);
 		} else {
 			((MyPostsTeacherListAdapter) adapter).addData(obj.getPosts(),
