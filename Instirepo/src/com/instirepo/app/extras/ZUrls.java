@@ -103,4 +103,10 @@ public interface ZUrls {
 	public String getFavouritePosts = ZApplication.getBaseUrl()
 			+ "get_posts_marked_important_by_user/";
 
+	public String editAboutUrl = ZApplication.getBaseUrl()
+			+ "change_about_for_user/";
+
+	public String editPhoneUrl = ZApplication.getBaseUrl()
+			+ "change_mobile_number_for_user/";
+
 }

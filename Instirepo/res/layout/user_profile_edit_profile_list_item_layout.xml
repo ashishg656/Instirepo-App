@@ -111,6 +111,7 @@
         android:orientation="vertical" >
 
         <LinearLayout
+            android:id="@+id/editabout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -254,6 +255,7 @@
                     android:textColor="@color/z_text_color_dark" />
 
                 <LinearLayout
+                    android:id="@+id/editphone"
                     android:layout_width="56dp"
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackgroundBorderless"

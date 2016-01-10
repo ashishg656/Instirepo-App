@@ -7,9 +7,11 @@ import java.util.Map;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
@@ -17,7 +19,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -56,6 +60,7 @@ public class UserProfileEditProfileListAdapter extends
 	EditProfileHolder holderChangePhoneVisibility;
 
 	ProgressDialog progressDialog, dropboxProgressDialog;
+	AlertDialog alertDialog;
 
 	final static private String APP_KEY = "ku1kknp8f14k7a6";
 	final static private String APP_SECRET = "INSERT_APP_SECRET";
@@ -188,7 +193,185 @@ public class UserProfileEditProfileListAdapter extends
 					deleteResumeRequest();
 				}
 			});
+
+			holder.editAbout.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					showEditAboutDialog();
+				}
+			});
+
+			holder.editPhone.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					showEditPhoneDialog();
+				}
+			});
 		}
+	}
+
+	protected void showEditPhoneDialog() {
+		View content = LayoutInflater.from(context).inflate(
+				R.layout.edit_phone_dialog_layout, null, false);
+		final EditText editText = (EditText) content.findViewById(R.id.about);
+		editText.setText(mData.getPhone());
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle("Edit Contact Number");
+		builder.setView(content);
+		builder.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				});
+		builder.setPositiveButton("Save", null);
+		alertDialog = builder.create();
+		alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+			@Override
+			public void onShow(DialogInterface dialog) {
+
+				Button b = ((AlertDialog) dialog)
+						.getButton(AlertDialog.BUTTON_POSITIVE);
+				b.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View view) {
+						if (editText.getText().toString().trim().length() > 0) {
+							savePhoneOnServer(editText.getText().toString()
+									.trim());
+						}
+					}
+				});
+			}
+		});
+		alertDialog.show();
+	}
+
+	protected void showEditAboutDialog() {
+		View content = LayoutInflater.from(context).inflate(
+				R.layout.edit_about_dialog_layout, null, false);
+		final EditText editText = (EditText) content.findViewById(R.id.about);
+		editText.setText(mData.getAbout());
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle("Edit About");
+		builder.setView(content);
+		builder.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				});
+		builder.setPositiveButton("Save", null);
+		alertDialog = builder.create();
+		alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+			@Override
+			public void onShow(DialogInterface dialog) {
+
+				Button b = ((AlertDialog) dialog)
+						.getButton(AlertDialog.BUTTON_POSITIVE);
+				b.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View view) {
+						if (editText.getText().toString().trim().length() > 0) {
+							saveAboutOnServer(editText.getText().toString()
+									.trim());
+						}
+					}
+				});
+			}
+		});
+		alertDialog.show();
+	}
+
+	protected void saveAboutOnServer(final String about) {
+		progressDialog = ProgressDialog.show(context, "Editing About",
+				"Please Wait", true, false);
+
+		StringRequest req = new StringRequest(Method.POST, editAboutUrl,
+				new Listener<String>() {
+
+					@Override
+					public void onResponse(String arg0) {
+						if (progressDialog != null)
+							progressDialog.dismiss();
+
+						((BaseActivity) context)
+								.makeToast("Edited About successfully");
+						mData.setAbout(about);
+						notifyItemChanged(1);
+
+						if (alertDialog != null)
+							alertDialog.dismiss();
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						if (progressDialog != null)
+							progressDialog.dismiss();
+
+						((BaseActivity) context)
+								.makeToast("Error. Check internet");
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				Map<String, String> p = new HashMap<>();
+				p.put("user_id", ZPreferences.getUserProfileID(context));
+				p.put("about", about);
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, editAboutUrl);
+	}
+
+	protected void savePhoneOnServer(final String about) {
+		progressDialog = ProgressDialog.show(context, "Editing Number",
+				"Please Wait", true, false);
+
+		StringRequest req = new StringRequest(Method.POST, editPhoneUrl,
+				new Listener<String>() {
+
+					@Override
+					public void onResponse(String arg0) {
+						if (progressDialog != null)
+							progressDialog.dismiss();
+
+						((BaseActivity) context)
+								.makeToast("Edited Number successfully");
+						mData.setPhone(about);
+						notifyItemChanged(1);
+
+						if (alertDialog != null)
+							alertDialog.dismiss();
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						if (progressDialog != null)
+							progressDialog.dismiss();
+
+						((BaseActivity) context)
+								.makeToast("Error. Check internet");
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				Map<String, String> p = new HashMap<>();
+				p.put("user_id", ZPreferences.getUserProfileID(context));
+				p.put("number", about);
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, editPhoneUrl);
 	}
 
 	protected void deleteResumeRequest() {
@@ -327,6 +510,7 @@ public class UserProfileEditProfileListAdapter extends
 				numberOfUpvotes, numberOfDownvotes, aboutText, email, mobile,
 				downloadResume, deleteResume, editResume;
 		CheckBox checkBoxEmail, checkBoxPhone;
+		LinearLayout editAbout, editPhone;
 
 		public EditProfileHolder(View v) {
 			super(v);
@@ -346,6 +530,8 @@ public class UserProfileEditProfileListAdapter extends
 			deleteResume = (TextView) v.findViewById(R.id.deleteresume);
 			checkBoxEmail = (CheckBox) v.findViewById(R.id.emailvisible);
 			checkBoxPhone = (CheckBox) v.findViewById(R.id.phonevisible);
+			editAbout = (LinearLayout) v.findViewById(R.id.editabout);
+			editPhone = (LinearLayout) v.findViewById(R.id.editphone);
 		}
 	}
 
