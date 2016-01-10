@@ -16,12 +16,12 @@
             android:orientation="vertical" >
 
             <ImageView
+                android:id="@+id/postimage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/symphony"
-                android:visibility="gone" />
+                android:src="@drawable/symphony" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -30,6 +30,7 @@
                 android:padding="@dimen/z_margin_large" >
 
                 <TextView
+                    android:id="@+id/postHeading"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Post Heading"
@@ -54,6 +55,7 @@
                     android:textSize="@dimen/z_font_supermini" />
 
                 <TextView
+                    android:id="@+id/postdesciption"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/z_margin_mini"
@@ -147,7 +149,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/z_margin_large" >
+                    android:paddingBottom="@dimen/z_margin_small"
+                    android:paddingLeft="@dimen/z_margin_large"
+                    android:paddingTop="@dimen/z_margin_small" >
 
                     <ImageView
                         android:layout_width="@dimen/z_margin_medium"
@@ -166,6 +170,7 @@
                         android:textSize="@dimen/z_font_supermini" />
 
                     <TextView
+                        android:id="@+id/vieewseens"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackgroundBorderless"
