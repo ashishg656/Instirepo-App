@@ -1,14 +1,16 @@
 package com.instirepo.app.activities;
 
-import com.instirepo.app.R;
-import com.instirepo.app.objects.PostListSinglePostObject;
-import com.instirepo.app.widgets.CircularImageView;
-import com.instirepo.app.widgets.ObservableScrollView;
-
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.instirepo.app.R;
+import com.instirepo.app.application.ZApplication;
+import com.instirepo.app.objects.PostListSinglePostObject;
+import com.instirepo.app.serverApi.ImageRequestManager;
+import com.instirepo.app.widgets.CircularImageView;
+import com.instirepo.app.widgets.ObservableScrollView;
 
 public class PostDetailActivity extends BaseActivity {
 
@@ -36,7 +38,15 @@ public class PostDetailActivity extends BaseActivity {
 	}
 
 	private void setInitialDataUsingnIntentObj() {
-
+		if (postListSinglePostObject != null) {
+			if (postListSinglePostObject.getImage() != null) {
+				ImageRequestManager.get(this).requestImage(
+						this,
+						postImage,
+						ZApplication.getImageUrl(postListSinglePostObject
+								.getImage()), -1);
+			}
+		}
 	}
 
 }
