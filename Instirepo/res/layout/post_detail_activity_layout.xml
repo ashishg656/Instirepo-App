@@ -86,8 +86,8 @@
 
                     <com.instirepo.app.widgets.CircularImageView
                         android:id="@+id/circularimage"
-                        android:layout_width="@dimen/z_post_uploader_image_height"
-                        android:layout_height="@dimen/z_post_uploader_image_height" />
+                        android:layout_width="@dimen/z_message_list_user_img_height"
+                        android:layout_height="@dimen/z_message_list_user_img_height" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -103,6 +103,7 @@
                             android:layout_height="wrap_content"
                             android:text="Ashish Goel"
                             android:textColor="@color/z_text_color_medium_dark"
+                            android:textSize="@dimen/z_font_small"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -149,13 +150,13 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/z_margin_small"
+                    android:paddingBottom="@dimen/z_margin_large"
                     android:paddingLeft="@dimen/z_margin_large"
-                    android:paddingTop="@dimen/z_margin_small" >
+                    android:paddingTop="@dimen/z_margin_large" >
 
                     <ImageView
-                        android:layout_width="@dimen/z_margin_medium"
-                        android:layout_height="@dimen/z_margin_medium"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:src="@drawable/ic_user" />
 
                     <TextView
@@ -166,8 +167,7 @@
                         android:layout_weight="1"
                         android:includeFontPadding="false"
                         android:text="5 people viewed"
-                        android:textColor="@color/z_text_color_medium_dark"
-                        android:textSize="@dimen/z_font_supermini" />
+                        android:textColor="@color/z_text_color_medium_dark" />
 
                     <TextView
                         android:id="@+id/vieewseens"
@@ -368,6 +368,7 @@
                         android:src="@drawable/follow_button_selector" />
 
                     <TextView
+                        android:id="@+id/followposttext"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/z_margin_small"
@@ -402,6 +403,7 @@
                         android:src="@drawable/flag_button_selector" />
 
                     <TextView
+                        android:id="@+id/reportposttext"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/z_margin_small"
