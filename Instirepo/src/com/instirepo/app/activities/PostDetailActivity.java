@@ -46,8 +46,8 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	RecyclerView seenByRecyclerView;
 	ObservableScrollView scrollView;
 
-	boolean previouslyUpvoted, previouslyDownvoted, previousUpvotes,
-			previousDownvotes;
+	boolean previouslyUpvoted, previouslyDownvoted;
+	int previousUpvotes, previousDownvotes;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +156,11 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	}
 
 	public void upvoteOrDownvotePost(boolean isUpvoteClicked) {
+		previousDownvotes = postListSinglePostObject.getDownvotes();
+		previousUpvotes = postListSinglePostObject.getUpvotes();
+		previouslyDownvoted = postListSinglePostObject.isHas_downvoted();
+		previouslyUpvoted = postListSinglePostObject.isHas_upvoted();
+
 		if (postListSinglePostObject.isHas_upvoted()) {
 			// upvoted
 			if (isUpvoteClicked) {
@@ -287,7 +292,12 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	}
 
 	protected void reverseUpvotePost() {
+		postListSinglePostObject.setUpvotes(previousUpvotes);
+		postListSinglePostObject.setDownvotes(previousDownvotes);
+		postListSinglePostObject.setHas_downvoted(previouslyDownvoted);
+		postListSinglePostObject.setHas_upvoted(previouslyUpvoted);
 
+		setInitialDataUsingnIntentObj();
 	}
 
 	@Override
