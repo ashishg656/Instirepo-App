@@ -14,11 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.AppConstants;
@@ -90,16 +92,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 			postListSinglePostObject = getIntent().getExtras().getParcelable(
 					"postobj");
 
-			if (postListSinglePostObject.getImage() != null) {
-				ImageRequestManager.get(this).requestImage(
-						this,
-						postImage,
-						ZApplication.getImageUrl(postListSinglePostObject
-								.getImage()), -1);
-			}
-
-			ImageRequestManager.get(this).requestImage(this, uploaderImage,
-					postListSinglePostObject.getUser_image(), -1);
+			setImagesForPostAndUserImage();
 
 			setInitialDataUsingnIntentObj();
 		} else if (getIntent().hasExtra("postid")) {
@@ -109,8 +102,50 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 		}
 	}
 
+	private void setImagesForPostAndUserImage() {
+		if (postListSinglePostObject.getImage() != null) {
+			ImageRequestManager.get(this).requestImage(
+					this,
+					postImage,
+					ZApplication.getImageUrl(postListSinglePostObject
+							.getImage()), -1);
+		}
+
+		ImageRequestManager.get(this).requestImage(this, uploaderImage,
+				postListSinglePostObject.getUser_image(), -1);
+	}
+
 	private void loadDataThroughPostID() {
-		
+		final String url = postDescriptionPage + "?post_id=" + postId;
+		hideErrorLayout();
+		showLoadingLayout();
+
+		StringRequest req = new StringRequest(Method.POST, url,
+				new Listener<String>() {
+
+					@Override
+					public void onResponse(String arg0) {
+
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						try {
+							Entry entry = ZApplication.getInstance()
+									.getRequestQueue().getCache().get(url);
+							String data = new String(entry.data, "UTF-8");
+							postListSinglePostObject = new Gson().fromJson(
+									data, PostListSinglePostObject.class);
+							setImagesForPostAndUserImage();
+							setInitialDataUsingnIntentObj();
+						} catch (Exception e) {
+							showErrorLayout();
+							hideLoadingLayout();
+						}
+					}
+				});
+		ZApplication.getInstance().addToRequestQueue(req, url);
 	}
 
 	private void setInitialDataUsingnIntentObj() {

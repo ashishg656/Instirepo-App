@@ -109,4 +109,7 @@ public interface ZUrls {
 	public String editPhoneUrl = ZApplication.getBaseUrl()
 			+ "change_mobile_number_for_user/";
 
+	public String postDescriptionPage = ZApplication.getBaseUrl()
+			+ "post_detail_request/";
+
 }
