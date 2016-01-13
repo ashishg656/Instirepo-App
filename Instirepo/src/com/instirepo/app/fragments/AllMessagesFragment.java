@@ -10,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.VolleyError;
+import com.android.volley.Cache;
+import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
@@ -64,9 +66,6 @@ public class AllMessagesFragment extends BaseFragment implements ZUrls,
 
 					@Override
 					public void onResponse(String arg0) {
-						hideErrorLayout();
-						hideLoadingLayout();
-
 						AllMessagesListObject obj = new Gson().fromJson(arg0,
 								AllMessagesListObject.class);
 						setAdapterData(obj);
@@ -75,6 +74,18 @@ public class AllMessagesFragment extends BaseFragment implements ZUrls,
 
 					@Override
 					public void onErrorResponse(VolleyError arg0) {
+						try {
+							Cache cache = ZApplication.getInstance()
+									.getRequestQueue().getCache();
+							Entry entry = cache.get(getAllMessagesList);
+							String data = new String(entry.data, "UTF-8");
+							AllMessagesListObject obj = new Gson().fromJson(
+									data, AllMessagesListObject.class);
+							setAdapterData(obj);
+						} catch (Exception e) {
+							hideLoadingLayout();
+							showErrorLayout();
+						}
 						hideLoadingLayout();
 						showErrorLayout();
 					}
@@ -90,6 +101,9 @@ public class AllMessagesFragment extends BaseFragment implements ZUrls,
 	}
 
 	protected void setAdapterData(AllMessagesListObject obj) {
+		hideErrorLayout();
+		hideLoadingLayout();
+
 		adapter = new AllMessageListAdapter(obj.getNames(), getActivity());
 		listView.setAdapter(adapter);
 	}

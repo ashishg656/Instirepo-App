@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 
-import com.android.volley.Request.Method;
 import com.android.volley.AuthFailureError;
-import com.android.volley.VolleyError;
+import com.android.volley.Cache;
+import com.android.volley.Cache.Entry;
+import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
@@ -51,9 +53,6 @@ public class NotificationsActivity extends BaseActivity implements ZUrls {
 
 					@Override
 					public void onResponse(String arg0) {
-						hideLoadingLayout();
-						hideErrorLayout();
-
 						NotificationsListObject obj = new Gson().fromJson(arg0,
 								NotificationsListObject.class);
 
@@ -63,8 +62,18 @@ public class NotificationsActivity extends BaseActivity implements ZUrls {
 
 					@Override
 					public void onErrorResponse(VolleyError arg0) {
-						hideLoadingLayout();
-						showErrorLayout();
+						try {
+							Cache cache = ZApplication.getInstance()
+									.getRequestQueue().getCache();
+							Entry entry = cache.get(getNotificationsForUser);
+							String data = new String(entry.data, "UTF-8");
+							NotificationsListObject obj = new Gson().fromJson(
+									data, NotificationsListObject.class);
+							setAdapterData(obj);
+						} catch (Exception e) {
+							hideLoadingLayout();
+							showErrorLayout();
+						}
 					}
 				}) {
 			@Override
@@ -80,6 +89,9 @@ public class NotificationsActivity extends BaseActivity implements ZUrls {
 	}
 
 	protected void setAdapterData(NotificationsListObject obj) {
+		hideLoadingLayout();
+		hideErrorLayout();
+
 		adapter = new NotificationsListAdapter(obj.getNotifications(), this);
 		listView.setAdapter(adapter);
 	}

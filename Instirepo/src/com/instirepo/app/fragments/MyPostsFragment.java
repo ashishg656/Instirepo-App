@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
@@ -119,7 +121,7 @@ public class MyPostsFragment extends UserProfileBaseFragment implements ZUrls {
 			showLoadingLayout();
 			hideErrorLayout();
 		}
-		String url = getPostsPostedByUser + "?pagenumber=" + nextPage;
+		final String url = getPostsPostedByUser + "?pagenumber=" + nextPage;
 		StringRequest req = new StringRequest(Method.POST, url,
 				new Listener<String>() {
 
@@ -135,9 +137,19 @@ public class MyPostsFragment extends UserProfileBaseFragment implements ZUrls {
 					@Override
 					public void onErrorResponse(VolleyError err) {
 						isRequestRunning = false;
-						if (adapter == null) {
-							showErrorLayout();
-							hideLoadingLayout();
+						try {
+							Cache cache = ZApplication.getInstance()
+									.getRequestQueue().getCache();
+							Entry entry = cache.get(url);
+							String data = new String(entry.data, "UTF-8");
+							PostsListObject obj = new Gson().fromJson(data,
+									PostsListObject.class);
+							setAdapterData(obj);
+						} catch (Exception e) {
+							if (adapter == null) {
+								showErrorLayout();
+								hideLoadingLayout();
+							}
 						}
 					}
 				}) {
@@ -159,6 +171,7 @@ public class MyPostsFragment extends UserProfileBaseFragment implements ZUrls {
 		if (adapter == null) {
 			hideErrorLayout();
 			hideLoadingLayout();
+
 			adapter = new MyPostsTeacherListAdapter(getActivity(),
 					obj.getPosts(), isMoreAllowed, false);
 			recyclerView.setAdapter(adapter);
