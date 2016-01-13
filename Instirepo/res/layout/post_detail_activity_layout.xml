@@ -349,6 +349,7 @@
                 android:background="@drawable/bnc_book_detail_activity_gradient_view" />
 
             <FrameLayout
+                android:id="@+id/followpostlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -385,6 +386,7 @@
                 android:background="@drawable/bnc_book_detail_activity_gradient_view" />
 
             <FrameLayout
+                android:id="@+id/reportpostlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"

@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -27,6 +26,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
@@ -44,6 +45,7 @@ import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.objects.AddCommentObject;
 import com.instirepo.app.objects.CommentsListObject;
 import com.instirepo.app.objects.CommentsListObject.CommentObject;
+import com.instirepo.app.objects.PostListSinglePostObject;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.CustomGoogleFloatingActionButton;
 
@@ -176,7 +178,7 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 				showLoadingLayout();
 				hideErrorLayout();
 			}
-			String url = getCommentsOnPost + "?pagenumber=" + nextPage
+			final String url = getCommentsOnPost + "?pagenumber=" + nextPage
 					+ "&post_id=" + postid;
 			StringRequest req = new StringRequest(Method.POST, url,
 					new Listener<String>() {
@@ -184,8 +186,6 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 						@Override
 						public void onResponse(String arg0) {
 							isRequestRunning = false;
-							hideLoadingLayout();
-							hideErrorLayout();
 							CommentsListObject obj = new Gson().fromJson(arg0,
 									CommentsListObject.class);
 							setAdapterData(obj);
@@ -195,8 +195,20 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 						@Override
 						public void onErrorResponse(VolleyError arg0) {
 							isRequestRunning = false;
-							hideLoadingLayout();
-							showErrorLayout();
+							try {
+								Cache cache = ZApplication.getInstance()
+										.getRequestQueue().getCache();
+								Entry entry = cache.get(url);
+								String data = new String(entry.data, "UTF-8");
+								CommentsListObject obj = new Gson().fromJson(
+										data, CommentsListObject.class);
+								setAdapterData(obj);
+							} catch (Exception e) {
+								if (adapter == null) {
+									hideLoadingLayout();
+									showErrorLayout();
+								}
+							}
 						}
 					}) {
 				@Override
@@ -218,6 +230,9 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 		if (nextPage == null)
 			isMoreAllowed = false;
 		if (adapter == null) {
+			hideLoadingLayout();
+			hideErrorLayout();
+
 			adapter = new CommentListAdapter(getActivity(), obj.getComments());
 			if (isMoreAllowed)
 				listView.addFooterView(footerView);

@@ -49,6 +49,8 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	boolean previouslyUpvoted, previouslyDownvoted;
 	int previousUpvotes, previousDownvotes;
 
+	int postId;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,6 +80,8 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 		findViewById(R.id.openuserprofilepost).setOnClickListener(this);
 		findViewById(R.id.seenbycontainer).setOnClickListener(this);
 		findViewById(R.id.commnts).setOnClickListener(this);
+		findViewById(R.id.reportpostlayout).setOnClickListener(this);
+		findViewById(R.id.followpostlayout).setOnClickListener(this);
 		upvoteImage.setOnClickListener(this);
 		downvoteImage.setOnClickListener(this);
 		savePostImage.setOnClickListener(this);
@@ -98,7 +102,15 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 					postListSinglePostObject.getUser_image(), -1);
 
 			setInitialDataUsingnIntentObj();
+		} else if (getIntent().hasExtra("postid")) {
+			postId = getIntent().getExtras().getInt("postid");
+
+			loadDataThroughPostID();
 		}
+	}
+
+	private void loadDataThroughPostID() {
+		
 	}
 
 	private void setInitialDataUsingnIntentObj() {
@@ -153,6 +165,84 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 					color);
 			category.setTextColor(color);
 		}
+	}
+
+	public void reportPostButtonClick() {
+		postListSinglePostObject.setIs_reported(!postListSinglePostObject
+				.isIs_reported());
+		setInitialDataUsingnIntentObj();
+
+		if (postListSinglePostObject.isIs_reported()) {
+			showSnackBar("Reported Post");
+		} else
+			showSnackBar("Undo Report Post");
+
+		StringRequest req = new StringRequest(Method.POST, reportPostUrl,
+				new Listener<String>() {
+					@Override
+					public void onResponse(String arg0) {
+
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						postListSinglePostObject
+								.setIs_reported(!postListSinglePostObject
+										.isIs_reported());
+						setInitialDataUsingnIntentObj();
+						showSnackBar("Unable to report post. Check internet");
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				HashMap<String, String> p = new HashMap<>();
+				p.put("user_id",
+						ZPreferences.getUserProfileID(PostDetailActivity.this));
+				p.put("post_id", postListSinglePostObject.getId() + "");
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, reportPostUrl);
+	}
+
+	public void followPostRequest() {
+		postListSinglePostObject.setIs_following(!postListSinglePostObject
+				.isIs_following());
+		setInitialDataUsingnIntentObj();
+
+		if (postListSinglePostObject.isIs_following()) {
+			showSnackBar("Following Post");
+		} else
+			showSnackBar("Unfollowed post");
+
+		StringRequest req = new StringRequest(Method.POST, followPostRequest,
+				new Listener<String>() {
+					@Override
+					public void onResponse(String arg0) {
+
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+						showSnackBar("Unable to follow/unfollow post. Check internet and try agin");
+						postListSinglePostObject
+								.setIs_following(!postListSinglePostObject
+										.isIs_following());
+						setInitialDataUsingnIntentObj();
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				HashMap<String, String> p = new HashMap<>();
+				p.put("user_id",
+						ZPreferences.getUserProfileID(PostDetailActivity.this));
+				p.put("post_id", postListSinglePostObject.getId() + "");
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, followPostRequest);
 	}
 
 	public void upvoteOrDownvotePost(boolean isUpvoteClicked) {
@@ -226,6 +316,12 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 			break;
 		case R.id.downvotepostimage:
 			upvoteOrDownvotePost(false);
+			break;
+		case R.id.reportpostlayout:
+			reportPostButtonClick();
+			break;
+		case R.id.followpostlayout:
+			followPostRequest();
 			break;
 
 		default:

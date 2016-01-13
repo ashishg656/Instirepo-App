@@ -10,6 +10,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.Cache;
+import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
@@ -91,16 +93,13 @@ public class SeenByPeopleFragment extends BaseFragment implements
 			showLoadingLayout();
 			hideErrorLayout();
 		}
-		String url = getPeopleWhoSawPost + "?pagenumber=" + nextPage
+		final String url = getPeopleWhoSawPost + "?pagenumber=" + nextPage
 				+ "&post_id=" + postId;
 		StringRequest req = new StringRequest(Method.GET, url,
 				new Listener<String>() {
 
 					@Override
 					public void onResponse(String res) {
-						hideErrorLayout();
-						hideLoadingLayout();
-
 						isRequestRunning = false;
 						SeenByPeopleObject obj = new Gson().fromJson(res,
 								SeenByPeopleObject.class);
@@ -111,8 +110,20 @@ public class SeenByPeopleFragment extends BaseFragment implements
 					@Override
 					public void onErrorResponse(VolleyError arg0) {
 						isRequestRunning = false;
-						hideLoadingLayout();
-						showErrorLayout();
+						try {
+							Cache cache = ZApplication.getInstance()
+									.getRequestQueue().getCache();
+							Entry entry = cache.get(url);
+							String data = new String(entry.data, "UTF-8");
+							SeenByPeopleObject obj = new Gson().fromJson(data,
+									SeenByPeopleObject.class);
+							setAdapterData(obj);
+						} catch (Exception e) {
+							if (adapter == null) {
+								hideLoadingLayout();
+								showErrorLayout();
+							}
+						}
 					}
 				});
 		ZApplication.getInstance().addToRequestQueue(req, getPeopleWhoSawPost);
@@ -124,11 +135,14 @@ public class SeenByPeopleFragment extends BaseFragment implements
 			isMoreAllowed = false;
 
 		if (adapter == null) {
+			hideErrorLayout();
+			hideLoadingLayout();
+
 			adapter = new SeenByPeopleListAdapter(getActivity(),
 					obj.getSeens(), isMoreAllowed);
 			recyclerView.setAdapter(adapter);
 		} else {
-			adapter.addData(obj.getSeens(),isMoreAllowed);
+			adapter.addData(obj.getSeens(), isMoreAllowed);
 		}
 	}
 
