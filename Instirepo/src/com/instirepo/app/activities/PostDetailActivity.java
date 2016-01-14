@@ -327,7 +327,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 			}
 		}
 
-		upvoteOrDownvotePost(isUpvoteClicked);
+		upvotePostRequest(isUpvoteClicked);
 	}
 
 	@Override
