@@ -537,7 +537,10 @@ public class UserProfileEditProfileListAdapter extends
 
 	public void notifyOnActivityResultFromActivity(int requestCode,
 			int resultCode, Intent data) {
-		if (requestCode == SELECT_FILE_FROM_AFILECHOOSER_CODE) {
+		if (requestCode == SELECT_FILE_FROM_AFILECHOOSER_CODE
+				&& resultCode == UserProfileActivity.RESULT_OK) {
+			if (data == null || data.getData() == null)
+				return;
 			final Uri uri = data.getData();
 
 			String path = FileUtils.getPath(context, uri);

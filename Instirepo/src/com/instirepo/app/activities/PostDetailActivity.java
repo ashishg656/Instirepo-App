@@ -326,6 +326,8 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 				setInitialDataUsingnIntentObj();
 			}
 		}
+
+		upvoteOrDownvotePost(isUpvoteClicked);
 	}
 
 	@Override
