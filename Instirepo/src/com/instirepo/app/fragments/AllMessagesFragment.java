@@ -86,8 +86,6 @@ public class AllMessagesFragment extends BaseFragment implements ZUrls,
 							hideLoadingLayout();
 							showErrorLayout();
 						}
-						hideLoadingLayout();
-						showErrorLayout();
 					}
 				}) {
 			@Override

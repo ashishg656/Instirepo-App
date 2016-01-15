@@ -5,7 +5,6 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
@@ -17,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
@@ -211,15 +211,13 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 			hideErrorLayout();
 		}
 
-		String url = getMessagesForOneChat + "?person_id=" + personID
+		final String url = getMessagesForOneChat + "?person_id=" + personID
 				+ "&pagenumber=" + nextPage;
 		StringRequest req = new StringRequest(Method.POST, url,
 				new Listener<String>() {
 
 					@Override
 					public void onResponse(String res) {
-						hideLoadingLayout();
-						hideErrorLayout();
 						isRequestRunning = false;
 
 						MessageListObject obj = new Gson().fromJson(res,
@@ -231,9 +229,15 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 					@Override
 					public void onErrorResponse(VolleyError arg0) {
 						isRequestRunning = false;
-						if (adapter == null) {
-							showErrorLayout();
-							hideLoadingLayout();
+						try {
+							Entry entry = ZApplication.getInstance()
+									.getRequestQueue().getCache().get(url);
+							String data = new String(entry.data, "UTF-8");
+							MessageListObject obj = new Gson().fromJson(data,
+									MessageListObject.class);
+							setAdapterData(obj);
+						} catch (Exception e) {
+
 						}
 					}
 				}) {
@@ -257,6 +261,8 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 		}
 
 		if (adapter == null) {
+			hideLoadingLayout();
+			hideErrorLayout();
 			adapter = new MessageListAdapter(obj.getMessages(), isMoreAllowed,
 					this);
 			recyclerView.setAdapter(adapter);
