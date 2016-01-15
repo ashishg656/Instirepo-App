@@ -531,6 +531,9 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 				&& !((UserProfileViewedByOtherFragment) fragmentUserProfileOpenedFromCommentsListAdapter).fragmentDestroyed) {
 			((UserProfileViewedByOtherFragment) fragmentUserProfileOpenedFromCommentsListAdapter)
 					.dismissScrollViewDownCalledFromActivityBackPressed();
+		} else if (fragmentUserProfileOpenedFromCommentsListAdapter != null
+				&& ((UserProfileViewedByOtherFragment) fragmentUserProfileOpenedFromCommentsListAdapter).fragmentDestroyed) {
+			super.onBackPressed();
 		} else if (fragmentUserProfile != null
 				&& !((UserProfileViewedByOtherFragment) fragmentUserProfile).fragmentDestroyed) {
 			((UserProfileViewedByOtherFragment) fragmentUserProfile)
