@@ -105,7 +105,7 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setTitle("Create Post");
 
 		toolbarHeight = getResources().getDimensionPixelSize(
 				R.dimen.z_toolbar_height);

@@ -133,7 +133,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setTitle("Instirepo");
 
 		createPostButton.setOnClickListener(this);
 

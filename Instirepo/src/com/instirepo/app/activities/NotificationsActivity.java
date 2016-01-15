@@ -39,7 +39,7 @@ public class NotificationsActivity extends BaseActivity implements ZUrls {
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setTitle("Notifications");
 
 		loadData();
 	}
