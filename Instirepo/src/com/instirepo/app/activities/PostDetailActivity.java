@@ -3,14 +3,19 @@ package com.instirepo.app.activities;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -34,9 +39,10 @@ import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.CircularImageView;
 import com.instirepo.app.widgets.ObservableScrollView;
+import com.instirepo.app.widgets.ObservableScrollViewListener;
 
 public class PostDetailActivity extends BaseActivity implements AppConstants,
-		OnClickListener, ZUrls {
+		OnClickListener, ZUrls, ObservableScrollViewListener {
 
 	PostListSinglePostObject postListSinglePostObject;
 	ImageView postImage, reportPostImage, followPostImage, savePostImage,
@@ -52,6 +58,11 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	int previousUpvotes, previousDownvotes;
 
 	int postId;
+
+	View bookImageDividerView;
+	int statusBarHeight, toolbarHeight;
+	LinearLayout transparentToolbar;
+	FrameLayout appbarContainer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +89,40 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 		savePostImage = (ImageView) findViewById(R.id.savepostbutton);
 		upvoteImage = (ImageView) findViewById(R.id.upvotepostimage);
 		downvoteImage = (ImageView) findViewById(R.id.downvotepostimage);
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		transparentToolbar = (LinearLayout) findViewById(R.id.faketoolbarshopdetail);
+		appbarContainer = (FrameLayout) findViewById(R.id.appbarcontainer);
+		scrollView = (ObservableScrollView) findViewById(R.id.postdetailscrollview);
+		bookImageDividerView = (View) findViewById(R.id.boomimagivideview);
+
+		scrollView.getViewTreeObserver().addOnGlobalLayoutListener(
+				new OnGlobalLayoutListener() {
+
+					@SuppressLint("NewApi")
+					@Override
+					public void onGlobalLayout() {
+						try {
+							scrollView.getViewTreeObserver()
+									.removeOnGlobalLayoutListener(this);
+						} catch (Exception e) {
+							scrollView.getViewTreeObserver()
+									.removeGlobalOnLayoutListener(this);
+						}
+						statusBarHeight = getResources().getDisplayMetrics().heightPixels
+								- scrollView.getHeight();
+					}
+				});
+
+		toolbarHeight = getResources().getDimensionPixelSize(
+				R.dimen.z_toolbar_height);
+
+		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setTitle("");
+
+		appbarContainer.setTranslationY(-toolbarHeight);
+
+		scrollView.setScrollListnerer(this);
 
 		findViewById(R.id.openuserprofilepost).setOnClickListener(this);
 		findViewById(R.id.seenbycontainer).setOnClickListener(this);
@@ -153,6 +198,9 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 		hideLoadingLayout();
 
 		if (postListSinglePostObject != null) {
+			getSupportActionBar().setTitle(
+					postListSinglePostObject.getHeading());
+
 			postHeading.setText(postListSinglePostObject.getHeading());
 			postDescription.setText(postListSinglePostObject.getDescription());
 			category.setText(postListSinglePostObject.getCategory());
@@ -530,5 +578,55 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 			}
 		};
 		ZApplication.getInstance().addToRequestQueue(req, markPostAsImportant);
+	}
+
+	@Override
+	public void onScrollStopped() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onScroll(int x, int y, int oldx, int oldy) {
+		float trans = y / 3;
+		postImage.setTranslationY(trans);
+
+		toolbarScrollChanges(y, oldy);
+	}
+
+	private void toolbarScrollChanges(int y, int oldy) {
+		int dy = -1 * (y - oldy);
+		int location[] = new int[5];
+		bookImageDividerView.getLocationOnScreen(location);
+		int actualLocation = location[1] - statusBarHeight;
+		if (actualLocation < 0) {
+			float trans = appbarContainer.getTranslationY() + dy;
+			if (trans > 0)
+				trans = 0;
+			else if (trans < -toolbarHeight)
+				trans = -toolbarHeight;
+			appbarContainer.setTranslationY(trans);
+		} else {
+			if (actualLocation < toolbarHeight) {
+				float trans = transparentToolbar.getTranslationY() + dy;
+				if (trans > 0)
+					trans = 0;
+				else if (trans < -toolbarHeight)
+					trans = -toolbarHeight;
+				transparentToolbar.setTranslationY(trans);
+				if (appbarContainer.getTranslationY() > -toolbarHeight) {
+					float transAppbar = appbarContainer.getTranslationY() + dy;
+					if (transAppbar > 0)
+						transAppbar = 0;
+					else if (transAppbar < -toolbarHeight)
+						transAppbar = -toolbarHeight;
+					appbarContainer.setTranslationY(transAppbar);
+				}
+			} else {
+				transparentToolbar.setTranslationY(0);
+				appbarContainer.animate().translationY(-toolbarHeight)
+						.setDuration(100).start();
+			}
+		}
 	}
 }
