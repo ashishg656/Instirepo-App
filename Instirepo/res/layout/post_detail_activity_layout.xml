@@ -7,9 +7,9 @@
 
     <com.instirepo.app.widgets.ObservableScrollView
         android:id="@+id/postdetailscrollview"
-        android:overScrollMode="never"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:overScrollMode="never" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -431,30 +431,24 @@
     <LinearLayout
         android:id="@+id/faketoolbarshopdetail"
         android:layout_width="match_parent"
-        android:layout_height="56dp" >
+        android:layout_height="56dp"
+        android:clickable="true" >
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/backbuttonfake"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:gravity="center" >
 
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
+                android:layout_gravity="center"
                 android:src="@drawable/ic_navigation_arrow_back_white" />
-        </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/appbarcontainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <include layout="@layout/toolbar_layout" />
-    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/fragmentcontainer"
@@ -466,6 +460,15 @@
         android:id="@+id/coordinatorlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
+
+        <FrameLayout
+            android:id="@+id/appbarcontainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shadow_toolbar" >
+
+            <include layout="@layout/toolbar_layout" />
+        </FrameLayout>
     </android.support.design.widget.CoordinatorLayout>
 
     <include layout="@layout/error_layout" />
