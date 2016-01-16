@@ -237,7 +237,10 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 									MessageListObject.class);
 							setAdapterData(obj);
 						} catch (Exception e) {
-
+							if (adapter == null) {
+								hideLoadingLayout();
+								showErrorLayout();
+							}
 						}
 					}
 				}) {

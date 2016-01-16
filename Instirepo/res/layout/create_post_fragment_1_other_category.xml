@@ -14,77 +14,112 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/z_margin_small"
-            android:background="@drawable/ic_cart_bg_shadow"
             android:orientation="vertical" >
 
-            <FrameLayout
-                android:id="@+id/createpostimagelayout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone" >
+                android:layout_margin="@dimen/z_margin_small"
+                android:background="@drawable/ic_cart_bg_shadow"
+                android:orientation="vertical" >
 
-                <com.instirepo.app.widgets.RoundedImageView
-                    android:id="@+id/rounderimagecreapost"
+                <FrameLayout
+                    android:id="@+id/createpostimagelayout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/z_post_image_height"
-                    android:scaleType="centerCrop"
-                    app:riv_corner_radius_top_left="2dp"
-                    app:riv_corner_radius_top_right="2dp" />
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" >
 
-                <LinearLayout
-                    android:id="@+id/crossbuttonimage"
-                    android:layout_width="@dimen/z_button_height"
-                    android:layout_height="@dimen/z_button_height"
-                    android:layout_gravity="right"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:gravity="right" >
+                    <com.instirepo.app.widgets.RoundedImageView
+                        android:id="@+id/rounderimagecreapost"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/z_post_image_height"
+                        android:scaleType="centerCrop"
+                        app:riv_corner_radius_top_left="2dp"
+                        app:riv_corner_radius_top_right="2dp" />
 
                     <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:id="@+id/crossbuttonimage"
+                        android:layout_width="@dimen/z_button_height"
+                        android:layout_height="@dimen/z_button_height"
                         android:layout_gravity="right"
-                        android:background="@color/z_black_50_alpha"
-                        android:gravity="center" >
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="right" >
 
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/bs_ic_clear" />
+                        <LinearLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="right"
+                            android:background="@color/z_black_50_alpha"
+                            android:gravity="center" >
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/bs_ic_clear" />
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-            </FrameLayout>
+                </FrameLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/z_margin_large" >
-
-                <android.support.design.widget.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/z_margin_large" >
 
-                    <EditText
-                        android:id="@+id/postHeading"
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <EditText
+                            android:id="@+id/postHeading"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="Post Heading.."
+                            android:imeOptions="actionNext"
+                            android:paddingTop="@dimen/z_margin_mini"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/compaynamlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/z_grey_shade_3" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="Post Heading.."
-                        android:imeOptions="actionNext"
-                        android:paddingTop="@dimen/z_margin_mini"
-                        android:textSize="14sp" />
-                </android.support.design.widget.TextInputLayout>
-            </LinearLayout>
+                        android:orientation="vertical"
+                        android:padding="@dimen/z_margin_large" >
 
-            <LinearLayout
-                android:id="@+id/compaynamlayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone" >
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <EditText
+                                android:id="@+id/postcomapnyname"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:gravity="start"
+                                android:hint="Company Name (optional)"
+                                android:imeOptions="actionNext"
+                                android:paddingTop="@dimen/z_margin_mini"
+                                android:singleLine="true"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -102,130 +137,340 @@
                         android:layout_height="wrap_content" >
 
                         <EditText
-                            android:id="@+id/postcomapnyname"
+                            android:id="@+id/postdesciption"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:gravity="start"
-                            android:hint="Company Name (optional)"
+                            android:hint="Post Content..."
                             android:imeOptions="actionNext"
+                            android:minLines="5"
                             android:paddingTop="@dimen/z_margin_mini"
-                            android:singleLine="true"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/z_grey_shade_3" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/z_grey_shade_3" />
+
+                <LinearLayout
+                    android:id="@+id/uploadpiclayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/z_margin_large" >
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_upload_pic" />
+
+                    <TextView
+                        android:id="@+id/uploadpictext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/z_margin_mini"
+                        android:includeFontPadding="false"
+                        android:text="Upload Post Cover Pic (optional)"
+                        android:textColor="@color/z_text_color_dark" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/z_grey_shade_3" />
+
+                <LinearLayout
+                    android:id="@+id/googledrivebutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/z_margin_large" >
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_attachment" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/z_margin_mini"
+                        android:includeFontPadding="false"
+                        android:text="Add Attachment"
+                        android:textColor="@color/z_text_color_dark" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/vieforatatchdcdnckl"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/z_grey_shade_3"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/addadeadttachments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/z_margin_large"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/z_margin_small"
+                        android:text="Added Attachments : "
+                        android:textColor="@color/z_text_color_light" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/z_margin_large" >
+                android:orientation="vertical" >
 
-                <android.support.design.widget.TextInputLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/z_margin_large"
+                    android:paddingTop="@dimen/z_margin_small"
+                    android:text="Please Enter Event Details"
+                    android:textColor="@color/z_text_color_medium_dark" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/z_margin_small"
+                    android:background="@drawable/ic_cart_bg_shadow"
+                    android:orientation="vertical" >
 
-                    <EditText
-                        android:id="@+id/postdesciption"
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp" >
+
+                        <com.instirepo.app.widgets.RoundedImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/navigation_drawer_header_bg_image"
+                            app:riv_corner_radius_top_left="2dp"
+                            app:riv_corner_radius_top_right="2dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/black_bg_with_rounded_top_corners" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/textview_bg_square"
+                            android:padding="@dimen/z_margin_medium"
+                            android:text="EVENT"
+                            android:textColor="@color/z_white"
+                            android:textSize="@dimen/z_font_small"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:gravity="start"
-                        android:hint="Post Content..."
-                        android:imeOptions="actionNext"
-                        android:minLines="5"
-                        android:paddingTop="@dimen/z_margin_mini"
-                        android:textSize="14sp" />
-                </android.support.design.widget.TextInputLayout>
-            </LinearLayout>
+                        android:orientation="vertical"
+                        android:padding="@dimen/z_margin_large" >
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/z_grey_shade_3" />
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
 
-            <LinearLayout
-                android:id="@+id/uploadpiclayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/z_margin_large" >
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Event Location"
+                                android:imeOptions="actionNext"
+                                android:paddingTop="@dimen/z_margin_mini"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
 
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:src="@drawable/ic_upload_pic" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/z_grey_shade_3" />
 
-                <TextView
-                    android:id="@+id/uploadpictext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/z_margin_mini"
-                    android:includeFontPadding="false"
-                    android:text="Upload Post Cover Pic (optional)"
-                    android:textColor="@color/z_text_color_dark" />
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/z_margin_large" >
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/z_grey_shade_3" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Start Date" />
 
-            <LinearLayout
-                android:id="@+id/googledrivebutton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/z_margin_large" >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:padding="@dimen/z_margin_medium"
+                            android:text="CHANGE"
+                            android:textColor="@color/PrimaryColor"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_attachment" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/z_grey_shade_3" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/z_margin_mini"
-                    android:includeFontPadding="false"
-                    android:text="Add Attachment"
-                    android:textColor="@color/z_text_color_dark" />
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/z_margin_large" >
 
-            <View
-                android:id="@+id/vieforatatchdcdnckl"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/z_grey_shade_3"
-                android:visibility="gone" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Start Time" />
 
-            <LinearLayout
-                android:id="@+id/addadeadttachments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/z_margin_large"
-                android:visibility="gone" >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:padding="@dimen/z_margin_medium"
+                            android:text="CHANGE"
+                            android:textColor="@color/PrimaryColor"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/z_margin_small"
-                    android:text="Added Attachments : "
-                    android:textColor="@color/z_text_color_light" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/z_grey_shade_3" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/z_margin_large" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="End Date" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:padding="@dimen/z_margin_medium"
+                            android:text="CHANGE"
+                            android:textColor="@color/PrimaryColor"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/z_grey_shade_3" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/z_margin_large" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="End Date" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:padding="@dimen/z_margin_medium"
+                            android:text="CHANGE"
+                            android:textColor="@color/PrimaryColor"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/z_grey_shade_3" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/z_margin_large" >
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:gravity="start"
+                                android:hint="Registration Fee"
+                                android:imeOptions="actionNext"
+                                android:paddingTop="@dimen/z_margin_mini"
+                                android:singleLine="true"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/z_grey_shade_3" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/z_margin_large" >
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:gravity="start"
+                                android:hint="Contact Number For More Details"
+                                android:imeOptions="actionNext"
+                                android:paddingTop="@dimen/z_margin_mini"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
