@@ -86,7 +86,9 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			endTimeSelected;
 
 	// poll
-	LinearLayout pollDetailsLayout;
+	LinearLayout pollDetailsLayout, addMoreChoice, choicesLayout;
+	ArrayList<EditText> pollChoices;
+	EditText choice1, choice2;
 
 	public static CreatePostFragment1OtherCategory newInstance(Bundle b) {
 		CreatePostFragment1OtherCategory frg = new CreatePostFragment1OtherCategory();
@@ -136,6 +138,10 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 				.findViewById(R.id.contactnumberformoredetails);
 		pollDetailsLayout = (LinearLayout) v
 				.findViewById(R.id.polldetaillayout);
+		addMoreChoice = (LinearLayout) v.findViewById(R.id.admorechocief);
+		choicesLayout = (LinearLayout) v.findViewById(R.id.pollchocieaddextra);
+		choice1 = (EditText) v.findViewById(R.id.pollch1);
+		choice2 = (EditText) v.findViewById(R.id.pollch2);
 
 		return v;
 	}
@@ -156,6 +162,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		changeEndTime.setOnClickListener(this);
 		changeStartDate.setOnClickListener(this);
 		changeStartTime.setOnClickListener(this);
+		addMoreChoice.setOnClickListener(this);
 
 		if (((CreatePostActivity) getActivity()).categoryType
 				.equals(AllPostCategoriesObject.categoryPlacement)) {
@@ -166,6 +173,9 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		} else if (((CreatePostActivity) getActivity()).categoryType
 				.equals(AllPostCategoriesObject.categoryPoll)) {
 			pollDetailsLayout.setVisibility(View.VISIBLE);
+			pollChoices = new ArrayList<>();
+			pollChoices.add(choice1);
+			pollChoices.add(choice2);
 		}
 	}
 
@@ -296,6 +306,14 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 					}, hour, minute, false);
 			timePickerDialog.show();
 			break;
+		case R.id.admorechocief:
+			View view = LayoutInflater.from(getActivity()).inflate(
+					R.layout.poll_choice_additional_edittext_layout,
+					choicesLayout, false);
+			EditText text = (EditText) view.findViewById(R.id.pollchoice);
+			pollChoices.add(text);
+			choicesLayout.addView(view);
+			break;
 		default:
 			break;
 		}
@@ -356,6 +374,20 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			} else if (!startDateSelected || !startTimeSelected
 					|| !endDateSelected || !endTimeSelected) {
 				makeToast("Please enter starting and ending dates and times for event");
+				return false;
+			}
+		} else if (((CreatePostActivity) getActivity()).categoryType
+				.equalsIgnoreCase(AllPostCategoriesObject.categoryPoll)) {
+			int count = 0;
+			for (EditText ed : pollChoices) {
+				if (ed.getText().toString().trim().length() > 0) {
+					count++;
+					if (count >= 2)
+						break;
+				}
+			}
+			if (count < 2) {
+				makeToast("Atlease 2 poll choices must be added");
 				return false;
 			}
 		}

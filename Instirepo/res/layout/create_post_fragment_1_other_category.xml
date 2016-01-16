@@ -492,7 +492,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible" >
+                android:visibility="gone" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -550,6 +550,7 @@
                             android:layout_height="wrap_content" >
 
                             <EditText
+                                android:id="@+id/pollch1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
@@ -576,6 +577,7 @@
                             android:layout_height="wrap_content" >
 
                             <EditText
+                                android:id="@+id/pollch2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
@@ -586,6 +588,15 @@
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/pollchocieaddextra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:animateLayoutChanges="true"
+                        android:background="@color/z_white"
+                        android:orientation="vertical" >
+                    </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -594,26 +605,33 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/z_margin_large" >
+                        android:background="@color/z_white" >
 
-                        <ImageView
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/ic_attachment"
-                            android:visibility="gone" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/admorechocief"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/z_margin_mini"
-                            android:includeFontPadding="false"
-                            android:text="Add More Choice"
-                            android:textColor="@color/z_text_color_dark" />
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/z_margin_large" >
+
+                            <ImageView
+                                android:layout_width="14dp"
+                                android:layout_height="14dp"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/ic_attachment"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/z_margin_mini"
+                                android:includeFontPadding="false"
+                                android:text="Add More Choice"
+                                android:textColor="@color/z_text_color_dark" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
