@@ -358,6 +358,14 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			data.startDate = startDate.getText().toString();
 			data.endDate = endDate.getText().toString();
 			data.endTime = endTime.getText().toString();
+		} else if (((CreatePostActivity) getActivity()).categoryType
+				.equals(AllPostCategoriesObject.categoryPoll)) {
+			data.pollChoices = new ArrayList<>();
+			for (EditText ed : pollChoices) {
+				if (ed.getText().toString().trim().length() > 0) {
+					data.pollChoices.add(ed.getText().toString().trim());
+				}
+			}
 		}
 
 		((CreatePostActivity) getActivity())

@@ -526,6 +526,12 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 					p.put("start_time", createPostDataToSendToServer.startTime);
 					p.put("end_date", createPostDataToSendToServer.endDate);
 					p.put("end_time", createPostDataToSendToServer.endTime);
+				} else if (categoryType
+						.equals(AllPostCategoriesObject.categoryPoll)) {
+					JSONArray arrayChoices = new JSONArray();
+					for (String ch : createPostDataToSendToServer.pollChoices)
+						arrayChoices.put(ch);
+					p.put("choices_poll", arrayChoices.toString());
 				}
 				return p;
 			}

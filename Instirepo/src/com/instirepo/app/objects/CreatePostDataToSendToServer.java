@@ -16,6 +16,9 @@ public class CreatePostDataToSendToServer {
 	public String eventLocation, eventFee, eventContact, startDate, startTime,
 			endDate, endTime;
 
+	// POLL
+	public ArrayList<String> pollChoices;
+
 	public CreatePostDataToSendToServer(String heading, String description,
 			String companyName, String coverPicImage, int categoryId,
 			int typeOfPostVisibilty, ArrayList<DropboxFilesObject> dropboxfiles) {
