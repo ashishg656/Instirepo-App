@@ -36,6 +36,8 @@ public class CreatePostSavedPostVisibilityCollectionAdapter extends
 		this.mData = mData;
 		colors = new ArrayList<>();
 		clickListener = new MyClickListener();
+		if (context == null)
+			return;
 		colors.add(context.getResources().getColor(
 				R.color.z_green_color_primary));
 		colors.add(context.getResources().getColor(R.color.z_red_color_primary));

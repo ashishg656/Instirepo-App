@@ -4,8 +4,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -21,10 +26,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.DropboxLink;
@@ -37,6 +44,7 @@ import com.instirepo.app.R;
 import com.instirepo.app.activities.BaseActivity;
 import com.instirepo.app.activities.CreatePostActivity;
 import com.instirepo.app.afilechooser.utils.FileUtils;
+import com.instirepo.app.extras.TimeUtils;
 import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.objects.CreatePostDataToSendToServer;
 import com.instirepo.app.objects.DropboxFilesObject;
@@ -74,6 +82,11 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	EditText eventLocation, eventFee, eventContact;
 	TextView startDate, startTime, endDate, endTime;
 	TextView changeStartDate, changeStartTime, changeEndDate, changeEndTime;
+	boolean startDateSelected, startTimeSelected, endDateSelected,
+			endTimeSelected;
+
+	// poll
+	LinearLayout pollDetailsLayout;
 
 	public static CreatePostFragment1OtherCategory newInstance(Bundle b) {
 		CreatePostFragment1OtherCategory frg = new CreatePostFragment1OtherCategory();
@@ -121,6 +134,8 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		eventFee = (EditText) v.findViewById(R.id.registrationfee);
 		eventContact = (EditText) v
 				.findViewById(R.id.contactnumberformoredetails);
+		pollDetailsLayout = (LinearLayout) v
+				.findViewById(R.id.polldetaillayout);
 
 		return v;
 	}
@@ -148,6 +163,9 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		} else if (((CreatePostActivity) getActivity()).categoryType
 				.equals(AllPostCategoriesObject.categoryEvent)) {
 			eventDetailsLayout.setVisibility(View.VISIBLE);
+		} else if (((CreatePostActivity) getActivity()).categoryType
+				.equals(AllPostCategoriesObject.categoryPoll)) {
+			pollDetailsLayout.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -187,16 +205,96 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			}
 			break;
 		case R.id.eventenddatechange:
-			
+			Calendar calendar = Calendar.getInstance();
+			int year = calendar.get(Calendar.YEAR);
+			int month = calendar.get(Calendar.MONTH);
+			int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+			DatePickerDialog datePickerDialog = new DatePickerDialog(
+					getActivity(), new OnDateSetListener() {
+
+						@Override
+						public void onDateSet(DatePicker view, int year,
+								int monthOfYear, int dayOfMonth) {
+							endDateSelected = true;
+							endDate.setText(TimeUtils
+									.getNormalisedDateFromDatePicker(year,
+											monthOfYear, dayOfMonth));
+							endDate.setTextColor(getActivity().getResources()
+									.getColor(R.color.z_text_color_medium_dark));
+						}
+					}, year, month, day);
+			datePickerDialog.show();
 			break;
 		case R.id.eventendtimechange:
+			calendar = Calendar.getInstance();
+			int hour = calendar.get(Calendar.HOUR_OF_DAY);
+			int minute = calendar.get(Calendar.MINUTE);
 
+			TimePickerDialog timePickerDialog = new TimePickerDialog(
+					getActivity(), new OnTimeSetListener() {
+
+						@Override
+						public void onTimeSet(TimePicker view, int hourOfDay,
+								int minute) {
+							endTimeSelected = true;
+							endTime.setText(TimeUtils
+									.getNormalisedTimeFromTimePicker(hourOfDay,
+											minute));
+							endTime.setTextColor(getActivity().getResources()
+									.getColor(R.color.z_text_color_medium_dark));
+						}
+					}, hour, minute, false);
+			timePickerDialog.show();
 			break;
 		case R.id.eventstartdatechange:
+			calendar = Calendar.getInstance();
+			year = calendar.get(Calendar.YEAR);
+			month = calendar.get(Calendar.MONTH);
+			day = calendar.get(Calendar.DAY_OF_MONTH);
 
+			datePickerDialog = new DatePickerDialog(getActivity(),
+					new OnDateSetListener() {
+
+						@Override
+						public void onDateSet(DatePicker view, int year,
+								int monthOfYear, int dayOfMonth) {
+							startDateSelected = true;
+							startDate.setText(TimeUtils
+									.getNormalisedDateFromDatePicker(year,
+											monthOfYear, dayOfMonth));
+							startDate
+									.setTextColor(getActivity()
+											.getResources()
+											.getColor(
+													R.color.z_text_color_medium_dark));
+						}
+					}, year, month, day);
+			datePickerDialog.show();
 			break;
 		case R.id.eventstarttimechange:
+			calendar = Calendar.getInstance();
+			hour = calendar.get(Calendar.HOUR_OF_DAY);
+			minute = calendar.get(Calendar.MINUTE);
 
+			timePickerDialog = new TimePickerDialog(getActivity(),
+					new OnTimeSetListener() {
+
+						@Override
+						public void onTimeSet(TimePicker view, int hourOfDay,
+								int minute) {
+							startTimeSelected = true;
+							startTime.setText(TimeUtils
+									.getNormalisedTimeFromTimePicker(hourOfDay,
+											minute));
+							startTime
+									.setTextColor(getActivity()
+											.getResources()
+											.getColor(
+													R.color.z_text_color_medium_dark));
+						}
+					}, hour, minute, false);
+			timePickerDialog.show();
 			break;
 		default:
 			break;
@@ -244,6 +342,22 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		} else if (postDescription.getText().toString().trim().length() == 0) {
 			makeToast("Please enter post description");
 			return false;
+		} else if (((CreatePostActivity) getActivity()).categoryType
+				.equalsIgnoreCase(AllPostCategoriesObject.categoryEvent)) {
+			if (eventLocation.getText().toString().trim().length() < 1) {
+				makeToast("Please enter location of event");
+				return false;
+			} else if (eventFee.getText().toString().trim().length() < 1) {
+				makeToast("Please enter registration fee for event. Enter Rs.0 for no registration fee.");
+				return false;
+			} else if (eventContact.getText().toString().trim().length() < 1) {
+				makeToast("Please enter contact number for event");
+				return false;
+			} else if (!startDateSelected || !startTimeSelected
+					|| !endDateSelected || !endTimeSelected) {
+				makeToast("Please enter starting and ending dates and times for event");
+				return false;
+			}
 		}
 		return true;
 	}

@@ -45,7 +45,6 @@ import com.instirepo.app.fragments.CreatePostSavePostVisibilitiesFragment;
 import com.instirepo.app.fragments.CreatePostSelectBranchFragment;
 import com.instirepo.app.fragments.CreatePostSelectTeacherFragment;
 import com.instirepo.app.fragments.CreatePostSelectYearOrBatchFragment;
-import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.objects.CreatePostDataToSendToServer;
 import com.instirepo.app.objects.DropboxFilesObject;
 import com.instirepo.app.objects.LoginScreenFragment2Object;

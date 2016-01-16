@@ -244,6 +244,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/z_margin_large"
                     android:paddingLeft="@dimen/z_margin_large"
                     android:paddingTop="@dimen/z_margin_small"
                     android:text="Please Enter Event Details"
@@ -482,6 +483,137 @@
                                 android:paddingTop="@dimen/z_margin_mini"
                                 android:textSize="14sp" />
                         </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/polldetaillayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/z_margin_large"
+                    android:paddingLeft="@dimen/z_margin_large"
+                    android:paddingTop="@dimen/z_margin_small"
+                    android:text="Please Enter Poll Choices"
+                    android:textColor="@color/z_text_color_medium_dark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/z_margin_small"
+                    android:background="@drawable/ic_cart_bg_shadow"
+                    android:orientation="vertical" >
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp" >
+
+                        <com.instirepo.app.widgets.RoundedImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/navigation_drawer_header_bg_image"
+                            app:riv_corner_radius_top_left="2dp"
+                            app:riv_corner_radius_top_right="2dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/black_bg_with_rounded_top_corners" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/textview_bg_square"
+                            android:padding="@dimen/z_margin_medium"
+                            android:text="POLLS"
+                            android:textColor="@color/z_white"
+                            android:textSize="@dimen/z_font_small"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/z_margin_large" >
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Enter Poll Choice"
+                                android:imeOptions="actionNext"
+                                android:paddingTop="@dimen/z_margin_mini"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/z_grey_shade_3" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/z_margin_large" >
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Enter Poll Choice"
+                                android:imeOptions="actionNext"
+                                android:paddingTop="@dimen/z_margin_mini"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/z_grey_shade_3" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/z_margin_large" >
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_attachment"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/z_margin_mini"
+                            android:includeFontPadding="false"
+                            android:text="Add More Choice"
+                            android:textColor="@color/z_text_color_dark" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

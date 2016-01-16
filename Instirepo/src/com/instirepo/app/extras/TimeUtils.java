@@ -218,4 +218,29 @@ public class TimeUtils {
 		return result;
 	}
 
+	public static CharSequence getNormalisedDateFromDatePicker(int year,
+			int monthOfYear, int dayOfMonth) {
+		return dayOfMonth + " " + getMonth(monthOfYear) + " " + year;
+	}
+
+	public static CharSequence getNormalisedTimeFromTimePicker(int hourOfDay,
+			int minute) {
+		String am_or_pm = hourOfDay >= 12 ? " PM" : " AM";
+
+		String minutes = Integer.toString(minute);
+		if (minute < 10) {
+			minutes = "0" + Integer.toString(minute);
+		}
+
+		if (hourOfDay == 0)
+			hourOfDay = 12;
+
+		if (hourOfDay > 12) {
+			hourOfDay = hourOfDay - 12;
+		}
+
+		String simpleDate = hourOfDay + ":" + minutes + am_or_pm;
+		return simpleDate;
+	}
+
 }

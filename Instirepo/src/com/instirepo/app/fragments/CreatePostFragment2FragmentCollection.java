@@ -78,6 +78,8 @@ public class CreatePostFragment2FragmentCollection extends BaseFragment
 										arg0,
 										SavedPostVisibilityCollectionObject.class);
 
+						if (getActivity() == null)
+							return;
 						adapter = new CreatePostSavedPostVisibilityCollectionAdapter(
 								getActivity(), obj);
 						recyclerView.setAdapter(adapter);
