@@ -235,9 +235,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/wvwntdetailslayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:visibility="gone" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -294,6 +296,7 @@
                             android:layout_height="wrap_content" >
 
                             <EditText
+                                android:id="@+id/eventlocation"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
@@ -316,12 +319,14 @@
                         android:padding="@dimen/z_margin_large" >
 
                         <TextView
+                            android:id="@+id/eventstartdate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Start Date" />
 
                         <TextView
+                            android:id="@+id/eventstartdatechange"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="?attr/selectableItemBackground"
@@ -344,12 +349,14 @@
                         android:padding="@dimen/z_margin_large" >
 
                         <TextView
+                            android:id="@+id/eventstarttime"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Start Time" />
 
                         <TextView
+                            android:id="@+id/eventstarttimechange"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="?attr/selectableItemBackground"
@@ -372,12 +379,14 @@
                         android:padding="@dimen/z_margin_large" >
 
                         <TextView
+                            android:id="@+id/eventenddate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="End Date" />
 
                         <TextView
+                            android:id="@+id/eventenddatechange"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="?attr/selectableItemBackground"
@@ -400,12 +409,14 @@
                         android:padding="@dimen/z_margin_large" >
 
                         <TextView
+                            android:id="@+id/eventendtime"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="End Date" />
+                            android:text="End Time" />
 
                         <TextView
+                            android:id="@+id/eventendtimechange"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="?attr/selectableItemBackground"
@@ -432,6 +443,7 @@
                             android:layout_height="wrap_content" >
 
                             <EditText
+                                android:id="@+id/registrationfee"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
@@ -460,6 +472,7 @@
                             android:layout_height="wrap_content" >
 
                             <EditText
+                                android:id="@+id/contactnumberformoredetails"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"

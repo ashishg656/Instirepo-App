@@ -69,6 +69,12 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 
 	public ArrayList<DropboxFilesObject> dropboxFilesList;
 
+	// event
+	LinearLayout eventDetailsLayout;
+	EditText eventLocation, eventFee, eventContact;
+	TextView startDate, startTime, endDate, endTime;
+	TextView changeStartDate, changeStartTime, changeEndDate, changeEndTime;
+
 	public static CreatePostFragment1OtherCategory newInstance(Bundle b) {
 		CreatePostFragment1OtherCategory frg = new CreatePostFragment1OtherCategory();
 		frg.setArguments(b);
@@ -101,6 +107,20 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		postHeading = (EditText) v.findViewById(R.id.postHeading);
 		postDescription = (EditText) v.findViewById(R.id.postdesciption);
 		postCompanyName = (EditText) v.findViewById(R.id.postcomapnyname);
+		eventDetailsLayout = (LinearLayout) v
+				.findViewById(R.id.wvwntdetailslayout);
+		startDate = (TextView) v.findViewById(R.id.eventstartdate);
+		startTime = (TextView) v.findViewById(R.id.eventstarttime);
+		endDate = (TextView) v.findViewById(R.id.eventenddate);
+		endTime = (TextView) v.findViewById(R.id.eventendtime);
+		changeStartDate = (TextView) v.findViewById(R.id.eventstartdatechange);
+		changeStartTime = (TextView) v.findViewById(R.id.eventstarttimechange);
+		changeEndDate = (TextView) v.findViewById(R.id.eventenddatechange);
+		changeEndTime = (TextView) v.findViewById(R.id.eventendtimechange);
+		eventLocation = (EditText) v.findViewById(R.id.eventlocation);
+		eventFee = (EditText) v.findViewById(R.id.registrationfee);
+		eventContact = (EditText) v
+				.findViewById(R.id.contactnumberformoredetails);
 
 		return v;
 	}
@@ -117,10 +137,17 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		addAttachmentLayout.setOnClickListener(this);
 		removeImageLayout.setOnClickListener(this);
 		floatingActionButton.setOnClickListener(this);
+		changeEndDate.setOnClickListener(this);
+		changeEndTime.setOnClickListener(this);
+		changeStartDate.setOnClickListener(this);
+		changeStartTime.setOnClickListener(this);
 
 		if (((CreatePostActivity) getActivity()).categoryType
 				.equals(AllPostCategoriesObject.categoryPlacement)) {
 			companyNameLayout.setVisibility(View.VISIBLE);
+		} else if (((CreatePostActivity) getActivity()).categoryType
+				.equals(AllPostCategoriesObject.categoryEvent)) {
+			eventDetailsLayout.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -158,6 +185,18 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			if (checkIfCanGoNext()) {
 				moveToSecondFragmentForSelectingPostVisibility();
 			}
+			break;
+		case R.id.eventenddatechange:
+			
+			break;
+		case R.id.eventendtimechange:
+
+			break;
+		case R.id.eventstartdatechange:
+
+			break;
+		case R.id.eventstarttimechange:
+
 			break;
 		default:
 			break;

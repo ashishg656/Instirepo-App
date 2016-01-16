@@ -130,14 +130,8 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 						showAndHideCircularRevealView();
 					}
 				});
-		if (categoryType
-				.equalsIgnoreCase(AllPostCategoriesObject.categoryEvent)) {
 
-		} else if (categoryType
-				.equalsIgnoreCase(AllPostCategoriesObject.categoryPoll)) {
-
-		} else
-			setFirstFragmentForOthersCategory();
+		setFirstFragmentForOthersCategory();
 	}
 
 	private void showAndHideCircularRevealView() {
