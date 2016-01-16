@@ -12,6 +12,10 @@ public class CreatePostDataToSendToServer {
 
 	ArrayList<DropboxFilesObject> dropboxFilesObject;
 
+	// EVENT
+	public String eventLocation, eventFee, eventContact, startDate, startTime,
+			endDate, endTime;
+
 	public CreatePostDataToSendToServer(String heading, String description,
 			String companyName, String coverPicImage, int categoryId,
 			int typeOfPostVisibilty, ArrayList<DropboxFilesObject> dropboxfiles) {

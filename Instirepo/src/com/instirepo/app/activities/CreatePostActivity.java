@@ -45,6 +45,7 @@ import com.instirepo.app.fragments.CreatePostSavePostVisibilitiesFragment;
 import com.instirepo.app.fragments.CreatePostSelectBranchFragment;
 import com.instirepo.app.fragments.CreatePostSelectTeacherFragment;
 import com.instirepo.app.fragments.CreatePostSelectYearOrBatchFragment;
+import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.objects.CreatePostDataToSendToServer;
 import com.instirepo.app.objects.DropboxFilesObject;
 import com.instirepo.app.objects.LoginScreenFragment2Object;
@@ -513,6 +514,18 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 						}
 					}
 					p.put("dropbox_files", dropboxFiles.toString());
+				}
+
+				if (categoryType.equals(AllPostCategoriesObject.categoryEvent)) {
+					p.put("event_location",
+							createPostDataToSendToServer.eventLocation);
+					p.put("event_fee", createPostDataToSendToServer.eventFee);
+					p.put("event_contact",
+							createPostDataToSendToServer.eventContact);
+					p.put("start_date", createPostDataToSendToServer.startDate);
+					p.put("start_time", createPostDataToSendToServer.startTime);
+					p.put("end_date", createPostDataToSendToServer.endDate);
+					p.put("end_time", createPostDataToSendToServer.endTime);
 				}
 				return p;
 			}

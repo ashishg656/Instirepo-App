@@ -349,6 +349,17 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 						.toString().trim(), imageToSend, -1, -1,
 				dropboxFilesList);
 
+		if (((CreatePostActivity) getActivity()).categoryType
+				.equals(AllPostCategoriesObject.categoryEvent)) {
+			data.eventLocation = eventLocation.getText().toString().trim();
+			data.eventFee = eventFee.getText().toString().trim();
+			data.eventContact = eventContact.getText().toString().trim();
+			data.startTime = startTime.getText().toString();
+			data.startDate = startDate.getText().toString();
+			data.endDate = endDate.getText().toString();
+			data.endTime = endTime.getText().toString();
+		}
+
 		((CreatePostActivity) getActivity())
 				.setSecondFragmentForPostVisibility(data);
 	}
