@@ -450,12 +450,6 @@
         </FrameLayout>
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/fragmentcontainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </FrameLayout>
-
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinatorlayout"
         android:layout_width="match_parent"
@@ -470,6 +464,12 @@
             <include layout="@layout/toolbar_layout" />
         </FrameLayout>
     </android.support.design.widget.CoordinatorLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
 
     <include layout="@layout/error_layout" />
 
