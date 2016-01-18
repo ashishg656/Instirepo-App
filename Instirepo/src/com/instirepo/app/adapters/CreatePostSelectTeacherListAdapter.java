@@ -75,7 +75,7 @@ public class CreatePostSelectTeacherListAdapter extends
 			holder.name.setText(obj.getName());
 			ImageRequestManager.get(context).requestImage(context,
 					holder.image, obj.getImage(), -1);
-			holder.branch.setText(TimeUtils.getPostTime(obj.getBranch()));
+			holder.branch.setText(obj.getBranch());
 
 			if (teacherIds.contains(obj.getId())) {
 				holder.checkBox.setChecked(true);
