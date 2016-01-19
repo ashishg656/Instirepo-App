@@ -97,6 +97,8 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 	public AllPostCategoriesObject allPostCategoriesObject;
 	private GoogleApiClient mGoogleApiClient;
 
+	FrameLayout splashActivityLayout;
+
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +132,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		navigationDrawerImageDefault = (ImageView) findViewById(R.id.avatardefault);
 		navigationDrawerUserName = (TextView) findViewById(R.id.navdrawerusername);
 		navigationDrawerHeaderLayout = (FrameLayout) findViewById(R.id.navigationdrawerheader);
+		splashActivityLayout = (FrameLayout) findViewById(R.id.splashactivitycontent);
 
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -194,6 +197,13 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		adapter = new MyPagerAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(adapter);
 		tabLayout.setupWithViewPager(viewPager);
+
+		if (getIntent().hasExtra("showsplash")
+				&& getIntent().getExtras().getBoolean("showsplash")) {
+
+		} else {
+
+		}
 	}
 
 	@Override

@@ -18,21 +18,30 @@ public class SplashActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash_activity_layout);
 
-		new Timer().schedule(new TimerTask() {
+		if (ZPreferences.isUserLogIn(this)) {
+			switchToHomeActivity();
+		} else {
+			new Timer().schedule(new TimerTask() {
 
-			@Override
-			public void run() {
-				switchToLoginActivityOrHomeActivity();
-			}
-		}, splashDuration);
+				@Override
+				public void run() {
+					switchToLoginActivity();
+				}
+			}, splashDuration);
+		}
 	}
 
-	private void switchToLoginActivityOrHomeActivity() {
+	private void switchToLoginActivity() {
 		Intent i = new Intent(this, LaunchActivity.class);
-		if (ZPreferences.isUserLogIn(this)) {
-			i = new Intent(this, HomeActivity.class);
-		}
 		startActivity(i);
+		this.finish();
+	}
+
+	public void switchToHomeActivity() {
+		Intent i = new Intent(this, HomeActivity.class);
+		i.putExtra("showsplash", true);
+		startActivity(i);
+		overridePendingTransition(0, 0);
 		this.finish();
 	}
 }
