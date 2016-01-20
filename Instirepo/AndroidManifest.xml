@@ -178,6 +178,9 @@
         </activity>
 
         <!-- End Dropbox -->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="f0a4b8dd35f1c09845dc9f233cd4e8c2e1a8db8c" />
     </application>
 
 </manifest>

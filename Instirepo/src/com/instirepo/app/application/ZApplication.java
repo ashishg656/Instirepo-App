@@ -1,5 +1,7 @@
 package com.instirepo.app.application;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.io.File;
 
 import android.app.ActivityManager;
@@ -33,6 +35,7 @@ public class ZApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		Fabric.with(this, new Crashlytics());
 		sInstance = this;
 
 		cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(),
