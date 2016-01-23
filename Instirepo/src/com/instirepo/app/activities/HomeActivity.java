@@ -2,6 +2,8 @@ package com.instirepo.app.activities;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
@@ -200,9 +202,22 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 
 		if (getIntent().hasExtra("showsplash")
 				&& getIntent().getExtras().getBoolean("showsplash")) {
+			new Timer().schedule(new TimerTask() {
 
+				@Override
+				public void run() {
+					splashActivityLayout.animate().alpha(0).setDuration(100)
+							.setListener(new ZAnimatorListener() {
+								@Override
+								public void onAnimationEnd(Animator animation) {
+									splashActivityLayout
+											.setVisibility(View.GONE);
+								}
+							});
+				}
+			}, SplashActivity.splashDuration);
 		} else {
-
+			splashActivityLayout.setVisibility(View.GONE);
 		}
 	}
 

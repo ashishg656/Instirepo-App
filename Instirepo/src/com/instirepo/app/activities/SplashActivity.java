@@ -11,7 +11,7 @@ import com.instirepo.app.preferences.ZPreferences;
 
 public class SplashActivity extends BaseActivity {
 
-	int splashDuration = 800;
+	public static int splashDuration = 800;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

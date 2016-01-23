@@ -3,6 +3,8 @@
     android:id="@+id/splashactivitycontent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/z_white"
+    android:clickable="true"
     tools:context="com.instirepo.app.activities.SplashActivity" >
 
     <ImageView
