@@ -14,6 +14,7 @@
         android:background="@drawable/ic_cart_bg_shadow" >
 
         <FrameLayout
+            android:id="@+id/notificationmaincontainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"

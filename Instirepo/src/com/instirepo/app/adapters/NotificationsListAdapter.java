@@ -2,8 +2,8 @@ package com.instirepo.app.adapters;
 
 import java.util.List;
 
-
 import com.instirepo.app.R;
+import com.instirepo.app.activities.PostDetailActivity;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.TimeUtils;
 import com.instirepo.app.objects.NotificationsListObject.NotificationsSingleObj;
@@ -11,10 +11,13 @@ import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.RoundedImageView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,12 +25,14 @@ public class NotificationsListAdapter extends BaseAdapter {
 
 	List<NotificationsSingleObj> mData;
 	Context context;
+	MyCliCkListerner clickListener;
 
 	public NotificationsListAdapter(List<NotificationsSingleObj> mData,
 			Context context) {
 		super();
 		this.mData = mData;
 		this.context = context;
+		clickListener = new MyCliCkListerner();
 	}
 
 	@Override
@@ -98,23 +103,48 @@ public class NotificationsListAdapter extends BaseAdapter {
 					+ obj.getPost_name() + "', authored by '"
 					+ obj.getUploader_name() + "', has new comments");
 		}
-		
+
 		holder.time.setText(TimeUtils.getPostTime(obj.getTime()));
 
+		holder.containerLayout.setTag(R.integer.z_select_post_tag_position,
+				position);
+		holder.containerLayout.setOnClickListener(clickListener);
+
 		return convertView;
+	}
+
+	class MyCliCkListerner implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.notificationmaincontainer:
+				int pos = (int) v.getTag(R.integer.z_select_post_tag_position);
+				Intent i = new Intent(context, PostDetailActivity.class);
+				i.putExtra("postid", mData.get(pos).getPost_id());
+				context.startActivity(i);
+				break;
+
+			default:
+				break;
+			}
+		}
 	}
 
 	class NotificationHolder {
 
 		RoundedImageView topImage;
 		ImageView leftImage;
-		TextView text,time;
+		TextView text, time;
+		FrameLayout containerLayout;
 
 		public NotificationHolder(View v) {
 			topImage = (RoundedImageView) v.findViewById(R.id.notiftopimage);
 			leftImage = (ImageView) v.findViewById(R.id.notifsideimage);
 			text = (TextView) v.findViewById(R.id.notiftext);
 			time = (TextView) v.findViewById(R.id.notiftexttime);
+			containerLayout = (FrameLayout) v
+					.findViewById(R.id.notificationmaincontainer);
 		}
 
 	}
