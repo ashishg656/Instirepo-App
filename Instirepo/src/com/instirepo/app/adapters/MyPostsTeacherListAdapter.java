@@ -646,7 +646,7 @@ public class MyPostsTeacherListAdapter extends
 							if (removePostFromListAfterRemovingFromFavourites
 									&& !obj.isIs_saved()) {
 								mData.remove(markImportantPosition);
-								notifyItemRemoved(markImportantPosition);
+								notifyItemRemoved(markImportantPosition + 1);
 							}
 						}
 					}, new ErrorListener() {
