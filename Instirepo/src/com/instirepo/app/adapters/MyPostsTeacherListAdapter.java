@@ -30,7 +30,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.BaseActivity;
-import com.instirepo.app.activities.HomeActivity;
 import com.instirepo.app.activities.UserProfileActivity;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.bottomsheet.BottomSheet;
@@ -351,7 +350,7 @@ public class MyPostsTeacherListAdapter extends
 	public void showOverflowIconContent(String message, final int postid,
 			boolean isSaved, final int pos, final PostsHolderNormal holder,
 			boolean isFollowing, boolean isReported) {
-		BottomSheet sheet = new BottomSheet.Builder((HomeActivity) context)
+		BottomSheet sheet = new BottomSheet.Builder((BaseActivity) context)
 				.title(message).sheet(R.menu.posts_sliding_panel_menu)
 				.listener(new DialogInterface.OnClickListener() {
 					@Override
