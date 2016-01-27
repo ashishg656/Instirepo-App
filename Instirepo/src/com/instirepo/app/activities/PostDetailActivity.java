@@ -169,8 +169,11 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 				new Listener<String>() {
 
 					@Override
-					public void onResponse(String arg0) {
-
+					public void onResponse(String data) {
+						postListSinglePostObject = new Gson().fromJson(data,
+								PostListSinglePostObject.class);
+						setImagesForPostAndUserImage();
+						setInitialDataUsingnIntentObj();
 					}
 				}, new ErrorListener() {
 
@@ -189,7 +192,15 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 							hideLoadingLayout();
 						}
 					}
-				});
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				Map<String, String> p = new HashMap<>();
+				p.put("user_id",
+						ZPreferences.getUserProfileID(PostDetailActivity.this));
+				return p;
+			}
+		};
 		ZApplication.getInstance().addToRequestQueue(req, url);
 	}
 
