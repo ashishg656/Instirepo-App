@@ -17,10 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.BaseActivity;
@@ -152,6 +152,12 @@ public class CommentListAdapter extends BaseAdapter implements ZUrls,
 						.getTag(R.integer.z_select_post_tag_position);
 				mData.get(flagCommentPosition).setIs_flagged(
 						!mData.get(flagCommentPosition).isIs_flagged());
+
+				if (mData.get(flagCommentPosition).isIs_flagged()) {
+					((BaseActivity) context).makeToast("Flagged comment");
+				} else {
+					((BaseActivity) context).makeToast("Removed flag");
+				}
 
 				if (flagCommentHolder != null) {
 					if (mData.get(flagCommentPosition).isIs_flagged())
