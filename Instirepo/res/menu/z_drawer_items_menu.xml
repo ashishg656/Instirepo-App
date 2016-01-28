@@ -8,7 +8,7 @@
             android:title="Home"/>
         <item
             android:id="@+id/opennotificaton"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/follow_button_selector"
             android:title="Notifications"/>
         <item
             android:id="@+id/allmessagesactivity"
@@ -20,6 +20,16 @@
             android:title="Logout"/>
     </group>
 
+    <item android:title="Support Us">
+        <menu>
+            <item
+                android:icon="@drawable/email_icon_selector"
+                android:title="Share App"/>
+            <item
+                android:icon="@drawable/email_icon_selector"
+                android:title="Rate App"/>
+        </menu>
+    </item>
     <item android:title="Contact Us">
         <menu>
             <item

@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
@@ -321,15 +322,12 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 							openNotificationsActivity();
 							return true;
 						case R.id.contactnav:
-							intent = new Intent(Intent.ACTION_SEND);
-							intent.setType("text/plain");
-							intent.putExtra(
-									Intent.EXTRA_EMAIL,
-									getResources().getString(
-											R.string.instirepo_support_email));
-							if (intent.resolveActivity(getPackageManager()) != null) {
-								startActivity(intent);
-							}
+							Intent emailIntent = new Intent(
+									Intent.ACTION_SENDTO,
+									Uri.parse("mailto:"
+											+ Uri.encode("instirepo@gmail.com")));
+							startActivity(Intent.createChooser(emailIntent,
+									"Send email via..."));
 							return true;
 						default:
 							return true;
