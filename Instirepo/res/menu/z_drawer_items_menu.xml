@@ -20,4 +20,13 @@
             android:title="Logout"/>
     </group>
 
+    <item android:title="Contact Us">
+        <menu>
+            <item
+                android:id="@+id/contactnav"
+                android:icon="@drawable/email_icon_selector"
+                android:title="Email Us"/>
+        </menu>
+    </item>
+
 </menu>

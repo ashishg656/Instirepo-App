@@ -34,4 +34,7 @@
     <string name="z_select_batch">Select Batches</string>
     <string name="z_select_year">Select Academic Years</string>
 
+    <!-- Support -->
+    <string name="instirepo_support_email">instirepo@gmail.com</string>
+
 </resources>
