@@ -4,29 +4,29 @@
     <group android:checkableBehavior="single" >
         <item
             android:checked="true"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/nav_home_icon_selector"
             android:title="Home"/>
         <item
             android:id="@+id/opennotificaton"
-            android:icon="@drawable/follow_button_selector"
+            android:icon="@drawable/nav_notification_icon_selector"
             android:title="Notifications"/>
         <item
             android:id="@+id/allmessagesactivity"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/nav_message_icon_selector"
             android:title="Messages"/>
         <item
             android:id="@+id/logoutfromapp"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/nav_logout_icon_selector"
             android:title="Logout"/>
     </group>
 
     <item android:title="Support Us">
         <menu>
             <item
-                android:icon="@drawable/email_icon_selector"
+                android:icon="@drawable/nav_share_icon_selector"
                 android:title="Share App"/>
             <item
-                android:icon="@drawable/email_icon_selector"
+                android:icon="@drawable/nav_rate_icon_selector"
                 android:title="Rate App"/>
         </menu>
     </item>
