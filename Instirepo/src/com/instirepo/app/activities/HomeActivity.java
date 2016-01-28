@@ -320,6 +320,17 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 						case R.id.opennotificaton:
 							openNotificationsActivity();
 							return true;
+						case R.id.contactnav:
+							intent = new Intent(Intent.ACTION_SEND);
+							intent.setType("text/plain");
+							intent.putExtra(
+									Intent.EXTRA_EMAIL,
+									getResources().getString(
+											R.string.instirepo_support_email));
+							if (intent.resolveActivity(getPackageManager()) != null) {
+								startActivity(intent);
+							}
+							return true;
 						default:
 							return true;
 						}
