@@ -20,7 +20,7 @@
             android:title="Logout"/>
     </group>
 
-    <item android:title="Support Us">
+    <item android:title="Like Us">
         <menu>
             <item
                 android:icon="@drawable/nav_share_icon_selector"
