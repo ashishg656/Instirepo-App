@@ -51,7 +51,7 @@
                             android:id="@+id/numberofcomments"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="53 comments"
+                            android:text="Comments"
                             android:textColor="@color/z_text_color_dark"
                             android:textSize="@dimen/z_font_small" />
                     </LinearLayout>
@@ -61,15 +61,26 @@
                         android:layout_height="1dp"
                         android:background="@color/z_grey_shade_2" />
 
-                    <ListView
-                        android:id="@+id/commentlist"
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:clipToPadding="false"
-                        android:divider="@null"
-                        android:paddingBottom="56dp" >
-                    </ListView>
+                        android:layout_weight="1" >
+
+                        <ListView
+                            android:id="@+id/commentlist"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clipToPadding="false"
+                            android:divider="@null"
+                            android:paddingBottom="56dp" >
+
+                            <include layout="@layout/error_layout" />
+
+                            <include layout="@layout/progress_layout" />
+
+                            <include layout="@layout/empty_view_layout" />
+                        </ListView>
+                    </FrameLayout>
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>
@@ -144,9 +155,5 @@
             </LinearLayout>
         </com.instirepo.app.circularreveal.RevealFrameLayout>
     </FrameLayout>
-
-    <include layout="@layout/error_layout" />
-
-    <include layout="@layout/progress_layout" />
 
 </FrameLayout>

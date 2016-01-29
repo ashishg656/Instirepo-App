@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class BaseFragment extends Fragment {
@@ -98,4 +99,25 @@ public class BaseFragment extends Fragment {
 			connectionErrorLayout.setVisibility(View.GONE);
 	}
 
+	public void showEmptyListView(String nullCaseText, boolean fullHeight,
+			View view) {
+		LinearLayout emptyLayout = (LinearLayout) view
+				.findViewById(R.id.nullcaselayoutF);
+		TextView textView = (TextView) view.findViewById(R.id.textnullcaseF);
+
+		if (nullCaseText != null)
+			textView.setText(nullCaseText);
+
+		if (fullHeight && getActivity() != null) {
+			ViewGroup.LayoutParams p = emptyLayout.getLayoutParams();
+			p.height = getActivity().getResources().getDisplayMetrics().heightPixels;
+			emptyLayout.setLayoutParams(p);
+		}
+	}
+
+	public void hideEmptyListCase(View view) {
+		LinearLayout layout = (LinearLayout) view
+				.findViewById(R.id.nullcaselayoutF);
+		layout.setVisibility(View.GONE);
+	}
 }

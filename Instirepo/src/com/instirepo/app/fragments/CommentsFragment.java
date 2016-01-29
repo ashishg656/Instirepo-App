@@ -45,7 +45,6 @@ import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.objects.AddCommentObject;
 import com.instirepo.app.objects.CommentsListObject;
 import com.instirepo.app.objects.CommentsListObject.CommentObject;
-import com.instirepo.app.objects.PostListSinglePostObject;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.CustomGoogleFloatingActionButton;
 
@@ -76,6 +75,8 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 
 	ProgressDialog progressDialog;
 
+	View inflatedView;
+
 	public static CommentsFragment newInstance(Bundle b) {
 		CommentsFragment frg = new CommentsFragment();
 		frg.setArguments(b);
@@ -87,6 +88,8 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.comments_fragment_layout, container,
 				false);
+
+		inflatedView = v;
 
 		listView = (ListView) v.findViewById(R.id.commentlist);
 		addCommentFab = (CustomGoogleFloatingActionButton) v
@@ -229,6 +232,13 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 		nextPage = obj.getNext_page();
 		if (nextPage == null)
 			isMoreAllowed = false;
+
+		if (adapter == null && obj.getComments().size() == 0) {
+			showEmptyListView(
+					"No comments have been received on this post yet. Be the first one to comment",
+					false, inflatedView);
+		}
+
 		if (adapter == null) {
 			hideLoadingLayout();
 			hideErrorLayout();
@@ -291,6 +301,8 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 								.getSystemService(Context.INPUT_METHOD_SERVICE);
 						imm.hideSoftInputFromWindow(getActivity()
 								.getCurrentFocus().getWindowToken(), 0);
+
+						hideEmptyListCase(inflatedView);
 
 						adapter.addSingleComment(commentObject);
 						adapter.notifyDataSetChanged();

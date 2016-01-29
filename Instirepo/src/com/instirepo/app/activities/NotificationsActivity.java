@@ -92,6 +92,11 @@ public class NotificationsActivity extends BaseActivity implements ZUrls {
 		hideLoadingLayout();
 		hideErrorLayout();
 
+		if (obj.getNotifications() == null
+				|| obj.getNotifications().size() == 0) {
+			showEmptyListView("No Notifications.", false);
+		}
+
 		adapter = new NotificationsListAdapter(obj.getNotifications(), this);
 		listView.setAdapter(adapter);
 	}

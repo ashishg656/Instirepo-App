@@ -159,6 +159,8 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 	}
 
 	protected void addMessageInRecyclerViewAndClearEditText() {
+		hideEmptyListCase();
+
 		localId++;
 		adapter.addListItemAtBeginningOfList(sendMessageEditText.getText()
 				.toString().trim(), localId);
@@ -261,6 +263,10 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 		} else {
 			isMoreAllowed = true;
 			nextPage = obj.getNext_page();
+		}
+
+		if (adapter == null && obj.getMessages().size() == 0) {
+			showEmptyListView("No Messages Found.", false);
 		}
 
 		if (adapter == null) {

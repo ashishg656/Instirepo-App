@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.instirepo.app.R;
@@ -133,5 +135,24 @@ public abstract class BaseActivity extends AppCompatActivity {
 		Intent i = new Intent(this, PostDetailActivity.class);
 		i.putExtra("postobj", postListSinglePostObject);
 		startActivity(i);
+	}
+
+	public void showEmptyListView(String nullCaseText, boolean fullHeight) {
+		LinearLayout emptyLayout = (LinearLayout) findViewById(R.id.nullcaselayoutF);
+		TextView textView = (TextView) findViewById(R.id.textnullcaseF);
+
+		if (nullCaseText != null)
+			textView.setText(nullCaseText);
+
+		if (fullHeight) {
+			ViewGroup.LayoutParams p = emptyLayout.getLayoutParams();
+			p.height = getResources().getDisplayMetrics().heightPixels;
+			emptyLayout.setLayoutParams(p);
+		}
+	}
+
+	public void hideEmptyListCase() {
+		LinearLayout layout = (LinearLayout) findViewById(R.id.nullcaselayoutF);
+		layout.setVisibility(View.GONE);
 	}
 }

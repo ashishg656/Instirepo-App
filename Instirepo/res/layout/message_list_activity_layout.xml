@@ -13,13 +13,20 @@
 
         <include layout="@layout/toolbar_layout_message_list" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/mesaagelistrecycelr"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clipToPadding="false"
-            android:scrollbars="vertical" />
+            android:layout_weight="1" >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/mesaagelistrecycelr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:scrollbars="vertical" />
+
+            <include layout="@layout/empty_view_layout" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

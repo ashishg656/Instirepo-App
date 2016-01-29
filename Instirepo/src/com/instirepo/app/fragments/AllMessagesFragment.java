@@ -32,6 +32,8 @@ public class AllMessagesFragment extends BaseFragment implements ZUrls,
 	ListView listView;
 	public AllMessageListAdapter adapter;
 
+	View inflatedView;
+
 	public static AllMessagesFragment newInstance(Bundle b) {
 		AllMessagesFragment frg = new AllMessagesFragment();
 		frg.setArguments(b);
@@ -46,6 +48,8 @@ public class AllMessagesFragment extends BaseFragment implements ZUrls,
 
 		listView = (ListView) v.findViewById(R.id.allmessgaes);
 		setProgressLayoutVariablesAndErrorVariables(v);
+
+		inflatedView = v;
 
 		return v;
 	}
@@ -101,6 +105,11 @@ public class AllMessagesFragment extends BaseFragment implements ZUrls,
 	protected void setAdapterData(AllMessagesListObject obj) {
 		hideErrorLayout();
 		hideLoadingLayout();
+
+		if (obj.getNames() == null || obj.getNames().size() == 0) {
+			showEmptyListView("You don't have any messages yet.", false,
+					inflatedView);
+		}
 
 		adapter = new AllMessageListAdapter(obj.getNames(), getActivity());
 		listView.setAdapter(adapter);
