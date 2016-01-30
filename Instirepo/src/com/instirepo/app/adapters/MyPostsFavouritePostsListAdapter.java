@@ -87,9 +87,13 @@ public class MyPostsFavouritePostsListAdapter extends
 
 	@Override
 	public int getItemCount() {
-		if (isMoreAllowed == true)
-			return mData.size() + 1 + 1;
-		return mData.size() + 1;
+		if (mData.size() == 0) {
+			return 2;
+		} else {
+			if (isMoreAllowed == true)
+				return mData.size() + 1 + 1;
+			return mData.size() + 1;
+		}
 	}
 
 	@Override
