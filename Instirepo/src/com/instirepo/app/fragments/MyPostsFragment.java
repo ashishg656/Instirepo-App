@@ -35,6 +35,7 @@ public class MyPostsFragment extends UserProfileBaseFragment implements ZUrls {
 	boolean isMoreAllowed = true;
 
 	boolean canScrollViewPagerHeader;
+	MyPostsFavouritePostsListAdapter adapter;
 
 	public static MyPostsFragment newInstance(Bundle v) {
 		MyPostsFragment frg = new MyPostsFragment();
@@ -176,8 +177,8 @@ public class MyPostsFragment extends UserProfileBaseFragment implements ZUrls {
 					obj.getPosts(), isMoreAllowed, false);
 			recyclerView.setAdapter(adapter);
 		} else {
-			((MyPostsFavouritePostsListAdapter) adapter).addData(obj.getPosts(),
-					isMoreAllowed);
+			((MyPostsFavouritePostsListAdapter) adapter).addData(
+					obj.getPosts(), isMoreAllowed);
 		}
 	}
 

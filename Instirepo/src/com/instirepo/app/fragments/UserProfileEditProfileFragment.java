@@ -33,6 +33,7 @@ public class UserProfileEditProfileFragment extends UserProfileBaseFragment
 		implements ZUrls {
 
 	boolean canScrollViewPagerHeader;
+	UserProfileEditProfileListAdapter adapter;
 
 	public static UserProfileEditProfileFragment newInstance(Bundle v) {
 		UserProfileEditProfileFragment frg = new UserProfileEditProfileFragment();

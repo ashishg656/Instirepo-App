@@ -34,6 +34,7 @@ public class FavouritePostsFragment extends UserProfileBaseFragment implements
 	boolean isMoreAllowed = true;
 
 	boolean canScrollViewPagerHeader;
+	MyPostsFavouritePostsListAdapter adapter;
 
 	public static FavouritePostsFragment newInstance(Bundle v) {
 		FavouritePostsFragment frg = new FavouritePostsFragment();
@@ -164,8 +165,8 @@ public class FavouritePostsFragment extends UserProfileBaseFragment implements
 					obj.getPosts(), isMoreAllowed, true);
 			recyclerView.setAdapter(adapter);
 		} else {
-			((MyPostsFavouritePostsListAdapter) adapter).addData(obj.getPosts(),
-					isMoreAllowed);
+			((MyPostsFavouritePostsListAdapter) adapter).addData(
+					obj.getPosts(), isMoreAllowed);
 		}
 	}
 

@@ -12,7 +12,6 @@ public class UserProfileBaseFragment extends BaseFragment {
 
 	public RecyclerView recyclerView;
 	public LinearLayoutManager layoutManager;
-	RecyclerView.Adapter<RecyclerView.ViewHolder> adapter;
 	LinearLayout progressSuperContainer;
 
 	@Override
