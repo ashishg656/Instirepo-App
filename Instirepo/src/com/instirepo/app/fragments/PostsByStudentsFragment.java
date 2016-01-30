@@ -43,6 +43,8 @@ public class PostsByStudentsFragment extends BaseFragment implements ZUrls,
 	Integer nextPage = 1;
 	boolean isMoreAllowed = true;
 
+	View inflatedView;
+
 	public static PostsByStudentsFragment newInstance(Bundle b) {
 		PostsByStudentsFragment frg = new PostsByStudentsFragment();
 		frg.setArguments(b);
@@ -54,6 +56,8 @@ public class PostsByStudentsFragment extends BaseFragment implements ZUrls,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.posts_by_teacher_fragment_layout,
 				container, false);
+
+		inflatedView = v;
 
 		recyclerView = (RecyclerView) v
 				.findViewById(R.id.postsbyreachersrecyclef);
@@ -170,6 +174,13 @@ public class PostsByStudentsFragment extends BaseFragment implements ZUrls,
 		if (nextPage == null) {
 			isMoreAllowed = false;
 		}
+
+		if (adapter == null && obj.getPosts().size() == 0) {
+			showEmptyListView("No Posts", false, inflatedView);
+		} else {
+			hideEmptyListCase(inflatedView);
+		}
+
 		if (adapter == null) {
 			hideErrorLayout();
 			hideLoadingLayout();

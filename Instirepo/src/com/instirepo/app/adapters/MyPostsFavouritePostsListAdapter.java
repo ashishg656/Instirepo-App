@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.LayoutParams;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +45,7 @@ import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.CircularImageView;
 import com.instirepo.app.widgets.PEWImageView;
 
-public class MyPostsTeacherListAdapter extends
+public class MyPostsFavouritePostsListAdapter extends
 		RecyclerView.Adapter<RecyclerView.ViewHolder> implements AppConstants,
 		ZUrls {
 
@@ -67,7 +68,7 @@ public class MyPostsTeacherListAdapter extends
 
 	boolean removePostFromListAfterRemovingFromFavourites;
 
-	public MyPostsTeacherListAdapter(Context context,
+	public MyPostsFavouritePostsListAdapter(Context context,
 			List<PostListSinglePostObject> mData, boolean isMoreAllowed,
 			boolean removePostFromListAfterRemovingFromFavourites) {
 		super();
@@ -96,9 +97,13 @@ public class MyPostsTeacherListAdapter extends
 		if (position == 0) {
 			return Z_USER_PROFILE_ITEM_HEADER;
 		} else {
-			if (position > mData.size() - 1 + 1)
-				return Z_RECYCLER_VIEW_ITEM_LOADING;
-			return Z_RECYCLER_VIEW_ITEM_NORMAL;
+			if (mData.size() == 0) {
+				return Z_RECYCLER_VIEW_ITEM_NULL_CASE;
+			} else {
+				if (position > mData.size() - 1 + 1)
+					return Z_RECYCLER_VIEW_ITEM_LOADING;
+				return Z_RECYCLER_VIEW_ITEM_NORMAL;
+			}
 		}
 	}
 
@@ -187,6 +192,15 @@ public class MyPostsTeacherListAdapter extends
 			ViewGroup.LayoutParams params = holder.header.getLayoutParams();
 			params.height = ((UserProfileActivity) context).headerHeight;
 			holder.header.setLayoutParams(params);
+		} else if (getItemViewType(pos) == Z_RECYCLER_VIEW_ITEM_NULL_CASE) {
+			EmptyViewHolder holder = (EmptyViewHolder) holderCom;
+			holder.emptyLayout.setVisibility(View.VISIBLE);
+			holder.textView.setText("No posts");
+
+			RecyclerView.LayoutParams p = (RecyclerView.LayoutParams) holder.emptyLayout
+					.getLayoutParams();
+			p.height = context.getResources().getDisplayMetrics().heightPixels;
+			holder.emptyLayout.setLayoutParams(p);
 		}
 	}
 
@@ -207,8 +221,25 @@ public class MyPostsTeacherListAdapter extends
 					R.layout.fake_header_user_profile, arg0, false);
 			FakeHeaderHolder holder = new FakeHeaderHolder(v);
 			return holder;
+		} else if (type == Z_RECYCLER_VIEW_ITEM_NULL_CASE) {
+			View v = LayoutInflater.from(context).inflate(
+					R.layout.empty_view_layout, arg0, false);
+			EmptyViewHolder holder = new EmptyViewHolder(v);
+			return holder;
 		}
 		return null;
+	}
+
+	class EmptyViewHolder extends RecyclerView.ViewHolder {
+
+		LinearLayout emptyLayout;
+		TextView textView;
+
+		public EmptyViewHolder(View v) {
+			super(v);
+			emptyLayout = (LinearLayout) v.findViewById(R.id.nullcaselayoutF);
+			textView = (TextView) v.findViewById(R.id.textnullcaseF);
+		}
 	}
 
 	class FakeHeaderHolder extends RecyclerView.ViewHolder {

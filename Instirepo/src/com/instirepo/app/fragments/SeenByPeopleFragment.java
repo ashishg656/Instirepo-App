@@ -37,6 +37,8 @@ public class SeenByPeopleFragment extends BaseFragment implements
 	boolean isMoreAllowed = true;
 	Integer nextPage = 1;
 
+	View inflatedView;
+
 	public static SeenByPeopleFragment newInstance(Bundle b) {
 		SeenByPeopleFragment frg = new SeenByPeopleFragment();
 		frg.setArguments(b);
@@ -49,6 +51,8 @@ public class SeenByPeopleFragment extends BaseFragment implements
 		View v = inflater.inflate(
 				R.layout.seen_by_poeple_dialog_fragment_layout, container,
 				false);
+
+		inflatedView = v;
 
 		recyclerView = (RecyclerView) v
 				.findViewById(R.id.postsbyreachersrecyclef);
@@ -133,6 +137,10 @@ public class SeenByPeopleFragment extends BaseFragment implements
 		nextPage = obj.getNext_page();
 		if (nextPage == null)
 			isMoreAllowed = false;
+
+		if (adapter == null && obj.getSeens().size() == 0) {
+			showEmptyListView("No Seens on this post yet", false, inflatedView);
+		}
 
 		if (adapter == null) {
 			hideErrorLayout();

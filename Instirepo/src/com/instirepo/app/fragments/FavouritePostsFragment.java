@@ -12,7 +12,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.activities.UserProfileActivity;
-import com.instirepo.app.adapters.MyPostsTeacherListAdapter;
+import com.instirepo.app.adapters.MyPostsFavouritePostsListAdapter;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.objects.PostsListObject;
@@ -160,11 +160,11 @@ public class FavouritePostsFragment extends UserProfileBaseFragment implements
 		if (adapter == null) {
 			hideErrorLayout();
 			hideLoadingLayout();
-			adapter = new MyPostsTeacherListAdapter(getActivity(),
+			adapter = new MyPostsFavouritePostsListAdapter(getActivity(),
 					obj.getPosts(), isMoreAllowed, true);
 			recyclerView.setAdapter(adapter);
 		} else {
-			((MyPostsTeacherListAdapter) adapter).addData(obj.getPosts(),
+			((MyPostsFavouritePostsListAdapter) adapter).addData(obj.getPosts(),
 					isMoreAllowed);
 		}
 	}
