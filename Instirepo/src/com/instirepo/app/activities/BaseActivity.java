@@ -141,6 +141,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 		LinearLayout emptyLayout = (LinearLayout) findViewById(R.id.nullcaselayoutF);
 		TextView textView = (TextView) findViewById(R.id.textnullcaseF);
 
+		emptyLayout.setVisibility(View.VISIBLE);
+
 		if (nullCaseText != null)
 			textView.setText(nullCaseText);
 

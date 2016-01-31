@@ -27,12 +27,6 @@ public class BaseFragment extends Fragment {
 
 	Toast toast;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return super.onCreateView(inflater, container, savedInstanceState);
-	}
-
 	void makeToast(String s) {
 		if (toast != null)
 			toast.cancel();
@@ -104,6 +98,8 @@ public class BaseFragment extends Fragment {
 		LinearLayout emptyLayout = (LinearLayout) view
 				.findViewById(R.id.nullcaselayoutF);
 		TextView textView = (TextView) view.findViewById(R.id.textnullcaseF);
+
+		emptyLayout.setVisibility(View.VISIBLE);
 
 		if (nullCaseText != null)
 			textView.setText(nullCaseText);
