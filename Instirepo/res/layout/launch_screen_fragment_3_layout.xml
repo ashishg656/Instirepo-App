@@ -14,10 +14,11 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/z_margin_large"
+            android:layout_margin="25dp"
             android:background="@drawable/white_ring_bg" />
 
         <LinearLayout
+            android:id="@+id/firstimage"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="left|center_vertical"
@@ -31,9 +32,38 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/secondimage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/blue_circular_bg"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_read" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/thirdimage"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right|center_vertical"
+            android:background="@drawable/blue_circular_bg"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_read" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fourthimage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom|center_horizontal"
             android:background="@drawable/blue_circular_bg"
             android:gravity="center" >
 

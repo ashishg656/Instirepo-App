@@ -59,6 +59,7 @@ import com.instirepo.app.fragments.LaunchScreen3Fragment;
 import com.instirepo.app.objects.GoogleLoginObject;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.CirclePageIndicator;
+import com.instirepo.app.widgets.LaunchActiviityViewPagerTransformer;
 
 public class LaunchActivity extends BaseActivity implements
 		OnPageChangeListener, OnClickListener,
@@ -176,6 +177,9 @@ public class LaunchActivity extends BaseActivity implements
 		adapter = new MyPagerAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(adapter);
 		pageIndicator.setViewPager(viewPager);
+
+		viewPager.setPageTransformer(false,
+				new LaunchActiviityViewPagerTransformer());
 
 		skipButton.setOnClickListener(this);
 		googleLoginButton.setOnClickListener(this);
