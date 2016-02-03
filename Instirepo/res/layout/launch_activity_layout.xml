@@ -103,9 +103,18 @@
         android:id="@+id/screenshitimaege"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:layout_gravity="bottom"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:scaleType="fitEnd"
         android:src="@drawable/launch_screen_1" />
+
+    <ImageView
+        android:id="@+id/screenshitimaege222"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:scaleType="fitEnd"
+        android:src="@drawable/launch_screen_2" />
 
 </FrameLayout>

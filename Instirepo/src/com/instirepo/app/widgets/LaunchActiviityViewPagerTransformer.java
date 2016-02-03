@@ -3,8 +3,10 @@ package com.instirepo.app.widgets;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.instirepo.app.R;
@@ -17,15 +19,6 @@ public class LaunchActiviityViewPagerTransformer implements
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void transformPage(View view, float position) {
-		int tag = Integer.parseInt(String.valueOf(view.getTag()));
-		if (position < -1) { // [-Infinity,-1)
-			// This page is way off-screen to the left.
-		} else if (position < 1) { // [-1,1]
-			
-		} else { // (1,+Infinity]
-			// This page is way off-screen to the right.
-		}
-
 		if (view.findViewById(R.id.framelayoutfragment3launch) != null) {
 			FrameLayout frame = (FrameLayout) view
 					.findViewById(R.id.framelayoutfragment3launch);

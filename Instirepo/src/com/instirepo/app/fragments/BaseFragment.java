@@ -28,7 +28,7 @@ public class BaseFragment extends Fragment {
 
 	Toast toast;
 
-	View rootView;
+	public View rootView;
 
 	void makeToast(String s) {
 		if (toast != null)

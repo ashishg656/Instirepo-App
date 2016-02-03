@@ -20,11 +20,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.support.v4.view.ViewPager.PageTransformer;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -67,7 +67,7 @@ public class LaunchActivity extends BaseActivity implements
 		OnPageChangeListener, OnClickListener,
 		GoogleApiClient.ConnectionCallbacks,
 		GoogleApiClient.OnConnectionFailedListener,
-		ResultCallback<LoadPeopleResult>, ZUrls, PageTransformer {
+		ResultCallback<LoadPeopleResult>, ZUrls {
 
 	ViewPager viewPager;
 	ArgbEvaluator argbEvaluator;
@@ -103,7 +103,9 @@ public class LaunchActivity extends BaseActivity implements
 			accessTokenToSend, additionalDataToSend;
 
 	int deviceWidth;
-	int thetaChange = 45;
+	float heightOfScreenShotImage;
+	float factorofImageTobeshownAlongHeight = 0.5f,
+			factorOfImageToBeTranslatedAlongWidth = 0.08f;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -126,10 +128,10 @@ public class LaunchActivity extends BaseActivity implements
 		skipButtonLayout = (RelativeLayout) findViewById(R.id.skipbuttonlayout);
 		googleLoginButton = (Button) findViewById(R.id.google_sign_in_button);
 
+		deviceWidth = getResources().getDisplayMetrics().widthPixels;
+
 		progressDialog = new ProgressDialog(this);
 		progressDialog.dismiss();
-
-		deviceWidth = getResources().getDisplayMetrics().widthPixels;
 
 		try {
 			Field mScroller = ViewPager.class.getDeclaredField("mScroller");
@@ -185,7 +187,8 @@ public class LaunchActivity extends BaseActivity implements
 		viewPager.setAdapter(adapter);
 		pageIndicator.setViewPager(viewPager);
 
-		viewPager.setPageTransformer(false, this);
+		viewPager.setPageTransformer(false,
+				new LaunchActiviityViewPagerTransformer());
 
 		skipButton.setOnClickListener(this);
 		googleLoginButton.setOnClickListener(this);
@@ -240,23 +243,14 @@ public class LaunchActivity extends BaseActivity implements
 		public Fragment getItem(int pos) {
 			Bundle bundle = new Bundle();
 			bundle.putInt("position", pos);
-
-			Fragment fragment = null;
-
 			switch (pos) {
 			case 1:
-				fragment = LaunchScreen2Fragment.newInstance(bundle);
-				break;
+				return LaunchScreen2Fragment.newInstance(bundle);
 			case 2:
-				fragment = LaunchScreen3Fragment.newInstance(bundle);
-				break;
+				return LaunchScreen3Fragment.newInstance(bundle);
 			default:
-				fragment = LaunchScreen1Fragment.newInstance(bundle);
-				break;
+				return LaunchScreen1Fragment.newInstance(bundle);
 			}
-
-			fragment.getView().setTag(pos);
-			return fragment;
 		}
 
 		@Override
@@ -308,51 +302,61 @@ public class LaunchActivity extends BaseActivity implements
 			gradientBg.setImageAlpha(255);
 			skipButtonBg.setImageAlpha(255);
 		}
+
+		animateImageForScreenshot(position, positionOffset,
+				positionOffsetPixels, viewPager.getCurrentItem());
 	}
 
-	@Override
-	public void transformPage(View view, float position) {
-		int tag = Integer.parseInt(String.valueOf(view.getTag()));
-		if (position < -1) { // [-Infinity,-1)
-			// This page is way off-screen to the left.
-		} else if (position < 1) { // [-1,1]
-			animateImageForScreenshot(position, tag);
-		} else { // (1,+Infinity]
-			// This page is way off-screen to the right.
+	@SuppressLint("NewApi")
+	private void animateImageForScreenshot(int position, float positionOffset,
+			int positionOffsetPixels, int currentItem) {
+		final ImageView image1 = (ImageView) findViewById(R.id.screenshitimaege);
+		ImageView image2 = (ImageView) findViewById(R.id.screenshitimaege222);
+
+		Log.w("as", "jsjc pos " + position + " - offset " + positionOffset
+				+ "  - current " + currentItem);
+
+		if (heightOfScreenShotImage < 10) {
+			image1.getViewTreeObserver().addOnPreDrawListener(
+					new OnPreDrawListener() {
+
+						@Override
+						public boolean onPreDraw() {
+							image1.getViewTreeObserver()
+									.removeOnPreDrawListener(this);
+							heightOfScreenShotImage = image1
+									.getMeasuredHeight();
+							heightOfScreenShotImage = heightOfScreenShotImage
+									* factorofImageTobeshownAlongHeight;
+							return true;
+						}
+					});
 		}
 
-		if (view.findViewById(R.id.framelayoutfragment3launch) != null) {
-			FrameLayout frame = (FrameLayout) view
-					.findViewById(R.id.framelayoutfragment3launch);
-			frame.setRotation(360 * position + thetaChange);
-		}
+		if ((position == 0 && currentItem == 0)
+				|| (position == 0 && currentItem == 1)) {
+			float trans = deviceWidth * (1 - positionOffset);
+			image1.setTranslationX(trans);
+			image2.setTranslationX(trans);
+		} else if ((position == 1 && currentItem == 1)
+				|| (position == 1 && currentItem == 2)) {
+			image1.setTranslationX(deviceWidth * (-positionOffset));
 
-		antiRotateThirdFragmentImage(R.id.firstimage, view, position);
-		antiRotateThirdFragmentImage(R.id.secondimage, view, position);
-		antiRotateThirdFragmentImage(R.id.thirdimage, view, position);
-		antiRotateThirdFragmentImage(R.id.fourthimage, view, position);
-	}
+			float scale = Math.min(1.5f, 1 + positionOffset / 2);
+			image2.setScaleX(scale);
+			image2.setScaleY(scale);
 
-	private void antiRotateThirdFragmentImage(int imageID, View view,
-			float position) {
-		if (view.findViewById(imageID) != null) {
-			LinearLayout image = (LinearLayout) view.findViewById(imageID);
-			image.setRotation(-360 * position - thetaChange);
-		}
-	}
+			float transY = positionOffset * heightOfScreenShotImage;
+			image2.setTranslationY(transY);
 
-	public void animateImageForScreenshot(float pos, int tag) {
-		ImageView image = (ImageView) findViewById(R.id.screenshitimaege);
-
-		// Decide which fragment is sliding left and which one is sliding right.
-		if (tag == 0) {
-			// Transformation between first and second fragment
-			float trans = deviceWidth * (1 - pos);
-			image.setTranslationX(trans);
-		} else if (tag == 1) {
-			// Transformation between first, second and third fragment
-		} else if (tag == 2) {
-			// Transformation between third and fourth fragment
+			if (factorOfImageToBeTranslatedAlongWidth != 0) {
+				float transX = positionOffset
+						* factorOfImageToBeTranslatedAlongWidth * deviceWidth;
+				image2.setTranslationX(transX);
+			}
+		} else if ((position == 1 && currentItem == 1)
+				|| (position == 1 && currentItem == 2)) {
+			image2.setTranslationX(deviceWidth * (-positionOffset));
 		}
 	}
 
