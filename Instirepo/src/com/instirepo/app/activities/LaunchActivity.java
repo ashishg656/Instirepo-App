@@ -55,6 +55,7 @@ import com.instirepo.app.R;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.fragments.LaunchScreen1Fragment;
+import com.instirepo.app.fragments.LaunchScreen3Fragment;
 import com.instirepo.app.objects.GoogleLoginObject;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.CirclePageIndicator;
@@ -230,6 +231,8 @@ public class LaunchActivity extends BaseActivity implements
 			Bundle bundle = new Bundle();
 			bundle.putInt("position", pos);
 			switch (pos) {
+			case 2:
+				return LaunchScreen3Fragment.newInstance(bundle);
 			default:
 				return LaunchScreen1Fragment.newInstance(bundle);
 			}
