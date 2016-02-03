@@ -30,7 +30,7 @@
     <color name="z_bg_color_ripple_color">#40ffffff</color>
 
     <!-- Launch Activity -->
-    <color name="home_viewpager_color_1">#009688</color>
+    <color name="home_viewpager_color_1">#34495e</color>
     <color name="home_viewpager_color_2">#00bcd4</color>
     <color name="home_viewpager_color_3">#4caf50</color>
     <color name="home_viewpager_color_4">#f44336</color>
