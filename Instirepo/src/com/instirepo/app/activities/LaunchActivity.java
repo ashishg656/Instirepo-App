@@ -354,8 +354,8 @@ public class LaunchActivity extends BaseActivity implements
 						* factorOfImageToBeTranslatedAlongWidth * deviceWidth;
 				image2.setTranslationX(transX);
 			}
-		} else if ((position == 1 && currentItem == 1)
-				|| (position == 1 && currentItem == 2)) {
+		} else if ((position == 2 && currentItem == 2)
+				|| (position == 2 && currentItem == 3)) {
 			image2.setTranslationX(deviceWidth * (-positionOffset));
 		}
 	}
