@@ -20,6 +20,8 @@ public class LaunchScreen2Fragment extends BaseFragment {
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.launch_screen_fragment_2_layout,
 				container, false);
+		
+		rootView = v;
 
 		return v;
 	}

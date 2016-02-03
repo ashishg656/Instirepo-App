@@ -5,6 +5,7 @@ import com.instirepo.app.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,8 @@ public class BaseFragment extends Fragment {
 	LinearLayout openSettingsLayout;
 
 	Toast toast;
+
+	View rootView;
 
 	void makeToast(String s) {
 		if (toast != null)

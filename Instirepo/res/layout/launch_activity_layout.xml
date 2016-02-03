@@ -99,4 +99,13 @@
         android:layout_gravity="center"
         android:src="@drawable/instirepo_app_icon_big" />
 
+    <ImageView
+        android:id="@+id/screenshitimaege"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_gravity="bottom"
+        android:scaleType="fitEnd"
+        android:src="@drawable/launch_screen_1" />
+
 </FrameLayout>

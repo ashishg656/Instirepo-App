@@ -20,6 +20,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v4.view.ViewPager.PageTransformer;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -66,7 +67,7 @@ public class LaunchActivity extends BaseActivity implements
 		OnPageChangeListener, OnClickListener,
 		GoogleApiClient.ConnectionCallbacks,
 		GoogleApiClient.OnConnectionFailedListener,
-		ResultCallback<LoadPeopleResult>, ZUrls {
+		ResultCallback<LoadPeopleResult>, ZUrls, PageTransformer {
 
 	ViewPager viewPager;
 	ArgbEvaluator argbEvaluator;
@@ -101,6 +102,9 @@ public class LaunchActivity extends BaseActivity implements
 	String emailToSend, idToSend, imageUrlToSend, nameToSend,
 			accessTokenToSend, additionalDataToSend;
 
+	int deviceWidth;
+	int thetaChange = 45;
+
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +128,8 @@ public class LaunchActivity extends BaseActivity implements
 
 		progressDialog = new ProgressDialog(this);
 		progressDialog.dismiss();
+
+		deviceWidth = getResources().getDisplayMetrics().widthPixels;
 
 		try {
 			Field mScroller = ViewPager.class.getDeclaredField("mScroller");
@@ -179,8 +185,7 @@ public class LaunchActivity extends BaseActivity implements
 		viewPager.setAdapter(adapter);
 		pageIndicator.setViewPager(viewPager);
 
-		viewPager.setPageTransformer(false,
-				new LaunchActiviityViewPagerTransformer());
+		viewPager.setPageTransformer(false, this);
 
 		skipButton.setOnClickListener(this);
 		googleLoginButton.setOnClickListener(this);
@@ -235,14 +240,23 @@ public class LaunchActivity extends BaseActivity implements
 		public Fragment getItem(int pos) {
 			Bundle bundle = new Bundle();
 			bundle.putInt("position", pos);
+
+			Fragment fragment = null;
+
 			switch (pos) {
 			case 1:
-				return LaunchScreen2Fragment.newInstance(bundle);
+				fragment = LaunchScreen2Fragment.newInstance(bundle);
+				break;
 			case 2:
-				return LaunchScreen3Fragment.newInstance(bundle);
+				fragment = LaunchScreen3Fragment.newInstance(bundle);
+				break;
 			default:
-				return LaunchScreen1Fragment.newInstance(bundle);
+				fragment = LaunchScreen1Fragment.newInstance(bundle);
+				break;
 			}
+
+			fragment.getView().setTag(pos);
+			return fragment;
 		}
 
 		@Override
@@ -293,6 +307,52 @@ public class LaunchActivity extends BaseActivity implements
 		} else if (viewPager.getCurrentItem() == 2 && position == 3) {
 			gradientBg.setImageAlpha(255);
 			skipButtonBg.setImageAlpha(255);
+		}
+	}
+
+	@Override
+	public void transformPage(View view, float position) {
+		int tag = Integer.parseInt(String.valueOf(view.getTag()));
+		if (position < -1) { // [-Infinity,-1)
+			// This page is way off-screen to the left.
+		} else if (position < 1) { // [-1,1]
+			animateImageForScreenshot(position, tag);
+		} else { // (1,+Infinity]
+			// This page is way off-screen to the right.
+		}
+
+		if (view.findViewById(R.id.framelayoutfragment3launch) != null) {
+			FrameLayout frame = (FrameLayout) view
+					.findViewById(R.id.framelayoutfragment3launch);
+			frame.setRotation(360 * position + thetaChange);
+		}
+
+		antiRotateThirdFragmentImage(R.id.firstimage, view, position);
+		antiRotateThirdFragmentImage(R.id.secondimage, view, position);
+		antiRotateThirdFragmentImage(R.id.thirdimage, view, position);
+		antiRotateThirdFragmentImage(R.id.fourthimage, view, position);
+	}
+
+	private void antiRotateThirdFragmentImage(int imageID, View view,
+			float position) {
+		if (view.findViewById(imageID) != null) {
+			LinearLayout image = (LinearLayout) view.findViewById(imageID);
+			image.setRotation(-360 * position - thetaChange);
+		}
+	}
+
+	public void animateImageForScreenshot(float pos, int tag) {
+		ImageView image = (ImageView) findViewById(R.id.screenshitimaege);
+
+		// Decide which fragment is sliding left and which one is sliding right.
+		if (tag == 0) {
+			// Transformation between first and second fragment
+			float trans = deviceWidth * (1 - pos);
+			image.setTranslationX(trans);
+		} else if (tag == 1) {
+			// Transformation between first, second and third fragment
+		} else if (tag == 2) {
+			// Transformation between third and fourth fragment
 		}
 	}
 

@@ -25,6 +25,8 @@ public class LaunchScreen3Fragment extends BaseFragment {
 		View v = inflater.inflate(R.layout.launch_screen_fragment_3_layout,
 				container, false);
 
+		rootView = v;
+
 		iconsContainer = (FrameLayout) v
 				.findViewById(R.id.framelayoutfragment3launch);
 

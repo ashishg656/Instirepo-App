@@ -21,6 +21,8 @@ public class LaunchScreen1Fragment extends BaseFragment {
 		View v = inflater.inflate(R.layout.launch_screen_fragment_1_layout,
 				container, false);
 
+		rootView = v;
+
 		return v;
 	}
 
