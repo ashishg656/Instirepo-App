@@ -35,12 +35,13 @@
             android:src="@drawable/launch_screen_1_image" />
 
         <LinearLayout
+            android:id="@+id/shareimage"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_below="@+id/bulbimage"
-            android:layout_toLeftOf="@+id/centerimage"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="20dp"
+            android:layout_toLeftOf="@+id/centerimage"
             android:background="@drawable/blue_circular_bg"
             android:gravity="center" >
 
@@ -52,6 +53,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/appicon"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginRight="-20dp"
@@ -59,6 +61,7 @@
             android:src="@drawable/instirepo_app_icon_big" />
 
         <LinearLayout
+            android:id="@+id/readimage"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
@@ -75,6 +78,42 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/eventimage"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_below="@+id/shoppingimage"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/centerimage"
+            android:background="@drawable/blue_circular_bg"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_event" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/newsimage"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="100dp"
+            android:layout_toLeftOf="@+id/centerimage"
+            android:background="@drawable/blue_circular_bg"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/launch_news" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shoppingimage"
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:layout_marginLeft="-10dp"
@@ -88,22 +127,6 @@
                 android:layout_height="40dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/launch_shopping" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="100dp"
-            android:layout_toLeftOf="@+id/centerimage"
-            android:background="@drawable/blue_circular_bg"
-            android:gravity="center" >
-
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/launch_news" />
         </LinearLayout>
     </RelativeLayout>
 

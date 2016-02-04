@@ -189,7 +189,7 @@ public class LaunchActivity extends BaseActivity implements
 		pageIndicator.setViewPager(viewPager);
 
 		viewPager.setPageTransformer(false,
-				new LaunchActiviityViewPagerTransformer());
+				new LaunchActiviityViewPagerTransformer(this));
 
 		skipButton.setOnClickListener(this);
 		googleLoginButton.setOnClickListener(this);
