@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/z_margin_large" >
+        android:padding="30dp" >
 
         <View
             android:layout_width="match_parent"

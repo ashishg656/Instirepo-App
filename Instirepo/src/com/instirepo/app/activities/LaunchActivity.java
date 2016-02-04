@@ -58,6 +58,7 @@ import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.fragments.LaunchScreen1Fragment;
 import com.instirepo.app.fragments.LaunchScreen2Fragment;
 import com.instirepo.app.fragments.LaunchScreen3Fragment;
+import com.instirepo.app.fragments.LaunchScreen4Fragment;
 import com.instirepo.app.objects.GoogleLoginObject;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.CirclePageIndicator;
@@ -244,6 +245,8 @@ public class LaunchActivity extends BaseActivity implements
 			Bundle bundle = new Bundle();
 			bundle.putInt("position", pos);
 			switch (pos) {
+			case 3:
+				return LaunchScreen4Fragment.newInstance(bundle);
 			case 1:
 				return LaunchScreen2Fragment.newInstance(bundle);
 			case 2:
@@ -279,26 +282,34 @@ public class LaunchActivity extends BaseActivity implements
 		}
 		gradientBg.setImageAlpha(0);
 		skipButtonBg.setImageAlpha(0);
-		if ((viewPager.getCurrentItem() == 0 && position == 0)
-				|| (viewPager.getCurrentItem() == 1 && position == 0)) {
-			translateLauncherIconUp(positionOffset);
-			scaleLauncherIcon(positionOffset);
-			fadeLauncherIcon(positionOffset);
+
+		int currentItem = viewPager.getCurrentItem();
+
+		if ((currentItem == 0 && position == 0)
+				|| (currentItem == 1 && position == 0)) {
 			translateLoginButtons(positionOffset);
 			translateSkipButton(positionOffset);
-		} else if ((viewPager.getCurrentItem() == 2 && position == 2)
-				|| (viewPager.getCurrentItem() == 3 && position == 2 && positionOffset != 0)) {
+
+			// TODO uncomment below 3 lines for launcher icon anim
+			// translateLauncherIconUp(positionOffset);
+			// scaleLauncherIcon(positionOffset);
+			// fadeLauncherIcon(positionOffset);
+
+			// TODO comment below line to show launcher icon anim
+			fadeLauncherIcon(1);
+		} else if ((currentItem == 2 && position == 2)
+				|| (currentItem == 3 && position == 2 && positionOffset != 0)) {
 			fadeSkipButtonAndLastFragmentBg(positionOffset);
 			translateLauncherIconUp(1 - positionOffset);
 			fadeLauncherIcon(1 - positionOffset);
 			scaleLauncherIcon(1 - positionOffset);
 			translateLoginButtons(1 - positionOffset);
 			translateSkipButton(1 - positionOffset);
-		} else if ((viewPager.getCurrentItem() == 2 && position == 2)
-				|| (viewPager.getCurrentItem() == 3 && position == 3)) {
+		} else if ((currentItem == 2 && position == 2)
+				|| (currentItem == 3 && position == 3)) {
 			gradientBg.setImageAlpha(255);
 			skipButtonBg.setImageAlpha(255);
-		} else if (viewPager.getCurrentItem() == 2 && position == 3) {
+		} else if (currentItem == 2 && position == 3) {
 			gradientBg.setImageAlpha(255);
 			skipButtonBg.setImageAlpha(255);
 		}
@@ -356,7 +367,8 @@ public class LaunchActivity extends BaseActivity implements
 			}
 		} else if ((position == 2 && currentItem == 2)
 				|| (position == 2 && currentItem == 3)) {
-			image2.setTranslationX(deviceWidth * (-positionOffset));
+			image2.setTranslationX(deviceWidth * (-positionOffset)
+					+ (factorOfImageToBeTranslatedAlongWidth * deviceWidth));
 		}
 	}
 

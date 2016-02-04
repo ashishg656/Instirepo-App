@@ -22,7 +22,7 @@ public class LaunchActiviityViewPagerTransformer implements
 		if (view.findViewById(R.id.framelayoutfragment3launch) != null) {
 			FrameLayout frame = (FrameLayout) view
 					.findViewById(R.id.framelayoutfragment3launch);
-			frame.setRotation(360 * position + thetaChange);
+			frame.setRotation(180 * position + thetaChange);
 		}
 
 		antiRotateThirdFragmentImage(R.id.firstimage, view, position);
@@ -35,7 +35,7 @@ public class LaunchActiviityViewPagerTransformer implements
 			float position) {
 		if (view.findViewById(imageID) != null) {
 			LinearLayout image = (LinearLayout) view.findViewById(imageID);
-			image.setRotation(-360 * position - thetaChange);
+			image.setRotation(-180 * position - thetaChange);
 		}
 	}
 }
