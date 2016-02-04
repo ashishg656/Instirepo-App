@@ -295,8 +295,10 @@ public class LaunchActivity extends BaseActivity implements
 			// scaleLauncherIcon(positionOffset);
 			// fadeLauncherIcon(positionOffset);
 
-			// TODO comment below line to show launcher icon anim
+			// TODO comment below 3 lines to show launcher icon anim
 			fadeLauncherIcon(1);
+			translateLauncherIconUp(1);
+			scaleLauncherIcon(1);
 		} else if ((currentItem == 2 && position == 2)
 				|| (currentItem == 3 && position == 2 && positionOffset != 0)) {
 			fadeSkipButtonAndLastFragmentBg(positionOffset);
