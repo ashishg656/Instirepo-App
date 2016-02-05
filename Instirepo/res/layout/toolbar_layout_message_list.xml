@@ -27,6 +27,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/openuserprofilepost"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:background="@drawable/z_user_profile_article_bg_selector"

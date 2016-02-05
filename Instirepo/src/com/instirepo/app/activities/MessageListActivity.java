@@ -5,6 +5,7 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
@@ -28,6 +29,7 @@ import com.instirepo.app.adapters.MessageListAdapter;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.ZUrls;
+import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
 import com.instirepo.app.objects.AddMessageResponseObject;
 import com.instirepo.app.objects.MessageListObject;
 import com.instirepo.app.objects.MessageListObject.SingleMessage;
@@ -37,7 +39,7 @@ import com.instirepo.app.widgets.CircularImageView;
 import com.instirepo.app.widgets.CustomGoogleFloatingActionButton;
 
 public class MessageListActivity extends BaseActivity implements AppConstants,
-		ZUrls {
+		ZUrls, OnClickListener {
 
 	String personName, personImage, personID;
 	CircularImageView personImageView;
@@ -93,6 +95,8 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 		sendButton = (CustomGoogleFloatingActionButton) findViewById(R.id.sendmessagebfab);
 
 		sendButton.setImageResource(R.drawable.ic_send_grey_fab);
+
+		findViewById(R.id.openuserprofilepost).setOnClickListener(this);
 
 		sendMessageEditText.addTextChangedListener(new TextWatcher() {
 
@@ -282,20 +286,62 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 
 	@Override
 	public void onBackPressed() {
-		if (adapter != null) {
-			Intent data = new Intent();
-			data.putExtra("person_id", personID);
-			for (SingleMessage msg : adapter.mData) {
-				if (msg.getServer_id() != null) {
-					data.putExtra("last_message", msg.getMessage());
-					data.putExtra("time", msg.getTime());
-					break;
-				}
-			}
-			setResult(RESULT_OK, data);
-			finish();
+		Fragment fragmentUserProfile = getSupportFragmentManager()
+				.findFragmentByTag(
+						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG);
+		if (fragmentUserProfile != null
+				&& !((UserProfileViewedByOtherFragment) fragmentUserProfile).fragmentDestroyed) {
+			((UserProfileViewedByOtherFragment) fragmentUserProfile)
+					.dismissScrollViewDownCalledFromActivityBackPressed();
+		} else if (fragmentUserProfile != null
+				&& ((UserProfileViewedByOtherFragment) fragmentUserProfile).fragmentDestroyed) {
+			super.onBackPressed();
 		} else {
-			finish();
+			if (adapter != null) {
+				Intent data = new Intent();
+				data.putExtra("person_id", personID);
+				for (SingleMessage msg : adapter.mData) {
+					if (msg.getServer_id() != null) {
+						data.putExtra("last_message", msg.getMessage());
+						data.putExtra("time", msg.getTime());
+						break;
+					}
+				}
+				setResult(RESULT_OK, data);
+				finish();
+			} else {
+				finish();
+			}
+		}
+	}
+
+	public void switchToUserProfileViewedByOtherFragment(int userid,
+			String name, String image) {
+		Bundle bundle = new Bundle();
+		bundle.putString("name", name);
+		bundle.putInt("userid", userid);
+		bundle.putString("image", image);
+
+		getSupportFragmentManager()
+				.beginTransaction()
+				.replace(R.id.fragmentcontainer,
+						UserProfileViewedByOtherFragment.newInstance(bundle),
+						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG)
+				.addToBackStack(
+						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG)
+				.commit();
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.openuserprofilepost:
+			switchToUserProfileViewedByOtherFragment(
+					Integer.parseInt(personID), personName, personImage);
+			break;
+
+		default:
+			break;
 		}
 	}
 }
