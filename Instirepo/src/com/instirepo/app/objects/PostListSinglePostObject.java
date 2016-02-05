@@ -1,5 +1,9 @@
 package com.instirepo.app.objects;
 
+import java.util.List;
+
+import com.instirepo.app.objects.SeenByPeopleObject.PeopleSeenPost;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -25,6 +29,15 @@ public class PostListSinglePostObject implements Parcelable {
 	boolean is_following;
 	boolean is_reported, is_by_teacher;
 	int user_id;
+	List<PeopleSeenPost> seens_by_list;
+
+	public List<PeopleSeenPost> getSeens_by_list() {
+		return seens_by_list;
+	}
+
+	public void setSeens_by_list(List<PeopleSeenPost> seens_by_list) {
+		this.seens_by_list = seens_by_list;
+	}
 
 	public PostListSinglePostObject() {
 

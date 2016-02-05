@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
+import com.instirepo.app.adapters.PostDetailSeenByListAdapter;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.TimeUtils;
@@ -44,7 +46,7 @@ import com.instirepo.app.widgets.ObservableScrollViewListener;
 public class PostDetailActivity extends BaseActivity implements AppConstants,
 		OnClickListener, ZUrls, ObservableScrollViewListener {
 
-	PostListSinglePostObject postListSinglePostObject;
+	PostListSinglePostObject mData;
 	ImageView postImage, reportPostImage, followPostImage, savePostImage,
 			upvoteImage, downvoteImage;
 	TextView postHeading, postDescription, category, uploaderName, uploadTime,
@@ -63,6 +65,8 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	int statusBarHeight, toolbarHeight;
 	LinearLayout transparentToolbar;
 	FrameLayout appbarContainer;
+
+	PostDetailSeenByListAdapter adapterSeenByList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +98,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 		appbarContainer = (FrameLayout) findViewById(R.id.appbarcontainer);
 		scrollView = (ObservableScrollView) findViewById(R.id.postdetailscrollview);
 		bookImageDividerView = (View) findViewById(R.id.boomimagivideview);
+		seenByRecyclerView = (RecyclerView) findViewById(R.id.viewiedbyrecycler);
 
 		scrollView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new OnGlobalLayoutListener() {
@@ -134,8 +139,8 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 		savePostImage.setOnClickListener(this);
 
 		if (getIntent().hasExtra("postobj")) {
-			postListSinglePostObject = getIntent().getExtras().getParcelable(
-					"postobj");
+			mData = getIntent().getExtras().getParcelable("postobj");
+			loadSeensbyList();
 
 			setImagesForPostAndUserImage();
 
@@ -148,16 +153,13 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	}
 
 	private void setImagesForPostAndUserImage() {
-		if (postListSinglePostObject.getImage() != null) {
-			ImageRequestManager.get(this).requestImage(
-					this,
-					postImage,
-					ZApplication.getImageUrl(postListSinglePostObject
-							.getImage()), -1);
+		if (mData.getImage() != null) {
+			ImageRequestManager.get(this).requestImage(this, postImage,
+					ZApplication.getImageUrl(mData.getImage()), -1);
 		}
 
 		ImageRequestManager.get(this).requestImage(this, uploaderImage,
-				postListSinglePostObject.getUser_image(), -1);
+				mData.getUser_image(), -1);
 	}
 
 	private void loadDataThroughPostID() {
@@ -170,7 +172,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 
 					@Override
 					public void onResponse(String data) {
-						postListSinglePostObject = new Gson().fromJson(data,
+						mData = new Gson().fromJson(data,
 								PostListSinglePostObject.class);
 						setImagesForPostAndUserImage();
 						setInitialDataUsingnIntentObj();
@@ -183,8 +185,8 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 							Entry entry = ZApplication.getInstance()
 									.getRequestQueue().getCache().get(url);
 							String data = new String(entry.data, "UTF-8");
-							postListSinglePostObject = new Gson().fromJson(
-									data, PostListSinglePostObject.class);
+							mData = new Gson().fromJson(data,
+									PostListSinglePostObject.class);
 							setImagesForPostAndUserImage();
 							setInitialDataUsingnIntentObj();
 						} catch (Exception e) {
@@ -204,28 +206,53 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 		ZApplication.getInstance().addToRequestQueue(req, url);
 	}
 
+	private void loadSeensbyList() {
+		final String url = postDescriptionPage + "?post_id=" + postId;
+
+		StringRequest req = new StringRequest(Method.POST, url,
+				new Listener<String>() {
+
+					@Override
+					public void onResponse(String data) {
+						PostListSinglePostObject object = new Gson().fromJson(
+								data, PostListSinglePostObject.class);
+						mData.setSeens_by_list(object.getSeens_by_list());
+						setSeensByInRecyclerView();
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError arg0) {
+
+					}
+				}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				Map<String, String> p = new HashMap<>();
+				p.put("user_id",
+						ZPreferences.getUserProfileID(PostDetailActivity.this));
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, url);
+	}
+
 	private void setInitialDataUsingnIntentObj() {
 		hideErrorLayout();
 		hideLoadingLayout();
 
-		if (postListSinglePostObject != null) {
-			getSupportActionBar().setTitle(
-					postListSinglePostObject.getHeading());
+		if (mData != null) {
+			getSupportActionBar().setTitle(mData.getHeading());
 
-			postHeading.setText(postListSinglePostObject.getHeading());
-			postDescription.setText(postListSinglePostObject.getDescription());
-			category.setText(postListSinglePostObject.getCategory());
-			uploaderName.setText(postListSinglePostObject.getUser_name());
-			uploadTime.setText(TimeUtils.getPostTime(postListSinglePostObject
-					.getTime()));
-			numberOfPeopleViewed.setText(postListSinglePostObject.getSeens()
-					+ " people viewed");
-			votes.setText(""
-					+ (postListSinglePostObject.getUpvotes() - postListSinglePostObject
-							.getDownvotes()));
-			comments.setText(postListSinglePostObject.getComment()
-					+ " comments");
-			if (postListSinglePostObject.isIs_following()) {
+			postHeading.setText(mData.getHeading());
+			postDescription.setText(mData.getDescription());
+			category.setText(mData.getCategory());
+			uploaderName.setText(mData.getUser_name());
+			uploadTime.setText(TimeUtils.getPostTime(mData.getTime()));
+			numberOfPeopleViewed.setText(mData.getSeens() + " people viewed");
+			votes.setText("" + (mData.getUpvotes() - mData.getDownvotes()));
+			comments.setText(mData.getComment() + " comments");
+			if (mData.isIs_following()) {
 				followPost.setText(getResources().getString(
 						R.string.following_post));
 				followPostImage.setSelected(true);
@@ -235,7 +262,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 				followPostImage.setSelected(false);
 			}
 
-			if (postListSinglePostObject.isIs_reported()) {
+			if (mData.isIs_reported()) {
 				reportPost.setText(getResources().getString(
 						R.string.reported_post));
 				reportPostImage.setSelected(true);
@@ -245,28 +272,42 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 				reportPostImage.setSelected(false);
 			}
 
-			savePostImage.setSelected(postListSinglePostObject.isIs_saved());
-			upvoteImage.setSelected(postListSinglePostObject.isHas_upvoted());
-			downvoteImage.setSelected(postListSinglePostObject
-					.isHas_downvoted());
+			savePostImage.setSelected(mData.isIs_saved());
+			upvoteImage.setSelected(mData.isHas_upvoted());
+			downvoteImage.setSelected(mData.isHas_downvoted());
 
 			GradientDrawable categoryBg = (GradientDrawable) category
 					.getBackground();
-			int color = Color.parseColor(postListSinglePostObject
-					.getCategory_color());
+			int color = Color.parseColor(mData.getCategory_color());
 			categoryBg.setStroke(
 					getResources().getDimensionPixelSize(R.dimen.z_one_dp),
 					color);
 			category.setTextColor(color);
 		}
+
+		setSeensByInRecyclerView();
+	}
+
+	private void setSeensByInRecyclerView() {
+		if (mData.getSeens_by_list() != null
+				&& mData.getSeens_by_list().size() >= 3) {
+			LinearLayoutManager layoutManager = new LinearLayoutManager(this,
+					LinearLayoutManager.HORIZONTAL, false);
+			seenByRecyclerView.setLayoutManager(layoutManager);
+
+			adapterSeenByList = new PostDetailSeenByListAdapter(
+					mData.getSeens_by_list(), this);
+			seenByRecyclerView.setAdapter(adapterSeenByList);
+		} else {
+			seenByRecyclerView.setVisibility(View.GONE);
+		}
 	}
 
 	public void reportPostButtonClick() {
-		postListSinglePostObject.setIs_reported(!postListSinglePostObject
-				.isIs_reported());
+		mData.setIs_reported(!mData.isIs_reported());
 		setInitialDataUsingnIntentObj();
 
-		if (postListSinglePostObject.isIs_reported()) {
+		if (mData.isIs_reported()) {
 			showSnackBar("Reported Post");
 		} else
 			showSnackBar("Undo Report Post");
@@ -281,9 +322,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 
 					@Override
 					public void onErrorResponse(VolleyError arg0) {
-						postListSinglePostObject
-								.setIs_reported(!postListSinglePostObject
-										.isIs_reported());
+						mData.setIs_reported(!mData.isIs_reported());
 						setInitialDataUsingnIntentObj();
 						showSnackBar("Unable to report post. Check internet");
 					}
@@ -293,7 +332,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 				HashMap<String, String> p = new HashMap<>();
 				p.put("user_id",
 						ZPreferences.getUserProfileID(PostDetailActivity.this));
-				p.put("post_id", postListSinglePostObject.getId() + "");
+				p.put("post_id", mData.getId() + "");
 				return p;
 			}
 		};
@@ -301,11 +340,10 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	}
 
 	public void followPostRequest() {
-		postListSinglePostObject.setIs_following(!postListSinglePostObject
-				.isIs_following());
+		mData.setIs_following(!mData.isIs_following());
 		setInitialDataUsingnIntentObj();
 
-		if (postListSinglePostObject.isIs_following()) {
+		if (mData.isIs_following()) {
 			showSnackBar("Following Post");
 		} else
 			showSnackBar("Unfollowed post");
@@ -321,9 +359,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 					@Override
 					public void onErrorResponse(VolleyError arg0) {
 						showSnackBar("Unable to follow/unfollow post. Check internet and try agin");
-						postListSinglePostObject
-								.setIs_following(!postListSinglePostObject
-										.isIs_following());
+						mData.setIs_following(!mData.isIs_following());
 						setInitialDataUsingnIntentObj();
 					}
 				}) {
@@ -332,7 +368,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 				HashMap<String, String> p = new HashMap<>();
 				p.put("user_id",
 						ZPreferences.getUserProfileID(PostDetailActivity.this));
-				p.put("post_id", postListSinglePostObject.getId() + "");
+				p.put("post_id", mData.getId() + "");
 				return p;
 			}
 		};
@@ -340,30 +376,28 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	}
 
 	public void upvoteOrDownvotePost(boolean isUpvoteClicked) {
-		previousDownvotes = postListSinglePostObject.getDownvotes();
-		previousUpvotes = postListSinglePostObject.getUpvotes();
-		previouslyDownvoted = postListSinglePostObject.isHas_downvoted();
-		previouslyUpvoted = postListSinglePostObject.isHas_upvoted();
+		previousDownvotes = mData.getDownvotes();
+		previousUpvotes = mData.getUpvotes();
+		previouslyDownvoted = mData.isHas_downvoted();
+		previouslyUpvoted = mData.isHas_upvoted();
 
-		if (postListSinglePostObject.isHas_upvoted()) {
+		if (mData.isHas_upvoted()) {
 			// upvoted
 			if (isUpvoteClicked) {
 				showSnackBar("Already Upvoted");
 				return;
 			} else {
 				showSnackBar("Neither upvoted nor downvoted");
-				postListSinglePostObject.setHas_upvoted(false);
-				postListSinglePostObject.setUpvotes(postListSinglePostObject
-						.getUpvotes() - 1);
+				mData.setHas_upvoted(false);
+				mData.setUpvotes(mData.getUpvotes() - 1);
 				setInitialDataUsingnIntentObj();
 			}
-		} else if (postListSinglePostObject.isHas_downvoted()) {
+		} else if (mData.isHas_downvoted()) {
 			// downvoted
 			if (isUpvoteClicked) {
 				showSnackBar("Neither upvoted nor downvoted");
-				postListSinglePostObject.setHas_downvoted(false);
-				postListSinglePostObject.setDownvotes(postListSinglePostObject
-						.getDownvotes() - 1);
+				mData.setHas_downvoted(false);
+				mData.setDownvotes(mData.getDownvotes() - 1);
 				setInitialDataUsingnIntentObj();
 			} else {
 				showSnackBar("Already Downvoted");
@@ -373,15 +407,13 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 			// neither upvoted nor downvoted
 			if (isUpvoteClicked) {
 				showSnackBar("Upvoted");
-				postListSinglePostObject.setHas_upvoted(true);
-				postListSinglePostObject.setUpvotes(postListSinglePostObject
-						.getUpvotes() + 1);
+				mData.setHas_upvoted(true);
+				mData.setUpvotes(mData.getUpvotes() + 1);
 				setInitialDataUsingnIntentObj();
 			} else {
 				showSnackBar("Downvoted");
-				postListSinglePostObject.setHas_downvoted(true);
-				postListSinglePostObject.setDownvotes(postListSinglePostObject
-						.getDownvotes() + 1);
+				mData.setHas_downvoted(true);
+				mData.setDownvotes(mData.getDownvotes() + 1);
 				setInitialDataUsingnIntentObj();
 			}
 		}
@@ -393,16 +425,14 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.openuserprofilepost:
-			switchToUserProfileViewedByOtherFragment(
-					postListSinglePostObject.getUser_id(),
-					postListSinglePostObject.getUser_name(),
-					postListSinglePostObject.getUser_image());
+			switchToUserProfileViewedByOtherFragment(mData.getUser_id(),
+					mData.getUser_name(), mData.getUser_image());
 			break;
 		case R.id.seenbycontainer:
-			switchToSeenByPeopleFragment(postListSinglePostObject.getId());
+			switchToSeenByPeopleFragment(mData.getId());
 			break;
 		case R.id.commnts:
-			switchToCommentsFragment(postListSinglePostObject.getId());
+			switchToCommentsFragment(mData.getId());
 			break;
 		case R.id.savepostbutton:
 			savePostAsImportant();
@@ -426,15 +456,13 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	}
 
 	private void savePostAsImportant() {
-		if (postListSinglePostObject.isIs_saved()) {
-			postListSinglePostObject.setIs_saved(false);
-			postListSinglePostObject.setSaves(postListSinglePostObject
-					.getSaves() - 1);
+		if (mData.isIs_saved()) {
+			mData.setIs_saved(false);
+			mData.setSaves(mData.getSaves() - 1);
 			showSnackBar("Removed Post From Important Posts List");
 		} else {
-			postListSinglePostObject.setIs_saved(true);
-			postListSinglePostObject.setSaves(postListSinglePostObject
-					.getSaves() + 1);
+			mData.setIs_saved(true);
+			mData.setSaves(mData.getSaves() + 1);
 			showSnackBar("Marked Post As important");
 		}
 		markPostImportantRequestServer();
@@ -442,14 +470,12 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	}
 
 	private void reverseSavePostAsImportant() {
-		if (postListSinglePostObject.isIs_saved()) {
-			postListSinglePostObject.setIs_saved(false);
-			postListSinglePostObject.setSaves(postListSinglePostObject
-					.getSaves() - 1);
+		if (mData.isIs_saved()) {
+			mData.setIs_saved(false);
+			mData.setSaves(mData.getSaves() - 1);
 		} else {
-			postListSinglePostObject.setIs_saved(true);
-			postListSinglePostObject.setSaves(postListSinglePostObject
-					.getSaves() + 1);
+			mData.setIs_saved(true);
+			mData.setSaves(mData.getSaves() + 1);
 		}
 		setInitialDataUsingnIntentObj();
 	}
@@ -475,7 +501,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 				HashMap<String, String> p = new HashMap<>();
 				p.put("user_id",
 						ZPreferences.getUserProfileID(PostDetailActivity.this));
-				p.put("post_id", postListSinglePostObject.getId() + "");
+				p.put("post_id", mData.getId() + "");
 				p.put("is_upvote_clicked", Boolean.toString(isUpvoteClicked));
 				return p;
 			}
@@ -484,10 +510,10 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	}
 
 	protected void reverseUpvotePost() {
-		postListSinglePostObject.setUpvotes(previousUpvotes);
-		postListSinglePostObject.setDownvotes(previousDownvotes);
-		postListSinglePostObject.setHas_downvoted(previouslyDownvoted);
-		postListSinglePostObject.setHas_upvoted(previouslyUpvoted);
+		mData.setUpvotes(previousUpvotes);
+		mData.setDownvotes(previousDownvotes);
+		mData.setHas_downvoted(previouslyDownvoted);
+		mData.setHas_upvoted(previouslyUpvoted);
 
 		setInitialDataUsingnIntentObj();
 	}
@@ -584,7 +610,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 				HashMap<String, String> p = new HashMap<>();
 				p.put("user_id",
 						ZPreferences.getUserProfileID(PostDetailActivity.this));
-				p.put("post_id", postListSinglePostObject.getId() + "");
+				p.put("post_id", mData.getId() + "");
 				return p;
 			}
 		};
