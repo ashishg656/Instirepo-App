@@ -207,8 +207,10 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/viewiedbyrecycler"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/post_Detail_seen_by_list_height"
                     android:clipToPadding="false"
+                    android:paddingLeft="@dimen/z_margin_large"
+                    android:paddingRight="@dimen/z_margin_large"
                     android:scrollbars="none" />
 
                 <View

@@ -82,4 +82,8 @@
     <!-- User profile activity -->
     <dimen name="z_user_profile_activity_image_height">100dp</dimen>
 
+    <!-- post detail -->
+    <dimen name="post_Detail_seen_by_list_height">60dp</dimen>
+    <dimen name="post_Detail_seen_by_list_image_radius">50dp</dimen>
+
 </resources>

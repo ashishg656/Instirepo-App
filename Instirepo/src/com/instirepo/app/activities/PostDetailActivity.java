@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -38,13 +39,16 @@ import com.instirepo.app.fragments.SeenByPeopleFragment;
 import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
 import com.instirepo.app.objects.PostListSinglePostObject;
 import com.instirepo.app.preferences.ZPreferences;
+import com.instirepo.app.serverApi.AppRequestListener;
+import com.instirepo.app.serverApi.CustomStringRequest;
 import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.CircularImageView;
 import com.instirepo.app.widgets.ObservableScrollView;
 import com.instirepo.app.widgets.ObservableScrollViewListener;
 
 public class PostDetailActivity extends BaseActivity implements AppConstants,
-		OnClickListener, ZUrls, ObservableScrollViewListener {
+		OnClickListener, ZUrls, ObservableScrollViewListener,
+		AppRequestListener {
 
 	PostListSinglePostObject mData;
 	ImageView postImage, reportPostImage, followPostImage, savePostImage,
@@ -140,11 +144,12 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 
 		if (getIntent().hasExtra("postobj")) {
 			mData = getIntent().getExtras().getParcelable("postobj");
-			loadSeensbyList();
 
 			setImagesForPostAndUserImage();
 
 			setInitialDataUsingnIntentObj();
+
+			loadSeensbyList();
 		} else if (getIntent().hasExtra("postid")) {
 			postId = getIntent().getExtras().getInt("postid");
 
@@ -207,34 +212,15 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 	}
 
 	private void loadSeensbyList() {
-		final String url = postDescriptionPage + "?post_id=" + postId;
+		final String url = postDescriptionPage + "?post_id=" + mData.getId();
 
-		StringRequest req = new StringRequest(Method.POST, url,
-				new Listener<String>() {
+		HashMap<String, String> p = new HashMap<>();
+		p.put("user_id", ZPreferences.getUserProfileID(PostDetailActivity.this));
 
-					@Override
-					public void onResponse(String data) {
-						PostListSinglePostObject object = new Gson().fromJson(
-								data, PostListSinglePostObject.class);
-						mData.setSeens_by_list(object.getSeens_by_list());
-						setSeensByInRecyclerView();
-					}
-				}, new ErrorListener() {
-
-					@Override
-					public void onErrorResponse(VolleyError arg0) {
-
-					}
-				}) {
-			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				Map<String, String> p = new HashMap<>();
-				p.put("user_id",
-						ZPreferences.getUserProfileID(PostDetailActivity.this));
-				return p;
-			}
-		};
-		ZApplication.getInstance().addToRequestQueue(req, url);
+		CustomStringRequest req = new CustomStringRequest(Method.POST, url,
+				"seenlistpostdetails", this, p);
+		ZApplication.getInstance()
+				.addToRequestQueue(req, "seenlistpostdetails");
 	}
 
 	private void setInitialDataUsingnIntentObj() {
@@ -298,6 +284,8 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 			adapterSeenByList = new PostDetailSeenByListAdapter(
 					mData.getSeens_by_list(), this);
 			seenByRecyclerView.setAdapter(adapterSeenByList);
+
+			seenByRecyclerView.setVisibility(View.VISIBLE);
 		} else {
 			seenByRecyclerView.setVisibility(View.GONE);
 		}
@@ -664,6 +652,26 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 				appbarContainer.animate().translationY(-toolbarHeight)
 						.setDuration(100).start();
 			}
+		}
+	}
+
+	@Override
+	public void onRequestStarted(String requestTag) {
+
+	}
+
+	@Override
+	public void onRequestFailed(String requestTag, VolleyError error) {
+		setSeensByInRecyclerView();
+	}
+
+	@Override
+	public void onRequestCompleted(String requestTag, String response) {
+		if (requestTag == "seenlistpostdetails") {
+			PostListSinglePostObject obj = new Gson().fromJson(response,
+					PostListSinglePostObject.class);
+			mData.setSeens_by_list(obj.getSeens_by_list());
+			setSeensByInRecyclerView();
 		}
 	}
 }
