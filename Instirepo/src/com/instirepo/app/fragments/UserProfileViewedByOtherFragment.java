@@ -367,9 +367,15 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		if (obj.getEmail() == null || obj.getEmail().trim().length() == 0) {
 			emailDivider.setVisibility(View.GONE);
 			emailUser.setVisibility(View.GONE);
+		} else {
+			emailUser.setText("Send email " + mData.getEmail());
+			emailUser.setOnClickListener(this);
 		}
+
 		if (obj.getPhone() == null || obj.getPhone().trim().length() == 0) {
 			callUser.setVisibility(View.GONE);
+		} else {
+			callUser.setOnClickListener(this);
 		}
 
 		if (callUser.getVisibility() == View.GONE
@@ -582,6 +588,10 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 			Intent i = new Intent(Intent.ACTION_VIEW);
 			i.setData(Uri.parse(mData.getResume()));
 			startActivity(i);
+			break;
+		case R.id.emailuser:
+			((BaseActivity) getActivity()).sendEmailIntentUsingToAction(mData
+					.getEmail());
 			break;
 
 		default:

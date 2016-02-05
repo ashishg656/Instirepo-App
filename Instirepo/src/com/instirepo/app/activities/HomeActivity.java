@@ -322,12 +322,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 							openNotificationsActivity();
 							return true;
 						case R.id.contactnav:
-							Intent emailIntent = new Intent(
-									Intent.ACTION_SENDTO,
-									Uri.parse("mailto:"
-											+ Uri.encode("instirepo@gmail.com")));
-							startActivity(Intent.createChooser(emailIntent,
-									"Send email via..."));
+							sendEmailIntentUsingToAction("");
 							return true;
 						default:
 							return true;

@@ -1,6 +1,7 @@
 package com.instirepo.app.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
@@ -156,5 +157,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 	public void hideEmptyListCase() {
 		LinearLayout layout = (LinearLayout) findViewById(R.id.nullcaselayoutF);
 		layout.setVisibility(View.GONE);
+	}
+
+	public void sendEmailIntentUsingToAction(String mailTo) {
+		Intent emailIntent = new Intent(Intent.ACTION_SENDTO,
+				Uri.parse("mailto:" + Uri.encode(mailTo)));
+		startActivity(Intent.createChooser(emailIntent, "Send email via..."));
 	}
 }
