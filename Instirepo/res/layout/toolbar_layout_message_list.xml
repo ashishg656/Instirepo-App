@@ -26,23 +26,32 @@
                 android:src="@drawable/ic_navigation_arrow_back_white" />
         </LinearLayout>
 
-        <com.instirepo.app.widgets.CircularImageView
-            android:id="@+id/toolbarimagecircular"
-            android:layout_width="@dimen/z_message_list_toolbar_image_radius"
-            android:layout_height="@dimen/z_message_list_toolbar_image_radius"
-            app:border="false"
-            app:shadow="false" />
-
-        <TextView
-            android:id="@+id/toolbartextname"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/z_margin_small"
-            android:singleLine="true"
-            android:text="Ashish Goel"
-            android:textColor="@color/z_white"
-            android:textSize="@dimen/z_font_medium"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:background="@drawable/z_user_profile_article_bg_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <com.instirepo.app.widgets.CircularImageView
+                android:id="@+id/toolbarimagecircular"
+                android:layout_width="@dimen/z_message_list_toolbar_image_radius"
+                android:layout_height="@dimen/z_message_list_toolbar_image_radius"
+                app:border="false"
+                app:shadow="false" />
+
+            <TextView
+                android:id="@+id/toolbartextname"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/z_margin_small"
+                android:singleLine="true"
+                android:text="Ashish Goel"
+                android:textColor="@color/z_white"
+                android:textSize="@dimen/z_font_medium"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 
 </android.support.design.widget.AppBarLayout>

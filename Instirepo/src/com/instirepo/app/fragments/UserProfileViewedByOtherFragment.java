@@ -331,16 +331,16 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
 		progressLayoutContainer.setLayoutParams(params);
 
-		designation.setText(obj.getDesignation());
-		branch.setText("Branch : " + obj.getBranch());
-		batch.setText("Batch : " + obj.getBatch());
-		year.setText("Year : " + obj.getYear());
+		designation.setText(mData.getDesignation());
+		branch.setText("Branch : " + mData.getBranch());
+		batch.setText("Batch : " + mData.getBatch());
+		year.setText("Year : " + mData.getYear());
 		numberOfPosts.setText("Number of Posts Posted : "
-				+ obj.getNumber_of_posts());
+				+ mData.getNumber_of_posts());
 		numberOfUpvotes.setText("Number of Upvotes Received : "
-				+ obj.getUpvotes());
+				+ mData.getUpvotes());
 		numberOfDownvotes.setText("Number of Downvotes Received : "
-				+ obj.getDownvotes());
+				+ mData.getDownvotes());
 
 		if (isViewerSameAsUser) {
 			voteUserLayout.setVisibility(View.GONE);
@@ -364,7 +364,7 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 
 		about.setText(obj.getAbout());
 
-		if (obj.getEmail() == null || obj.getEmail().trim().length() == 0) {
+		if (mData.getEmail() == null || mData.getEmail().trim().length() == 0) {
 			emailDivider.setVisibility(View.GONE);
 			emailUser.setVisibility(View.GONE);
 		} else {
@@ -372,9 +372,10 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 			emailUser.setOnClickListener(this);
 		}
 
-		if (obj.getPhone() == null || obj.getPhone().trim().length() == 0) {
+		if (mData.getPhone() == null || mData.getPhone().trim().length() == 0) {
 			callUser.setVisibility(View.GONE);
 		} else {
+			callUser.setText("Call : " + mData.getPhone());
 			callUser.setOnClickListener(this);
 		}
 
@@ -384,20 +385,20 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 			contactUserLayout.setVisibility(View.GONE);
 		}
 
-		messageOnInstirepo
-				.setText("Message " + obj.getName() + " on INSTIREPO");
+		messageOnInstirepo.setText("Message " + mData.getName()
+				+ " on INSTIREPO");
 		messageOnInstirepo.setOnClickListener(this);
 
-		if (obj.isHas_downvoted()) {
+		if (mData.isHas_downvoted()) {
 			downVoteButton.setSelected(true);
-		} else if (obj.isHas_upvoted()) {
+		} else if (mData.isHas_upvoted()) {
 			upvoteButton.setSelected(true);
 		}
 
-		upvotDownVoteIndicatorText.setText((obj.getUpvotes() - obj
+		upvotDownVoteIndicatorText.setText((mData.getUpvotes() - mData
 				.getDownvotes()) + "");
 
-		if (obj.isIs_professor() || obj.isIs_senior_professor()) {
+		if (mData.isIs_professor() || mData.isIs_senior_professor()) {
 			downVoteButton.setVisibility(View.GONE);
 		}
 	}
@@ -592,6 +593,13 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		case R.id.emailuser:
 			((BaseActivity) getActivity()).sendEmailIntentUsingToAction(mData
 					.getEmail());
+			break;
+		case R.id.calluser:
+			Intent intent = new Intent(Intent.ACTION_CALL);
+			intent.setData(Uri.parse("tel:" + mData.getPhone()));
+			if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+				startActivity(intent);
+			}
 			break;
 
 		default:
