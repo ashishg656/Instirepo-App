@@ -306,7 +306,7 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 
 						adapter.addSingleComment(commentObject);
 						adapter.notifyDataSetChanged();
-						listView.scrollTo(0, 0);
+						listView.setSelectionAfterHeaderView();
 					}
 				}, new ErrorListener() {
 

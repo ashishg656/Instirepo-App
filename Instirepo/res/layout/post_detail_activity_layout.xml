@@ -209,8 +209,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/post_Detail_seen_by_list_height"
                     android:clipToPadding="false"
-                    android:paddingLeft="@dimen/z_margin_large"
-                    android:paddingRight="@dimen/z_margin_large"
+                    android:paddingLeft="@dimen/z_margin_medium"
+                    android:paddingRight="@dimen/z_margin_small"
                     android:scrollbars="none" />
 
                 <View

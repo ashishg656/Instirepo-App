@@ -266,6 +266,7 @@
                                     android:background="@color/z_grey_shade_2" />
 
                                 <TextView
+                                    android:id="@+id/downloadresuem"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="?attr/selectableItemBackground"

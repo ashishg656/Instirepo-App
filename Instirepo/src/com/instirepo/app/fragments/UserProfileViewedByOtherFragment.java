@@ -5,7 +5,9 @@ import java.util.Map;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.VelocityTrackerCompat;
 import android.support.v7.graphics.Palette;
@@ -85,7 +87,7 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 	TextView userName, designation, about, branch, batch, year, numberOfPosts,
 			numberOfUpvotes, numberOfDownvotes, editProfile, blockUser,
 			messageOnInstirepo, emailUser, callUser,
-			upvotDownVoteIndicatorText;
+			upvotDownVoteIndicatorText, downloadResume;
 	View messageDivider, emailDivider;
 	LinearLayout voteUserLayout, contactUserLayout, resumeLayout;
 	FrameLayout upvoteButton, downVoteButton;
@@ -153,6 +155,7 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 				.findViewById(R.id.downupvotepostprogress);
 		downvotePostImage = (ImageView) v.findViewById(R.id.downvotepostimage);
 		upvotePostImage = (ImageView) v.findViewById(R.id.upvotepostimage);
+		downloadResume = (TextView) v.findViewById(R.id.downloadresuem);
 
 		return v;
 	}
@@ -351,6 +354,7 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 
 		editProfile.setOnClickListener(this);
 		blockUser.setOnClickListener(this);
+		downloadResume.setOnClickListener(this);
 
 		setTextInBlockUserTextViewBasedOnBoolean();
 
@@ -573,6 +577,11 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		case R.id.messageoninstiepo:
 			((BaseActivity) getActivity()).openUserChatWithPersonUserActivity(
 					userId, mData.getName(), mData.getImage());
+			break;
+		case R.id.downloadresuem:
+			Intent i = new Intent(Intent.ACTION_VIEW);
+			i.setData(Uri.parse(mData.getResume()));
+			startActivity(i);
 			break;
 
 		default:
