@@ -2,6 +2,7 @@ package com.instirepo.app.fragments;
 
 import com.instirepo.app.R;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,20 @@ public class LaunchScreen3Fragment extends BaseFragment {
 				.getLayoutParams();
 		p.height = deviceWidth;
 		iconsContainer.setLayoutParams(p);
+
+		GradientDrawable gd = (GradientDrawable) rootView.findViewById(
+				R.id.firstimage).getBackground();
+		gd.setColor(getActivity().getResources().getColor(
+				R.color.z_red_color_primary));
+
+		gd = (GradientDrawable) rootView.findViewById(R.id.secondimage)
+				.getBackground();
+		gd.setColor(getActivity().getResources().getColor(
+				R.color.z_green_color_primary));
+
+		gd = (GradientDrawable) rootView.findViewById(R.id.fourthimage)
+				.getBackground();
+		gd.setColor(getActivity().getResources().getColor(R.color.orange_post));
 	}
 
 }

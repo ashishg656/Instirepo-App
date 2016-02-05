@@ -1,11 +1,12 @@
 package com.instirepo.app.fragments;
 
-import com.instirepo.app.R;
-
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.instirepo.app.R;
 
 public class LaunchScreen1Fragment extends BaseFragment {
 
@@ -29,6 +30,33 @@ public class LaunchScreen1Fragment extends BaseFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
+		GradientDrawable gd = (GradientDrawable) rootView.findViewById(
+				R.id.bulbimage).getBackground();
+		gd.setColor(getActivity().getResources().getColor(
+				R.color.z_red_color_primary));
+
+		gd = (GradientDrawable) rootView.findViewById(R.id.eventimage)
+				.getBackground();
+		gd.setColor(getActivity().getResources().getColor(R.color.orange_post));
+
+		gd = (GradientDrawable) rootView.findViewById(R.id.newsimage)
+				.getBackground();
+		gd.setColor(getActivity().getResources().getColor(R.color.orange_post));
+
+		gd = (GradientDrawable) rootView.findViewById(R.id.shoppingimage)
+				.getBackground();
+		gd.setColor(getActivity().getResources().getColor(R.color.purple_post));
+
+		gd = (GradientDrawable) rootView.findViewById(R.id.shareimage)
+				.getBackground();
+		gd.setColor(getActivity().getResources().getColor(
+				R.color.PrimaryDarkColor));
+
+		gd = (GradientDrawable) rootView.findViewById(R.id.readimage)
+				.getBackground();
+		gd.setColor(getActivity().getResources().getColor(
+				R.color.home_viewpager_color_1));
 	}
 
 }

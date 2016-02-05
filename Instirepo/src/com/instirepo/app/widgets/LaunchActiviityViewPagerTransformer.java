@@ -51,7 +51,7 @@ public class LaunchActiviityViewPagerTransformer implements
 				* deviceWidth);
 		animationForFirstFragmentImages(R.id.shareimage, view, position, -0.5f
 				* deviceWidth);
-		animationForFirstFragmentImages(R.id.bulbimage, view, position, -1f
+		animationForFirstFragmentImages(R.id.bulbimage, view, position, -0.8f
 				* deviceWidth);
 	}
 
