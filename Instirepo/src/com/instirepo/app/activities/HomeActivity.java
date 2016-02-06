@@ -10,7 +10,6 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
@@ -61,6 +60,7 @@ import com.instirepo.app.floatingactionbutton.FloatingActionMenu;
 import com.instirepo.app.fragments.CommentsFragment;
 import com.instirepo.app.fragments.PostsByStudentsFragment;
 import com.instirepo.app.fragments.PostsByTeachersFragment;
+import com.instirepo.app.fragments.ProductsCategoriesFragment;
 import com.instirepo.app.fragments.SeenByPeopleFragment;
 import com.instirepo.app.fragments.SelectPostCategoryFragment;
 import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
@@ -362,21 +362,26 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 			Bundle bundle = new Bundle();
 			if (pos == 0)
 				return PostsByTeachersFragment.newInstance(bundle);
-			else
+			else if (pos == 1)
 				return PostsByStudentsFragment.newInstance(bundle);
+			else
+				return ProductsCategoriesFragment.newInstance(bundle);
 		}
 
 		@Override
 		public int getCount() {
-			return 2;
+			return 3;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
 			if (position == 0) {
 				return "Posts By Teachers";
-			} else
+			} else if (position == 1) {
 				return "Posts By Students";
+			} else {
+				return "Products";
+			}
 		}
 	}
 
