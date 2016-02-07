@@ -120,9 +120,11 @@ public class NotificationsListAdapter extends BaseAdapter {
 			switch (v.getId()) {
 			case R.id.notificationmaincontainer:
 				int pos = (int) v.getTag(R.integer.z_select_post_tag_position);
-				Intent i = new Intent(context, PostDetailActivity.class);
-				i.putExtra("postid", mData.get(pos).getPost_id());
-				context.startActivity(i);
+				if (!mData.get(pos).isGeneral_notification()) {
+					Intent i = new Intent(context, PostDetailActivity.class);
+					i.putExtra("postid", mData.get(pos).getPost_id());
+					context.startActivity(i);
+				}
 				break;
 
 			default:
