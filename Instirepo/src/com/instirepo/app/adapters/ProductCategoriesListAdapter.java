@@ -3,7 +3,7 @@ package com.instirepo.app.adapters;
 import java.util.List;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
+import android.graphics.Paint;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -184,6 +184,9 @@ public class ProductCategoriesListAdapter extends
 			holder.name.setText(mData.get(pos).getName());
 			holder.price.setText("₹ " + mData.get(pos).getPrice());
 			holder.mrp.setText("₹ " + mData.get(pos).getMrp());
+
+			holder.mrp.setPaintFlags(holder.mrp.getPaintFlags()
+					| Paint.STRIKE_THRU_TEXT_FLAG);
 		}
 
 		@Override

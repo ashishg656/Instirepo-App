@@ -4,7 +4,7 @@
     android:layout_width="@dimen/product_Category_list_item_width"
     android:layout_height="match_parent"
     android:layout_marginRight="@dimen/z_margin_mini"
-    android:background="@drawable/ic_cart_bg_shadow"
+    android:background="@drawable/ic_shadow_card"
     android:orientation="vertical" >
 
     <FrameLayout
