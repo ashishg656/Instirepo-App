@@ -47,6 +47,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/product_Category_list_height"
         android:layout_marginTop="@dimen/z_margin_mini"
+        android:clickable="false"
+        android:paddingLeft="@dimen/z_margin_medium"
+        android:paddingRight="@dimen/z_margin_small"
         android:scrollbars="none" />
 
 </LinearLayout>

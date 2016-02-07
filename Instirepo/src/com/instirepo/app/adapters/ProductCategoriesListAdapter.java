@@ -13,8 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.instirepo.app.R;
+import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.objects.ProductCategoriesListObject;
 import com.instirepo.app.objects.ProductObjectSingle;
+import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.RoundedImageView;
 
 public class ProductCategoriesListAdapter extends
@@ -137,8 +139,14 @@ public class ProductCategoriesListAdapter extends
 		}
 
 		@Override
-		public void onBindViewHolder(ViewHolder arg0, int arg1) {
-
+		public void onBindViewHolder(ViewHolder holderCOm, int pos) {
+			ProductHolder holder = (ProductHolder) holderCOm;
+			ImageRequestManager.get(context).requestImage(context,
+					holder.image,
+					ZApplication.getImageUrl(mData.get(pos).getImage()), -1);
+			holder.name.setText(mData.get(pos).getName());
+			holder.price.setText("₹ " + mData.get(pos).getPrice());
+			holder.mrp.setText("₹ " + mData.get(pos).getMrp());
 		}
 
 		@Override
@@ -154,8 +162,15 @@ public class ProductCategoriesListAdapter extends
 
 		class ProductHolder extends RecyclerView.ViewHolder {
 
+			TextView name, mrp, price;
+			RoundedImageView image;
+
 			public ProductHolder(View v) {
 				super(v);
+				name = (TextView) v.findViewById(R.id.productname);
+				mrp = (TextView) v.findViewById(R.id.productmrp);
+				price = (TextView) v.findViewById(R.id.productprice);
+				image = (RoundedImageView) v.findViewById(R.id.productimage);
 			}
 		}
 	}
