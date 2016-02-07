@@ -3,12 +3,14 @@ package com.instirepo.app.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -35,6 +37,10 @@ public class ProductCategoriesListAdapter extends
 			Context activity) {
 		this.context = activity;
 		this.mData = obj;
+		heightOfCategory = context.getResources().getDisplayMetrics().widthPixels
+				/ 2
+				- context.getResources().getDimensionPixelSize(
+						R.dimen.z_margin_small);
 	}
 
 	@Override
@@ -59,7 +65,19 @@ public class ProductCategoriesListAdapter extends
 	@Override
 	public void onBindViewHolder(ViewHolder holderCOm, int pos) {
 		if (getItemViewType(pos) == ITEM_CATEGORY) {
+			pos = pos - 1;
+			CategoriesHolder holder = (CategoriesHolder) holderCOm;
+			ImageRequestManager.get(context).requestImage(
+					context,
+					holder.image,
+					ZApplication.getImageUrl(mData.getCategories().get(pos)
+							.getImage()), 0);
+			holder.name.setText(mData.getCategories().get(pos).getName());
 
+			GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) holder.container
+					.getLayoutParams();
+			params.height = heightOfCategory;
+			holder.container.setLayoutParams(params);
 		} else if (getItemViewType(pos) == ITEM_RECENTLY_VIEWED) {
 			TrendingProductsHolder holder = (TrendingProductsHolder) holderCOm;
 			holder.recyclerView.setLayoutManager(new LinearLayoutManager(
@@ -68,6 +86,8 @@ public class ProductCategoriesListAdapter extends
 					mData.getRecently_viewed()));
 
 			holder.heading.setText("Recently Viewed Products");
+
+			holder.shopByCategoriesText.setVisibility(View.GONE);
 		} else if (getItemViewType(pos) == ITEM_TRENDING) {
 			TrendingProductsHolder holder = (TrendingProductsHolder) holderCOm;
 			holder.recyclerView.setLayoutManager(new LinearLayoutManager(
@@ -76,6 +96,8 @@ public class ProductCategoriesListAdapter extends
 					mData.getTrending_products()));
 
 			holder.heading.setText("Trending Products");
+
+			holder.shopByCategoriesText.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -101,7 +123,7 @@ public class ProductCategoriesListAdapter extends
 
 		RecyclerView recyclerView;
 		LinearLayout viewMore;
-		TextView heading;
+		TextView heading, shopByCategoriesText;
 
 		public TrendingProductsHolder(View v) {
 			super(v);
@@ -109,6 +131,8 @@ public class ProductCategoriesListAdapter extends
 					.findViewById(R.id.postsbyreachersrecyclef);
 			viewMore = (LinearLayout) v.findViewById(R.id.viewmorelayout);
 			heading = (TextView) v.findViewById(R.id.viewmorehading);
+			shopByCategoriesText = (TextView) v
+					.findViewById(R.id.shopbyCategories);
 		}
 	}
 
@@ -116,11 +140,13 @@ public class ProductCategoriesListAdapter extends
 
 		RoundedImageView image;
 		TextView name;
+		FrameLayout container;
 
 		public CategoriesHolder(View v) {
 			super(v);
 			image = (RoundedImageView) v.findViewById(R.id.categoryimage);
 			name = (TextView) v.findViewById(R.id.categoryname);
+			container = (FrameLayout) v.findViewById(R.id.containergridselect);
 		}
 	}
 

@@ -4,7 +4,7 @@
     android:layout_width="@dimen/product_Category_list_item_width"
     android:layout_height="match_parent"
     android:layout_marginRight="@dimen/z_margin_mini"
-    android:background="@drawable/ic_shadow_card"
+    android:background="@drawable/ic_cart_bg_shadow"
     android:orientation="vertical" >
 
     <FrameLayout
@@ -32,8 +32,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="2dp"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:paddingTop="2dp" >
 
                 <TextView

@@ -46,10 +46,24 @@
         android:id="@+id/postsbyreachersrecyclef"
         android:layout_width="match_parent"
         android:layout_height="@dimen/product_Category_list_height"
-        android:layout_marginTop="@dimen/z_margin_mini"
-        android:clickable="false"
-        android:paddingLeft="@dimen/z_margin_medium"
-        android:paddingRight="@dimen/z_margin_small"
+        android:layout_marginTop="4dp"
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/z_margin_small"
+        android:paddingRight="@dimen/z_margin_mini"
         android:scrollbars="none" />
+
+    <TextView
+        android:id="@+id/shopbyCategories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/z_margin_medium"
+        android:layout_marginTop="22dp"
+        android:includeFontPadding="false"
+        android:paddingLeft="@dimen/z_margin_medium"
+        android:paddingRight="@dimen/z_margin_medium"
+        android:text="Shop By Categories"
+        android:textColor="@color/z_text_color_dark"
+        android:textSize="@dimen/z_font_mini"
+        android:textStyle="bold" />
 
 </LinearLayout>
