@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res/com.instirepo.app"
-    android:id="@+id/containergridselect"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shadow_bg_shop"
-    android:clickable="true"
-    android:foreground="?attr/selectableItemBackground"
-    android:orientation="vertical" >
+    android:background="@drawable/shadow_bg_shop" >
 
-    <com.instirepo.app.widgets.RoundedImageView
-        android:id="@+id/categoryimage"
+    <FrameLayout
+        android:id="@+id/containergridselect"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        app:riv_corner_radius="2dp" />
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="vertical" >
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/black_bg_with_rounded_corners" />
+        <com.instirepo.app.widgets.RoundedImageView
+            android:id="@+id/categoryimage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="2dp" />
 
-    <TextView
-        android:id="@+id/categoryname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:includeFontPadding="false"
-        android:text="Entertainment"
-        android:textAllCaps="true"
-        android:textColor="@color/z_white"
-        android:textStyle="bold" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/black_bg_with_rounded_corners" />
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/categoryname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:includeFontPadding="false"
+            android:text="Entertainment"
+            android:textAllCaps="true"
+            android:textColor="@color/z_white"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+</LinearLayout>

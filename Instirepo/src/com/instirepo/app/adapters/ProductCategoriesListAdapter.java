@@ -74,7 +74,7 @@ public class ProductCategoriesListAdapter extends
 							.getImage()), 0);
 			holder.name.setText(mData.getCategories().get(pos).getName());
 
-			GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) holder.container
+			LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) holder.container
 					.getLayoutParams();
 			params.height = heightOfCategory;
 			holder.container.setLayoutParams(params);
@@ -88,6 +88,12 @@ public class ProductCategoriesListAdapter extends
 			holder.heading.setText("Recently Viewed Products");
 
 			holder.shopByCategoriesText.setVisibility(View.GONE);
+
+			LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) holder.viewMore
+					.getLayoutParams();
+			params.topMargin = context.getResources().getDimensionPixelSize(
+					R.dimen.z_margin_mini);
+			holder.viewMore.setLayoutParams(params);
 		} else if (getItemViewType(pos) == ITEM_TRENDING) {
 			TrendingProductsHolder holder = (TrendingProductsHolder) holderCOm;
 			holder.recyclerView.setLayoutManager(new LinearLayoutManager(
@@ -98,6 +104,11 @@ public class ProductCategoriesListAdapter extends
 			holder.heading.setText("Trending Products");
 
 			holder.shopByCategoriesText.setVisibility(View.VISIBLE);
+
+			LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) holder.viewMore
+					.getLayoutParams();
+			params.topMargin = 0;
+			holder.viewMore.setLayoutParams(params);
 		}
 	}
 
