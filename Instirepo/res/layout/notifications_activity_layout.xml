@@ -18,7 +18,9 @@
                 android:id="@+id/notificatinslist"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clipToPadding="false"
                 android:divider="@null"
+                android:paddingTop="@dimen/z_margin_mini"
                 android:scrollbars="none" />
 
             <include layout="@layout/error_layout" />
