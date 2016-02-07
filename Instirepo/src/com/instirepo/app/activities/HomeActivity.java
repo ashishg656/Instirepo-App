@@ -196,6 +196,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		setDrawerActionBarToggle();
 		setDrawerItemClickListener();
 		viewPager.setOnPageChangeListener(this);
+		viewPager.setOffscreenPageLimit(3);
 
 		adapter = new MyPagerAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(adapter);

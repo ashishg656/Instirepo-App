@@ -1,7 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingBottom="@dimen/z_margin_medium"
+        android:paddingLeft="@dimen/z_margin_medium"
+        android:paddingRight="@dimen/z_margin_medium"
+        android:paddingTop="@dimen/z_margin_medium" >
+
+        <TextView
+            android:includeFontPadding="false"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:text="Trending Products"
+            android:textColor="@color/z_text_color_dark"
+            android:textSize="@dimen/z_font_mini" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:includeFontPadding="false"
+            android:paddingBottom="2dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:paddingTop="2dp"
+            android:text="MORE"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="@dimen/z_font_small"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/postsbyreachersrecyclef"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/product_Category_list_height"
+        android:layout_marginTop="@dimen/z_margin_mini"
+        android:scrollbars="none" />
 
 </LinearLayout>

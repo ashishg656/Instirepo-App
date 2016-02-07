@@ -1,19 +1,26 @@
 package com.instirepo.app.fragments;
 
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Cache;
+import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
+import com.instirepo.app.adapters.ProductCategoriesListAdapter;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.objects.ProductCategoriesListObject;
+import com.instirepo.app.objects.ProductObjectSingle;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.serverApi.AppRequestListener;
 import com.instirepo.app.serverApi.CustomStringRequest;
@@ -23,6 +30,9 @@ public class ProductsCategoriesFragment extends BaseFragment implements ZUrls,
 
 	RecyclerView recyclerView;
 	LinearLayoutManager layoutManager;
+
+	ProductCategoriesListAdapter adapter;
+	String url;
 
 	public static ProductsCategoriesFragment newInstance(Bundle b) {
 		ProductsCategoriesFragment frg = new ProductsCategoriesFragment();
@@ -53,7 +63,7 @@ public class ProductsCategoriesFragment extends BaseFragment implements ZUrls,
 	}
 
 	private void loadData() {
-		String url = productCategoriesAndTrendingProducts
+		url = productCategoriesAndTrendingProducts + "user_id="
 				+ ZPreferences.getUserProfileID(getActivity());
 
 		CustomStringRequest req = new CustomStringRequest(Method.POST, url,
@@ -73,8 +83,18 @@ public class ProductsCategoriesFragment extends BaseFragment implements ZUrls,
 	@Override
 	public void onRequestFailed(String requestTag, VolleyError error) {
 		if (requestTag.equals(productCategoriesAndTrendingProducts)) {
-			hideLoadingLayout();
-			showErrorLayout();
+			try {
+				Cache cache = ZApplication.getInstance().getRequestQueue()
+						.getCache();
+				Entry entry = cache.get(url);
+				String data = new String(entry.data, "UTF-8");
+				ProductCategoriesListObject obj = new Gson().fromJson(data,
+						ProductCategoriesListObject.class);
+				setAdapterData(obj);
+			} catch (Exception e) {
+				hideLoadingLayout();
+				showErrorLayout();
+			}
 		}
 	}
 
@@ -86,4 +106,13 @@ public class ProductsCategoriesFragment extends BaseFragment implements ZUrls,
 			setAdapterData(obj);
 		}
 	}
+
+	private void setAdapterData(ProductCategoriesListObject obj) {
+		hideLoadingLayout();
+		hideErrorLayout();
+
+		adapter = new ProductCategoriesListAdapter(obj, getActivity());
+		recyclerView.setAdapter(adapter);
+	}
+
 }

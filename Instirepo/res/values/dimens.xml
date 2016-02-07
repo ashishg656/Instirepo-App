@@ -86,4 +86,7 @@
     <dimen name="post_Detail_seen_by_list_height">60dp</dimen>
     <dimen name="post_Detail_seen_by_list_image_radius">50dp</dimen>
 
+    <!-- product category fragment -->
+    <dimen name="product_Category_list_height">120dp</dimen>
+
 </resources>

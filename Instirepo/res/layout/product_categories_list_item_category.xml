@@ -19,7 +19,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#40000000" />
+        android:background="@drawable/black_bg_with_rounded_corners" />
 
     <TextView
         android:id="@+id/categoryname"
