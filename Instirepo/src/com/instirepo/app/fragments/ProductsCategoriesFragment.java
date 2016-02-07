@@ -1,11 +1,9 @@
 package com.instirepo.app.fragments;
 
-import java.util.List;
-
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.GridLayoutManager.SpanSizeLookup;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import com.instirepo.app.adapters.ProductCategoriesListAdapter;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.objects.ProductCategoriesListObject;
-import com.instirepo.app.objects.ProductObjectSingle;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.serverApi.AppRequestListener;
 import com.instirepo.app.serverApi.CustomStringRequest;
@@ -29,7 +26,7 @@ public class ProductsCategoriesFragment extends BaseFragment implements ZUrls,
 		AppRequestListener {
 
 	RecyclerView recyclerView;
-	LinearLayoutManager layoutManager;
+	GridLayoutManager layoutManager;
 
 	ProductCategoriesListAdapter adapter;
 	String url;
@@ -56,7 +53,17 @@ public class ProductsCategoriesFragment extends BaseFragment implements ZUrls,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		layoutManager = new LinearLayoutManager(getActivity());
+		layoutManager = new GridLayoutManager(getActivity(), 2);
+		layoutManager.setSpanSizeLookup(new SpanSizeLookup() {
+
+			@Override
+			public int getSpanSize(int pos) {
+				if (adapter.getItemViewType(pos) == ProductCategoriesListAdapter.ITEM_CATEGORY) {
+					return 1;
+				} else
+					return 2;
+			}
+		});
 		recyclerView.setLayoutManager(layoutManager);
 
 		loadData();

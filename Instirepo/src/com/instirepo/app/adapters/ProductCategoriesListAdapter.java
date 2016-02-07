@@ -3,11 +3,13 @@ package com.instirepo.app.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.instirepo.app.R;
@@ -21,9 +23,11 @@ public class ProductCategoriesListAdapter extends
 	Context context;
 	ProductCategoriesListObject mData;
 
-	int ITEM_CATEGORY = 0;
-	int ITEM_RECENTLY_VIEWED = 1;
-	int ITEM_TRENDING = 2;
+	public static int ITEM_CATEGORY = 0;
+	public static int ITEM_RECENTLY_VIEWED = 1;
+	public static int ITEM_TRENDING = 2;
+
+	int widthOfProduct, heightOfCategory;
 
 	public ProductCategoriesListAdapter(ProductCategoriesListObject obj,
 			Context activity) {
@@ -55,9 +59,21 @@ public class ProductCategoriesListAdapter extends
 		if (getItemViewType(pos) == ITEM_CATEGORY) {
 
 		} else if (getItemViewType(pos) == ITEM_RECENTLY_VIEWED) {
+			TrendingProductsHolder holder = (TrendingProductsHolder) holderCOm;
+			holder.recyclerView.setLayoutManager(new LinearLayoutManager(
+					context, LinearLayoutManager.HORIZONTAL, false));
+			holder.recyclerView.setAdapter(new TrendingProductsListAdapter(
+					mData.getRecently_viewed()));
 
+			holder.heading.setText("Recently Viewed Products");
 		} else if (getItemViewType(pos) == ITEM_TRENDING) {
+			TrendingProductsHolder holder = (TrendingProductsHolder) holderCOm;
+			holder.recyclerView.setLayoutManager(new LinearLayoutManager(
+					context, LinearLayoutManager.HORIZONTAL, false));
+			holder.recyclerView.setAdapter(new TrendingProductsListAdapter(
+					mData.getTrending_products()));
 
+			holder.heading.setText("Trending Products");
 		}
 	}
 
@@ -81,8 +97,16 @@ public class ProductCategoriesListAdapter extends
 
 	class TrendingProductsHolder extends RecyclerView.ViewHolder {
 
+		RecyclerView recyclerView;
+		LinearLayout viewMore;
+		TextView heading;
+
 		public TrendingProductsHolder(View v) {
 			super(v);
+			recyclerView = (RecyclerView) v
+					.findViewById(R.id.postsbyreachersrecyclef);
+			viewMore = (LinearLayout) v.findViewById(R.id.viewmorelayout);
+			heading = (TextView) v.findViewById(R.id.viewmorehading);
 		}
 	}
 

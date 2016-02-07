@@ -5,6 +5,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/viewmorelayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
@@ -16,14 +17,15 @@
         android:paddingTop="@dimen/z_margin_medium" >
 
         <TextView
-            android:includeFontPadding="false"
+            android:id="@+id/viewmorehading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textStyle="bold"
+            android:includeFontPadding="false"
             android:text="Trending Products"
             android:textColor="@color/z_text_color_dark"
-            android:textSize="@dimen/z_font_mini" />
+            android:textSize="@dimen/z_font_mini"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,7 +38,7 @@
             android:paddingTop="2dp"
             android:text="MORE"
             android:textColor="@color/PrimaryColor"
-            android:textSize="@dimen/z_font_small"
+            android:textSize="@dimen/z_font_mini"
             android:textStyle="bold" />
     </LinearLayout>
 
