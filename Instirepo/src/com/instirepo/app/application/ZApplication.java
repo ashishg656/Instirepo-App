@@ -95,6 +95,10 @@ public class ZApplication extends Application {
 		return "http://hola-instirepo.rhcloud.com/app/";
 	}
 
+	public static String getEcommerceUrl() {
+		return "http://hola-instirepo.rhcloud.com/ecommerce/";
+	}
+
 	public static String getImageUrl(String s) {
 		return "http://hola-instirepo.rhcloud.com" + s;
 	}

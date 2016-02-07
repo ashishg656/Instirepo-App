@@ -2,6 +2,10 @@ package com.instirepo.app.extras;
 
 import com.instirepo.app.application.ZApplication;
 
+/**
+ * @author Ashish Goel
+ * 
+ */
 public interface ZUrls {
 
 	public String loginUrl = ZApplication.getBaseUrl() + "login_request/";
@@ -111,5 +115,14 @@ public interface ZUrls {
 
 	public String postDescriptionPage = ZApplication.getBaseUrl()
 			+ "post_detail_request/";
+
+	/**
+	 * ecommerce urls
+	 * 
+	 */
+
+	public String productCategoriesAndTrendingProducts = ZApplication
+			.getEcommerceUrl()
+			+ "get_all_product_categories_and_trending_and_recent_products/?";
 
 }

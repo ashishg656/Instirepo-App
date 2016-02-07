@@ -10,6 +10,7 @@ public class ProductObjectSingle {
 	int uploader_id;
 	String uploader_name;
 	String uploader_image;
+	String image;
 
 	public int getId() {
 		return id;
