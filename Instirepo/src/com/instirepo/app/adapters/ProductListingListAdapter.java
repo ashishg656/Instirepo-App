@@ -3,6 +3,7 @@ package com.instirepo.app.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
@@ -11,9 +12,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.instirepo.app.R;
+import com.instirepo.app.adapters.ProductCategoriesListAdapter.TrendingProductsListAdapter.ProductHolder;
+import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.objects.ProductObjectSingle;
+import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.CircularImageView;
+import com.instirepo.app.widgets.RoundedImageView;
 
 public class ProductListingListAdapter extends
 		RecyclerView.Adapter<RecyclerView.ViewHolder> implements AppConstants {
@@ -55,7 +60,15 @@ public class ProductListingListAdapter extends
 		pos = holderCommom.getAdapterPosition();
 		if (getItemViewType(pos) == Z_RECYCLER_VIEW_ITEM_NORMAL) {
 			ProductHolder holder = (ProductHolder) holderCommom;
+			ImageRequestManager.get(context).requestImage(context,
+					holder.image,
+					ZApplication.getImageUrl(mData.get(pos).getImage()), -1);
+			holder.name.setText(mData.get(pos).getName());
+			holder.price.setText("₹ " + mData.get(pos).getPrice());
+			holder.mrp.setText("₹ " + mData.get(pos).getMrp());
 
+			holder.mrp.setPaintFlags(holder.mrp.getPaintFlags()
+					| Paint.STRIKE_THRU_TEXT_FLAG);
 		}
 	}
 
@@ -83,14 +96,16 @@ public class ProductListingListAdapter extends
 	}
 
 	class ProductHolder extends RecyclerView.ViewHolder {
-		TextView name, time;
-		CircularImageView image;
+
+		TextView name, mrp, price;
+		RoundedImageView image;
 
 		public ProductHolder(View v) {
 			super(v);
-			name = (TextView) v.findViewById(R.id.seenbyname);
-			image = (CircularImageView) v.findViewById(R.id.seenbyimage);
-			time = (TextView) v.findViewById(R.id.seenbytime);
+			name = (TextView) v.findViewById(R.id.productname);
+			mrp = (TextView) v.findViewById(R.id.productmrp);
+			price = (TextView) v.findViewById(R.id.productprice);
+			image = (RoundedImageView) v.findViewById(R.id.productimage);
 		}
 	}
 

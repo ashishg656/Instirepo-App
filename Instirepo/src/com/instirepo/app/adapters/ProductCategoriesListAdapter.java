@@ -3,26 +3,30 @@ package com.instirepo.app.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.instirepo.app.R;
+import com.instirepo.app.activities.ProductsListingActivity;
 import com.instirepo.app.application.ZApplication;
+import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.objects.ProductCategoriesListObject;
 import com.instirepo.app.objects.ProductObjectSingle;
 import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.RoundedImageView;
 
 public class ProductCategoriesListAdapter extends
-		RecyclerView.Adapter<RecyclerView.ViewHolder> {
+		RecyclerView.Adapter<RecyclerView.ViewHolder> implements AppConstants {
 
 	Context context;
 	ProductCategoriesListObject mData;
@@ -32,6 +36,7 @@ public class ProductCategoriesListAdapter extends
 	public static int ITEM_TRENDING = 2;
 
 	int widthOfProduct, heightOfCategory;
+	MyClickListener clickListerner;
 
 	public ProductCategoriesListAdapter(ProductCategoriesListObject obj,
 			Context activity) {
@@ -41,6 +46,7 @@ public class ProductCategoriesListAdapter extends
 				/ 2
 				- context.getResources().getDimensionPixelSize(
 						R.dimen.z_margin_small);
+		clickListerner = new MyClickListener();
 	}
 
 	@Override
@@ -78,6 +84,9 @@ public class ProductCategoriesListAdapter extends
 					.getLayoutParams();
 			params.height = heightOfCategory;
 			holder.container.setLayoutParams(params);
+
+			holder.container.setTag(pos);
+			holder.container.setOnClickListener(clickListerner);
 		} else if (getItemViewType(pos) == ITEM_RECENTLY_VIEWED) {
 			TrendingProductsHolder holder = (TrendingProductsHolder) holderCOm;
 			holder.recyclerView.setLayoutManager(new LinearLayoutManager(
@@ -211,6 +220,26 @@ public class ProductCategoriesListAdapter extends
 				mrp = (TextView) v.findViewById(R.id.productmrp);
 				price = (TextView) v.findViewById(R.id.productprice);
 				image = (RoundedImageView) v.findViewById(R.id.productimage);
+			}
+		}
+	}
+
+	class MyClickListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.containergridselect:
+				int pos = (int) v.getTag();
+				Intent i = new Intent(context, ProductsListingActivity.class);
+				i.putExtra("typeoflisting", mData.getCategories().get(pos)
+						.getId());
+				i.putExtra("categoryid", LISTING_BY_CATEGORY);
+				context.startActivity(i);
+				break;
+
+			default:
+				break;
 			}
 		}
 	}

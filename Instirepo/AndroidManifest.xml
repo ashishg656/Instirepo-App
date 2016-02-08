@@ -144,6 +144,11 @@
             android:launchMode="singleTask"
             android:theme="@style/BNCNoActionBar" >
         </activity>
+        <activity
+            android:name="com.instirepo.app.activities.ProductsListingActivity"
+            android:label="@string/app_name"
+            android:theme="@style/BNCNoActionBar" >
+        </activity>
 
         <!-- File chooser activity -->
         <activity
