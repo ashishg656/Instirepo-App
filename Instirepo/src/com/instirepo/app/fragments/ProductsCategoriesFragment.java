@@ -30,6 +30,7 @@ public class ProductsCategoriesFragment extends BaseFragment implements ZUrls,
 
 	ProductCategoriesListAdapter adapter;
 	String url;
+	public ProductCategoriesListObject mData;
 
 	public static ProductsCategoriesFragment newInstance(Bundle b) {
 		ProductsCategoriesFragment frg = new ProductsCategoriesFragment();
@@ -115,6 +116,7 @@ public class ProductsCategoriesFragment extends BaseFragment implements ZUrls,
 	}
 
 	private void setAdapterData(ProductCategoriesListObject obj) {
+		mData = obj;
 		hideLoadingLayout();
 		hideErrorLayout();
 

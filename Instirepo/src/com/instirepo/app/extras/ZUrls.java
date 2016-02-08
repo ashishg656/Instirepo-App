@@ -125,4 +125,7 @@ public interface ZUrls {
 			.getEcommerceUrl()
 			+ "get_all_product_categories_and_trending_and_recent_products/?";
 
+	public String productListingByCategory = ZApplication.getEcommerceUrl()
+			+ "get_products_from_category/?";
+
 }

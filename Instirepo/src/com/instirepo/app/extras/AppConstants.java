@@ -32,4 +32,9 @@ public interface AppConstants {
 	public static int Z_CREATE_POST_PUBLIC = 0;
 	public static int Z_CREATE_POST_SELECTED_PEOPLE = 2;
 	public static int Z_CREATE_POST_SAVED_COLLECTION = 1;
+
+	// PRODUCT LISTING ACTIVITY
+	public static int LISTING_BY_CATEGORY = 0;
+	public static int LISTING_BY_TRENDING = 2;
+	public static int LISTING_BY_RECENT = 1;
 }

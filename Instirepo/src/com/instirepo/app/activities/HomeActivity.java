@@ -101,12 +101,15 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 	private GoogleApiClient mGoogleApiClient;
 
 	FrameLayout splashActivityLayout;
+	HashMap<Integer, Fragment> fragmentHashMap;
 
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_activity_layout);
+
+		fragmentHashMap = new HashMap<>();
 
 		fabRevealMargin = getResources().getDimensionPixelSize(
 				R.dimen.z_fab_home_dimension_for_reveal);
@@ -142,6 +145,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		getSupportActionBar().setTitle("Instirepo");
 
 		createPostButton.setOnClickListener(this);
+		findViewById(R.id.sellproduct).setOnClickListener(this);
 
 		floatingActionMenu.setOnMenuButtonClickListener(new OnClickListener() {
 
@@ -361,12 +365,17 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		@Override
 		public Fragment getItem(int pos) {
 			Bundle bundle = new Bundle();
+
+			Fragment fragment = null;
 			if (pos == 0)
-				return PostsByTeachersFragment.newInstance(bundle);
+				fragment = PostsByTeachersFragment.newInstance(bundle);
 			else if (pos == 1)
-				return PostsByStudentsFragment.newInstance(bundle);
+				fragment = PostsByStudentsFragment.newInstance(bundle);
 			else
-				return ProductsCategoriesFragment.newInstance(bundle);
+				fragment = ProductsCategoriesFragment.newInstance(bundle);
+
+			fragmentHashMap.put(pos, fragment);
+			return fragment;
 		}
 
 		@Override
@@ -599,6 +608,15 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 				makeToast("Please Login");
 				Intent i = new Intent(this, LaunchActivity.class);
 				startActivity(i);
+			}
+			break;
+		case R.id.sellproduct:
+			ProductsCategoriesFragment fragment = (ProductsCategoriesFragment) fragmentHashMap
+					.get(2);
+			if (fragment == null || fragment.mData == null) {
+				openSellProductActivity(null);
+			} else {
+				openSellProductActivity(fragment.mData.getCategories());
 			}
 			break;
 		default:

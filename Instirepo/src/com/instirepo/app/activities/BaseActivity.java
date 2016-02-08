@@ -1,5 +1,7 @@
 package com.instirepo.app.activities;
 
+import java.util.List;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.instirepo.app.R;
+import com.instirepo.app.objects.AllPostCategoriesObject.PostCategorySingle;
 import com.instirepo.app.objects.PostListSinglePostObject;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -163,5 +166,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 		Intent emailIntent = new Intent(Intent.ACTION_SENDTO,
 				Uri.parse("mailto:" + Uri.encode(mailTo)));
 		startActivity(Intent.createChooser(emailIntent, "Send email via..."));
+	}
+
+	public void openSellProductActivity(List<PostCategorySingle> categories) {
+
 	}
 }
