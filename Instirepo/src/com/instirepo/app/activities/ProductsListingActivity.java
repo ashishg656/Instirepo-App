@@ -61,6 +61,9 @@ public class ProductsListingActivity extends BaseActivity implements
 			url = productListingByCategory + "user_id="
 					+ ZPreferences.getUserProfileID(this) + "&category_id="
 					+ categoryId;
+		} else if (typeOfListing == LISTING_BY_TRENDING) {
+			url = trendingProductsUrl + "user_id="
+					+ ZPreferences.getUserProfileID(this);
 		}
 
 		recyclerView.addOnScrollListener(new OnScrollListener() {

@@ -128,4 +128,7 @@ public interface ZUrls {
 	public String productListingByCategory = ZApplication.getEcommerceUrl()
 			+ "get_products_from_category/?";
 
+	public String trendingProductsUrl = ZApplication.getEcommerceUrl()
+			+ "get_trending_products/?";
+
 }

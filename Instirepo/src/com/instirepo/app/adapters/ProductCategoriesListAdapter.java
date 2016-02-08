@@ -103,6 +103,9 @@ public class ProductCategoriesListAdapter extends
 			params.topMargin = context.getResources().getDimensionPixelSize(
 					R.dimen.z_margin_mini);
 			holder.viewMore.setLayoutParams(params);
+
+			holder.viewMore.setTag(pos);
+			holder.viewMore.setOnClickListener(clickListerner);
 		} else if (getItemViewType(pos) == ITEM_TRENDING) {
 			TrendingProductsHolder holder = (TrendingProductsHolder) holderCOm;
 			holder.recyclerView.setLayoutManager(new LinearLayoutManager(
@@ -118,6 +121,9 @@ public class ProductCategoriesListAdapter extends
 					.getLayoutParams();
 			params.topMargin = 0;
 			holder.viewMore.setLayoutParams(params);
+
+			holder.viewMore.setTag(pos);
+			holder.viewMore.setOnClickListener(clickListerner);
 		}
 	}
 
@@ -234,6 +240,16 @@ public class ProductCategoriesListAdapter extends
 				Intent i = new Intent(context, ProductsListingActivity.class);
 				i.putExtra("categoryid", mData.getCategories().get(pos).getId());
 				i.putExtra("typeoflisting", LISTING_BY_CATEGORY);
+				context.startActivity(i);
+				break;
+			case R.id.viewmorelayout:
+				pos = (int) v.getTag();
+				i = new Intent(context, ProductsListingActivity.class);
+				if (getItemViewType(pos) == ITEM_RECENTLY_VIEWED) {
+					i.putExtra("typeoflisting", LISTING_BY_RECENT);
+				} else if (getItemViewType(pos) == ITEM_TRENDING) {
+					i.putExtra("typeoflisting", LISTING_BY_TRENDING);
+				}
 				context.startActivity(i);
 				break;
 
