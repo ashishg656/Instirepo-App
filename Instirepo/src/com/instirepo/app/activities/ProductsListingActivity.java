@@ -64,6 +64,9 @@ public class ProductsListingActivity extends BaseActivity implements
 		} else if (typeOfListing == LISTING_BY_TRENDING) {
 			url = trendingProductsUrl + "user_id="
 					+ ZPreferences.getUserProfileID(this);
+		} else if (typeOfListing == LISTING_BY_RECENT) {
+			url = recentProductsUrl + "user_id="
+					+ ZPreferences.getUserProfileID(this);
 		}
 
 		recyclerView.addOnScrollListener(new OnScrollListener() {
