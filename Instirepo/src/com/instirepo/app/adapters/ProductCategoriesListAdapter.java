@@ -232,9 +232,8 @@ public class ProductCategoriesListAdapter extends
 			case R.id.containergridselect:
 				int pos = (int) v.getTag();
 				Intent i = new Intent(context, ProductsListingActivity.class);
-				i.putExtra("typeoflisting", mData.getCategories().get(pos)
-						.getId());
-				i.putExtra("categoryid", LISTING_BY_CATEGORY);
+				i.putExtra("categoryid", mData.getCategories().get(pos).getId());
+				i.putExtra("typeoflisting", LISTING_BY_CATEGORY);
 				context.startActivity(i);
 				break;
 

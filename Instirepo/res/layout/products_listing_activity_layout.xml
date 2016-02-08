@@ -4,30 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/productlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:clipToPadding="false"
+        android:paddingBottom="4dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingTop="62dp"
+        android:scrollbars="none" />
 
-        <include layout="@layout/toolbar_layout" />
+    <include layout="@layout/error_layout" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent" >
+    <include layout="@layout/progress_layout" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/productlist"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingBottom="4dp"
-                android:paddingTop="60dp"
-                android:scrollbars="none" />
+    <include layout="@layout/empty_view_layout" />
 
-            <include layout="@layout/error_layout" />
-
-            <include layout="@layout/progress_layout" />
-        </FrameLayout>
-    </LinearLayout>
+    <include layout="@layout/toolbar_layout" />
 
 </FrameLayout>

@@ -2,26 +2,24 @@ package com.instirepo.app.activities;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.RecyclerView.OnScrollListener;
 
 import com.android.volley.Cache;
-import com.android.volley.VolleyError;
 import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.adapters.ProductListingListAdapter;
-import com.instirepo.app.adapters.SeenByPeopleListAdapter;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.objects.ProductsListingListObject;
-import com.instirepo.app.objects.SeenByPeopleObject;
 import com.instirepo.app.preferences.ZPreferences;
 
 public class ProductsListingActivity extends BaseActivity implements
@@ -136,7 +134,10 @@ public class ProductsListingActivity extends BaseActivity implements
 			isMoreAllowed = true;
 
 		if (adapter == null && obj.getProducts().size() == 0) {
-			// showEmptyListView("No Seens on this post yet", false);
+			showEmptyListView("No Products", false);
+			hideErrorLayout();
+		} else {
+			hideEmptyListCase();
 		}
 
 		if (adapter == null) {
