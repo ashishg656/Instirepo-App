@@ -130,8 +130,11 @@ public interface ZUrls {
 
 	public String trendingProductsUrl = ZApplication.getEcommerceUrl()
 			+ "get_trending_products/?";
-	
+
 	public String recentProductsUrl = ZApplication.getEcommerceUrl()
 			+ "get_recent_products/?";
+
+	public String getProductDetailUrl = ZApplication.getEcommerceUrl()
+			+ "get_product_detail/?";
 
 }

@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.instirepo.app.R;
+import com.instirepo.app.activities.BaseActivity;
 import com.instirepo.app.activities.ProductsListingActivity;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.AppConstants;
@@ -92,7 +93,7 @@ public class ProductCategoriesListAdapter extends
 			holder.recyclerView.setLayoutManager(new LinearLayoutManager(
 					context, LinearLayoutManager.HORIZONTAL, false));
 			holder.recyclerView.setAdapter(new TrendingProductsListAdapter(
-					mData.getRecently_viewed()));
+					mData.getRecently_viewed(), getItemViewType(pos)));
 
 			holder.heading.setText("Recently Viewed Products");
 
@@ -111,7 +112,7 @@ public class ProductCategoriesListAdapter extends
 			holder.recyclerView.setLayoutManager(new LinearLayoutManager(
 					context, LinearLayoutManager.HORIZONTAL, false));
 			holder.recyclerView.setAdapter(new TrendingProductsListAdapter(
-					mData.getTrending_products()));
+					mData.getTrending_products(), getItemViewType(pos)));
 
 			holder.heading.setText("Trending Products");
 
@@ -180,8 +181,11 @@ public class ProductCategoriesListAdapter extends
 			RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 		List<ProductObjectSingle> mData;
+		int itemType;
 
-		public TrendingProductsListAdapter(List<ProductObjectSingle> data) {
+		public TrendingProductsListAdapter(List<ProductObjectSingle> data,
+				int itemType) {
+			this.itemType = itemType;
 			this.mData = data;
 		}
 
@@ -202,6 +206,12 @@ public class ProductCategoriesListAdapter extends
 
 			holder.mrp.setPaintFlags(holder.mrp.getPaintFlags()
 					| Paint.STRIKE_THRU_TEXT_FLAG);
+
+			holder.containerLayout.setTag(R.integer.z_select_post_tag_holder,
+					itemType);
+			holder.containerLayout.setTag(R.integer.z_select_post_tag_position,
+					pos);
+			holder.containerLayout.setOnClickListener(clickListerner);
 		}
 
 		@Override
@@ -219,6 +229,7 @@ public class ProductCategoriesListAdapter extends
 
 			TextView name, mrp, price;
 			RoundedImageView image;
+			FrameLayout containerLayout;
 
 			public ProductHolder(View v) {
 				super(v);
@@ -226,6 +237,8 @@ public class ProductCategoriesListAdapter extends
 				mrp = (TextView) v.findViewById(R.id.productmrp);
 				price = (TextView) v.findViewById(R.id.productprice);
 				image = (RoundedImageView) v.findViewById(R.id.productimage);
+				containerLayout = (FrameLayout) v
+						.findViewById(R.id.productcontainerlayout);
 			}
 		}
 	}
@@ -251,6 +264,17 @@ public class ProductCategoriesListAdapter extends
 					i.putExtra("typeoflisting", LISTING_BY_TRENDING);
 				}
 				context.startActivity(i);
+				break;
+			case R.id.productcontainerlayout:
+				int type = (int) v.getTag(R.integer.z_select_post_tag_holder);
+				pos = (int) v.getTag(R.integer.z_select_post_tag_position);
+				if (type == ITEM_RECENTLY_VIEWED) {
+					((BaseActivity) context).openProductDetailActivity(mData
+							.getRecently_viewed().get(pos).getId());
+				} else if (type == ITEM_TRENDING) {
+					((BaseActivity) context).openProductDetailActivity(mData
+							.getTrending_products().get(pos).getId());
+				}
 				break;
 
 			default:

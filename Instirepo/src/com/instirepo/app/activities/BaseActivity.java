@@ -171,4 +171,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 	public void openSellProductActivity(List<PostCategorySingle> categories) {
 
 	}
+
+	public void openProductDetailActivity(int productId) {
+		Intent i = new Intent(this, ProductDetailActivity.class);
+		i.putExtra("productid", productId);
+		startActivity(i);
+	}
 }
