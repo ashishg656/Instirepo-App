@@ -3,3 +3,5 @@ Instirepo is a platform where students and teachers can share notes, knowledge, 
 While uploading post, user can choose category among events, polls or general posts and based on the category selected, corresponding layout is shown.
 Also, there is a ecommerce part in this application, where users can upload products that they want to sell and then other users can contact them through the app ir they want to purchase that product.
 Complete application can be run offline(if data available in cache i.e viewed at least once). 
+Implemented material design, pleasing animations and Django for backend.
+Included animations as seen in Google Play Newsstand, Yahoo News Digest. Made use of circular reveal animation to create nice visual animation effects. 
