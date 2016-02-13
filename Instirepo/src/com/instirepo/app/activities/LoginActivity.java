@@ -33,7 +33,7 @@ public class LoginActivity extends BaseActivity {
 	public void setSecondFragmentForTeacherDetails() {
 		getSupportFragmentManager()
 				.beginTransaction()
-				.replace(
+				.add(
 						R.id.fragmentcontainer,
 						LoginScreenTeacherDetailsFragment
 								.newInstance(new Bundle())).addToBackStack("1")
@@ -43,7 +43,7 @@ public class LoginActivity extends BaseActivity {
 	public void setSecondFragmentForStudentDetails() {
 		getSupportFragmentManager()
 				.beginTransaction()
-				.replace(
+				.add(
 						R.id.fragmentcontainer,
 						LoginScreenStudentDetailsFragment
 								.newInstance(new Bundle())).addToBackStack("1")
