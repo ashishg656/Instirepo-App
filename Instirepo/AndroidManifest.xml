@@ -102,7 +102,7 @@
         <activity
             android:name="com.instirepo.app.activities.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/BNCNoActionBar" >
+            android:theme="@style/BNCNoActionBarWithColorAccent" >
         </activity>
         <activity
             android:name="com.instirepo.app.activities.HomeActivity"

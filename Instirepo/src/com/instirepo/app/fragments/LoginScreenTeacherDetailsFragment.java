@@ -204,6 +204,7 @@ public class LoginScreenTeacherDetailsFragment extends BaseFragment implements
 								.get(branchSpinner.getSelectedItemPosition() - 1)
 								.getBranch_id()
 								+ "");
+				p.put("teacher_registration", Boolean.toString(true));
 				return p;
 			}
 		};
