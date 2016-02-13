@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -48,7 +49,7 @@ import com.instirepo.app.widgets.CircularImageView;
 import com.instirepo.app.widgets.PagerSlidingTabStrip;
 
 public class UserProfileActivity extends BaseActivity implements AppConstants,
-		OnPageChangeListener {
+		OnPageChangeListener, OnClickListener {
 
 	public int headerHeight, deviceHeight, deviceWidth;
 	ViewPager viewPager;
@@ -137,6 +138,8 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 			viewPager.setCurrentItem(position, false);
 		} catch (Exception e) {
 		}
+
+		findViewById(R.id.backbuttonfake).setOnClickListener(this);
 
 		setDataBeforeLoadingFromServer();
 	}
@@ -524,4 +527,14 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 		}
 	}
 
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.backbuttonfake:
+			super.onBackPressed();
+			break;
+		default:
+			break;
+		}
+	}
 }

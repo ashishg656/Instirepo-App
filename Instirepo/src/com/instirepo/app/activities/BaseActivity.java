@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -176,5 +177,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 		Intent i = new Intent(this, ProductDetailActivity.class);
 		i.putExtra("productid", productId);
 		startActivity(i);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			super.onBackPressed();
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

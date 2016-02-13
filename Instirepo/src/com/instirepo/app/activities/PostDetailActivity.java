@@ -140,6 +140,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 		upvoteImage.setOnClickListener(this);
 		downvoteImage.setOnClickListener(this);
 		savePostImage.setOnClickListener(this);
+		findViewById(R.id.backbuttonfake).setOnClickListener(this);
 
 		if (getIntent().hasExtra("postobj")) {
 			mData = getIntent().getExtras().getParcelable("postobj");
@@ -435,6 +436,9 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 			break;
 		case R.id.followpostlayout:
 			followPostRequest();
+			break;
+		case R.id.backbuttonfake:
+			super.onBackPressed();
 			break;
 
 		default:

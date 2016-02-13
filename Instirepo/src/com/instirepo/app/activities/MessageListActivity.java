@@ -97,6 +97,8 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 		sendButton.setImageResource(R.drawable.ic_send_grey_fab);
 
 		findViewById(R.id.openuserprofilepost).setOnClickListener(this);
+		findViewById(R.id.ic_navigation_arrow_back_white).setOnClickListener(
+				this);
 
 		sendMessageEditText.addTextChangedListener(new TextWatcher() {
 
@@ -338,6 +340,9 @@ public class MessageListActivity extends BaseActivity implements AppConstants,
 		case R.id.openuserprofilepost:
 			switchToUserProfileViewedByOtherFragment(
 					Integer.parseInt(personID), personName, personImage);
+			break;
+		case R.id.ic_navigation_arrow_back_white:
+			super.onBackPressed();
 			break;
 
 		default:

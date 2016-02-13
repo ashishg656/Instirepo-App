@@ -8,10 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.instirepo.app.R;
+import com.instirepo.app.activities.BaseActivity;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.objects.ProductObjectSingle;
@@ -24,6 +27,7 @@ public class ProductListingListAdapter extends
 	Context context;
 	boolean isMoreAllowed;
 	List<ProductObjectSingle> mData;
+	MyClickListener clickListener;
 
 	public ProductListingListAdapter(Context context,
 			List<ProductObjectSingle> mData, boolean isMoreAllowed) {
@@ -31,6 +35,7 @@ public class ProductListingListAdapter extends
 		this.context = context;
 		this.mData = mData;
 		this.isMoreAllowed = isMoreAllowed;
+		clickListener = new MyClickListener();
 	}
 
 	public void addData(List<ProductObjectSingle> objs, boolean isMoreAllowed2) {
@@ -67,6 +72,10 @@ public class ProductListingListAdapter extends
 
 			holder.mrp.setPaintFlags(holder.mrp.getPaintFlags()
 					| Paint.STRIKE_THRU_TEXT_FLAG);
+
+			holder.containerLayout.setTag(R.integer.z_select_post_tag_position,
+					pos);
+			holder.containerLayout.setOnClickListener(clickListener);
 		}
 	}
 
@@ -97,6 +106,7 @@ public class ProductListingListAdapter extends
 
 		TextView name, mrp, price;
 		RoundedImageView image;
+		FrameLayout containerLayout;
 
 		public ProductHolder(View v) {
 			super(v);
@@ -104,7 +114,24 @@ public class ProductListingListAdapter extends
 			mrp = (TextView) v.findViewById(R.id.productmrp);
 			price = (TextView) v.findViewById(R.id.productprice);
 			image = (RoundedImageView) v.findViewById(R.id.productimage);
+			containerLayout = (FrameLayout) v
+					.findViewById(R.id.productcontainerlayout);
 		}
 	}
 
+	class MyClickListener implements OnClickListener {
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.productcontainerlayout:
+				int pos = (int) v.getTag(R.integer.z_select_post_tag_position);
+				((BaseActivity) context).openProductDetailActivity(mData.get(
+						pos).getId());
+				break;
+
+			default:
+				break;
+			}
+		}
+	}
 }

@@ -58,6 +58,7 @@
             android:orientation="horizontal" >
 
             <FrameLayout
+                android:id="@+id/backbuttonfake"
                 android:layout_width="@dimen/z_toolbar_height"
                 android:layout_height="match_parent"
                 android:clickable="true"

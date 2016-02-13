@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -540,5 +541,13 @@ public class CreatePostActivity extends BaseActivity implements AppConstants,
 		req.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
 				DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 		ZApplication.getInstance().addToRequestQueue(req, uploadPostUrl);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			onBackPressed();
+		}
+		return true;
 	}
 }

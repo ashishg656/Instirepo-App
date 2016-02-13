@@ -13,6 +13,7 @@
         android:orientation="horizontal" >
 
         <LinearLayout
+            android:id="@+id/ic_navigation_arrow_back_white"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:background="@drawable/z_user_profile_article_bg_selector"

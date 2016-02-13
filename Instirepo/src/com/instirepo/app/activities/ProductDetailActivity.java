@@ -9,15 +9,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.android.volley.VolleyError;
+import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.AppConstants;
@@ -48,6 +50,10 @@ public class ProductDetailActivity extends BaseActivity implements
 	ProductObjectSingle mData;
 	String url;
 
+	ImagesPagerAdapter adapter;
+	ViewPager viewPager;
+	int deviceWidth;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,6 +73,14 @@ public class ProductDetailActivity extends BaseActivity implements
 		appbarContainer = (FrameLayout) findViewById(R.id.appbarcontainer);
 		scrollView = (ObservableScrollView) findViewById(R.id.postdetailscrollview);
 		bookImageDividerView = (View) findViewById(R.id.boomimagivideview);
+		viewPager = (ViewPager) findViewById(R.id.postimage);
+
+		// deviceWidth = getResources().getDisplayMetrics().widthPixels;
+		// FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)
+		// viewPager
+		// .getLayoutParams();
+		// params.height = deviceWidth;
+		// viewPager.setLayoutParams(params);
 
 		scrollView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new OnGlobalLayoutListener() {
@@ -93,6 +107,8 @@ public class ProductDetailActivity extends BaseActivity implements
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle("");
 
+		findViewById(R.id.backbuttonfake).setOnClickListener(this);
+
 		appbarContainer.setTranslationY(-toolbarHeight);
 
 		scrollView.setScrollListnerer(this);
@@ -118,6 +134,9 @@ public class ProductDetailActivity extends BaseActivity implements
 		addImageInArraylistIfNotNull(mData.getImage6());
 		addImageInArraylistIfNotNull(mData.getImage7());
 		addImageInArraylistIfNotNull(mData.getImage8());
+
+		adapter = new ImagesPagerAdapter();
+		viewPager.setAdapter(adapter);
 	}
 
 	private void addImageInArraylistIfNotNull(String image) {
@@ -134,7 +153,7 @@ public class ProductDetailActivity extends BaseActivity implements
 	@Override
 	public void onScroll(int x, int y, int oldx, int oldy) {
 		float trans = y / 3;
-		postImage.setTranslationY(trans);
+		viewPager.setTranslationY(trans);
 
 		toolbarScrollChanges(y, oldy);
 	}
@@ -177,19 +196,34 @@ public class ProductDetailActivity extends BaseActivity implements
 
 	@Override
 	public void onRequestStarted(String requestTag) {
-		
+		if (requestTag.equals(getProductDetailUrl)) {
+			hideErrorLayout();
+			showLoadingLayout();
+		}
 	}
 
 	@Override
 	public void onRequestFailed(String requestTag, VolleyError error) {
-		// TODO Auto-generated method stub
-
+		if (requestTag.equals(getProductDetailUrl)) {
+			try {
+				Entry entry = ZApplication.getInstance().getRequestQueue()
+						.getCache().get(url);
+				String data = new String(entry.data, "UTF-8");
+				mData = new Gson().fromJson(data, ProductObjectSingle.class);
+				fillDataInScrollView();
+			} catch (Exception e) {
+				hideLoadingLayout();
+				showErrorLayout();
+			}
+		}
 	}
 
 	@Override
 	public void onRequestCompleted(String requestTag, String response) {
-		// TODO Auto-generated method stub
-
+		if (requestTag.equals(getProductDetailUrl)) {
+			mData = new Gson().fromJson(response, ProductObjectSingle.class);
+			fillDataInScrollView();
+		}
 	}
 
 	class ImagesPagerAdapter extends PagerAdapter {
@@ -233,6 +267,9 @@ public class ProductDetailActivity extends BaseActivity implements
 		// case R.id.postcategoy:
 
 		// break;
+		case R.id.backbuttonfake:
+			super.onBackPressed();
+			break;
 
 		default:
 			break;
