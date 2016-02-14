@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
 import com.android.volley.Cache.Entry;
@@ -244,6 +245,7 @@ public class ProductDetailActivity extends BaseActivity implements
 			ImageRequestManager.get(ProductDetailActivity.this).requestImage(
 					ProductDetailActivity.this, image,
 					ZApplication.getImageUrl(productImages.get(position)), -1);
+			image.setScaleType(ScaleType.CENTER_CROP);
 
 			container.addView(v);
 			return v;

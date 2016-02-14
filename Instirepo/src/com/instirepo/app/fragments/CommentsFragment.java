@@ -77,6 +77,8 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 
 	View inflatedView;
 
+	boolean isProductsComments;
+
 	public static CommentsFragment newInstance(Bundle b) {
 		CommentsFragment frg = new CommentsFragment();
 		frg.setArguments(b);
@@ -109,6 +111,9 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 		super.onActivityCreated(savedInstanceState);
 		postid = getArguments().getInt("postid");
 		sendCommentImage.setAlpha(0.5f);
+
+		isProductsComments = getArguments().getBoolean("isproductcommentpage",
+				false);
 
 		footerView = LayoutInflater.from(getActivity()).inflate(
 				R.layout.loading_more, null, false);
