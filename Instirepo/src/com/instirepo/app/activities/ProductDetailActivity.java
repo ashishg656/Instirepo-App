@@ -2,6 +2,23 @@ package com.instirepo.app.activities;
 
 import java.util.ArrayList;
 
+import com.android.volley.Cache.Entry;
+import com.android.volley.Request.Method;
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.instirepo.app.R;
+import com.instirepo.app.application.ZApplication;
+import com.instirepo.app.extras.AppConstants;
+import com.instirepo.app.extras.ZUrls;
+import com.instirepo.app.objects.ProductObjectSingle;
+import com.instirepo.app.preferences.ZPreferences;
+import com.instirepo.app.serverApi.AppRequestListener;
+import com.instirepo.app.serverApi.CustomStringRequest;
+import com.instirepo.app.serverApi.ImageRequestManager;
+import com.instirepo.app.widgets.CirclePageIndicator;
+import com.instirepo.app.widgets.ObservableScrollView;
+import com.instirepo.app.widgets.ObservableScrollViewListener;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -17,25 +34,8 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
-import com.android.volley.Cache.Entry;
-import com.android.volley.Request.Method;
-import com.android.volley.VolleyError;
-import com.google.gson.Gson;
-import com.instirepo.app.R;
-import com.instirepo.app.application.ZApplication;
-import com.instirepo.app.extras.AppConstants;
-import com.instirepo.app.extras.ZUrls;
-import com.instirepo.app.objects.ProductObjectSingle;
-import com.instirepo.app.preferences.ZPreferences;
-import com.instirepo.app.serverApi.AppRequestListener;
-import com.instirepo.app.serverApi.CustomStringRequest;
-import com.instirepo.app.serverApi.ImageRequestManager;
-import com.instirepo.app.widgets.ObservableScrollView;
-import com.instirepo.app.widgets.ObservableScrollViewListener;
-
-public class ProductDetailActivity extends BaseActivity implements
-		AppConstants, OnClickListener, ZUrls, ObservableScrollViewListener,
-		AppRequestListener {
+public class ProductDetailActivity extends BaseActivity
+		implements AppConstants, OnClickListener, ZUrls, ObservableScrollViewListener, AppRequestListener {
 
 	int productId;
 
@@ -54,6 +54,7 @@ public class ProductDetailActivity extends BaseActivity implements
 	ImagesPagerAdapter adapter;
 	ViewPager viewPager;
 	int deviceWidth;
+	CirclePageIndicator pageIndicator;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +64,7 @@ public class ProductDetailActivity extends BaseActivity implements
 		productId = getIntent().getExtras().getInt("productid");
 		productImages = new ArrayList<>();
 
-		url = getProductDetailUrl + "user_id="
-				+ ZPreferences.getUserProfileID(this) + "&product_id="
-				+ productId;
+		url = getProductDetailUrl + "user_id=" + ZPreferences.getUserProfileID(this) + "&product_id=" + productId;
 
 		setProgressLayoutVariablesAndErrorVariables();
 
@@ -75,6 +74,7 @@ public class ProductDetailActivity extends BaseActivity implements
 		scrollView = (ObservableScrollView) findViewById(R.id.postdetailscrollview);
 		bookImageDividerView = (View) findViewById(R.id.boomimagivideview);
 		viewPager = (ViewPager) findViewById(R.id.postimage);
+		pageIndicator = (CirclePageIndicator) findViewById(R.id.circle_page_indicator);
 
 		// deviceWidth = getResources().getDisplayMetrics().widthPixels;
 		// FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)
@@ -83,26 +83,21 @@ public class ProductDetailActivity extends BaseActivity implements
 		// params.height = deviceWidth;
 		// viewPager.setLayoutParams(params);
 
-		scrollView.getViewTreeObserver().addOnGlobalLayoutListener(
-				new OnGlobalLayoutListener() {
+		scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 
-					@SuppressLint("NewApi")
-					@Override
-					public void onGlobalLayout() {
-						try {
-							scrollView.getViewTreeObserver()
-									.removeOnGlobalLayoutListener(this);
-						} catch (Exception e) {
-							scrollView.getViewTreeObserver()
-									.removeGlobalOnLayoutListener(this);
-						}
-						statusBarHeight = getResources().getDisplayMetrics().heightPixels
-								- scrollView.getHeight();
-					}
-				});
+			@SuppressLint("NewApi")
+			@Override
+			public void onGlobalLayout() {
+				try {
+					scrollView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				} catch (Exception e) {
+					scrollView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+				}
+				statusBarHeight = getResources().getDisplayMetrics().heightPixels - scrollView.getHeight();
+			}
+		});
 
-		toolbarHeight = getResources().getDimensionPixelSize(
-				R.dimen.z_toolbar_height);
+		toolbarHeight = getResources().getDimensionPixelSize(R.dimen.z_toolbar_height);
 
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -118,8 +113,7 @@ public class ProductDetailActivity extends BaseActivity implements
 	}
 
 	void loadData() {
-		CustomStringRequest req = new CustomStringRequest(Method.GET, url,
-				getProductDetailUrl, this, null);
+		CustomStringRequest req = new CustomStringRequest(Method.GET, url, getProductDetailUrl, this, null);
 		ZApplication.getInstance().addToRequestQueue(req, getProductDetailUrl);
 	}
 
@@ -138,6 +132,7 @@ public class ProductDetailActivity extends BaseActivity implements
 
 		adapter = new ImagesPagerAdapter();
 		viewPager.setAdapter(adapter);
+		pageIndicator.setViewPager(viewPager);
 	}
 
 	private void addImageInArraylistIfNotNull(String image) {
@@ -189,8 +184,7 @@ public class ProductDetailActivity extends BaseActivity implements
 				}
 			} else {
 				transparentToolbar.setTranslationY(0);
-				appbarContainer.animate().translationY(-toolbarHeight)
-						.setDuration(100).start();
+				appbarContainer.animate().translationY(-toolbarHeight).setDuration(100).start();
 			}
 		}
 	}
@@ -207,8 +201,7 @@ public class ProductDetailActivity extends BaseActivity implements
 	public void onRequestFailed(String requestTag, VolleyError error) {
 		if (requestTag.equals(getProductDetailUrl)) {
 			try {
-				Entry entry = ZApplication.getInstance().getRequestQueue()
-						.getCache().get(url);
+				Entry entry = ZApplication.getInstance().getRequestQueue().getCache().get(url);
 				String data = new String(entry.data, "UTF-8");
 				mData = new Gson().fromJson(data, ProductObjectSingle.class);
 				fillDataInScrollView();
@@ -236,14 +229,11 @@ public class ProductDetailActivity extends BaseActivity implements
 
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
-			View v = LayoutInflater.from(ProductDetailActivity.this).inflate(
-					R.layout.product_detail_imageview_viewpager, container,
-					false);
+			View v = LayoutInflater.from(ProductDetailActivity.this)
+					.inflate(R.layout.product_detail_imageview_viewpager, container, false);
 
-			ImageView image = (ImageView) v
-					.findViewById(R.id.productdetailimaheview);
-			ImageRequestManager.get(ProductDetailActivity.this).requestImage(
-					ProductDetailActivity.this, image,
+			ImageView image = (ImageView) v.findViewById(R.id.productdetailimaheview);
+			ImageRequestManager.get(ProductDetailActivity.this).requestImage(ProductDetailActivity.this, image,
 					ZApplication.getImageUrl(productImages.get(position)), -1);
 			image.setScaleType(ScaleType.CENTER_CROP);
 
