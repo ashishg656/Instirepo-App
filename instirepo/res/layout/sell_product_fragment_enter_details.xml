@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res/com.instirepo.app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/z_grey_shade_2"
     android:orientation="vertical" >
 
     <ScrollView
@@ -24,6 +25,111 @@
                 android:orientation="vertical" >
 
                 <LinearLayout
+                    android:id="@+id/linearlayoutpicsupload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/z_margin_small"
+                    android:paddingLeft="@dimen/z_margin_mini"
+                    android:paddingRight="@dimen/z_margin_mini"
+                    android:paddingTop="@dimen/z_margin_small"
+                    android:weightSum="4" >
+
+                    <FrameLayout
+                        android:id="@+id/uploadimage1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/z_margin_mini"
+                        android:layout_marginRight="@dimen/z_margin_mini"
+                        android:layout_weight="1"
+                        android:background="@color/z_grey_shade_3" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_upload_pic" />
+
+                        <ImageView
+                            android:id="@+id/image1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/uploadimage2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/z_margin_mini"
+                        android:layout_marginRight="@dimen/z_margin_mini"
+                        android:layout_weight="1"
+                        android:background="@color/z_grey_shade_3" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_upload_pic" />
+
+                        <ImageView
+                            android:id="@+id/image2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/uploadimage3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/z_margin_mini"
+                        android:layout_marginRight="@dimen/z_margin_mini"
+                        android:layout_weight="1"
+                        android:background="@color/z_grey_shade_3" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_upload_pic" />
+
+                        <ImageView
+                            android:id="@+id/image3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/uploadimage4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/z_margin_mini"
+                        android:layout_marginRight="@dimen/z_margin_mini"
+                        android:layout_weight="1"
+                        android:background="@color/z_grey_shade_3" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_upload_pic" />
+
+                        <ImageView
+                            android:id="@+id/image4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/z_grey_shade_3" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -38,7 +144,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
-                            android:hint="Post Heading.."
+                            android:hint="Product Name"
                             android:imeOptions="actionNext"
                             android:paddingTop="@dimen/z_margin_mini"
                             android:textSize="14sp" />
@@ -66,7 +172,7 @@
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:gravity="start"
-                            android:hint="Post Content..."
+                            android:hint="Product Description"
                             android:imeOptions="actionNext"
                             android:minLines="5"
                             android:paddingTop="@dimen/z_margin_mini"
@@ -78,6 +184,159 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/z_grey_shade_3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/z_margin_large" >
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <EditText
+                            android:id="@+id/mrp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="MRP of product"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:paddingTop="@dimen/z_margin_mini"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/z_grey_shade_3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/z_margin_large" >
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <EditText
+                            android:id="@+id/price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="Selling Price (Must be less than or equal to MRP)"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:paddingTop="@dimen/z_margin_mini"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/z_grey_shade_3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/z_margin_large" >
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <EditText
+                            android:id="@+id/number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="Contact Number"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:paddingTop="@dimen/z_margin_mini"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/z_grey_shade_3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/z_margin_large" >
+
+                    <CheckBox
+                        android:id="@+id/billavailabe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Do you have the bill of product?"
+                        android:textColor="@color/z_text_color_dark" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/z_grey_shade_3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/z_margin_large" >
+
+                    <CheckBox
+                        android:id="@+id/warrantycheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Is the product in warranty period?"
+                        android:textColor="@color/z_text_color_dark" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/warrantyleftcontainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/z_grey_shade_3" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/z_margin_large" >
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <EditText
+                                android:id="@+id/warrantyleft"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Warranty period left"
+                                android:imeOptions="actionNext"
+                                android:paddingTop="@dimen/z_margin_mini"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -52,15 +52,13 @@ import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.CustomGoogleFloatingActionButton;
 import com.instirepo.app.widgets.RoundedImageView;
 
-public class CreatePostFragment1OtherCategory extends BaseFragment implements
-		OnClickListener {
+public class CreatePostFragment1OtherCategory extends BaseFragment implements OnClickListener {
 
 	final static private String APP_KEY = "ku1kknp8f14k7a6";
 	final static private String APP_SECRET = "INSERT_APP_SECRET";
 	private DropboxAPI<AndroidAuthSession> mDBApi;
 
-	LinearLayout uploadPicLayout, addAttachmentLayout, removeImageLayout,
-			addedAttachments, companyNameLayout;
+	LinearLayout uploadPicLayout, addAttachmentLayout, removeImageLayout, addedAttachments, companyNameLayout;
 	View addedAttachmentsView;
 	TextView uploadPicText;
 	FrameLayout imageViewHolder;
@@ -82,8 +80,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	EditText eventLocation, eventFee, eventContact;
 	TextView startDate, startTime, endDate, endTime;
 	TextView changeStartDate, changeStartTime, changeEndDate, changeEndTime;
-	boolean startDateSelected, startTimeSelected, endDateSelected,
-			endTimeSelected;
+	boolean startDateSelected, startTimeSelected, endDateSelected, endTimeSelected;
 
 	// poll
 	LinearLayout pollDetailsLayout, addMoreChoice, choicesLayout;
@@ -97,33 +94,23 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View v = inflater.inflate(
-				R.layout.create_post_fragment_1_other_category, container,
-				false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.create_post_fragment_1_other_category, container, false);
 
 		uploadPicLayout = (LinearLayout) v.findViewById(R.id.uploadpiclayout);
 		uploadPicText = (TextView) v.findViewById(R.id.uploadpictext);
-		roundedImageView = (RoundedImageView) v
-				.findViewById(R.id.rounderimagecreapost);
-		addAttachmentLayout = (LinearLayout) v
-				.findViewById(R.id.googledrivebutton);
-		removeImageLayout = (LinearLayout) v
-				.findViewById(R.id.crossbuttonimage);
-		imageViewHolder = (FrameLayout) v
-				.findViewById(R.id.createpostimagelayout);
-		addedAttachments = (LinearLayout) v
-				.findViewById(R.id.addadeadttachments);
+		roundedImageView = (RoundedImageView) v.findViewById(R.id.rounderimagecreapost);
+		addAttachmentLayout = (LinearLayout) v.findViewById(R.id.googledrivebutton);
+		removeImageLayout = (LinearLayout) v.findViewById(R.id.crossbuttonimage);
+		imageViewHolder = (FrameLayout) v.findViewById(R.id.createpostimagelayout);
+		addedAttachments = (LinearLayout) v.findViewById(R.id.addadeadttachments);
 		addedAttachmentsView = (View) v.findViewById(R.id.vieforatatchdcdnckl);
 		companyNameLayout = (LinearLayout) v.findViewById(R.id.compaynamlayout);
-		floatingActionButton = (CustomGoogleFloatingActionButton) v
-				.findViewById(R.id.createpostfab);
+		floatingActionButton = (CustomGoogleFloatingActionButton) v.findViewById(R.id.createpostfab);
 		postHeading = (EditText) v.findViewById(R.id.postHeading);
 		postDescription = (EditText) v.findViewById(R.id.postdesciption);
 		postCompanyName = (EditText) v.findViewById(R.id.postcomapnyname);
-		eventDetailsLayout = (LinearLayout) v
-				.findViewById(R.id.wvwntdetailslayout);
+		eventDetailsLayout = (LinearLayout) v.findViewById(R.id.wvwntdetailslayout);
 		startDate = (TextView) v.findViewById(R.id.eventstartdate);
 		startTime = (TextView) v.findViewById(R.id.eventstarttime);
 		endDate = (TextView) v.findViewById(R.id.eventenddate);
@@ -134,10 +121,8 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		changeEndTime = (TextView) v.findViewById(R.id.eventendtimechange);
 		eventLocation = (EditText) v.findViewById(R.id.eventlocation);
 		eventFee = (EditText) v.findViewById(R.id.registrationfee);
-		eventContact = (EditText) v
-				.findViewById(R.id.contactnumberformoredetails);
-		pollDetailsLayout = (LinearLayout) v
-				.findViewById(R.id.polldetaillayout);
+		eventContact = (EditText) v.findViewById(R.id.contactnumberformoredetails);
+		pollDetailsLayout = (LinearLayout) v.findViewById(R.id.polldetaillayout);
 		addMoreChoice = (LinearLayout) v.findViewById(R.id.admorechocief);
 		choicesLayout = (LinearLayout) v.findViewById(R.id.pollchocieaddextra);
 		choice1 = (EditText) v.findViewById(R.id.pollch1);
@@ -164,14 +149,11 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		changeStartTime.setOnClickListener(this);
 		addMoreChoice.setOnClickListener(this);
 
-		if (((CreatePostActivity) getActivity()).categoryType
-				.equals(AllPostCategoriesObject.categoryPlacement)) {
+		if (((CreatePostActivity) getActivity()).categoryType.equals(AllPostCategoriesObject.categoryPlacement)) {
 			companyNameLayout.setVisibility(View.VISIBLE);
-		} else if (((CreatePostActivity) getActivity()).categoryType
-				.equals(AllPostCategoriesObject.categoryEvent)) {
+		} else if (((CreatePostActivity) getActivity()).categoryType.equals(AllPostCategoriesObject.categoryEvent)) {
 			eventDetailsLayout.setVisibility(View.VISIBLE);
-		} else if (((CreatePostActivity) getActivity()).categoryType
-				.equals(AllPostCategoriesObject.categoryPoll)) {
+		} else if (((CreatePostActivity) getActivity()).categoryType.equals(AllPostCategoriesObject.categoryPoll)) {
 			pollDetailsLayout.setVisibility(View.VISIBLE);
 			pollChoices = new ArrayList<>();
 			pollChoices.add(choice1);
@@ -197,8 +179,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.uploadpiclayout:
-			Intent intent = new Intent(
-					Intent.ACTION_PICK,
+			Intent intent = new Intent(Intent.ACTION_PICK,
 					android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 			intent.setType("image/*");
 			startActivityForResult(intent, SELECT_POST_COVER_PIC);
@@ -220,20 +201,15 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			int month = calendar.get(Calendar.MONTH);
 			int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-			DatePickerDialog datePickerDialog = new DatePickerDialog(
-					getActivity(), new OnDateSetListener() {
+			DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new OnDateSetListener() {
 
-						@Override
-						public void onDateSet(DatePicker view, int year,
-								int monthOfYear, int dayOfMonth) {
-							endDateSelected = true;
-							endDate.setText(TimeUtils
-									.getNormalisedDateFromDatePicker(year,
-											monthOfYear, dayOfMonth));
-							endDate.setTextColor(getActivity().getResources()
-									.getColor(R.color.z_text_color_medium_dark));
-						}
-					}, year, month, day);
+				@Override
+				public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+					endDateSelected = true;
+					endDate.setText(TimeUtils.getNormalisedDateFromDatePicker(year, monthOfYear, dayOfMonth));
+					endDate.setTextColor(getActivity().getResources().getColor(R.color.z_text_color_medium_dark));
+				}
+			}, year, month, day);
 			datePickerDialog.show();
 			break;
 		case R.id.eventendtimechange:
@@ -241,20 +217,15 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			int hour = calendar.get(Calendar.HOUR_OF_DAY);
 			int minute = calendar.get(Calendar.MINUTE);
 
-			TimePickerDialog timePickerDialog = new TimePickerDialog(
-					getActivity(), new OnTimeSetListener() {
+			TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new OnTimeSetListener() {
 
-						@Override
-						public void onTimeSet(TimePicker view, int hourOfDay,
-								int minute) {
-							endTimeSelected = true;
-							endTime.setText(TimeUtils
-									.getNormalisedTimeFromTimePicker(hourOfDay,
-											minute));
-							endTime.setTextColor(getActivity().getResources()
-									.getColor(R.color.z_text_color_medium_dark));
-						}
-					}, hour, minute, false);
+				@Override
+				public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+					endTimeSelected = true;
+					endTime.setText(TimeUtils.getNormalisedTimeFromTimePicker(hourOfDay, minute));
+					endTime.setTextColor(getActivity().getResources().getColor(R.color.z_text_color_medium_dark));
+				}
+			}, hour, minute, false);
 			timePickerDialog.show();
 			break;
 		case R.id.eventstartdatechange:
@@ -263,23 +234,15 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			month = calendar.get(Calendar.MONTH);
 			day = calendar.get(Calendar.DAY_OF_MONTH);
 
-			datePickerDialog = new DatePickerDialog(getActivity(),
-					new OnDateSetListener() {
+			datePickerDialog = new DatePickerDialog(getActivity(), new OnDateSetListener() {
 
-						@Override
-						public void onDateSet(DatePicker view, int year,
-								int monthOfYear, int dayOfMonth) {
-							startDateSelected = true;
-							startDate.setText(TimeUtils
-									.getNormalisedDateFromDatePicker(year,
-											monthOfYear, dayOfMonth));
-							startDate
-									.setTextColor(getActivity()
-											.getResources()
-											.getColor(
-													R.color.z_text_color_medium_dark));
-						}
-					}, year, month, day);
+				@Override
+				public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+					startDateSelected = true;
+					startDate.setText(TimeUtils.getNormalisedDateFromDatePicker(year, monthOfYear, dayOfMonth));
+					startDate.setTextColor(getActivity().getResources().getColor(R.color.z_text_color_medium_dark));
+				}
+			}, year, month, day);
 			datePickerDialog.show();
 			break;
 		case R.id.eventstarttimechange:
@@ -287,28 +250,19 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			hour = calendar.get(Calendar.HOUR_OF_DAY);
 			minute = calendar.get(Calendar.MINUTE);
 
-			timePickerDialog = new TimePickerDialog(getActivity(),
-					new OnTimeSetListener() {
+			timePickerDialog = new TimePickerDialog(getActivity(), new OnTimeSetListener() {
 
-						@Override
-						public void onTimeSet(TimePicker view, int hourOfDay,
-								int minute) {
-							startTimeSelected = true;
-							startTime.setText(TimeUtils
-									.getNormalisedTimeFromTimePicker(hourOfDay,
-											minute));
-							startTime
-									.setTextColor(getActivity()
-											.getResources()
-											.getColor(
-													R.color.z_text_color_medium_dark));
-						}
-					}, hour, minute, false);
+				@Override
+				public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+					startTimeSelected = true;
+					startTime.setText(TimeUtils.getNormalisedTimeFromTimePicker(hourOfDay, minute));
+					startTime.setTextColor(getActivity().getResources().getColor(R.color.z_text_color_medium_dark));
+				}
+			}, hour, minute, false);
 			timePickerDialog.show();
 			break;
 		case R.id.admorechocief:
-			View view = LayoutInflater.from(getActivity()).inflate(
-					R.layout.poll_choice_additional_edittext_layout,
+			View view = LayoutInflater.from(getActivity()).inflate(R.layout.poll_choice_additional_edittext_layout,
 					choicesLayout, false);
 			EditText text = (EditText) view.findViewById(R.id.pollchoice);
 			pollChoices.add(text);
@@ -335,22 +289,18 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 
 	private void checkIfUserAuthenticatedDropbox() {
 		if (ZPreferences.getDropboxToken(getActivity()) == null) {
-			mDBApi.getSession().startOAuth2Authentication(
-					(CreatePostActivity) getActivity());
+			mDBApi.getSession().startOAuth2Authentication((CreatePostActivity) getActivity());
 		} else {
 			intentForRequestingFileFromBrowser();
 		}
 	}
 
 	private void moveToSecondFragmentForSelectingPostVisibility() {
-		CreatePostDataToSendToServer data = new CreatePostDataToSendToServer(
-				postHeading.getText().toString().trim(), postDescription
-						.getText().toString().trim(), postCompanyName.getText()
-						.toString().trim(), imageToSend, -1, -1,
-				dropboxFilesList);
+		CreatePostDataToSendToServer data = new CreatePostDataToSendToServer(postHeading.getText().toString().trim(),
+				postDescription.getText().toString().trim(), postCompanyName.getText().toString().trim(), imageToSend,
+				-1, -1, dropboxFilesList);
 
-		if (((CreatePostActivity) getActivity()).categoryType
-				.equals(AllPostCategoriesObject.categoryEvent)) {
+		if (((CreatePostActivity) getActivity()).categoryType.equals(AllPostCategoriesObject.categoryEvent)) {
 			data.eventLocation = eventLocation.getText().toString().trim();
 			data.eventFee = eventFee.getText().toString().trim();
 			data.eventContact = eventContact.getText().toString().trim();
@@ -358,8 +308,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			data.startDate = startDate.getText().toString();
 			data.endDate = endDate.getText().toString();
 			data.endTime = endTime.getText().toString();
-		} else if (((CreatePostActivity) getActivity()).categoryType
-				.equals(AllPostCategoriesObject.categoryPoll)) {
+		} else if (((CreatePostActivity) getActivity()).categoryType.equals(AllPostCategoriesObject.categoryPoll)) {
 			data.pollChoices = new ArrayList<>();
 			for (EditText ed : pollChoices) {
 				if (ed.getText().toString().trim().length() > 0) {
@@ -368,8 +317,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			}
 		}
 
-		((CreatePostActivity) getActivity())
-				.setSecondFragmentForPostVisibility(data);
+		((CreatePostActivity) getActivity()).setSecondFragmentForPostVisibility(data);
 	}
 
 	boolean checkIfCanGoNext() {
@@ -390,8 +338,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			} else if (eventContact.getText().toString().trim().length() < 1) {
 				makeToast("Please enter contact number for event");
 				return false;
-			} else if (!startDateSelected || !startTimeSelected
-					|| !endDateSelected || !endTimeSelected) {
+			} else if (!startDateSelected || !startTimeSelected || !endDateSelected || !endTimeSelected) {
 				makeToast("Please enter starting and ending dates and times for event");
 				return false;
 			}
@@ -425,10 +372,8 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			if (requestCode == CreatePostFragment1OtherCategory.SELECT_POST_COVER_PIC) {
 				Uri selectedImageUri = data.getData();
 				String[] projection = { MediaColumns.DATA };
-				Cursor cursor = getActivity().managedQuery(selectedImageUri,
-						projection, null, null, null);
-				int column_index = cursor
-						.getColumnIndexOrThrow(MediaColumns.DATA);
+				Cursor cursor = getActivity().managedQuery(selectedImageUri, projection, null, null, null);
+				int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
 				cursor.moveToFirst();
 				String selectedImagePath = cursor.getString(column_index);
 				Bitmap bm;
@@ -437,8 +382,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 				BitmapFactory.decodeFile(selectedImagePath, options);
 				final int REQUIRED_SIZE = 400;
 				int scale = 1;
-				while (options.outWidth / scale / 2 >= REQUIRED_SIZE
-						&& options.outHeight / scale / 2 >= REQUIRED_SIZE)
+				while (options.outWidth / scale / 2 >= REQUIRED_SIZE && options.outHeight / scale / 2 >= REQUIRED_SIZE)
 					scale *= 2;
 				options.inSampleSize = scale;
 				options.inJustDecodeBounds = false;
@@ -476,13 +420,10 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 		}
 		TextView textView = new TextView(getActivity());
 		textView.setText(obj.getFileName());
-		textView.setTextColor(getActivity().getResources().getColor(
-				R.color.z_text_color_dark));
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.WRAP_CONTENT,
+		textView.setTextColor(getActivity().getResources().getColor(R.color.z_text_color_dark));
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT);
-		params.bottomMargin = getActivity().getResources()
-				.getDimensionPixelSize(R.dimen.z_margin_small);
+		params.bottomMargin = getActivity().getResources().getDimensionPixelSize(R.dimen.z_margin_small);
 		textView.setLayoutParams(params);
 
 		addedAttachments.addView(textView);
@@ -490,16 +431,13 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 
 	public String getPathFromUri(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
-		Cursor cursor = getActivity().getContentResolver().query(uri,
-				projection, null, null, null);
-		int column_index = cursor
-				.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+		Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
+		int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 		cursor.moveToFirst();
 		return cursor.getString(column_index);
 	}
 
-	public class UploadFileAsyncTask extends
-			AsyncTask<String, Long, DropboxFilesObject> {
+	public class UploadFileAsyncTask extends AsyncTask<String, Long, DropboxFilesObject> {
 
 		@Override
 		protected void onPreExecute() {
@@ -508,8 +446,7 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 				dropboxProgressDialog.dismiss();
 			dropboxProgressDialog = new ProgressDialog(getActivity());
 			dropboxProgressDialog.setMessage("Uplaoding file to dropbox");
-			dropboxProgressDialog
-					.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			dropboxProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			dropboxProgressDialog.setIndeterminate(false);
 			dropboxProgressDialog.setProgress(0);
 			dropboxProgressDialog.setCancelable(false);
@@ -522,11 +459,9 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 			super.onPostExecute(obj);
 			dropboxProgressDialog.dismiss();
 			if (obj == null) {
-				((BaseActivity) getActivity())
-						.makeToast("Error occured.Please login to Dropbox");
+				((BaseActivity) getActivity()).makeToast("Error occured.Please login to Dropbox");
 			} else {
-				((BaseActivity) getActivity())
-						.makeToast("Success uploading dropbox file");
+				((BaseActivity) getActivity()).makeToast("Success uploading dropbox file");
 
 				addFileToFilesList(obj);
 			}
@@ -538,8 +473,8 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 				String path = params[0];
 				final File file = new File(path);
 				FileInputStream inputStream = new FileInputStream(file);
-				Entry response = mDBApi.putFile(file.getName(), inputStream,
-						file.length(), null, new ProgressListener() {
+				Entry response = mDBApi.putFile(file.getName(), inputStream, file.length(), null,
+						new ProgressListener() {
 
 							@Override
 							public void onProgress(long arg0, long arg1) {
@@ -548,16 +483,13 @@ public class CreatePostFragment1OtherCategory extends BaseFragment implements
 								publishProgress((long) progess);
 							}
 						});
-				Log.i("DbExampleLog", "The uploaded file's rev is: "
-						+ response.rev);
+				Log.i("DbExampleLog", "The uploaded file's rev is: " + response.rev);
 
 				DropboxLink link = mDBApi.share(response.path);
 
-				DropboxFilesObject obj = new DropboxFilesObject(
-						response.fileName(), response.parentPath(),
-						response.path, response.mimeType, response.modified,
-						response.rev, response.size, link.url, response.bytes,
-						link.expires);
+				DropboxFilesObject obj = new DropboxFilesObject(response.fileName(), response.parentPath(),
+						response.path, response.mimeType, response.modified, response.rev, response.size, link.url,
+						response.bytes, link.expires);
 
 				return obj;
 			} catch (DropboxUnlinkedException e) {

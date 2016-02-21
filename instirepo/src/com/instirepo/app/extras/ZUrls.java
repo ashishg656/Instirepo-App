@@ -107,4 +107,6 @@ public interface ZUrls {
 	public String markProductAsFavourite = ZApplication.getEcommerceUrl() + "save_product_for_later/";
 
 	public String getAllProductCategories = ZApplication.getEcommerceUrl() + "get_all_categories_for_product";
+
+	public String uploadProduct = ZApplication.getEcommerceUrl() + "upload_product/";
 }

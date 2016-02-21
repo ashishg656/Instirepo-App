@@ -111,6 +111,7 @@ public class SellProductActivity extends BaseActivity {
 		this.categoryId = categoryid;
 
 		getSupportFragmentManager().beginTransaction()
-				.add(R.id.fragmtnholder, SellProductFragment2ProductDetail.newInstance(new Bundle())).commit();
+				.add(R.id.fragmtnholder, SellProductFragment2ProductDetail.newInstance(new Bundle()))
+				.addToBackStack("detail").commit();
 	}
 }
