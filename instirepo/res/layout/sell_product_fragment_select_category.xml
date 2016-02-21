@@ -4,11 +4,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/postsbyreachersrecyclef"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none" />
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Select Category For Product"
+            android:textColor="@color/z_text_color_dark" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/postsbyreachersrecyclef"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="4dp"
+            android:scrollbars="none" />
+    </LinearLayout>
 
     <include layout="@layout/progress_layout" />
 

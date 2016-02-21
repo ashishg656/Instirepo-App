@@ -1,19 +1,12 @@
 package com.instirepo.app.fragments;
 
-import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.GridLayoutManager.SpanSizeLookup;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.android.volley.Cache;
 import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
+import com.instirepo.app.activities.HomeActivity;
 import com.instirepo.app.adapters.ProductCategoriesListAdapter;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.ZUrls;
@@ -22,8 +15,16 @@ import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.serverApi.AppRequestListener;
 import com.instirepo.app.serverApi.CustomStringRequest;
 
-public class ProductsCategoriesFragment extends BaseFragment implements ZUrls,
-		AppRequestListener {
+import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.GridLayoutManager.SpanSizeLookup;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnScrollListener;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+public class ProductsCategoriesFragment extends BaseFragment implements ZUrls, AppRequestListener {
 
 	RecyclerView recyclerView;
 	GridLayoutManager layoutManager;
@@ -39,13 +40,10 @@ public class ProductsCategoriesFragment extends BaseFragment implements ZUrls,
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.product_categories_fragment_layout,
-				container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.product_categories_fragment_layout, container, false);
 
-		recyclerView = (RecyclerView) v
-				.findViewById(R.id.postsbyreachersrecyclef);
+		recyclerView = (RecyclerView) v.findViewById(R.id.postsbyreachersrecyclef);
 		setProgressLayoutVariablesAndErrorVariables(v);
 
 		return v;
@@ -67,17 +65,36 @@ public class ProductsCategoriesFragment extends BaseFragment implements ZUrls,
 		});
 		recyclerView.setLayoutManager(layoutManager);
 
+		recyclerView.addOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+					int pos = layoutManager.findFirstVisibleItemPosition();
+					if (pos == 0) {
+						((HomeActivity) getActivity()).setToolbarTranslation(recyclerView.getChildAt(0));
+					} else
+						((HomeActivity) getActivity()).scrollToolbarAfterTouchEnds();
+				}
+				super.onScrollStateChanged(recyclerView, newState);
+			}
+
+			@Override
+			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+				((HomeActivity) getActivity()).scrollToolbarBy(-dy);
+				super.onScrolled(recyclerView, dx, dy);
+			}
+		});
+
 		loadData();
 	}
 
 	private void loadData() {
-		url = productCategoriesAndTrendingProducts + "user_id="
-				+ ZPreferences.getUserProfileID(getActivity());
+		url = productCategoriesAndTrendingProducts + "user_id=" + ZPreferences.getUserProfileID(getActivity());
 
-		CustomStringRequest req = new CustomStringRequest(Method.POST, url,
-				productCategoriesAndTrendingProducts, this, null);
-		ZApplication.getInstance().addToRequestQueue(req,
-				productCategoriesAndTrendingProducts);
+		CustomStringRequest req = new CustomStringRequest(Method.POST, url, productCategoriesAndTrendingProducts, this,
+				null);
+		ZApplication.getInstance().addToRequestQueue(req, productCategoriesAndTrendingProducts);
 	}
 
 	@Override
@@ -92,12 +109,10 @@ public class ProductsCategoriesFragment extends BaseFragment implements ZUrls,
 	public void onRequestFailed(String requestTag, VolleyError error) {
 		if (requestTag.equals(productCategoriesAndTrendingProducts)) {
 			try {
-				Cache cache = ZApplication.getInstance().getRequestQueue()
-						.getCache();
+				Cache cache = ZApplication.getInstance().getRequestQueue().getCache();
 				Entry entry = cache.get(url);
 				String data = new String(entry.data, "UTF-8");
-				ProductCategoriesListObject obj = new Gson().fromJson(data,
-						ProductCategoriesListObject.class);
+				ProductCategoriesListObject obj = new Gson().fromJson(data, ProductCategoriesListObject.class);
 				setAdapterData(obj);
 			} catch (Exception e) {
 				hideLoadingLayout();
@@ -109,8 +124,7 @@ public class ProductsCategoriesFragment extends BaseFragment implements ZUrls,
 	@Override
 	public void onRequestCompleted(String requestTag, String response) {
 		if (requestTag.equals(productCategoriesAndTrendingProducts)) {
-			ProductCategoriesListObject obj = new Gson().fromJson(response,
-					ProductCategoriesListObject.class);
+			ProductCategoriesListObject obj = new Gson().fromJson(response, ProductCategoriesListObject.class);
 			setAdapterData(obj);
 		}
 	}

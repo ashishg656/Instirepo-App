@@ -5,6 +5,8 @@ import com.instirepo.app.circularreveal.SupportAnimator;
 import com.instirepo.app.circularreveal.ViewAnimationUtils;
 import com.instirepo.app.extras.ZAnimatorListener;
 import com.instirepo.app.extras.ZCircularAnimatorListener;
+import com.instirepo.app.fragments.SellProductFragment2ProductDetail;
+import com.instirepo.app.fragments.SellProductFragmentSelectCategory;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
@@ -14,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,6 +27,8 @@ public class SellProductActivity extends BaseActivity {
 	LinearLayout mainLayoutForFragment;
 	int toolbarHeight;
 	AppBarLayout appBarLayout;
+
+	public int categoryId;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -64,9 +67,8 @@ public class SellProductActivity extends BaseActivity {
 	}
 
 	private void setFirstFragmentForSelectingCategory() {
-		// getSupportFragmentManager().beginTransaction().replace(R.id.fragmtnholder,
-		// createPostFragment1OtherCategory)
-		// .commit();
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.fragmtnholder, SellProductFragmentSelectCategory.newInstance(new Bundle())).commit();
 	}
 
 	boolean getEdittextLength(EditText et) {
@@ -103,5 +105,12 @@ public class SellProductActivity extends BaseActivity {
 			}
 		});
 		anim.start();
+	}
+
+	public void switchToSecondFragment(int categoryid) {
+		this.categoryId = categoryid;
+
+		getSupportFragmentManager().beginTransaction()
+				.add(R.id.fragmtnholder, SellProductFragment2ProductDetail.newInstance(new Bundle())).commit();
 	}
 }
