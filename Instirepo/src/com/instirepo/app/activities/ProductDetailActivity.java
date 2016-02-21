@@ -33,6 +33,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -73,7 +74,7 @@ public class ProductDetailActivity extends BaseActivity
 	CirclePageIndicator pageIndicator;
 
 	TextView name, price, mrp, youSave, warrantyPeriodLeft, description, uploaderName, uploadTime, numberOfSaves,
-			numberOfComments;
+			numberOfComments, showMore;
 	CheckBox billAvailable, warrantyAvailable;
 	CircularImageView imageUploader;
 	LinearLayout chatWithUser, CallUser;
@@ -101,6 +102,7 @@ public class ProductDetailActivity extends BaseActivity
 		name = (TextView) findViewById(R.id.productname);
 		price = (TextView) findViewById(R.id.productprice);
 		mrp = (TextView) findViewById(R.id.productmrp);
+		showMore = (TextView) findViewById(R.id.showmore);
 		youSave = (TextView) findViewById(R.id.yousave);
 		warrantyAvailable = (CheckBox) findViewById(R.id.warrantyavaailable);
 		billAvailable = (CheckBox) findViewById(R.id.billavailable);
@@ -156,9 +158,12 @@ public class ProductDetailActivity extends BaseActivity
 		ZApplication.getInstance().addToRequestQueue(req, getProductDetailUrl);
 	}
 
+	@SuppressLint("NewApi")
 	void fillDataInScrollView() {
 		hideLoadingLayout();
 		hideErrorLayout();
+
+		getSupportActionBar().setTitle(mData.getName());
 
 		addImageInArraylistIfNotNull(mData.getImage());
 		addImageInArraylistIfNotNull(mData.getImage2());
@@ -206,6 +211,7 @@ public class ProductDetailActivity extends BaseActivity
 		findViewById(R.id.openuserprofilepost).setOnClickListener(this);
 		findViewById(R.id.viewcomments).setOnClickListener(this);
 		findViewById(R.id.savepostimage).setOnClickListener(this);
+		showMore.setOnClickListener(this);
 
 		if (Integer.toString(mData.getUser_id()).equalsIgnoreCase(ZPreferences.getUserProfileID(this))) {
 			findViewById(R.id.chatcontaner).setVisibility(View.GONE);
@@ -217,6 +223,29 @@ public class ProductDetailActivity extends BaseActivity
 		findViewById(R.id.viewcomments).setOnClickListener(this);
 
 		fillDataForSavePostImageSelected();
+
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+			showMore.setVisibility(View.VISIBLE);
+			description.setMaxLines(5);
+		} else {
+			showMore.setVisibility(View.GONE);
+			description.setMaxLines(Integer.MAX_VALUE);
+		}
+
+		description.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+
+			@Override
+			public void onGlobalLayout() {
+				if (Build.VERSION.SDK_INT < 16) {
+					description.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+				} else {
+					description.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				}
+				if (description.getLineCount() < 5) {
+					showMore.setVisibility(View.GONE);
+				}
+			}
+		});
 	}
 
 	void fillDataForSavePostImageSelected() {
@@ -444,6 +473,7 @@ public class ProductDetailActivity extends BaseActivity
 		ZApplication.getInstance().addToRequestQueue(req, markProductAsFavourite);
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -469,7 +499,17 @@ public class ProductDetailActivity extends BaseActivity
 		case R.id.backbuttonfake:
 			super.onBackPressed();
 			break;
-
+		case R.id.showmore:
+			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+				if (description.getMaxLines() == 5) {
+					description.setMaxLines(Integer.MAX_VALUE);
+					showMore.setText("SHOW LESS");
+				} else {
+					description.setMaxLines(5);
+					showMore.setText("SHOW MORE");
+				}
+			}
+			break;
 		default:
 			break;
 		}

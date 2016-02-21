@@ -77,18 +77,16 @@ public abstract class BaseActivity extends AppCompatActivity {
 				retryDataConnectionLayout.performClick();
 			}
 		});
-		findViewById(R.id.opensettingslayout).setOnClickListener(
-				new OnClickListener() {
+		findViewById(R.id.opensettingslayout).setOnClickListener(new OnClickListener() {
 
-					@Override
-					public void onClick(View v) {
-						Intent intent = new Intent(
-								Settings.ACTION_WIFI_SETTINGS);
-						if (intent.resolveActivity(getPackageManager()) != null) {
-							startActivity(intent);
-						}
-					}
-				});
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+				if (intent.resolveActivity(getPackageManager()) != null) {
+					startActivity(intent);
+				}
+			}
+		});
 	}
 
 	void hideErrorLayout() {
@@ -107,8 +105,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 	public void showSnackBar(String text) {
 		if (findViewById(R.id.coordinatorlayout) != null)
-			Snackbar.make(findViewById(R.id.coordinatorlayout), text,
-					Snackbar.LENGTH_SHORT).show();
+			Snackbar.make(findViewById(R.id.coordinatorlayout), text, Snackbar.LENGTH_SHORT).show();
 	}
 
 	void openMessagesListActivity() {
@@ -126,8 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 		startActivity(i);
 	}
 
-	public void openUserChatWithPersonUserActivity(int id, String name,
-			String image) {
+	public void openUserChatWithPersonUserActivity(int id, String name, String image) {
 		Intent i = new Intent(this, MessageListActivity.class);
 		i.putExtra("person_id", id);
 		i.putExtra("person_name", name);
@@ -135,8 +131,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 		startActivity(i);
 	}
 
-	public void openPostDetailActivity(
-			PostListSinglePostObject postListSinglePostObject) {
+	public void openPostDetailActivity(PostListSinglePostObject postListSinglePostObject) {
 		Intent i = new Intent(this, PostDetailActivity.class);
 		i.putExtra("postobj", postListSinglePostObject);
 		startActivity(i);
@@ -164,13 +159,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 	}
 
 	public void sendEmailIntentUsingToAction(String mailTo) {
-		Intent emailIntent = new Intent(Intent.ACTION_SENDTO,
-				Uri.parse("mailto:" + Uri.encode(mailTo)));
+		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + Uri.encode(mailTo)));
 		startActivity(Intent.createChooser(emailIntent, "Send email via..."));
 	}
 
-	public void openSellProductActivity(List<PostCategorySingle> categories) {
-
+	public void openSellProductActivity() {
+		overridePendingTransition(0, 0);
+		Intent i = new Intent(this, SellProductActivity.class);
+		startActivity(i);
 	}
 
 	public void openProductDetailActivity(int productId) {

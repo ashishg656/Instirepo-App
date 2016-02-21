@@ -10,7 +10,8 @@
         android:id="@+id/postdetailscrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never" >
+        android:overScrollMode="never"
+        android:scrollbars="none" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,7 +53,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/z_grey_shade_1"
+                android:background="@color/z_grey_shade_2"
                 android:orientation="vertical" >
 
                 <LinearLayout
@@ -71,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:text="Post Heading"
                         android:textColor="@color/z_text_color_dark"
-                        android:textSize="@dimen/z_font_small"
+                        android:textSize="@dimen/z_font_medium"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -85,7 +86,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Selling Price : ₹ "
-                            android:textColor="@color/PrimaryColor" />
+                            android:textColor="@color/PrimaryColor"
+                            android:textSize="@dimen/z_font_small" />
 
                         <TextView
                             android:id="@+id/productprice"
@@ -118,7 +120,6 @@
                             android:layout_marginLeft="@dimen/z_margin_small"
                             android:text="You Save 57%"
                             android:textColor="@color/z_green_color_primary"
-                            android:textSize="@dimen/z_font_small"
                             android:textStyle="italic" />
                     </LinearLayout>
                 </LinearLayout>
@@ -172,7 +173,7 @@
                             android:layout_width="@dimen/z_upvote_button_height"
                             android:layout_height="@dimen/z_upvote_button_height"
                             android:background="@drawable/comment_button_selector"
-                            android:clickable="true" />
+                            android:clickable="false" />
 
                         <TextView
                             android:id="@+id/numberofcomments"
@@ -244,6 +245,7 @@
                     android:layout_marginLeft="@dimen/z_margin_mini"
                     android:layout_marginRight="@dimen/z_margin_mini"
                     android:layout_marginTop="@dimen/z_margin_mini"
+                    android:animateLayoutChanges="true"
                     android:background="@drawable/ic_shadow_card"
                     android:orientation="vertical"
                     android:padding="@dimen/z_margin_large" >
@@ -262,8 +264,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/z_margin_small"
+                        android:maxLines="5"
                         android:text="Product Description"
                         android:textColor="@color/z_text_color_medium_dark" />
+
+                    <TextView
+                        android:id="@+id/showmore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/z_margin_small"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:paddingBottom="@dimen/z_margin_small"
+                        android:paddingLeft="@dimen/z_margin_large"
+                        android:paddingRight="@dimen/z_margin_large"
+                        android:paddingTop="@dimen/z_margin_small"
+                        android:text="SHOW MORE"
+                        android:textColor="@color/z_green_color_primary" />
                 </LinearLayout>
 
                 <FrameLayout

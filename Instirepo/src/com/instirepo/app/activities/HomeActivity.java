@@ -70,9 +70,8 @@ import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.serverApi.ImageRequestManager.RequestBitmap;
 import com.instirepo.app.widgets.CircularImageView;
 
-public class HomeActivity extends BaseActivity implements OnPageChangeListener,
-		AppConstants, OnClickListener, ZUrls, ConnectionCallbacks,
-		OnConnectionFailedListener {
+public class HomeActivity extends BaseActivity implements OnPageChangeListener, AppConstants, OnClickListener, ZUrls,
+		ConnectionCallbacks, OnConnectionFailedListener {
 
 	ViewPager viewPager;
 	TabLayout tabLayout;
@@ -111,18 +110,14 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 
 		fragmentHashMap = new HashMap<>();
 
-		fabRevealMargin = getResources().getDimensionPixelSize(
-				R.dimen.z_fab_home_dimension_for_reveal);
+		fabRevealMargin = getResources().getDimensionPixelSize(R.dimen.z_fab_home_dimension_for_reveal);
 		deviceHeight = getResources().getDisplayMetrics().heightPixels;
 		deviceWidth = getResources().getDisplayMetrics().widthPixels;
 		maxFloatingActionButtonTranslation = getResources()
-				.getDimensionPixelSize(
-						R.dimen.floating_action_button_height_with_margin_bottom_considered);
+				.getDimensionPixelSize(R.dimen.floating_action_button_height_with_margin_bottom_considered);
 
-		mGoogleApiClient = new GoogleApiClient.Builder(this)
-				.addConnectionCallbacks(this)
-				.addOnConnectionFailedListener(this).addApi(Plus.API)
-				.addScope(new Scope(Scopes.PROFILE)).build();
+		mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this)
+				.addOnConnectionFailedListener(this).addApi(Plus.API).addScope(new Scope(Scopes.PROFILE)).build();
 
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		tabLayout = (TabLayout) findViewById(R.id.indicator);
@@ -159,35 +154,30 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 			}
 		});
 
-		toolbar.getViewTreeObserver().addOnGlobalLayoutListener(
-				new ViewTreeObserver.OnGlobalLayoutListener() {
+		toolbar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
-					@SuppressLint("NewApi")
-					@Override
-					public void onGlobalLayout() {
-						try {
-							toolbar.getViewTreeObserver()
-									.removeOnGlobalLayoutListener(this);
-						} catch (Exception e) {
-							toolbar.getViewTreeObserver()
-									.removeGlobalOnLayoutListener(this);
-						}
-						toolbarHeight = toolbar.getHeight();
-					}
-				});
+			@SuppressLint("NewApi")
+			@Override
+			public void onGlobalLayout() {
+				try {
+					toolbar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				} catch (Exception e) {
+					toolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+				}
+				toolbarHeight = toolbar.getHeight();
+			}
+		});
 
 		if (ZPreferences.isUserLogIn(this)) {
 			navigationDrawerEmail.setText(ZPreferences.getUserEmail(this));
 			navigationDrawerUserName.setText(ZPreferences.getUserName(this));
-			ImageRequestManager.get(this).requestImage2(this,
-					navigationDrawerImageUser,
+			ImageRequestManager.get(this).requestImage2(this, navigationDrawerImageUser,
 					ZPreferences.getUserImageURL(this), new RequestBitmap() {
 
 						@Override
 						public void onRequestCompleted(Bitmap bitmap) {
 							navigationDrawerImageUser.setImageBitmap(bitmap);
-							navigationDrawerImageDefault
-									.setVisibility(View.GONE);
+							navigationDrawerImageDefault.setVisibility(View.GONE);
 						}
 					}, -1);
 		} else {
@@ -206,20 +196,17 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		viewPager.setAdapter(adapter);
 		tabLayout.setupWithViewPager(viewPager);
 
-		if (getIntent().hasExtra("showsplash")
-				&& getIntent().getExtras().getBoolean("showsplash")) {
+		if (getIntent().hasExtra("showsplash") && getIntent().getExtras().getBoolean("showsplash")) {
 			new Timer().schedule(new TimerTask() {
 
 				@Override
 				public void run() {
-					splashActivityLayout.animate().alpha(0).setDuration(100)
-							.setListener(new ZAnimatorListener() {
-								@Override
-								public void onAnimationEnd(Animator animation) {
-									splashActivityLayout
-											.setVisibility(View.GONE);
-								}
-							});
+					splashActivityLayout.animate().alpha(0).setDuration(100).setListener(new ZAnimatorListener() {
+						@Override
+						public void onAnimationEnd(Animator animation) {
+							splashActivityLayout.setVisibility(View.GONE);
+						}
+					});
 				}
 			}, SplashActivity.splashDuration);
 		} else {
@@ -243,9 +230,8 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 	protected void hideFloatingActionMenu() {
 		if (!isFabAnimRunning) {
 			isFabAnimRunning = true;
-			SupportAnimator anim = ViewAnimationUtils.createCircularReveal(
-					fabBackground, deviceWidth - fabRevealMargin, deviceHeight
-							- 2 * fabRevealMargin, deviceHeight, 0);
+			SupportAnimator anim = ViewAnimationUtils.createCircularReveal(fabBackground, deviceWidth - fabRevealMargin,
+					deviceHeight - 2 * fabRevealMargin, deviceHeight, 0);
 			anim.setInterpolator(new AccelerateDecelerateInterpolator());
 			anim.setDuration(400);
 			anim.addListener(new ZCircularAnimatorListener() {
@@ -265,8 +251,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		super.onNewIntent(intent);
 		adapter = new MyPagerAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(adapter);
-		Fragment fragment = getSupportFragmentManager().findFragmentByTag(
-				Z_HOME_ACTIVITY_SLECT_CATEGORY_FRAGMENT_TAG);
+		Fragment fragment = getSupportFragmentManager().findFragmentByTag(Z_HOME_ACTIVITY_SLECT_CATEGORY_FRAGMENT_TAG);
 		if (fragment != null) {
 			onBackPressed();
 		}
@@ -276,9 +261,8 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		if (!isFabAnimRunning) {
 			isFabAnimRunning = true;
 			fabBackground.setVisibility(View.VISIBLE);
-			SupportAnimator anim = ViewAnimationUtils.createCircularReveal(
-					fabBackground, deviceWidth - fabRevealMargin, deviceHeight
-							- 2 * fabRevealMargin, 0, deviceHeight);
+			SupportAnimator anim = ViewAnimationUtils.createCircularReveal(fabBackground, deviceWidth - fabRevealMargin,
+					deviceHeight - 2 * fabRevealMargin, 0, deviceHeight);
 			anim.setDuration(500);
 			anim.addListener(new ZCircularAnimatorListener() {
 				@Override
@@ -292,54 +276,46 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 	}
 
 	private void setDrawerItemClickListener() {
-		navigationView
-				.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+		navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
-					@Override
-					public boolean onNavigationItemSelected(MenuItem item) {
-						item.setChecked(true);
-						drawerLayout.closeDrawers();
-						switch (item.getItemId()) {
-						case R.id.logoutfromapp:
-							ZPreferences.setIsUserLogin(HomeActivity.this,
-									false);
-							ZPreferences.setUserProfileID(HomeActivity.this,
-									null);
-							ZPreferences.setDropboxToken(HomeActivity.this,
-									null);
-							if (mGoogleApiClient.isConnected()) {
-								Plus.AccountApi
-										.clearDefaultAccount(mGoogleApiClient);
-								mGoogleApiClient.disconnect();
-							}
-							Intent intent = new Intent(HomeActivity.this,
-									LaunchActivity.class);
-							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-									| Intent.FLAG_ACTIVITY_CLEAR_TASK
-									| Intent.FLAG_ACTIVITY_NEW_TASK);
-							startActivity(intent);
-							HomeActivity.this.finish();
-							return true;
-						case R.id.allmessagesactivity:
-							openMessagesListActivity();
-							return true;
-						case R.id.opennotificaton:
-							openNotificationsActivity();
-							return true;
-						case R.id.contactnav:
-							sendEmailIntentUsingToAction("");
-							return true;
-						default:
-							return true;
-						}
+			@Override
+			public boolean onNavigationItemSelected(MenuItem item) {
+				item.setChecked(true);
+				drawerLayout.closeDrawers();
+				switch (item.getItemId()) {
+				case R.id.logoutfromapp:
+					ZPreferences.setIsUserLogin(HomeActivity.this, false);
+					ZPreferences.setUserProfileID(HomeActivity.this, null);
+					ZPreferences.setDropboxToken(HomeActivity.this, null);
+					if (mGoogleApiClient.isConnected()) {
+						Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+						mGoogleApiClient.disconnect();
 					}
-				});
+					Intent intent = new Intent(HomeActivity.this, LaunchActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK
+							| Intent.FLAG_ACTIVITY_NEW_TASK);
+					startActivity(intent);
+					HomeActivity.this.finish();
+					return true;
+				case R.id.allmessagesactivity:
+					openMessagesListActivity();
+					return true;
+				case R.id.opennotificaton:
+					openNotificationsActivity();
+					return true;
+				case R.id.contactnav:
+					sendEmailIntentUsingToAction("");
+					return true;
+				default:
+					return true;
+				}
+			}
+		});
 	}
 
 	private void setDrawerActionBarToggle() {
-		ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-				this, drawerLayout, toolbar, R.string.z_open_drawer,
-				R.string.z_close_drawer) {
+		ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+				R.string.z_open_drawer, R.string.z_close_drawer) {
 
 			@Override
 			public void onDrawerClosed(View drawerView) {
@@ -404,8 +380,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		} else if (requestedTranslation > 0) {
 			requestedTranslation = 0;
 			appBarLayout.setTranslationY(requestedTranslation);
-		} else if (requestedTranslation >= -toolbarHeight
-				&& requestedTranslation <= 0) {
+		} else if (requestedTranslation >= -toolbarHeight && requestedTranslation <= 0) {
 			appBarLayout.setTranslationY(requestedTranslation);
 		}
 
@@ -420,8 +395,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		} else if (requestedTranslation < 0) {
 			requestedTranslation = 0;
 			floatingActionMenu.setTranslationY(requestedTranslation);
-		} else if (requestedTranslation <= maxFloatingActionButtonTranslation
-				&& requestedTranslation >= 0) {
+		} else if (requestedTranslation <= maxFloatingActionButtonTranslation && requestedTranslation >= 0) {
 			floatingActionMenu.setTranslationY(requestedTranslation);
 		}
 	}
@@ -457,10 +431,8 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 	}
 
 	void animateToolbarLayout(int trans) {
-		appBarLayout.animate().translationY(trans)
-				.setDuration(TRANSLATION_DURATION)
-				.setInterpolator(new DecelerateInterpolator())
-				.setListener(new ZAnimatorListener() {
+		appBarLayout.animate().translationY(trans).setDuration(TRANSLATION_DURATION)
+				.setInterpolator(new DecelerateInterpolator()).setListener(new ZAnimatorListener() {
 
 					@Override
 					public void onAnimationStart(Animator animation) {
@@ -475,10 +447,8 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 	}
 
 	void animateFABLayout(int trans) {
-		floatingActionMenu.animate().translationY(trans)
-				.setDuration(TRANSLATION_DURATION)
-				.setInterpolator(new DecelerateInterpolator())
-				.setListener(new ZAnimatorListener() {
+		floatingActionMenu.animate().translationY(trans).setDuration(TRANSLATION_DURATION)
+				.setInterpolator(new DecelerateInterpolator()).setListener(new ZAnimatorListener() {
 
 					@Override
 					public void onAnimationStart(Animator animation) {
@@ -511,65 +481,50 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		Bundle bundle = new Bundle();
 		bundle.putInt("postid", postid);
 
-		getSupportFragmentManager()
-				.beginTransaction()
-				.replace(R.id.fragmentcontainer,
-						SeenByPeopleFragment.newInstance(bundle))
-				.addToBackStack("tag").commit();
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.fragmentcontainer, SeenByPeopleFragment.newInstance(bundle)).addToBackStack("tag")
+				.commit();
 	}
 
 	public void switchToCommentsFragment(int postid) {
 		Bundle bundle = new Bundle();
 		bundle.putInt("postid", postid);
 
-		getSupportFragmentManager()
-				.beginTransaction()
-				.replace(R.id.fragmentcontainer,
-						CommentsPostsFragment.newInstance(bundle),
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.fragmentcontainer, CommentsPostsFragment.newInstance(bundle),
 						Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG)
-				.addToBackStack("Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG")
-				.commit();
+				.addToBackStack("Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG").commit();
 	}
 
 	void switchToSelectPostCategoryFragment() {
 		Bundle bundle = new Bundle();
 
-		getSupportFragmentManager()
-				.beginTransaction()
-				.replace(R.id.fragmentcontainer,
-						SelectPostCategoryFragment.newInstance(bundle),
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.fragmentcontainer, SelectPostCategoryFragment.newInstance(bundle),
 						Z_HOME_ACTIVITY_SLECT_CATEGORY_FRAGMENT_TAG)
-				.addToBackStack(Z_HOME_ACTIVITY_SLECT_CATEGORY_FRAGMENT_TAG)
-				.commit();
+				.addToBackStack(Z_HOME_ACTIVITY_SLECT_CATEGORY_FRAGMENT_TAG).commit();
 	}
 
-	public void switchToUserProfileViewedByOtherFragment(int userid,
-			String name, String image) {
+	public void switchToUserProfileViewedByOtherFragment(int userid, String name, String image) {
 		Bundle bundle = new Bundle();
 		bundle.putString("name", name);
 		bundle.putInt("userid", userid);
 		bundle.putString("image", image);
 
-		getSupportFragmentManager()
-				.beginTransaction()
-				.replace(R.id.fragmentcontainer,
-						UserProfileViewedByOtherFragment.newInstance(bundle),
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.fragmentcontainer, UserProfileViewedByOtherFragment.newInstance(bundle),
 						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG)
-				.addToBackStack(
-						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG)
-				.commit();
+				.addToBackStack(Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG).commit();
 	}
 
 	@Override
 	public void onBackPressed() {
 		Fragment fragmentUserProfile = getSupportFragmentManager()
-				.findFragmentByTag(
-						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG);
+				.findFragmentByTag(Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG);
 		Fragment fragmentComments = getSupportFragmentManager()
 				.findFragmentByTag(Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG);
 		Fragment fragmentUserProfileOpenedFromCommentsListAdapter = getSupportFragmentManager()
-				.findFragmentByTag(
-						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG_FROM_COMMENT_LIST_ADAPTER);
+				.findFragmentByTag(Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG_FROM_COMMENT_LIST_ADAPTER);
 
 		if (fragmentUserProfileOpenedFromCommentsListAdapter != null
 				&& !((UserProfileViewedByOtherFragment) fragmentUserProfileOpenedFromCommentsListAdapter).fragmentDestroyed) {
@@ -611,13 +566,8 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 			}
 			break;
 		case R.id.sellproduct:
-			ProductsCategoriesFragment fragment = (ProductsCategoriesFragment) fragmentHashMap
-					.get(2);
-			if (fragment == null || fragment.mData == null) {
-				openSellProductActivity(null);
-			} else {
-				openSellProductActivity(fragment.mData.getCategories());
-			}
+			hideFloatingActionMenu();
+			openSellProductActivity();
 			break;
 		default:
 			break;
@@ -625,48 +575,42 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 	}
 
 	private void requestAllPostCategories() {
-		progressDialog = ProgressDialog.show(this, "Loading",
-				"Verifying and getting categories..");
+		progressDialog = ProgressDialog.show(this, "Loading", "Verifying and getting categories..");
 
-		StringRequest req = new StringRequest(Method.POST,
-				getAllPostCategories, new Listener<String>() {
+		StringRequest req = new StringRequest(Method.POST, getAllPostCategories, new Listener<String>() {
 
-					@Override
-					public void onResponse(String arg0) {
-						if (progressDialog != null)
-							progressDialog.dismiss();
+			@Override
+			public void onResponse(String arg0) {
+				if (progressDialog != null)
+					progressDialog.dismiss();
 
-						AllPostCategoriesObject obj = new Gson().fromJson(arg0,
-								AllPostCategoriesObject.class);
-						HomeActivity.this.allPostCategoriesObject = obj;
+				AllPostCategoriesObject obj = new Gson().fromJson(arg0, AllPostCategoriesObject.class);
+				HomeActivity.this.allPostCategoriesObject = obj;
 
-						if (obj.isError()) {
-							snackbar = Snackbar.make(
-									findViewById(R.id.coordinatorlayout),
-									obj.getMessage(),
-									Snackbar.LENGTH_INDEFINITE);
-							snackbar.show();
-							hideFloatingActionMenu();
-						} else {
-							hideFloatingActionMenu();
-							switchToSelectPostCategoryFragment();
-						}
-					}
-				}, new ErrorListener() {
+				if (obj.isError()) {
+					snackbar = Snackbar.make(findViewById(R.id.coordinatorlayout), obj.getMessage(),
+							Snackbar.LENGTH_INDEFINITE);
+					snackbar.show();
+					hideFloatingActionMenu();
+				} else {
+					hideFloatingActionMenu();
+					switchToSelectPostCategoryFragment();
+				}
+			}
+		}, new ErrorListener() {
 
-					@Override
-					public void onErrorResponse(VolleyError arg0) {
-						if (progressDialog != null)
-							progressDialog.dismiss();
+			@Override
+			public void onErrorResponse(VolleyError arg0) {
+				if (progressDialog != null)
+					progressDialog.dismiss();
 
-						showSnackBar("Error..Check Internet Connection");
-					}
-				}) {
+				showSnackBar("Error..Check Internet Connection");
+			}
+		}) {
 			@Override
 			protected Map<String, String> getParams() throws AuthFailureError {
 				HashMap<String, String> p = new HashMap<>();
-				p.put("user_id",
-						ZPreferences.getUserProfileID(HomeActivity.this));
+				p.put("user_id", ZPreferences.getUserProfileID(HomeActivity.this));
 				return p;
 			}
 		};
