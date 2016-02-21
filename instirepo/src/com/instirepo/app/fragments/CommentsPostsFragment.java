@@ -3,28 +3,6 @@ package com.instirepo.app.fragments;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.animation.Animator;
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
 import com.android.volley.Cache.Entry;
@@ -48,9 +26,30 @@ import com.instirepo.app.objects.CommentsListObject.CommentObject;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.widgets.CustomGoogleFloatingActionButton;
 
+import android.animation.Animator;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+
 @SuppressLint("NewApi")
-public class CommentsFragment extends BaseFragment implements OnClickListener,
-		ZUrls {
+public class CommentsPostsFragment extends BaseFragment implements OnClickListener, ZUrls {
 
 	ListView listView;
 	CommentListAdapter adapter;
@@ -77,25 +76,20 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 
 	View inflatedView;
 
-	boolean isProductsComments;
-
-	public static CommentsFragment newInstance(Bundle b) {
-		CommentsFragment frg = new CommentsFragment();
+	public static CommentsPostsFragment newInstance(Bundle b) {
+		CommentsPostsFragment frg = new CommentsPostsFragment();
 		frg.setArguments(b);
 		return frg;
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.comments_fragment_layout, container,
-				false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.comments_fragment_layout, container, false);
 
 		inflatedView = v;
 
 		listView = (ListView) v.findViewById(R.id.commentlist);
-		addCommentFab = (CustomGoogleFloatingActionButton) v
-				.findViewById(R.id.adddocmmentfab);
+		addCommentFab = (CustomGoogleFloatingActionButton) v.findViewById(R.id.adddocmmentfab);
 		addCommentLayout = (LinearLayout) v.findViewById(R.id.commentlayoutadd);
 		setProgressLayoutVariablesAndErrorVariables(v);
 		sendComment = (LinearLayout) v.findViewById(R.id.sendcomment);
@@ -112,16 +106,10 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 		postid = getArguments().getInt("postid");
 		sendCommentImage.setAlpha(0.5f);
 
-		isProductsComments = getArguments().getBoolean("isproductcommentpage",
-				false);
+		footerView = LayoutInflater.from(getActivity()).inflate(R.layout.loading_more, null, false);
 
-		footerView = LayoutInflater.from(getActivity()).inflate(
-				R.layout.loading_more, null, false);
-
-		dimen16 = getActivity().getResources().getDimensionPixelSize(
-				R.dimen.z_margin_large);
-		dimen56 = getActivity().getResources().getDimensionPixelSize(
-				R.dimen.z_toolbar_height);
+		dimen16 = getActivity().getResources().getDimensionPixelSize(R.dimen.z_margin_large);
+		dimen56 = getActivity().getResources().getDimensionPixelSize(R.dimen.z_toolbar_height);
 		deviceWidth = getActivity().getResources().getDisplayMetrics().widthPixels;
 
 		addCommentFab.setOnClickListener(this);
@@ -134,18 +122,15 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 			}
 
 			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 				if ((firstVisibleItem + visibleItemCount == totalItemCount - 1)
-						&& addCommentLayout.getVisibility() == View.GONE
-						&& !isShowCommentLayoutAnimRunning
+						&& addCommentLayout.getVisibility() == View.GONE && !isShowCommentLayoutAnimRunning
 						&& !shownAddCommentLayoutOnListScroll) {
 					showCommentLayout();
 					shownAddCommentLayoutOnListScroll = true;
 				}
 
-				int diff = totalItemCount
-						- (firstVisibleItem + visibleItemCount);
+				int diff = totalItemCount - (firstVisibleItem + visibleItemCount);
 				if (diff < 6 && !isRequestRunning && isMoreAllowed)
 					loadData();
 			}
@@ -154,11 +139,9 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 		commentBox.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if (s.length() == 0) {
-					sendCommentImage
-							.setImageResource(R.drawable.ic_send_disabled_grey);
+					sendCommentImage.setImageResource(R.drawable.ic_send_disabled_grey);
 					sendCommentImage.setAlpha(0.5f);
 				} else {
 					sendCommentImage.setImageResource(R.drawable.ic_send_white);
@@ -167,8 +150,7 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 			}
 
 			@Override
@@ -186,50 +168,42 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 				showLoadingLayout();
 				hideErrorLayout();
 			}
-			final String url = getCommentsOnPost + "?pagenumber=" + nextPage
-					+ "&post_id=" + postid;
-			StringRequest req = new StringRequest(Method.POST, url,
-					new Listener<String>() {
+			final String url = getCommentsOnPost + "?pagenumber=" + nextPage + "&post_id=" + postid;
+			StringRequest req = new StringRequest(Method.POST, url, new Listener<String>() {
 
-						@Override
-						public void onResponse(String arg0) {
-							isRequestRunning = false;
-							CommentsListObject obj = new Gson().fromJson(arg0,
-									CommentsListObject.class);
-							setAdapterData(obj);
-						}
-					}, new ErrorListener() {
-
-						@Override
-						public void onErrorResponse(VolleyError arg0) {
-							isRequestRunning = false;
-							try {
-								Cache cache = ZApplication.getInstance()
-										.getRequestQueue().getCache();
-								Entry entry = cache.get(url);
-								String data = new String(entry.data, "UTF-8");
-								CommentsListObject obj = new Gson().fromJson(
-										data, CommentsListObject.class);
-								setAdapterData(obj);
-							} catch (Exception e) {
-								if (adapter == null) {
-									hideLoadingLayout();
-									showErrorLayout();
-								}
-							}
-						}
-					}) {
 				@Override
-				protected Map<String, String> getParams()
-						throws AuthFailureError {
+				public void onResponse(String arg0) {
+					isRequestRunning = false;
+					CommentsListObject obj = new Gson().fromJson(arg0, CommentsListObject.class);
+					setAdapterData(obj);
+				}
+			}, new ErrorListener() {
+
+				@Override
+				public void onErrorResponse(VolleyError arg0) {
+					isRequestRunning = false;
+					try {
+						Cache cache = ZApplication.getInstance().getRequestQueue().getCache();
+						Entry entry = cache.get(url);
+						String data = new String(entry.data, "UTF-8");
+						CommentsListObject obj = new Gson().fromJson(data, CommentsListObject.class);
+						setAdapterData(obj);
+					} catch (Exception e) {
+						if (adapter == null) {
+							hideLoadingLayout();
+							showErrorLayout();
+						}
+					}
+				}
+			}) {
+				@Override
+				protected Map<String, String> getParams() throws AuthFailureError {
 					HashMap<String, String> p = new HashMap<>();
-					p.put("user_id",
-							ZPreferences.getUserProfileID(getActivity()));
+					p.put("user_id", ZPreferences.getUserProfileID(getActivity()));
 					return p;
 				}
 			};
-			ZApplication.getInstance()
-					.addToRequestQueue(req, getCommentsOnPost);
+			ZApplication.getInstance().addToRequestQueue(req, getCommentsOnPost);
 		}
 	}
 
@@ -239,16 +213,15 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 			isMoreAllowed = false;
 
 		if (adapter == null && obj.getComments().size() == 0) {
-			showEmptyListView(
-					"No comments have been received on this post yet. Be the first one to comment",
-					false, inflatedView);
+			showEmptyListView("No comments have been received on this post yet. Be the first one to comment", false,
+					inflatedView);
 		}
 
 		if (adapter == null) {
 			hideLoadingLayout();
 			hideErrorLayout();
 
-			adapter = new CommentListAdapter(getActivity(), obj.getComments());
+			adapter = new CommentListAdapter(getActivity(), obj.getComments(), false);
 			if (isMoreAllowed)
 				listView.addFooterView(footerView);
 			listView.setAdapter(adapter);
@@ -276,53 +249,48 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 	private void sendCommentToServer() {
 		if (progressDialog != null)
 			progressDialog.dismiss();
-		progressDialog = ProgressDialog.show(getActivity(), "Adding comment",
-				"Please wait. Posting your comment");
+		progressDialog = ProgressDialog.show(getActivity(), "Adding comment", "Please wait. Posting your comment");
 
-		StringRequest req = new StringRequest(Method.POST, addCommentOnPost,
-				new Listener<String>() {
+		StringRequest req = new StringRequest(Method.POST, addCommentOnPost, new Listener<String>() {
 
-					@Override
-					public void onResponse(String arg0) {
-						if (progressDialog != null)
-							progressDialog.dismiss();
+			@Override
+			public void onResponse(String arg0) {
+				if (progressDialog != null)
+					progressDialog.dismiss();
 
-						AddCommentObject obj = new Gson().fromJson(arg0,
-								AddCommentObject.class);
+				AddCommentObject obj = new Gson().fromJson(arg0, AddCommentObject.class);
 
-						numberOfComments.setText(obj.getCount() + " comments");
-						CommentObject commentObject = new CommentsListObject().new CommentObject();
-						commentObject.setId(obj.getId());
-						commentObject.setComment(commentBox.getText()
-								.toString());
-						commentObject.setTime("now");
-						commentObject.setIs_by_user(true);
-						commentObject.setUser_image(obj.getImage());
-						commentObject.setUser_name(obj.getName());
+				numberOfComments.setText(obj.getCount() + " comments");
+				CommentObject commentObject = new CommentsListObject().new CommentObject();
+				commentObject.setId(obj.getId());
+				commentObject.setComment(commentBox.getText().toString());
+				commentObject.setTime("now");
+				commentObject.setIs_by_user(true);
+				commentObject.setUser_image(obj.getImage());
+				commentObject.setUser_name(obj.getName());
 
-						commentBox.setText("");
-						commentBox.clearFocus();
-						InputMethodManager imm = (InputMethodManager) getActivity()
-								.getSystemService(Context.INPUT_METHOD_SERVICE);
-						imm.hideSoftInputFromWindow(getActivity()
-								.getCurrentFocus().getWindowToken(), 0);
+				commentBox.setText("");
+				commentBox.clearFocus();
+				InputMethodManager imm = (InputMethodManager) getActivity()
+						.getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
 
-						hideEmptyListCase(inflatedView);
+				hideEmptyListCase(inflatedView);
 
-						adapter.addSingleComment(commentObject);
-						adapter.notifyDataSetChanged();
-						listView.setSelectionAfterHeaderView();
-					}
-				}, new ErrorListener() {
+				adapter.addSingleComment(commentObject);
+				adapter.notifyDataSetChanged();
+				listView.setSelectionAfterHeaderView();
+			}
+		}, new ErrorListener() {
 
-					@Override
-					public void onErrorResponse(VolleyError arg0) {
-						if (progressDialog != null)
-							progressDialog.dismiss();
+			@Override
+			public void onErrorResponse(VolleyError arg0) {
+				if (progressDialog != null)
+					progressDialog.dismiss();
 
-						makeToast("Some error occured in posting comment. Please check internet and try again");
-					}
-				}) {
+				makeToast("Some error occured in posting comment. Please check internet and try again");
+			}
+		}) {
 			@Override
 			protected Map<String, String> getParams() throws AuthFailureError {
 				HashMap<String, String> p = new HashMap<>();
@@ -338,8 +306,7 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 	private void showCommentLayout() {
 		isShowCommentLayoutAnimRunning = true;
 		addCommentFab.animate().translationY(dimen16).translationX(-dimen16)
-				.setInterpolator(new AccelerateInterpolator()).setDuration(150)
-				.setListener(new ZAnimatorListener() {
+				.setInterpolator(new AccelerateInterpolator()).setDuration(150).setListener(new ZAnimatorListener() {
 
 					@Override
 					public void onAnimationEnd(Animator animation) {
@@ -349,10 +316,8 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 						addCommentFab.setVisibility(View.GONE);
 						addCommentLayout.setVisibility(View.VISIBLE);
 
-						SupportAnimator animator = ViewAnimationUtils
-								.createCircularReveal(addCommentLayout,
-										location[0] + dimen56 / 3, dimen56 / 2,
-										dimen56 / 2, deviceWidth);
+						SupportAnimator animator = ViewAnimationUtils.createCircularReveal(addCommentLayout,
+								location[0] + dimen56 / 3, dimen56 / 2, dimen56 / 2, deviceWidth);
 						animator.setInterpolator(new AccelerateDecelerateInterpolator());
 						animator.setDuration(600);
 						animator.addListener(new ZCircularAnimatorListener() {
@@ -367,9 +332,8 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 	}
 
 	void hideCommentLayout() {
-		SupportAnimator animator = ViewAnimationUtils.createCircularReveal(
-				addCommentLayout, location[0] + dimen56 / 3, dimen56 / 2,
-				deviceWidth, dimen56 / 2);
+		SupportAnimator animator = ViewAnimationUtils.createCircularReveal(addCommentLayout, location[0] + dimen56 / 3,
+				dimen56 / 2, deviceWidth, dimen56 / 2);
 		animator.setInterpolator(new AccelerateDecelerateInterpolator());
 		animator.setDuration(600);
 		animator.addListener(new ZCircularAnimatorListener() {
@@ -378,19 +342,14 @@ public class CommentsFragment extends BaseFragment implements OnClickListener,
 			public void onAnimationEnd() {
 				addCommentFab.setVisibility(View.VISIBLE);
 				addCommentLayout.setVisibility(View.GONE);
-				addCommentFab
-						.animate()
-						.translationX(0)
-						.translationY(0)
-						.setDuration(80)
-						.setInterpolator(new AccelerateDecelerateInterpolator())
-						.setListener(new ZAnimatorListener() {
-							@Override
-							public void onAnimationEnd(Animator animation) {
-								addCommentFab.setVisibility(View.VISIBLE);
-								addCommentLayout.setVisibility(View.GONE);
-							}
-						}).start();
+				addCommentFab.animate().translationX(0).translationY(0).setDuration(80)
+						.setInterpolator(new AccelerateDecelerateInterpolator()).setListener(new ZAnimatorListener() {
+					@Override
+					public void onAnimationEnd(Animator animation) {
+						addCommentFab.setVisibility(View.VISIBLE);
+						addCommentLayout.setVisibility(View.GONE);
+					}
+				}).start();
 			}
 		});
 		animator.start();

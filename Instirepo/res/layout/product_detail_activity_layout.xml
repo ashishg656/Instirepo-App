@@ -88,6 +88,7 @@
                             android:textColor="@color/PrimaryColor" />
 
                         <TextView
+                            android:id="@+id/productprice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="00"
@@ -104,12 +105,14 @@
                         android:orientation="horizontal" >
 
                         <TextView
+                            android:id="@+id/productmrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="MRP : ₹ 900"
                             android:textColor="@color/z_red_color_primary" />
 
                         <TextView
+                            android:id="@+id/yousave"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/z_margin_small"
@@ -117,6 +120,69 @@
                             android:textColor="@color/z_green_color_primary"
                             android:textSize="@dimen/z_font_small"
                             android:textStyle="italic" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/z_margin_mini"
+                    android:layout_marginRight="@dimen/z_margin_mini"
+                    android:layout_marginTop="@dimen/z_margin_mini"
+                    android:background="@drawable/ic_shadow_card"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/z_margin_large"
+                    android:paddingRight="@dimen/z_margin_large"
+                    android:paddingTop="@dimen/z_margin_large" >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:id="@+id/savepostimage"
+                            android:layout_width="@dimen/z_upvote_button_height"
+                            android:layout_height="@dimen/z_upvote_button_height"
+                            android:background="@drawable/star_button_selector"
+                            android:clickable="true" />
+
+                        <TextView
+                            android:id="@+id/numberofsaves"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:includeFontPadding="false"
+                            android:text="0 Likes"
+                            android:textColor="@color/z_text_color_medium_dark"
+                            android:textSize="@dimen/z_font_supermini" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/viewcomments"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="@dimen/z_upvote_button_height"
+                            android:layout_height="@dimen/z_upvote_button_height"
+                            android:background="@drawable/comment_button_selector"
+                            android:clickable="true" />
+
+                        <TextView
+                            android:id="@+id/numberofcomments"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:includeFontPadding="false"
+                            android:text="0 Comments"
+                            android:textColor="@color/z_text_color_medium_dark"
+                            android:textSize="@dimen/z_font_supermini" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -142,6 +208,7 @@
                         android:textStyle="bold" />
 
                     <CheckBox
+                        android:id="@+id/warrantyavaailable"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
@@ -151,6 +218,7 @@
                         android:text="Warranty Available" />
 
                     <CheckBox
+                        android:id="@+id/billavailable"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
@@ -160,6 +228,7 @@
                         android:text="Bill Available" />
 
                     <TextView
+                        android:id="@+id/wanntyleft"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/z_margin_large"
@@ -189,6 +258,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/z_margin_small"
@@ -199,12 +269,14 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="54dp"
                     android:layout_marginLeft="@dimen/z_margin_mini"
                     android:layout_marginRight="@dimen/z_margin_mini"
                     android:layout_marginTop="@dimen/z_margin_mini"
                     android:background="@drawable/ic_shadow_card" >
 
                     <LinearLayout
+                        android:id="@+id/openuserprofilepost"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
@@ -262,6 +334,67 @@
     </com.instirepo.app.widgets.ObservableScrollView>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/chatcontaner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/orange_post"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/chat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="Chat"
+                    android:textColor="@color/z_white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/z_green_color_primary"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/call"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/calluplaodtext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="Call"
+                    android:textColor="@color/z_white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/faketoolbarshopdetail"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -297,6 +430,12 @@
             <include layout="@layout/toolbar_layout" />
         </FrameLayout>
     </android.support.design.widget.CoordinatorLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
 
     <include layout="@layout/error_layout" />
 

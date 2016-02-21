@@ -1,26 +1,40 @@
 package com.instirepo.app.activities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.android.volley.Cache.Entry;
 import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.AuthFailureError;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.instirepo.app.R;
 import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.AppConstants;
+import com.instirepo.app.extras.TimeUtils;
 import com.instirepo.app.extras.ZUrls;
+import com.instirepo.app.fragments.CommentsProductsFragment;
+import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
 import com.instirepo.app.objects.ProductObjectSingle;
 import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.serverApi.AppRequestListener;
 import com.instirepo.app.serverApi.CustomStringRequest;
 import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.CirclePageIndicator;
+import com.instirepo.app.widgets.CircularImageView;
 import com.instirepo.app.widgets.ObservableScrollView;
 import com.instirepo.app.widgets.ObservableScrollViewListener;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -29,10 +43,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class ProductDetailActivity extends BaseActivity
 		implements AppConstants, OnClickListener, ZUrls, ObservableScrollViewListener, AppRequestListener {
@@ -56,6 +72,13 @@ public class ProductDetailActivity extends BaseActivity
 	int deviceWidth;
 	CirclePageIndicator pageIndicator;
 
+	TextView name, price, mrp, youSave, warrantyPeriodLeft, description, uploaderName, uploadTime, numberOfSaves,
+			numberOfComments;
+	CheckBox billAvailable, warrantyAvailable;
+	CircularImageView imageUploader;
+	LinearLayout chatWithUser, CallUser;
+	ImageView savePostImage;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,6 +98,22 @@ public class ProductDetailActivity extends BaseActivity
 		bookImageDividerView = (View) findViewById(R.id.boomimagivideview);
 		viewPager = (ViewPager) findViewById(R.id.postimage);
 		pageIndicator = (CirclePageIndicator) findViewById(R.id.circle_page_indicator);
+		name = (TextView) findViewById(R.id.productname);
+		price = (TextView) findViewById(R.id.productprice);
+		mrp = (TextView) findViewById(R.id.productmrp);
+		youSave = (TextView) findViewById(R.id.yousave);
+		warrantyAvailable = (CheckBox) findViewById(R.id.warrantyavaailable);
+		billAvailable = (CheckBox) findViewById(R.id.billavailable);
+		warrantyPeriodLeft = (TextView) findViewById(R.id.wanntyleft);
+		description = (TextView) findViewById(R.id.desc);
+		uploaderName = (TextView) findViewById(R.id.seenbyname);
+		imageUploader = (CircularImageView) findViewById(R.id.seenbyimage);
+		uploadTime = (TextView) findViewById(R.id.seenbytime);
+		chatWithUser = (LinearLayout) findViewById(R.id.chat);
+		CallUser = (LinearLayout) findViewById(R.id.call);
+		savePostImage = (ImageView) findViewById(R.id.savepostimage);
+		numberOfSaves = (TextView) findViewById(R.id.numberofsaves);
+		numberOfComments = (TextView) findViewById(R.id.numberofcomments);
 
 		// deviceWidth = getResources().getDisplayMetrics().widthPixels;
 		// FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)
@@ -133,6 +172,57 @@ public class ProductDetailActivity extends BaseActivity
 		adapter = new ImagesPagerAdapter();
 		viewPager.setAdapter(adapter);
 		pageIndicator.setViewPager(viewPager);
+
+		name.setText(mData.getName());
+		price.setText(mData.getPrice() + "");
+		mrp.setText("MRP : ₹ " + mData.getMrp());
+		float save = 100 - ((float) mData.getPrice() / (float) mData.getMrp() * 100.0f);
+		youSave.setText("You Save " + ((int) save) + "%");
+		description.setText(mData.getDescription());
+		uploadTime.setText(TimeUtils.getPostTime(mData.getTime()));
+		uploaderName.setText(mData.getUser_name());
+		ImageRequestManager.get(this).requestImage(this, imageUploader, mData.getUser_image(), -1);
+		mrp.setPaintFlags(mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+		if (mData.isWarranty_availabe()) {
+			warrantyAvailable.setChecked(true);
+			warrantyAvailable.setText("Warranty Available");
+			warrantyPeriodLeft.setText(mData.getWarranty_left());
+		} else {
+			warrantyAvailable.setText("Warranty Not Available");
+			warrantyAvailable.setChecked(false);
+			warrantyPeriodLeft.setVisibility(View.GONE);
+		}
+
+		billAvailable.setChecked(mData.isBill_availabe());
+		if (mData.isBill_availabe()) {
+			billAvailable.setText("Bill Available");
+		} else {
+			billAvailable.setText("Bill Not Available");
+		}
+
+		chatWithUser.setOnClickListener(this);
+		CallUser.setOnClickListener(this);
+		findViewById(R.id.openuserprofilepost).setOnClickListener(this);
+		findViewById(R.id.viewcomments).setOnClickListener(this);
+		findViewById(R.id.savepostimage).setOnClickListener(this);
+
+		if (Integer.toString(mData.getUser_id()).equalsIgnoreCase(ZPreferences.getUserProfileID(this))) {
+			findViewById(R.id.chatcontaner).setVisibility(View.GONE);
+			((TextView) findViewById(R.id.calluplaodtext)).setText("Call uploader");
+		}
+
+		numberOfComments.setText(mData.getNumber_of_comments() + " Comments");
+		savePostImage.setOnClickListener(this);
+		findViewById(R.id.viewcomments).setOnClickListener(this);
+
+		fillDataForSavePostImageSelected();
+	}
+
+	void fillDataForSavePostImageSelected() {
+		numberOfSaves.setText(mData.getNumber_of_likes() + " Saves");
+
+		savePostImage.setSelected(mData.isHas_liked());
 	}
 
 	private void addImageInArraylistIfNotNull(String image) {
@@ -254,11 +344,128 @@ public class ProductDetailActivity extends BaseActivity
 	}
 
 	@Override
+	public void onBackPressed() {
+		Fragment fragmentUserProfile = getSupportFragmentManager()
+				.findFragmentByTag(Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG);
+		Fragment fragmentComments = getSupportFragmentManager()
+				.findFragmentByTag(Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG);
+		Fragment fragmentUserProfileOpenedFromCommentsListAdapter = getSupportFragmentManager()
+				.findFragmentByTag(Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG_FROM_COMMENT_LIST_ADAPTER);
+
+		if (fragmentUserProfileOpenedFromCommentsListAdapter != null
+				&& !((UserProfileViewedByOtherFragment) fragmentUserProfileOpenedFromCommentsListAdapter).fragmentDestroyed) {
+			((UserProfileViewedByOtherFragment) fragmentUserProfileOpenedFromCommentsListAdapter)
+					.dismissScrollViewDownCalledFromActivityBackPressed();
+		} else if (fragmentUserProfileOpenedFromCommentsListAdapter != null
+				&& ((UserProfileViewedByOtherFragment) fragmentUserProfileOpenedFromCommentsListAdapter).fragmentDestroyed) {
+			super.onBackPressed();
+		} else if (fragmentUserProfile != null
+				&& !((UserProfileViewedByOtherFragment) fragmentUserProfile).fragmentDestroyed) {
+			((UserProfileViewedByOtherFragment) fragmentUserProfile)
+					.dismissScrollViewDownCalledFromActivityBackPressed();
+		} else if (fragmentComments != null) {
+			CommentsProductsFragment frg = (CommentsProductsFragment) fragmentComments;
+			if (frg.shouldGoBackOnBackButtonPress())
+				super.onBackPressed();
+		} else
+			super.onBackPressed();
+	}
+
+	public void switchToUserProfileViewedByOtherFragment(int userid, String name, String image) {
+		Bundle bundle = new Bundle();
+		bundle.putString("name", name);
+		bundle.putInt("userid", userid);
+		bundle.putString("image", image);
+
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.fragmentcontainer, UserProfileViewedByOtherFragment.newInstance(bundle),
+						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG)
+				.addToBackStack(Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG).commit();
+	}
+
+	public void switchToCommentsFragment(int productId) {
+		Bundle bundle = new Bundle();
+		bundle.putInt("postid", productId);
+
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.fragmentcontainer, CommentsProductsFragment.newInstance(bundle),
+						Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG)
+				.addToBackStack("Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG").commit();
+	}
+
+	private void saveProductAsImportant() {
+		if (mData.isHas_liked()) {
+			mData.setHas_liked(false);
+			mData.setNumber_of_likes(mData.getNumber_of_likes() - 1);
+			showSnackBar("Removed Product From Favourites");
+		} else {
+			mData.setHas_liked(true);
+			mData.setNumber_of_likes(mData.getNumber_of_likes() + 1);
+			showSnackBar("Added Product To Favourites List");
+		}
+		markPostImportantRequestServer();
+		fillDataForSavePostImageSelected();
+	}
+
+	private void reverseSavePostAsImportant() {
+		if (mData.isHas_liked()) {
+			mData.setHas_liked(false);
+			mData.setNumber_of_likes(mData.getNumber_of_likes() - 1);
+		} else {
+			mData.setHas_liked(true);
+			mData.setNumber_of_likes(mData.getNumber_of_likes() + 1);
+		}
+		fillDataForSavePostImageSelected();
+	}
+
+	public void markPostImportantRequestServer() {
+		StringRequest req = new StringRequest(Method.POST, markProductAsFavourite, new Listener<String>() {
+
+			@Override
+			public void onResponse(String arg0) {
+
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError arg0) {
+				showSnackBar("Some error occured. Check internet connection");
+				reverseSavePostAsImportant();
+			}
+		}) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				HashMap<String, String> p = new HashMap<>();
+				p.put("user_id", ZPreferences.getUserProfileID(ProductDetailActivity.this));
+				p.put("product_id", productId + "");
+				return p;
+			}
+		};
+		ZApplication.getInstance().addToRequestQueue(req, markProductAsFavourite);
+	}
+
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		// case R.id.postcategoy:
-
-		// break;
+		case R.id.openuserprofilepost:
+			switchToUserProfileViewedByOtherFragment(mData.getUser_id(), mData.getUser_name(), mData.getUser_image());
+			break;
+		case R.id.chat:
+			openUserChatWithPersonUserActivity(mData.getUser_id(), mData.getUser_name(), mData.getUser_image());
+			break;
+		case R.id.call:
+			Intent intent = new Intent(Intent.ACTION_CALL);
+			intent.setData(Uri.parse("tel:" + mData.getContact_number()));
+			if (intent.resolveActivity(this.getPackageManager()) != null) {
+				startActivity(intent);
+			}
+			break;
+		case R.id.viewcomments:
+			switchToCommentsFragment(productId);
+			break;
+		case R.id.savepostimage:
+			saveProductAsImportant();
+			break;
 		case R.id.backbuttonfake:
 			super.onBackPressed();
 			break;

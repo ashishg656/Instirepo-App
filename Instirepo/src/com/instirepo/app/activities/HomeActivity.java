@@ -57,7 +57,7 @@ import com.instirepo.app.extras.ZCircularAnimatorListener;
 import com.instirepo.app.extras.ZUrls;
 import com.instirepo.app.floatingactionbutton.FloatingActionButton;
 import com.instirepo.app.floatingactionbutton.FloatingActionMenu;
-import com.instirepo.app.fragments.CommentsFragment;
+import com.instirepo.app.fragments.CommentsPostsFragment;
 import com.instirepo.app.fragments.PostsByStudentsFragment;
 import com.instirepo.app.fragments.PostsByTeachersFragment;
 import com.instirepo.app.fragments.ProductsCategoriesFragment;
@@ -525,7 +525,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 		getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.fragmentcontainer,
-						CommentsFragment.newInstance(bundle),
+						CommentsPostsFragment.newInstance(bundle),
 						Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG)
 				.addToBackStack("Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG")
 				.commit();
@@ -583,7 +583,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener,
 			((UserProfileViewedByOtherFragment) fragmentUserProfile)
 					.dismissScrollViewDownCalledFromActivityBackPressed();
 		} else if (fragmentComments != null) {
-			CommentsFragment frg = (CommentsFragment) fragmentComments;
+			CommentsPostsFragment frg = (CommentsPostsFragment) fragmentComments;
 			if (frg.shouldGoBackOnBackButtonPress())
 				super.onBackPressed();
 		} else if (fabBackground.getVisibility() == View.VISIBLE) {

@@ -35,7 +35,7 @@ import com.instirepo.app.circularreveal.ViewAnimationUtils;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.ZAnimationListener;
 import com.instirepo.app.extras.ZAnimatorListener;
-import com.instirepo.app.fragments.CommentsFragment;
+import com.instirepo.app.fragments.CommentsPostsFragment;
 import com.instirepo.app.fragments.FavouritePostsFragment;
 import com.instirepo.app.fragments.MyPostsFragment;
 import com.instirepo.app.fragments.SeenByPeopleFragment;
@@ -310,7 +310,7 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 		getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.fragmentcontainer,
-						CommentsFragment.newInstance(bundle),
+						CommentsPostsFragment.newInstance(bundle),
 						Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG)
 				.addToBackStack("Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG")
 				.commit();
@@ -356,7 +356,7 @@ public class UserProfileActivity extends BaseActivity implements AppConstants,
 			((UserProfileViewedByOtherFragment) fragmentUserProfile)
 					.dismissScrollViewDownCalledFromActivityBackPressed();
 		} else if (fragmentComments != null) {
-			CommentsFragment frg = (CommentsFragment) fragmentComments;
+			CommentsPostsFragment frg = (CommentsPostsFragment) fragmentComments;
 			if (frg.shouldGoBackOnBackButtonPress())
 				super.onBackPressed();
 		} else

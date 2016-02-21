@@ -33,7 +33,7 @@ import com.instirepo.app.application.ZApplication;
 import com.instirepo.app.extras.AppConstants;
 import com.instirepo.app.extras.TimeUtils;
 import com.instirepo.app.extras.ZUrls;
-import com.instirepo.app.fragments.CommentsFragment;
+import com.instirepo.app.fragments.CommentsPostsFragment;
 import com.instirepo.app.fragments.SeenByPeopleFragment;
 import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
 import com.instirepo.app.objects.PostListSinglePostObject;
@@ -532,7 +532,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 			((UserProfileViewedByOtherFragment) fragmentUserProfile)
 					.dismissScrollViewDownCalledFromActivityBackPressed();
 		} else if (fragmentComments != null) {
-			CommentsFragment frg = (CommentsFragment) fragmentComments;
+			CommentsPostsFragment frg = (CommentsPostsFragment) fragmentComments;
 			if (frg.shouldGoBackOnBackButtonPress())
 				super.onBackPressed();
 		} else
@@ -557,7 +557,7 @@ public class PostDetailActivity extends BaseActivity implements AppConstants,
 		getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.fragmentcontainer,
-						CommentsFragment.newInstance(bundle),
+						CommentsPostsFragment.newInstance(bundle),
 						Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG)
 				.addToBackStack("Z_COMMENT_FRAGMENT_BACKSTACK_ENTRY_TAG")
 				.commit();

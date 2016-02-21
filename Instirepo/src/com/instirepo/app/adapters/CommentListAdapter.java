@@ -35,8 +35,7 @@ import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.widgets.CircularImageView;
 
-public class CommentListAdapter extends BaseAdapter implements ZUrls,
-		AppConstants {
+public class CommentListAdapter extends BaseAdapter implements ZUrls, AppConstants {
 
 	Context context;
 	List<CommentsListObject.CommentObject> mData;
@@ -45,10 +44,13 @@ public class CommentListAdapter extends BaseAdapter implements ZUrls,
 	int flagCommentPosition;
 	CommentHolder flagCommentHolder;
 
-	public CommentListAdapter(Context context, List<CommentObject> mData) {
+	boolean isProductComments;
+
+	public CommentListAdapter(Context context, List<CommentObject> mData, boolean isProductPage) {
 		super();
 		this.context = context;
 		this.mData = mData;
+		this.isProductComments = isProductPage;
 		clickListener = new MyClickListener();
 	}
 
@@ -79,8 +81,7 @@ public class CommentListAdapter extends BaseAdapter implements ZUrls,
 	public View getView(int position, View convertView, ViewGroup parent) {
 		CommentHolder holder = null;
 		if (convertView == null) {
-			convertView = LayoutInflater.from(context).inflate(
-					R.layout.comments_list_item_layout, parent, false);
+			convertView = LayoutInflater.from(context).inflate(R.layout.comments_list_item_layout, parent, false);
 			holder = new CommentHolder(convertView);
 			convertView.setTag(holder);
 		} else
@@ -91,20 +92,15 @@ public class CommentListAdapter extends BaseAdapter implements ZUrls,
 		holder.comment.setText(obj.getComment());
 		holder.time.setText(TimeUtils.getPostTime(obj.getTime()));
 		holder.userName.setText(obj.getUser_name());
-		ImageRequestManager.get(context).requestImage(context,
-				holder.userImage, obj.getUser_image(), -1);
+		ImageRequestManager.get(context).requestImage(context, holder.userImage, obj.getUser_image(), -1);
 		if (obj.isIs_different_color()) {
-			holder.userName.setTextColor(context.getResources().getColor(
-					R.color.z_green_color_primary));
+			holder.userName.setTextColor(context.getResources().getColor(R.color.z_green_color_primary));
 		} else {
-			holder.userName.setTextColor(context.getResources().getColor(
-					R.color.z_text_color_dark));
+			holder.userName.setTextColor(context.getResources().getColor(R.color.z_text_color_dark));
 		}
 
-		holder.commentFlagLayout.setTag(R.integer.z_select_post_tag_holder,
-				holder);
-		holder.commentFlagLayout.setTag(R.integer.z_select_post_tag_position,
-				position);
+		holder.commentFlagLayout.setTag(R.integer.z_select_post_tag_holder, holder);
+		holder.commentFlagLayout.setTag(R.integer.z_select_post_tag_position, position);
 		holder.commentFlagLayout.setOnClickListener(clickListener);
 
 		holder.containerLayout.setTag(position);
@@ -133,10 +129,8 @@ public class CommentListAdapter extends BaseAdapter implements ZUrls,
 			time = (TextView) v.findViewById(R.id.time);
 			userName = (TextView) v.findViewById(R.id.uploadrname);
 			commentFlagImage = (ImageView) v.findViewById(R.id.commentflgimage);
-			commentFlagLayout = (LinearLayout) v
-					.findViewById(R.id.commentflaglayou);
-			containerLayout = (FrameLayout) v
-					.findViewById(R.id.commentlayouttoopenuserprofile);
+			commentFlagLayout = (LinearLayout) v.findViewById(R.id.commentflaglayou);
+			containerLayout = (FrameLayout) v.findViewById(R.id.commentlayouttoopenuserprofile);
 		}
 	}
 
@@ -146,12 +140,9 @@ public class CommentListAdapter extends BaseAdapter implements ZUrls,
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.commentflaglayou:
-				flagCommentHolder = (CommentHolder) v
-						.getTag(R.integer.z_select_post_tag_holder);
-				flagCommentPosition = (int) v
-						.getTag(R.integer.z_select_post_tag_position);
-				mData.get(flagCommentPosition).setIs_flagged(
-						!mData.get(flagCommentPosition).isIs_flagged());
+				flagCommentHolder = (CommentHolder) v.getTag(R.integer.z_select_post_tag_holder);
+				flagCommentPosition = (int) v.getTag(R.integer.z_select_post_tag_position);
+				mData.get(flagCommentPosition).setIs_flagged(!mData.get(flagCommentPosition).isIs_flagged());
 
 				if (mData.get(flagCommentPosition).isIs_flagged()) {
 					((BaseActivity) context).makeToast("Flagged comment");
@@ -179,20 +170,24 @@ public class CommentListAdapter extends BaseAdapter implements ZUrls,
 	}
 
 	public void sendFlagCommentRequestToServer() {
-		StringRequest req = new StringRequest(Method.POST, flagCommentOnPost,
-				new Listener<String>() {
+		String url = flagCommentOnPost;
+		if (isProductComments) {
+			url = flagCommentOnProduct;
+		}
 
-					@Override
-					public void onResponse(String arg0) {
+		StringRequest req = new StringRequest(Method.POST, url, new Listener<String>() {
 
-					}
-				}, new ErrorListener() {
+			@Override
+			public void onResponse(String arg0) {
 
-					@Override
-					public void onErrorResponse(VolleyError arg0) {
-						errorResponseForFlaggingAComment();
-					}
-				}) {
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError arg0) {
+				errorResponseForFlaggingAComment();
+			}
+		}) {
 			@Override
 			protected Map<String, String> getParams() throws AuthFailureError {
 				HashMap<String, String> p = new HashMap<>();
@@ -201,7 +196,7 @@ public class CommentListAdapter extends BaseAdapter implements ZUrls,
 				return p;
 			}
 		};
-		ZApplication.getInstance().addToRequestQueue(req, flagCommentOnPost);
+		ZApplication.getInstance().addToRequestQueue(req, url);
 	}
 
 	public void openUserProfileViewedByOtherFragment(int pos) {
@@ -210,23 +205,16 @@ public class CommentListAdapter extends BaseAdapter implements ZUrls,
 		bundle.putInt("userid", mData.get(pos).getUser_id());
 		bundle.putString("image", mData.get(pos).getUser_image());
 
-		((BaseActivity) context)
-				.getSupportFragmentManager()
-				.beginTransaction()
-				.add(R.id.fragmentcontainer,
-						UserProfileViewedByOtherFragment.newInstance(bundle),
+		((BaseActivity) context).getSupportFragmentManager().beginTransaction()
+				.add(R.id.fragmentcontainer, UserProfileViewedByOtherFragment.newInstance(bundle),
 						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG_FROM_COMMENT_LIST_ADAPTER)
-				.addToBackStack(
-						Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG_FROM_COMMENT_LIST_ADAPTER)
-				.commit();
+				.addToBackStack(Z_USER_PROFILE_VIEWED_BY_OTHER_BACKSTACK_ENTRY_TAG_FROM_COMMENT_LIST_ADAPTER).commit();
 	}
 
 	protected void errorResponseForFlaggingAComment() {
-		((BaseActivity) context)
-				.makeToast("Error in flagging post. Check internet");
+		((BaseActivity) context).makeToast("Error in flagging post. Check internet");
 
-		mData.get(flagCommentPosition).setIs_flagged(
-				!mData.get(flagCommentPosition).isIs_flagged());
+		mData.get(flagCommentPosition).setIs_flagged(!mData.get(flagCommentPosition).isIs_flagged());
 
 		if (flagCommentHolder != null) {
 			if (mData.get(flagCommentPosition).isIs_flagged())
