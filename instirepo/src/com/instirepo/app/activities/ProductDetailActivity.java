@@ -192,7 +192,7 @@ public class ProductDetailActivity extends BaseActivity
 		if (mData.isWarranty_availabe()) {
 			warrantyAvailable.setChecked(true);
 			warrantyAvailable.setText("Warranty Available");
-			warrantyPeriodLeft.setText(mData.getWarranty_left());
+			warrantyPeriodLeft.setText("Warranty period left : " + mData.getWarranty_left());
 		} else {
 			warrantyAvailable.setText("Warranty Not Available");
 			warrantyAvailable.setChecked(false);

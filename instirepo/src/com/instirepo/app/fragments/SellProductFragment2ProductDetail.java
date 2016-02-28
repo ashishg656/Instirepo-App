@@ -3,11 +3,10 @@ package com.instirepo.app.fragments;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
-import com.android.volley.Request.Method;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request.Method;
 import com.android.volley.VolleyError;
 import com.instirepo.app.R;
-import com.instirepo.app.activities.CreatePostActivity;
 import com.instirepo.app.activities.HomeActivity;
 import com.instirepo.app.activities.SellProductActivity;
 import com.instirepo.app.application.ZApplication;
@@ -164,10 +163,18 @@ public class SellProductFragment2ProductDetail extends BaseFragment
 		p.put("category_id", ((SellProductActivity) getActivity()).categoryId + "");
 		p.put("name", name.getText().toString().trim());
 		p.put("description", description.getText().toString().trim());
-		p.put("image1", image1send);
-		p.put("image2", image2send);
-		p.put("image3", image3send);
-		p.put("image4", image4send);
+		if (image1send != null && image1send.length() > 0) {
+			p.put("image1", image1send);
+		}
+		if (image2send != null && image2send.length() > 0) {
+			p.put("image2", image2send);
+		}
+		if (image3send != null && image3send.length() > 0) {
+			p.put("image3", image3send);
+		}
+		if (image4send != null && image4send.length() > 0) {
+			p.put("image4", image4send);
+		}
 		p.put("mrp", mrp.getText().toString().trim());
 		p.put("price", price.getText().toString().trim());
 		p.put("contact", number.getText().toString().trim());
