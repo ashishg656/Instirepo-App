@@ -38,8 +38,7 @@ public class ZApplication extends Application {
 		Fabric.with(this, new Crashlytics());
 		sInstance = this;
 
-		cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(),
-				"instirepo");
+		cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "instirepo");
 		initImageLoader(getApplicationContext());
 
 		// setFonts("Hind-Light.ttf");
@@ -61,27 +60,20 @@ public class ZApplication extends Application {
 	public static void initImageLoader(Context context) {
 		Options decodingOptions = new Options();
 
-		DisplayImageOptions options = new DisplayImageOptions.Builder()
-				.resetViewBeforeLoading(true).cacheInMemory(true)
-				.cacheOnDisk(true).imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-				.showImageOnLoading(R.drawable.symphony)
-				.decodingOptions(decodingOptions)
-				.bitmapConfig(Bitmap.Config.ARGB_8888).build();
+		DisplayImageOptions options = new DisplayImageOptions.Builder().resetViewBeforeLoading(true).cacheInMemory(true)
+				.cacheOnDisk(true).imageScaleType(ImageScaleType.IN_SAMPLE_INT).showImageOnLoading(R.drawable.symphony)
+				.decodingOptions(decodingOptions).bitmapConfig(Bitmap.Config.ARGB_8888).build();
 
-		final int memClass = ((ActivityManager) context
-				.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass();
+		final int memClass = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass();
 		final int cacheSize = 1024 * 1024 * memClass / 8;
 
 		System.out.println("Memory cache size" + cacheSize);
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-				context).threadPriority(Thread.NORM_PRIORITY - 2)
-				.threadPoolSize(5).memoryCacheSize(cacheSize)
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+				.threadPriority(Thread.NORM_PRIORITY - 2).threadPoolSize(5).memoryCacheSize(cacheSize)
 				.diskCacheSize(50 * 1024 * 1024).diskCacheFileCount(300)
 				.diskCacheFileNameGenerator(new HashCodeFileNameGenerator())
-				.imageDecoder(new NutraBaseImageDecoder(true))
-				.denyCacheImageMultipleSizesInMemory()
-				.defaultDisplayImageOptions(options)
-				.tasksProcessingOrder(QueueProcessingType.FIFO).build();
+				.imageDecoder(new NutraBaseImageDecoder(true)).denyCacheImageMultipleSizesInMemory()
+				.defaultDisplayImageOptions(options).tasksProcessingOrder(QueueProcessingType.FIFO).build();
 
 		ImageLoader.getInstance().init(config);
 	}
@@ -106,8 +98,7 @@ public class ZApplication extends Application {
 	void setFonts(String font) {
 		String[] types = { "DEFAULT", "MONOSPACE", "SERIF", "SANS_SERIF" };
 		for (int i = 0; i < types.length; i++) {
-			FontsOverride.setDefaultFont(getApplicationContext(), types[i],
-					"fonts/" + font);
+			FontsOverride.setDefaultFont(getApplicationContext(), types[i], "fonts/" + font);
 		}
 	}
 
