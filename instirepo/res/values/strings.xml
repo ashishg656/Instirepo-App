@@ -36,5 +36,7 @@
 
     <!-- Support -->
     <string name="instirepo_support_email">instirepo@gmail.com</string>
+    <string name="about_us_string">INSTIREPO\n\nInstrepo is a platform where students and teachers can interact and share anything related to their educational institute and can also purchase and sell products on the platform which are uploaded by other students and teachers from their institute and verified by our team.</string>
 
+    <string name="credits_string">Credits : \n\nIcons and images :\n\nIcons and images used in this application have been taken from www.freepik.com.\nIcons made by Freepik from www.flaticon.com\n\n1.	Danger icon : ic_danger_exclaimation\nIcon made by Freepik from www.flaticon.com\n2.	Double Tick : ic_double_tick\nIcon made by Google from www.flaticon.com\n3.	Tick : ic_tick_small_green\nIcon made by Google from www.flaticon.com\n4.	All other images also are from www.flaticon.com\n5.	If any credit is missing, you can contact us and we will add the credits here.\n\nOpen source libraries used :\n\n1.	Crashlytics\n2.	Android Design Support Library\n3.	Google Play Services library\n4.	Android Support-v7 AppCompat Library \n5.	NineOldAndroids\n6.	Android Support Pallete Library\n7.	Dropbox Android SDK\n8.	GSON\n9.	JSON Simple\n10.	Universal Image Loader\n11.	Volley by Google\n12.	Parallax EveryWhere By Narfss\n13.	If any library is missing, you can contact us and we will add the credits here.</string>
 </resources>

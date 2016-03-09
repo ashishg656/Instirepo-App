@@ -36,6 +36,10 @@
                 android:id="@+id/contactnav"
                 android:icon="@drawable/email_icon_selector"
                 android:title="Email Us"/>
+            <item
+                android:id="@+id/aboutus"
+                android:icon="@drawable/email_icon_selector"
+                android:title="About Us"/>
         </menu>
     </item>
 

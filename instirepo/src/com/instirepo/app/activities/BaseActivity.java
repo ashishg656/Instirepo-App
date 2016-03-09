@@ -1,6 +1,7 @@
 package com.instirepo.app.activities;
 
-import java.util.List;
+import com.instirepo.app.R;
+import com.instirepo.app.objects.PostListSinglePostObject;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -17,10 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.instirepo.app.R;
-import com.instirepo.app.objects.AllPostCategoriesObject.PostCategorySingle;
-import com.instirepo.app.objects.PostListSinglePostObject;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
