@@ -484,7 +484,7 @@ public class ProductDetailActivity extends BaseActivity
 			openUserChatWithPersonUserActivity(mData.getUser_id(), mData.getUser_name(), mData.getUser_image());
 			break;
 		case R.id.call:
-			Intent intent = new Intent(Intent.ACTION_CALL);
+			Intent intent = new Intent(Intent.ACTION_DIAL);
 			intent.setData(Uri.parse("tel:" + mData.getContact_number()));
 			if (intent.resolveActivity(this.getPackageManager()) != null) {
 				startActivity(intent);

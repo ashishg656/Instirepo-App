@@ -57,8 +57,7 @@ import com.instirepo.app.widgets.ObservableScrollView;
 import com.instirepo.app.widgets.ObservableScrollViewListener;
 
 @SuppressLint("NewApi")
-public class UserProfileViewedByOtherFragment extends BaseFragment implements
-		ZUrls, OnClickListener {
+public class UserProfileViewedByOtherFragment extends BaseFragment implements ZUrls, OnClickListener {
 
 	int heightOfUserDetailCard;
 	int marginTopForUserDetailCard;
@@ -84,10 +83,8 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 
 	UserProfileViewedByOtherObject mData;
 
-	TextView userName, designation, about, branch, batch, year, numberOfPosts,
-			numberOfUpvotes, numberOfDownvotes, editProfile, blockUser,
-			messageOnInstirepo, emailUser, callUser,
-			upvotDownVoteIndicatorText, downloadResume;
+	TextView userName, designation, about, branch, batch, year, numberOfPosts, numberOfUpvotes, numberOfDownvotes,
+			editProfile, blockUser, messageOnInstirepo, emailUser, callUser, upvotDownVoteIndicatorText, downloadResume;
 	View messageDivider, emailDivider;
 	LinearLayout voteUserLayout, contactUserLayout, resumeLayout;
 	FrameLayout upvoteButton, downVoteButton;
@@ -105,29 +102,20 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View v = inflater.inflate(
-				R.layout.user_profile_viewed_by_other_fragment_layout,
-				container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.user_profile_viewed_by_other_fragment_layout, container, false);
 
 		userProfileDetail = (LinearLayout) v.findViewById(R.id.userprofilecard);
-		scrollView = (ObservableScrollView) v
-				.findViewById(R.id.scrollviewuserrofiel);
-		circularImageView = (CircularImageView) v
-				.findViewById(R.id.userprofilecircularimage);
-		scrollViewLinearLayout = (LinearLayout) v
-				.findViewById(R.id.scrollviewlinearlayout);
-		touchInterceptFrameLayoutUserProfile = (FrameLayout) v
-				.findViewById(R.id.touchinterceptframelayouruserprof);
+		scrollView = (ObservableScrollView) v.findViewById(R.id.scrollviewuserrofiel);
+		circularImageView = (CircularImageView) v.findViewById(R.id.userprofilecircularimage);
+		scrollViewLinearLayout = (LinearLayout) v.findViewById(R.id.scrollviewlinearlayout);
+		touchInterceptFrameLayoutUserProfile = (FrameLayout) v.findViewById(R.id.touchinterceptframelayouruserprof);
 		circularRevealView = (View) v.findViewById(R.id.revealviewuserprofiel);
 		userName = (TextView) v.findViewById(R.id.username);
 		setProgressLayoutVariablesAndErrorVariables(v);
-		mainContentLayout = (LinearLayout) v
-				.findViewById(R.id.maincontentlayout);
+		mainContentLayout = (LinearLayout) v.findViewById(R.id.maincontentlayout);
 		designation = (TextView) v.findViewById(R.id.designation);
-		progressLayoutContainer = (FrameLayout) v
-				.findViewById(R.id.progresslayoutcontainer);
+		progressLayoutContainer = (FrameLayout) v.findViewById(R.id.progresslayoutcontainer);
 		about = (TextView) v.findViewById(R.id.about);
 		branch = (TextView) v.findViewById(R.id.branch);
 		batch = (TextView) v.findViewById(R.id.batch);
@@ -145,14 +133,11 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		callUser = (TextView) v.findViewById(R.id.calluser);
 		messageDivider = (View) v.findViewById(R.id.messagedownview);
 		emailDivider = (View) v.findViewById(R.id.emaildownviwe);
-		upvotDownVoteIndicatorText = (TextView) v
-				.findViewById(R.id.uppvotedownvotes);
+		upvotDownVoteIndicatorText = (TextView) v.findViewById(R.id.uppvotedownvotes);
 		upvoteButton = (FrameLayout) v.findViewById(R.id.upvotebutton);
 		downVoteButton = (FrameLayout) v.findViewById(R.id.downvotebutton);
-		upvoteProgressBar = (ProgressBar) v
-				.findViewById(R.id.upvotepostprogress);
-		downvoteProgressBar = (ProgressBar) v
-				.findViewById(R.id.downupvotepostprogress);
+		upvoteProgressBar = (ProgressBar) v.findViewById(R.id.upvotepostprogress);
+		downvoteProgressBar = (ProgressBar) v.findViewById(R.id.downupvotepostprogress);
 		downvotePostImage = (ImageView) v.findViewById(R.id.downvotepostimage);
 		upvotePostImage = (ImageView) v.findViewById(R.id.upvotepostimage);
 		downloadResume = (TextView) v.findViewById(R.id.downloadresuem);
@@ -172,33 +157,28 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		upvoteButton.setOnClickListener(this);
 		downVoteButton.setOnClickListener(this);
 
-		if (ZPreferences.getUserProfileID(getActivity()).equalsIgnoreCase(
-				userId + "")) {
+		if (ZPreferences.getUserProfileID(getActivity()).equalsIgnoreCase(userId + "")) {
 			isViewerSameAsUser = true;
 		}
 
 		userName.setText(name);
-		ImageRequestManager.get(getActivity()).requestImage1(getActivity(),
-				circularImageView, image, new RequestBitmap() {
+		ImageRequestManager.get(getActivity()).requestImage1(getActivity(), circularImageView, image,
+				new RequestBitmap() {
 
 					@Override
 					public void onRequestCompleted(Bitmap bitmap) {
 						circularImageView.setImageBitmap(bitmap);
 
-						Palette.from(bitmap).generate(
-								new PaletteAsyncListener() {
+						Palette.from(bitmap).generate(new PaletteAsyncListener() {
 
-									@Override
-									public void onGenerated(Palette p) {
-										int colorLight = p
-												.getDarkMutedColor(0x000000);
-										int colorDark = p
-												.getDarkVibrantColor(0x000000);
+							@Override
+							public void onGenerated(Palette p) {
+								int colorLight = p.getDarkMutedColor(0x000000);
+								int colorDark = p.getDarkVibrantColor(0x000000);
 
-										userProfileDetail
-												.setBackgroundColor(colorDark);
-									}
-								});
+								userProfileDetail.setBackgroundColor(colorDark);
+							}
+						});
 					}
 				}, -1);
 
@@ -206,13 +186,11 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		deviceWidth = getActivity().getResources().getDisplayMetrics().widthPixels;
 		touchInterceptFrameLayoutUserProfile.setTranslationY(deviceHeight);
 
-		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) progressLayoutContainer
-				.getLayoutParams();
+		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) progressLayoutContainer.getLayoutParams();
 		params.height = (int) deviceHeight;
 		progressLayoutContainer.setLayoutParams(params);
 
-		SupportAnimator animator = ViewAnimationUtils.createCircularReveal(
-				circularRevealView, (int) (deviceWidth / 2),
+		SupportAnimator animator = ViewAnimationUtils.createCircularReveal(circularRevealView, (int) (deviceWidth / 2),
 				(int) (0.9 * deviceHeight), 0, deviceHeight);
 		animator.setInterpolator(new AccelerateInterpolator());
 		animator.setDuration(500);
@@ -228,13 +206,12 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 
 			@Override
 			public void onAnimationEnd() {
-				circularRevealView.animate().alpha(0).setDuration(300)
-						.setListener(new ZAnimatorListener() {
-							@Override
-							public void onAnimationEnd(Animator animation) {
-								circularRevealView.setVisibility(View.GONE);
-							}
-						}).start();
+				circularRevealView.animate().alpha(0).setDuration(300).setListener(new ZAnimatorListener() {
+					@Override
+					public void onAnimationEnd(Animator animation) {
+						circularRevealView.setVisibility(View.GONE);
+					}
+				}).start();
 			}
 
 			@Override
@@ -243,25 +220,22 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		});
 		animator.start();
 
-		ViewConfiguration viewConfiguration = ViewConfiguration
-				.get(getActivity());
+		ViewConfiguration viewConfiguration = ViewConfiguration.get(getActivity());
 		minFlingVelocity = viewConfiguration.getScaledMinimumFlingVelocity() * 2;
 
 		userProfileImageHeight = getActivity().getResources()
 				.getDimensionPixelSize(R.dimen.z_user_profile_image_height);
 
-		userProfileDetail.getViewTreeObserver().addOnGlobalLayoutListener(
-				new OnGlobalLayoutListener() {
+		userProfileDetail.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 
-					@Override
-					public void onGlobalLayout() {
-						userProfileDetail.getViewTreeObserver()
-								.removeOnGlobalLayoutListener(this);
-						heightOfUserDetailCard = userProfileDetail.getHeight();
+			@Override
+			public void onGlobalLayout() {
+				userProfileDetail.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				heightOfUserDetailCard = userProfileDetail.getHeight();
 
-						performCalculationsAfterViewTreeObserver();
-					}
-				});
+				performCalculationsAfterViewTreeObserver();
+			}
+		});
 
 		setTouchListenersOnScrollView();
 
@@ -274,40 +248,33 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		mainContentLayout.setVisibility(View.GONE);
 
 		String url = userProfileViewedByOther + "?profile_viewing_id=" + userId;
-		StringRequest req = new StringRequest(Method.POST, url,
-				new Listener<String>() {
+		StringRequest req = new StringRequest(Method.POST, url, new Listener<String>() {
 
-					@Override
-					public void onResponse(String arg0) {
-						UserProfileViewedByOtherObject obj = new Gson()
-								.fromJson(arg0,
-										UserProfileViewedByOtherObject.class);
-						setScrollViewData(obj);
-					}
-				}, new ErrorListener() {
+			@Override
+			public void onResponse(String arg0) {
+				UserProfileViewedByOtherObject obj = new Gson().fromJson(arg0, UserProfileViewedByOtherObject.class);
+				setScrollViewData(obj);
+			}
+		}, new ErrorListener() {
 
-					@Override
-					public void onErrorResponse(VolleyError arg0) {
-						try {
-							Cache cache = ZApplication.getInstance()
-									.getRequestQueue().getCache();
-							Entry entry = cache.get(userProfileViewedByOther
-									+ "?profile_viewing_id=" + userId);
-							String data = new String(entry.data, "UTF-8");
+			@Override
+			public void onErrorResponse(VolleyError arg0) {
+				try {
+					Cache cache = ZApplication.getInstance().getRequestQueue().getCache();
+					Entry entry = cache.get(userProfileViewedByOther + "?profile_viewing_id=" + userId);
+					String data = new String(entry.data, "UTF-8");
 
-							UserProfileViewedByOtherObject obj = new Gson()
-									.fromJson(
-											data,
-											UserProfileViewedByOtherObject.class);
-							setScrollViewData(obj);
-						} catch (Exception e) {
-							hideLoadingLayout();
-							showErrorLayout();
+					UserProfileViewedByOtherObject obj = new Gson().fromJson(data,
+							UserProfileViewedByOtherObject.class);
+					setScrollViewData(obj);
+				} catch (Exception e) {
+					hideLoadingLayout();
+					showErrorLayout();
 
-							setTouchListenersOnScrollView();
-						}
-					}
-				}) {
+					setTouchListenersOnScrollView();
+				}
+			}
+		}) {
 			@Override
 			protected Map<String, String> getParams() throws AuthFailureError {
 				HashMap<String, String> p = new HashMap<>();
@@ -316,8 +283,7 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 				return p;
 			}
 		};
-		ZApplication.getInstance().addToRequestQueue(req,
-				userProfileViewedByOther);
+		ZApplication.getInstance().addToRequestQueue(req, userProfileViewedByOther);
 	}
 
 	protected void setScrollViewData(UserProfileViewedByOtherObject obj) {
@@ -326,8 +292,7 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 
 		mData = obj;
 		mainContentLayout.setVisibility(View.VISIBLE);
-		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) progressLayoutContainer
-				.getLayoutParams();
+		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) progressLayoutContainer.getLayoutParams();
 		params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
 		progressLayoutContainer.setLayoutParams(params);
 
@@ -335,12 +300,9 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		branch.setText("Branch : " + mData.getBranch());
 		batch.setText("Batch : " + mData.getBatch());
 		year.setText("Year : " + mData.getYear());
-		numberOfPosts.setText("Number of Posts Posted : "
-				+ mData.getNumber_of_posts());
-		numberOfUpvotes.setText("Number of Upvotes Received : "
-				+ mData.getUpvotes());
-		numberOfDownvotes.setText("Number of Downvotes Received : "
-				+ mData.getDownvotes());
+		numberOfPosts.setText("Number of Posts Posted : " + mData.getNumber_of_posts());
+		numberOfUpvotes.setText("Number of Upvotes Received : " + mData.getUpvotes());
+		numberOfDownvotes.setText("Number of Downvotes Received : " + mData.getDownvotes());
 
 		if (isViewerSameAsUser) {
 			voteUserLayout.setVisibility(View.GONE);
@@ -379,14 +341,12 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 			callUser.setOnClickListener(this);
 		}
 
-		if (callUser.getVisibility() == View.GONE
-				&& emailUser.getVisibility() == View.GONE
+		if (callUser.getVisibility() == View.GONE && emailUser.getVisibility() == View.GONE
 				&& messageOnInstirepo.getVisibility() == View.GONE) {
 			contactUserLayout.setVisibility(View.GONE);
 		}
 
-		messageOnInstirepo.setText("Message " + mData.getName()
-				+ " on INSTIREPO");
+		messageOnInstirepo.setText("Message " + mData.getName() + " on INSTIREPO");
 		messageOnInstirepo.setOnClickListener(this);
 
 		if (mData.isHas_downvoted()) {
@@ -395,8 +355,7 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 			upvoteButton.setSelected(true);
 		}
 
-		upvotDownVoteIndicatorText.setText((mData.getUpvotes() - mData
-				.getDownvotes()) + "");
+		upvotDownVoteIndicatorText.setText((mData.getUpvotes() - mData.getDownvotes()) + "");
 
 		if (mData.isIs_professor() || mData.isIs_senior_professor()) {
 			downVoteButton.setVisibility(View.GONE);
@@ -416,8 +375,7 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 				try {
 					int location[] = new int[2];
 					scrollViewLinearLayout.getLocationInWindow(location);
-					Log.w("as", "scr " + scrollView.getScrollY() + " top  "
-							+ location[1]);
+					Log.w("as", "scr " + scrollView.getScrollY() + " top  " + location[1]);
 				} catch (Exception e) {
 				}
 
@@ -435,8 +393,7 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 				int pointerId = event.getPointerId(index);
 
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					initialTranslation = touchInterceptFrameLayoutUserProfile
-							.getTranslationY();
+					initialTranslation = touchInterceptFrameLayoutUserProfile.getTranslationY();
 					initialY = event.getRawY();
 
 					if (mVelocityTracker == null)
@@ -452,15 +409,13 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 
 						float dy = initialY - event.getRawY();
 						if ((dy < 0 && scrollView.getScrollY() == 0)
-								|| touchInterceptFrameLayoutUserProfile
-										.getTranslationY() != 0) {
+								|| touchInterceptFrameLayoutUserProfile.getTranslationY() != 0) {
 							float trans = initialTranslation - dy;
 							if (trans < 0) {
 								scrollView.setTranslationY(0);
 								return false;
 							}
-							touchInterceptFrameLayoutUserProfile
-									.setTranslationY(trans);
+							touchInterceptFrameLayoutUserProfile.setTranslationY(trans);
 							return true;
 						}
 					} catch (Exception e) {
@@ -470,8 +425,7 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 					try {
 						mVelocityTracker.addMovement(event);
 						mVelocityTracker.computeCurrentVelocity(1000);
-						float yVelocity = VelocityTrackerCompat.getYVelocity(
-								mVelocityTracker, pointerId);
+						float yVelocity = VelocityTrackerCompat.getYVelocity(mVelocityTracker, pointerId);
 
 						if (scrollView.getScrollY() == 0) {
 							if (Math.abs(yVelocity) < minFlingVelocity) {
@@ -500,40 +454,29 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 	void performCalculationsAfterViewTreeObserver() {
 		marginTopForUserDetailCard = (int) (deviceHeight / 3);
 
-		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) userProfileDetail
-				.getLayoutParams();
+		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) userProfileDetail.getLayoutParams();
 		params.topMargin = marginTopForUserDetailCard;
 		userProfileDetail.setLayoutParams(params);
 
 		params = (FrameLayout.LayoutParams) circularImageView.getLayoutParams();
-		params.topMargin = marginTopForUserDetailCard - userProfileImageHeight
-				/ 2;
+		params.topMargin = marginTopForUserDetailCard - userProfileImageHeight / 2;
 		circularImageView.setLayoutParams(params);
 
-		scrollView.setPadding(0,
-				(int) (marginTopForUserDetailCard + heightOfUserDetailCard), 0,
-				0);
-		scrollViewCheckTranslationUp = deviceHeight
-				- (marginTopForUserDetailCard);
+		scrollView.setPadding(0, (int) (marginTopForUserDetailCard + heightOfUserDetailCard), 0, 0);
+		scrollViewCheckTranslationUp = deviceHeight - (marginTopForUserDetailCard);
 
-		touchInterceptFrameLayoutUserProfile.animate().translationY(0)
-				.setDuration(500)
-				.setInterpolator(new AccelerateDecelerateInterpolator())
-				.start();
+		touchInterceptFrameLayoutUserProfile.animate().translationY(0).setDuration(500)
+				.setInterpolator(new AccelerateDecelerateInterpolator()).start();
 	}
 
 	protected void setScrollViewTranslation0() {
-		touchInterceptFrameLayoutUserProfile.animate().translationY(0)
-				.setDuration(300)
-				.setInterpolator(new AccelerateDecelerateInterpolator())
-				.start();
+		touchInterceptFrameLayoutUserProfile.animate().translationY(0).setDuration(300)
+				.setInterpolator(new AccelerateDecelerateInterpolator()).start();
 	}
 
 	public void dismissScrollViewDown() {
-		touchInterceptFrameLayoutUserProfile.animate()
-				.translationY(deviceHeight).setDuration(400)
-				.setInterpolator(new AccelerateInterpolator())
-				.setListener(new ZAnimatorListener() {
+		touchInterceptFrameLayoutUserProfile.animate().translationY(deviceHeight).setDuration(400)
+				.setInterpolator(new AccelerateInterpolator()).setListener(new ZAnimatorListener() {
 					@Override
 					public void onAnimationEnd(Animator animation) {
 						fragmentDestroyed = true;
@@ -546,17 +489,14 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 	public void dismissScrollViewDownCalledFromActivityBackPressed() {
 		circularRevealView.setVisibility(View.VISIBLE);
 		circularRevealView.setAlpha(1);
-		SupportAnimator animator = ViewAnimationUtils.createCircularReveal(
-				circularRevealView, (int) (deviceWidth / 2),
+		SupportAnimator animator = ViewAnimationUtils.createCircularReveal(circularRevealView, (int) (deviceWidth / 2),
 				(int) (0.9 * deviceHeight), deviceHeight, 0);
 		animator.setInterpolator(new AccelerateDecelerateInterpolator());
 		animator.setDuration(400);
 		animator.start();
 
-		touchInterceptFrameLayoutUserProfile.animate()
-				.translationY(deviceHeight).setDuration(400)
-				.setInterpolator(new AccelerateInterpolator())
-				.setListener(new ZAnimatorListener() {
+		touchInterceptFrameLayoutUserProfile.animate().translationY(deviceHeight).setDuration(400)
+				.setInterpolator(new AccelerateInterpolator()).setListener(new ZAnimatorListener() {
 					@Override
 					public void onAnimationEnd(Animator animation) {
 						fragmentDestroyed = true;
@@ -582,8 +522,8 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 			makeRequestToBlockUser();
 			break;
 		case R.id.messageoninstiepo:
-			((BaseActivity) getActivity()).openUserChatWithPersonUserActivity(
-					userId, mData.getName(), mData.getImage());
+			((BaseActivity) getActivity()).openUserChatWithPersonUserActivity(userId, mData.getName(),
+					mData.getImage());
 			break;
 		case R.id.downloadresuem:
 			Intent i = new Intent(Intent.ACTION_VIEW);
@@ -591,11 +531,10 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 			startActivity(i);
 			break;
 		case R.id.emailuser:
-			((BaseActivity) getActivity()).sendEmailIntentUsingToAction(mData
-					.getEmail());
+			((BaseActivity) getActivity()).sendEmailIntentUsingToAction(mData.getEmail());
 			break;
 		case R.id.calluser:
-			Intent intent = new Intent(Intent.ACTION_CALL);
+			Intent intent = new Intent(Intent.ACTION_DIAL);
 			intent.setData(Uri.parse("tel:" + mData.getPhone()));
 			if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
 				startActivity(intent);
@@ -614,22 +553,21 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 		mData.setIs_blocked(!mData.isIs_blocked());
 		setTextInBlockUserTextViewBasedOnBoolean();
 
-		StringRequest req = new StringRequest(Method.POST, blockUserRequestUrl,
-				new Listener<String>() {
+		StringRequest req = new StringRequest(Method.POST, blockUserRequestUrl, new Listener<String>() {
 
-					@Override
-					public void onResponse(String arg0) {
-						Log.w("As", "blocked user");
-					}
-				}, new ErrorListener() {
+			@Override
+			public void onResponse(String arg0) {
+				Log.w("As", "blocked user");
+			}
+		}, new ErrorListener() {
 
-					@Override
-					public void onErrorResponse(VolleyError arg0) {
-						mData.setIs_blocked(!mData.isIs_blocked());
-						setTextInBlockUserTextViewBasedOnBoolean();
-						makeToast("Unable to send request to block user. Check internet");
-					}
-				}) {
+			@Override
+			public void onErrorResponse(VolleyError arg0) {
+				mData.setIs_blocked(!mData.isIs_blocked());
+				setTextInBlockUserTextViewBasedOnBoolean();
+				makeToast("Unable to send request to block user. Check internet");
+			}
+		}) {
 			@Override
 			protected Map<String, String> getParams() throws AuthFailureError {
 				Map<String, String> p = new HashMap<>();
@@ -658,69 +596,59 @@ public class UserProfileViewedByOtherFragment extends BaseFragment implements
 			downvotePostImage.setVisibility(View.GONE);
 			downvoteProgressBar.setVisibility(View.VISIBLE);
 		}
-		StringRequest req = new StringRequest(Method.POST, upvoteUser,
-				new Listener<String>() {
+		StringRequest req = new StringRequest(Method.POST, upvoteUser, new Listener<String>() {
 
-					@Override
-					public void onResponse(String arg0) {
-						UpvotePostObject obj = new Gson().fromJson(arg0,
-								UpvotePostObject.class);
+			@Override
+			public void onResponse(String arg0) {
+				UpvotePostObject obj = new Gson().fromJson(arg0, UpvotePostObject.class);
 
-						String snackBar = "";
-						if (obj.isHas_downvoted()) {
-							downVoteButton.setSelected(true);
-							upvoteButton.setSelected(false);
-							snackBar = "Downvoted User";
-						} else if (obj.isHas_upvoted()) {
-							upvoteButton.setSelected(true);
-							downVoteButton.setSelected(false);
-							snackBar = "Upvoted User";
-						} else {
-							upvoteButton.setSelected(false);
-							downVoteButton.setSelected(false);
-							snackBar = "Neither upvoted nor downvoted";
-						}
+				String snackBar = "";
+				if (obj.isHas_downvoted()) {
+					downVoteButton.setSelected(true);
+					upvoteButton.setSelected(false);
+					snackBar = "Downvoted User";
+				} else if (obj.isHas_upvoted()) {
+					upvoteButton.setSelected(true);
+					downVoteButton.setSelected(false);
+					snackBar = "Upvoted User";
+				} else {
+					upvoteButton.setSelected(false);
+					downVoteButton.setSelected(false);
+					snackBar = "Neither upvoted nor downvoted";
+				}
 
-						upvotDownVoteIndicatorText.setText((obj.getUpvotes() - obj
-								.getDownvotes()) + "");
+				upvotDownVoteIndicatorText.setText((obj.getUpvotes() - obj.getDownvotes()) + "");
 
-						numberOfUpvotes.setText("Number of Upvotes Received : "
-								+ obj.getUpvotes());
-						numberOfDownvotes
-								.setText("Number of Downvotes Received : "
-										+ obj.getDownvotes());
+				numberOfUpvotes.setText("Number of Upvotes Received : " + obj.getUpvotes());
+				numberOfDownvotes.setText("Number of Downvotes Received : " + obj.getDownvotes());
 
-						((BaseActivity) getActivity()).showSnackBar(snackBar);
+				((BaseActivity) getActivity()).showSnackBar(snackBar);
 
-						upvotePostImage.setVisibility(View.VISIBLE);
-						upvoteProgressBar.setVisibility(View.GONE);
-						downvotePostImage.setVisibility(View.VISIBLE);
-						downvoteProgressBar.setVisibility(View.GONE);
-					}
-				}, new ErrorListener() {
+				upvotePostImage.setVisibility(View.VISIBLE);
+				upvoteProgressBar.setVisibility(View.GONE);
+				downvotePostImage.setVisibility(View.VISIBLE);
+				downvoteProgressBar.setVisibility(View.GONE);
+			}
+		}, new ErrorListener() {
 
-					@Override
-					public void onErrorResponse(VolleyError arg0) {
-						((BaseActivity) getActivity())
-								.showSnackBar("Some error occured. Check internet");
+			@Override
+			public void onErrorResponse(VolleyError arg0) {
+				((BaseActivity) getActivity()).showSnackBar("Some error occured. Check internet");
 
-						upvotePostImage.setVisibility(View.VISIBLE);
-						upvoteProgressBar.setVisibility(View.GONE);
-						downvotePostImage.setVisibility(View.VISIBLE);
-						downvoteProgressBar.setVisibility(View.GONE);
-					}
-				}) {
+				upvotePostImage.setVisibility(View.VISIBLE);
+				upvoteProgressBar.setVisibility(View.GONE);
+				downvotePostImage.setVisibility(View.VISIBLE);
+				downvoteProgressBar.setVisibility(View.GONE);
+			}
+		}) {
 			@Override
 			protected Map<String, String> getParams() throws AuthFailureError {
 				HashMap<String, String> p = new HashMap<>();
-				p.put("upvoter_id",
-						ZPreferences.getUserProfileID(getActivity()));
+				p.put("upvoter_id", ZPreferences.getUserProfileID(getActivity()));
 				p.put("user_to_be_voted", userId + "");
-				if (downVoteButton.getVisibility() == View.GONE
-						&& upvoteButton.isSelected())
+				if (downVoteButton.getVisibility() == View.GONE && upvoteButton.isSelected())
 					upvoteClickedOrDownvote = false;
-				p.put("is_upvote_clicked",
-						Boolean.toString(upvoteClickedOrDownvote));
+				p.put("is_upvote_clicked", Boolean.toString(upvoteClickedOrDownvote));
 				return p;
 			}
 		};
