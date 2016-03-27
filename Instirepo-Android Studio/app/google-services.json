@@ -1,0 +1,112 @@
+{
+  "project_info": {
+    "project_id": "instirepo-1089",
+    "project_number": "860159170646",
+    "name": "Instirepo"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860159170646:android:aa8a078df97b66c9",
+        "client_id": "android:com.example.faceless",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.example.faceless",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860159170646-etjq78ciilius08ehhoq0k63ttco4s2j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860159170646:android:4b899f4c61abf4f7",
+        "client_id": "android:com.instirepo.app",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.instirepo.app",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860159170646-j4pmdin1c8l0hj27r6hsu101mtevshat.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.instirepo.app",
+            "certificate_hash": "615BD63443B333219B5CF8A8DED8DB436A19AE2D"
+          }
+        },
+        {
+          "client_id": "860159170646-orsfe9dinns6ousfo4f1u6vtd75sk997.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.instirepo.app",
+            "certificate_hash": "858A14545E3940295C41E033043BD36A5B9465B1"
+          }
+        },
+        {
+          "client_id": "860159170646-caed7hj6dkmd6oof6kpvpoevnicmkhb3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.instirepo.app",
+            "certificate_hash": "F20E2330098FD9C4447FF05B200B170073F221E8"
+          }
+        },
+        {
+          "client_id": "860159170646-etjq78ciilius08ehhoq0k63ttco4s2j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-65892231-3"
+          }
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

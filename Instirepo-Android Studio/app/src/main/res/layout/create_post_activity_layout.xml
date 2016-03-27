@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearlayoutcreatepost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/z_grey_shade_1"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <include layout="@layout/toolbar_layout" />
+
+        <FrameLayout
+            android:id="@+id/fragmtnholder"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent" >
+        </FrameLayout>
+    </LinearLayout>
+
+    <com.instirepo.app.circularreveal.RevealFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <View
+            android:id="@+id/circularereavelaveiw"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/PrimaryColor" />
+    </com.instirepo.app.circularreveal.RevealFrameLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </android.support.design.widget.CoordinatorLayout>
+
+</FrameLayout>

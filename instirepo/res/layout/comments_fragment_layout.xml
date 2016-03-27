@@ -35,6 +35,7 @@
                         android:orientation="horizontal" >
 
                         <LinearLayout
+                            android:id="@+id/backbuttoncommentspage"
                             android:layout_width="@dimen/z_button_height"
                             android:layout_height="@dimen/z_button_height"
                             android:background="@drawable/z_user_profile_article_bg_selector"

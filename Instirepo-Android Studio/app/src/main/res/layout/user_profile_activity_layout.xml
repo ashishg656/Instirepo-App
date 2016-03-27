@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/z_grey_shade_2"
+    android:orientation="vertical" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_launch"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" />
+
+    <FrameLayout
+        android:id="@+id/actualheader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/navigation_drawer_header_bg_image" />
+
+        <com.instirepo.app.notboringactionbar.KenBurnsSupportView
+            android:id="@+id/kenburnssupoortview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <com.instirepo.app.circularreveal.RevealFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <View
+                android:id="@+id/image_overlay_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bnc_shop_by_category_color1_light" />
+
+            <View
+                android:id="@+id/circular_reveal_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.instirepo.app.circularreveal.RevealFrameLayout>
+
+        <com.instirepo.app.widgets.CircularImageView
+            android:id="@+id/userprofileimage"
+            android:layout_width="@dimen/z_user_profile_activity_image_height"
+            android:layout_height="@dimen/z_user_profile_activity_image_height"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:id="@+id/faketoolbalayouy"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/z_toolbar_height"
+            android:orientation="horizontal" >
+
+            <FrameLayout
+                android:id="@+id/backbuttonfake"
+                android:layout_width="@dimen/z_toolbar_height"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center" >
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_navigation_arrow_back_white" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <com.instirepo.app.widgets.PagerSlidingTabStrip
+            android:id="@+id/tab_strip_category"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/z_button_height"
+            android:layout_gravity="bottom"
+            app:pstsIndicatorColor="@color/z_white"
+            app:pstsPaddingMiddle="true"
+            app:pstsTextAllCaps="true"
+            app:pstsTextColorSelected="@color/z_white" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/appbarlayoutcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow_toolbar" >
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbarlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/z_toolbar_height"
+                android:gravity="center_vertical"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+            </android.support.v7.widget.Toolbar>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/z_button_height"
+                android:layout_gravity="center_horizontal"
+                app:tabGravity="center"
+                app:tabIndicatorColor="@color/z_white"
+                app:tabMode="scrollable"
+                app:tabSelectedTextColor="@color/z_white"
+                app:tabTextColor="@color/z_white_transparency" />
+        </android.support.design.widget.AppBarLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </android.support.design.widget.CoordinatorLayout>
+
+</FrameLayout>

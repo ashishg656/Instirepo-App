@@ -67,7 +67,7 @@ public class CommentsPostsFragment extends BaseFragment implements OnClickListen
 	int postid;
 
 	View footerView;
-	LinearLayout sendComment;
+	LinearLayout sendComment, backButton;
 	EditText commentBox;
 	ImageView sendCommentImage;
 	TextView numberOfComments;
@@ -96,6 +96,7 @@ public class CommentsPostsFragment extends BaseFragment implements OnClickListen
 		commentBox = (EditText) v.findViewById(R.id.commentbox);
 		numberOfComments = (TextView) v.findViewById(R.id.numberofcomments);
 		sendCommentImage = (ImageView) v.findViewById(R.id.commentsendicon);
+		backButton = (LinearLayout) v.findViewById(R.id.backbuttoncommentspage);
 
 		return v;
 	}
@@ -114,6 +115,7 @@ public class CommentsPostsFragment extends BaseFragment implements OnClickListen
 
 		addCommentFab.setOnClickListener(this);
 		sendComment.setOnClickListener(this);
+		backButton.setOnClickListener(this);
 
 		listView.setOnScrollListener(new OnScrollListener() {
 
@@ -243,6 +245,8 @@ public class CommentsPostsFragment extends BaseFragment implements OnClickListen
 			if (commentBox.getText().toString().length() > 0) {
 				sendCommentToServer();
 			}
+		} else if (v.getId() == R.id.backbuttoncommentspage) {
+			getActivity().onBackPressed();
 		}
 	}
 
@@ -344,12 +348,12 @@ public class CommentsPostsFragment extends BaseFragment implements OnClickListen
 				addCommentLayout.setVisibility(View.GONE);
 				addCommentFab.animate().translationX(0).translationY(0).setDuration(80)
 						.setInterpolator(new AccelerateDecelerateInterpolator()).setListener(new ZAnimatorListener() {
-					@Override
-					public void onAnimationEnd(Animator animation) {
-						addCommentFab.setVisibility(View.VISIBLE);
-						addCommentLayout.setVisibility(View.GONE);
-					}
-				}).start();
+							@Override
+							public void onAnimationEnd(Animator animation) {
+								addCommentFab.setVisibility(View.VISIBLE);
+								addCommentLayout.setVisibility(View.GONE);
+							}
+						}).start();
 			}
 		});
 		animator.start();

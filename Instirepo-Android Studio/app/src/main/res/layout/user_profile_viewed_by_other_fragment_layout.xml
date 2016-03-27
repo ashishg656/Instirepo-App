@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.instirepo.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/z_black_50_alpha"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <com.instirepo.app.circularreveal.RevealFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <View
+            android:id="@+id/revealviewuserprofiel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/z_white" />
+    </com.instirepo.app.circularreveal.RevealFrameLayout>
+
+    <FrameLayout
+        android:id="@+id/touchinterceptframelayouruserprof"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.instirepo.app.widgets.ObservableScrollView
+            android:id="@+id/scrollviewuserrofiel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/z_grey_shade_1"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/scrollviewlinearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <FrameLayout
+                        android:id="@+id/progresslayoutcontainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <LinearLayout
+                            android:id="@+id/maincontentlayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="-3dp"
+                                android:background="@drawable/shadow_post"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/z_margin_large"
+                                    android:text="About"
+                                    android:textColor="@color/PrimaryColor" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/z_grey_shade_2" />
+
+                                <TextView
+                                    android:id="@+id/about"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/z_margin_large"
+                                    android:textColor="@color/z_text_color_medium_dark" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/z_margin_mini"
+                                android:background="@drawable/shadow_post"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/z_margin_large"
+                                    android:text="User Details"
+                                    android:textColor="@color/PrimaryColor" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/z_grey_shade_2" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/z_margin_large" >
+
+                                    <TextView
+                                        android:id="@+id/branch"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Branch : Information Technology"
+                                        android:textColor="@color/z_text_color_dark" />
+
+                                    <TextView
+                                        android:id="@+id/batch"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:text="Batch : 7I 456"
+                                        android:textColor="@color/z_text_color_dark" />
+
+                                    <TextView
+                                        android:id="@+id/year"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:text="Year : 4th year"
+                                        android:textColor="@color/z_text_color_dark" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="1dp"
+                                        android:layout_marginBottom="@dimen/z_margin_large"
+                                        android:layout_marginTop="@dimen/z_margin_large"
+                                        android:background="@color/z_grey_shade_2" />
+
+                                    <TextView
+                                        android:id="@+id/posts"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Number of Posts Posted : 16"
+                                        android:textColor="@color/z_text_color_dark" />
+
+                                    <TextView
+                                        android:id="@+id/upvotes"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:text="Number of Upvotes Received : 16"
+                                        android:textColor="@color/z_text_color_dark" />
+
+                                    <TextView
+                                        android:id="@+id/downvotes"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:text="Number of Downvotes Received : 16"
+                                        android:textColor="@color/z_text_color_dark" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/voteuserlayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/z_margin_mini"
+                                android:background="@drawable/shadow_post"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/z_margin_large"
+                                    android:text="Vote User"
+                                    android:textColor="@color/PrimaryColor" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/z_grey_shade_2" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="horizontal" >
+
+                                    <FrameLayout
+                                        android:id="@+id/upvotebutton"
+                                        android:layout_width="@dimen/z_button_height"
+                                        android:layout_height="@dimen/z_button_height"
+                                        android:clickable="true" >
+
+                                        <ImageView
+                                            android:id="@+id/upvotepostimage"
+                                            android:layout_width="@dimen/z_upvote_button_height"
+                                            android:layout_height="@dimen/z_upvote_button_height"
+                                            android:layout_gravity="center"
+                                            android:src="@drawable/upvote_button_selector" />
+
+                                        <ProgressBar
+                                            android:id="@+id/upvotepostprogress"
+                                            android:layout_width="@dimen/z_upvote_button_height"
+                                            android:layout_height="@dimen/z_upvote_button_height"
+                                            android:layout_gravity="center"
+                                            android:indeterminate="true"
+                                            android:indeterminateOnly="true"
+                                            android:visibility="gone" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:id="@+id/uppvotedownvotes"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/z_margin_medium"
+                                        android:layout_marginRight="@dimen/z_margin_medium"
+                                        android:includeFontPadding="false"
+                                        android:text="10"
+                                        android:textColor="@color/z_text_color_medium_dark"
+                                        android:textSize="@dimen/z_font_mini" />
+
+                                    <FrameLayout
+                                        android:id="@+id/downvotebutton"
+                                        android:layout_width="@dimen/z_button_height"
+                                        android:layout_height="@dimen/z_button_height"
+                                        android:clickable="true" >
+
+                                        <ImageView
+                                            android:id="@+id/downvotepostimage"
+                                            android:layout_width="@dimen/z_upvote_button_height"
+                                            android:layout_height="@dimen/z_upvote_button_height"
+                                            android:layout_gravity="center"
+                                            android:src="@drawable/downvote_button_selector" />
+
+                                        <ProgressBar
+                                            android:id="@+id/downupvotepostprogress"
+                                            android:layout_width="@dimen/z_upvote_button_height"
+                                            android:layout_height="@dimen/z_upvote_button_height"
+                                            android:layout_gravity="center"
+                                            android:indeterminate="true"
+                                            android:indeterminateOnly="true"
+                                            android:visibility="gone" />
+                                    </FrameLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/resumelayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/z_margin_mini"
+                                android:background="@drawable/shadow_post"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/z_margin_large"
+                                    android:text="Resume"
+                                    android:textColor="@color/PrimaryColor" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/z_grey_shade_2" />
+
+                                <TextView
+                                    android:id="@+id/downloadresuem"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="?attr/selectableItemBackground"
+                                    android:clickable="true"
+                                    android:padding="@dimen/z_margin_large"
+                                    android:text="Download Resume"
+                                    android:textColor="@color/z_text_color_dark" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/contactlayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/z_margin_mini"
+                                android:background="@drawable/shadow_post"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/z_margin_large"
+                                    android:text="Contact"
+                                    android:textColor="@color/PrimaryColor" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/z_grey_shade_2" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/z_margin_large"
+                                    android:layout_marginRight="@dimen/z_margin_large"
+                                    android:orientation="vertical" >
+
+                                    <TextView
+                                        android:id="@+id/messageoninstiepo"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="?attr/selectableItemBackground"
+                                        android:clickable="true"
+                                        android:padding="@dimen/z_margin_large"
+                                        android:text="Message on Instirepo"
+                                        android:textColor="@color/z_text_color_dark" />
+
+                                    <View
+                                        android:id="@+id/messagedownview"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="1dp"
+                                        android:background="@color/z_grey_shade_2" />
+
+                                    <TextView
+                                        android:id="@+id/emailuser"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="?attr/selectableItemBackground"
+                                        android:clickable="true"
+                                        android:padding="@dimen/z_margin_large"
+                                        android:text="Email "
+                                        android:textColor="@color/z_text_color_dark" />
+
+                                    <View
+                                        android:id="@+id/emaildownviwe"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="1dp"
+                                        android:background="@color/z_grey_shade_2" />
+
+                                    <TextView
+                                        android:id="@+id/calluser"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="?attr/selectableItemBackground"
+                                        android:clickable="true"
+                                        android:padding="@dimen/z_margin_large"
+                                        android:text="Call 9873443137"
+                                        android:textColor="@color/z_text_color_dark" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/z_margin_small"
+                                android:layout_marginTop="@dimen/z_margin_mini"
+                                android:gravity="right"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:id="@+id/blockuser"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/z_margin_large"
+                                    android:background="?attr/selectableItemBackground"
+                                    android:clickable="true"
+                                    android:padding="@dimen/z_margin_large"
+                                    android:text="BLOCK USER"
+                                    android:textColor="@color/PrimaryColor"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/viewfullprofile"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/z_margin_large"
+                                    android:background="?attr/selectableItemBackground"
+                                    android:clickable="true"
+                                    android:padding="@dimen/z_margin_large"
+                                    android:text="EDIT PROFILE"
+                                    android:textColor="@color/PrimaryColor"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <include layout="@layout/error_layout" />
+
+                        <LinearLayout
+                            android:id="@+id/progressbarcontainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/z_white"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:paddingTop="50dp"
+                            android:visibility="gone" >
+
+                            <ProgressBar
+                                android:id="@+id/progressbarloading"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:indeterminate="true"
+                                android:indeterminateOnly="true" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </com.instirepo.app.widgets.ObservableScrollView>
+
+        <LinearLayout
+            android:id="@+id/userprofilecard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/PrimaryColor"
+            android:gravity="center_horizontal|bottom"
+            android:orientation="vertical"
+            android:padding="@dimen/z_margin_large" >
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/z_user_profile_image_height_half_large"
+                android:textColor="@color/z_white"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/designation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/z_margin_mini"
+                android:textColor="@color/z_white"
+                android:textSize="@dimen/z_font_mini" />
+        </LinearLayout>
+
+        <com.instirepo.app.widgets.CircularImageView
+            android:id="@+id/userprofilecircularimage"
+            android:layout_width="@dimen/z_user_profile_image_height"
+            android:layout_height="@dimen/z_user_profile_image_height"
+            android:layout_gravity="center_horizontal"
+            app:border="true"
+            app:border_color="@color/z_white"
+            app:border_width="2dp" />
+    </FrameLayout>
+
+</FrameLayout>

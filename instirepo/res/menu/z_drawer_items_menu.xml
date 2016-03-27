@@ -23,9 +23,11 @@
     <item android:title="Like Us">
         <menu>
             <item
+                android:id="@+id/sharepapintemt"
                 android:icon="@drawable/nav_share_icon_selector"
                 android:title="Share App"/>
             <item
+                android:id="@+id/shareappplaystore"
                 android:icon="@drawable/nav_rate_icon_selector"
                 android:title="Rate App"/>
         </menu>

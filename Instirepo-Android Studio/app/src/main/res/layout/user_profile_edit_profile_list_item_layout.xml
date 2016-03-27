@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.instirepo.app"
+    android:id="@+id/maincontentlayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/z_margin_large"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3dp"
+        android:background="@drawable/shadow_post"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/z_margin_large"
+            android:text="User Details"
+            android:textColor="@color/PrimaryColor" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/z_grey_shade_2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/z_margin_large" >
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name : Hello World"
+                android:textColor="@color/z_text_color_dark" />
+
+            <TextView
+                android:id="@+id/branch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Branch : Information Technology"
+                android:textColor="@color/z_text_color_dark" />
+
+            <TextView
+                android:id="@+id/batch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Batch : 7I 456"
+                android:textColor="@color/z_text_color_dark" />
+
+            <TextView
+                android:id="@+id/year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Year : 4th year"
+                android:textColor="@color/z_text_color_dark" />
+
+            <TextView
+                android:id="@+id/enrollment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Enrollment Number : 67263"
+                android:textColor="@color/z_text_color_dark" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/z_margin_large"
+                android:layout_marginTop="@dimen/z_margin_large"
+                android:background="@color/z_grey_shade_2" />
+
+            <TextView
+                android:id="@+id/posts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Number of Posts Posted : 16"
+                android:textColor="@color/z_text_color_dark" />
+
+            <TextView
+                android:id="@+id/upvotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Number of Upvotes Received : 16"
+                android:textColor="@color/z_text_color_dark" />
+
+            <TextView
+                android:id="@+id/downvotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Number of Downvotes Received : 16"
+                android:textColor="@color/z_text_color_dark" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/z_margin_mini"
+        android:background="@drawable/shadow_post"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/editabout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/z_margin_large"
+                android:text="About"
+                android:textColor="@color/PrimaryColor" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_edit" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/z_grey_shade_2" />
+
+        <TextView
+            android:id="@+id/about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/z_margin_large"
+            android:textColor="@color/z_text_color_medium_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/resumelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/z_margin_mini"
+        android:background="@drawable/shadow_post"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/z_margin_large"
+            android:text="Resume"
+            android:textColor="@color/PrimaryColor" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/z_grey_shade_2" />
+
+        <TextView
+            android:id="@+id/downloadresuem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:padding="@dimen/z_margin_large"
+            android:text="Download Resume"
+            android:textColor="@color/z_text_color_dark" />
+
+        <TextView
+            android:id="@+id/editresume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:padding="@dimen/z_margin_large"
+            android:text="Edit Resume"
+            android:textColor="@color/z_text_color_dark" />
+
+        <TextView
+            android:id="@+id/deleteresume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:padding="@dimen/z_margin_large"
+            android:text="Delete Resume"
+            android:textColor="@color/z_text_color_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/contactlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/z_margin_mini"
+        android:background="@drawable/shadow_post"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/z_margin_large"
+            android:text="Contact"
+            android:textColor="@color/PrimaryColor" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/z_grey_shade_2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/z_margin_large"
+            android:layout_marginRight="@dimen/z_margin_large"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/emailuser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:padding="@dimen/z_margin_large"
+                android:text="Email : ashishg656@gmail.com"
+                android:textColor="@color/z_text_color_dark" />
+
+            <View
+                android:id="@+id/emaildownviwe"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/z_grey_shade_2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/calluser"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:padding="@dimen/z_margin_large"
+                    android:text="Phone : 9873443137"
+                    android:textColor="@color/z_text_color_dark" />
+
+                <LinearLayout
+                    android:id="@+id/editphone"
+                    android:layout_width="56dp"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_edit" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/z_grey_shade_2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingTop="12dp" >
+
+                <CheckBox
+                    android:id="@+id/emailvisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/z_margin_small"
+                    android:paddingTop="@dimen/z_margin_mini"
+                    android:text="Email Visible To Other Users" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="12dp"
+                android:paddingTop="8dp" >
+
+                <CheckBox
+                    android:id="@+id/phonevisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/z_margin_small"
+                    android:paddingTop="@dimen/z_margin_mini"
+                    android:text="Mobile Number Visible To Other Users" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

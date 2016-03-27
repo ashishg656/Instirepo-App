@@ -5,34 +5,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.animation.Animator;
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
@@ -69,6 +41,36 @@ import com.instirepo.app.preferences.ZPreferences;
 import com.instirepo.app.serverApi.ImageRequestManager;
 import com.instirepo.app.serverApi.ImageRequestManager.RequestBitmap;
 import com.instirepo.app.widgets.CircularImageView;
+
+import android.animation.Animator;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class HomeActivity extends BaseActivity implements OnPageChangeListener, AppConstants, OnClickListener, ZUrls,
 		ConnectionCallbacks, OnConnectionFailedListener {
@@ -310,11 +312,40 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener, 
 					intent = new Intent(HomeActivity.this, AboutUsActivity.class);
 					startActivity(intent);
 					return true;
+				case R.id.shareappplaystore:
+					openPlayStore();
+					return true;
+				case R.id.sharepapintemt:
+					shareApplicationIntent();
+					return true;
 				default:
 					return true;
 				}
 			}
 		});
+	}
+
+	protected void openPlayStore() {
+		Uri uri = Uri.parse("market://details?id=" + this.getPackageName());
+		Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+		goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET
+				| Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+		try {
+			startActivity(goToMarket);
+		} catch (ActivityNotFoundException e) {
+			startActivity(new Intent(Intent.ACTION_VIEW,
+					Uri.parse("http://play.google.com/store/apps/details?id=" + this.getPackageName())));
+		}
+	}
+
+	void shareApplicationIntent() {
+		Intent sendIntent = new Intent();
+		sendIntent.setAction(Intent.ACTION_SEND);
+		sendIntent.putExtra(Intent.EXTRA_TEXT,
+				"Checkout Instirepo - A platform for college students and teachers to discuss and share anything and buy/sell products. Download : http://play.google.com/store/apps/details?id="
+						+ this.getPackageName());
+		sendIntent.setType("text/plain");
+		startActivity(sendIntent);
 	}
 
 	private void setDrawerActionBarToggle() {

@@ -1,0 +1,93 @@
+<resources>
+
+    <!-- margins -->
+    <dimen name="z_margin_supermini">2dp</dimen>
+    <dimen name="z_margin_mini">4dp</dimen>
+    <dimen name="z_margin_small">8dp</dimen>
+    <dimen name="z_margin_medium">12dp</dimen>
+    <dimen name="z_margin_large">16dp</dimen>
+    <dimen name="z_margin_xlarge">25dp</dimen>
+    <dimen name="z_margin_top_104">104dp</dimen>
+    <dimen name="z_margin_top_108">108dp</dimen>
+    <dimen name="z_one_dp">1dp</dimen>
+
+    <!-- Sliding panel -->
+    <dimen name="bs_grid_left_padding">8dp</dimen>
+    <dimen name="bs_grid_top_padding">0dp</dimen>
+    <dimen name="bs_grid_right_padding">8dp</dimen>
+    <dimen name="bs_grid_bottom_padding">8dp</dimen>
+
+    <!-- fonts -->
+    <dimen name="z_font_supermini">12sp</dimen>
+    <dimen name="z_font_mini">14sp</dimen>
+    <dimen name="z_font_small">16sp</dimen>
+    <dimen name="z_font_medium">18sp</dimen>
+
+    <!-- material -->
+    <dimen name="z_button_height">48dp</dimen>
+    <dimen name="z_toolbar_height">56dp</dimen>
+    <dimen name="z_appbar_layout_height">104dp</dimen>
+
+    <!-- launch screen -->
+    <dimen name="z_launch_app_icon_margin">210dp</dimen>
+
+    <!-- Home Activity -->
+    <dimen name="z_fab_home_dimension_for_reveal">40dp</dimen>
+    <dimen name="select_post_category_grid_image_margin">24dp</dimen>
+
+    <!-- navigation drawer -->
+    <dimen name="z_drawer_header_top_padding">56dp</dimen>
+    <dimen name="z_drawer_profile_image_height">64dp</dimen>
+
+    <!-- Posts Screen -->
+    <dimen name="z_post_uploader_image_height">40dp</dimen>
+    <dimen name="z_seen_by_uploader_image_height">40dp</dimen>
+    <dimen name="z_upvote_button_height">35dp</dimen>
+    <dimen name="z_post_image_height">200dp</dimen>
+
+    <!-- User profile Fragment -->
+    <dimen name="z_user_profile_image_height">120dp</dimen>
+    <dimen name="z_user_profile_image_height_half">60dp</dimen>
+    <dimen name="z_user_profile_image_height_half_large">80dp</dimen>
+
+    <!-- Floating Action Button -->
+    <dimen name="fab_size_normal">56dp</dimen>
+    <dimen name="fab_size_mini">40dp</dimen>
+    <dimen name="labels_text_size">14sp</dimen>
+    <dimen name="floating_action_button_height_with_margin_bottom_considered">80dp</dimen>
+
+    <!-- afilechooser -->
+    <dimen name="list_padding">0dp</dimen>
+    <dimen name="list_item_padding">16dp</dimen>
+
+    <!-- swipe refresh -->
+    <dimen name="z_swipe_refresh_start_pos">90dp</dimen>
+    <dimen name="z_swipe_refresh_rest_pos">130dp</dimen>
+    <dimen name="z_swipe_refresh_start_pos_small">40dp</dimen>
+    <dimen name="z_swipe_refresh_rest_pos_small">80dp</dimen>
+
+    <!-- Messages screen list -->
+    <dimen name="z_message_list_user_img_height">60dp</dimen>
+
+    <!-- Message list screen -->
+    <dimen name="z_message_list_toolbar_image_radius">45dp</dimen>
+    <dimen name="z_message_list_item_margin">60dp</dimen>
+
+    <!-- FAB -->
+    <dimen name="z_fab_margin_0_for_v21">0dp</dimen>
+
+    <!-- notifications -->
+    <dimen name="z_notification_image_height">80dp</dimen>
+
+    <!-- User profile activity -->
+    <dimen name="z_user_profile_activity_image_height">100dp</dimen>
+
+    <!-- post detail -->
+    <dimen name="post_Detail_seen_by_list_height">60dp</dimen>
+    <dimen name="post_Detail_seen_by_list_image_radius">50dp</dimen>
+
+    <!-- product category fragment -->
+    <dimen name="product_Category_list_height">180dp</dimen>
+    <dimen name="product_Category_list_item_width">140dp</dimen>
+
+</resources>

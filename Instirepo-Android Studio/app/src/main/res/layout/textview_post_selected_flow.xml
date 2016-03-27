@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/z_margin_supermini"
+    android:background="@drawable/textview_post_visibility_bg"
+    android:paddingBottom="@dimen/z_margin_supermini"
+    android:paddingLeft="@dimen/z_margin_mini"
+    android:paddingRight="@dimen/z_margin_mini"
+    android:paddingTop="@dimen/z_margin_supermini"
+    android:textColor="@color/z_white"
+    android:textSize="@dimen/z_font_supermini" >
+
+</TextView>

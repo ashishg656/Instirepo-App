@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/z_black_50_alpha"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="@dimen/z_margin_large"
+        android:layout_marginRight="@dimen/z_margin_large"
+        android:background="@drawable/ic_cart_bg_shadow"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/z_margin_medium"
+            android:text="Save Post Visibility"
+            android:textColor="@color/z_text_color_medium_dark"
+            android:textSize="@dimen/z_font_small"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/z_grey_shade_2"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/z_margin_large" >
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <EditText
+                    android:id="@+id/enrollmentnumebr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name of visibility"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:padding="@dimen/z_margin_large" >
+
+            <TextView
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:paddingBottom="@dimen/z_margin_small"
+                android:paddingLeft="@dimen/z_margin_large"
+                android:paddingRight="@dimen/z_margin_large"
+                android:paddingTop="@dimen/z_margin_small"
+                android:text="CANCEL"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="@dimen/z_font_mini"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:paddingBottom="@dimen/z_margin_small"
+                android:paddingLeft="@dimen/z_margin_large"
+                android:paddingRight="@dimen/z_margin_large"
+                android:paddingTop="@dimen/z_margin_small"
+                android:text="SAVE"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="@dimen/z_font_mini"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

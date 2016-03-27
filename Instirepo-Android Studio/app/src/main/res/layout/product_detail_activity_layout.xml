@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.instirepo.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/z_white"
+    android:orientation="vertical" >
+
+    <com.instirepo.app.widgets.ObservableScrollView
+        android:id="@+id/postdetailscrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/postimage"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <com.instirepo.app.widgets.CirclePageIndicator
+                        android:id="@+id/circle_page_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/z_margin_small"
+                        app:radius="5dp" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <View
+                android:id="@+id/boomimagivideview"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="-4dp"
+                android:background="@drawable/bnc_book_detail_activity_gradient_view" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/z_grey_shade_2"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/z_margin_mini"
+                    android:layout_marginRight="@dimen/z_margin_mini"
+                    android:layout_marginTop="@dimen/z_margin_mini"
+                    android:background="@drawable/ic_shadow_card"
+                    android:orientation="vertical"
+                    android:padding="@dimen/z_margin_large" >
+
+                    <TextView
+                        android:id="@+id/productname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Post Heading"
+                        android:textColor="@color/z_text_color_dark"
+                        android:textSize="@dimen/z_font_medium"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Selling Price : ₹ "
+                            android:textColor="@color/PrimaryColor"
+                            android:textSize="@dimen/z_font_small" />
+
+                        <TextView
+                            android:id="@+id/productprice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="00"
+                            android:textColor="@color/PrimaryDarkColor"
+                            android:textSize="@dimen/z_font_small"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/z_margin_mini"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/productmrp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="MRP : ₹ 900"
+                            android:textColor="@color/z_red_color_primary" />
+
+                        <TextView
+                            android:id="@+id/yousave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/z_margin_small"
+                            android:text="You Save 57%"
+                            android:textColor="@color/z_green_color_primary"
+                            android:textStyle="italic" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/z_margin_mini"
+                    android:layout_marginRight="@dimen/z_margin_mini"
+                    android:layout_marginTop="@dimen/z_margin_mini"
+                    android:background="@drawable/ic_shadow_card"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/z_margin_large"
+                    android:paddingRight="@dimen/z_margin_large"
+                    android:paddingTop="@dimen/z_margin_large" >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:id="@+id/savepostimage"
+                            android:layout_width="@dimen/z_upvote_button_height"
+                            android:layout_height="@dimen/z_upvote_button_height"
+                            android:background="@drawable/star_button_selector"
+                            android:clickable="true" />
+
+                        <TextView
+                            android:id="@+id/numberofsaves"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:includeFontPadding="false"
+                            android:text="0 Likes"
+                            android:textColor="@color/z_text_color_medium_dark"
+                            android:textSize="@dimen/z_font_supermini" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/viewcomments"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="@dimen/z_upvote_button_height"
+                            android:layout_height="@dimen/z_upvote_button_height"
+                            android:background="@drawable/comment_button_selector"
+                            android:clickable="false" />
+
+                        <TextView
+                            android:id="@+id/numberofcomments"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:includeFontPadding="false"
+                            android:text="0 Comments"
+                            android:textColor="@color/z_text_color_medium_dark"
+                            android:textSize="@dimen/z_font_supermini" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/z_margin_mini"
+                    android:layout_marginRight="@dimen/z_margin_mini"
+                    android:layout_marginTop="@dimen/z_margin_mini"
+                    android:background="@drawable/ic_shadow_card"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/z_margin_large"
+                    android:paddingRight="@dimen/z_margin_large"
+                    android:paddingTop="@dimen/z_margin_large" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Warranty Details"
+                        android:textColor="@color/PrimaryColor"
+                        android:textSize="@dimen/z_font_small"
+                        android:textStyle="bold" />
+
+                    <CheckBox
+                        android:id="@+id/warrantyavaailable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="@dimen/z_margin_small"
+                        android:clickable="false"
+                        android:editable="false"
+                        android:text="Warranty Available" />
+
+                    <CheckBox
+                        android:id="@+id/billavailable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:checked="true"
+                        android:clickable="false"
+                        android:editable="false"
+                        android:text="Bill Available" />
+
+                    <TextView
+                        android:id="@+id/wanntyleft"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/z_margin_large"
+                        android:layout_marginTop="@dimen/z_margin_mini"
+                        android:text="Warranty period left : 5 months"
+                        android:textColor="@color/z_text_color_dark"
+                        android:textStyle="normal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/z_margin_mini"
+                    android:layout_marginRight="@dimen/z_margin_mini"
+                    android:layout_marginTop="@dimen/z_margin_mini"
+                    android:animateLayoutChanges="true"
+                    android:background="@drawable/ic_shadow_card"
+                    android:orientation="vertical"
+                    android:padding="@dimen/z_margin_large" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Product Description"
+                        android:textColor="@color/PrimaryColor"
+                        android:textSize="@dimen/z_font_small"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/z_margin_small"
+                        android:maxLines="5"
+                        android:text="Product Description"
+                        android:textColor="@color/z_text_color_medium_dark" />
+
+                    <TextView
+                        android:id="@+id/showmore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/z_margin_small"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:paddingBottom="@dimen/z_margin_small"
+                        android:paddingLeft="@dimen/z_margin_large"
+                        android:paddingRight="@dimen/z_margin_large"
+                        android:paddingTop="@dimen/z_margin_small"
+                        android:text="SHOW MORE"
+                        android:textColor="@color/z_green_color_primary" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="54dp"
+                    android:layout_marginLeft="@dimen/z_margin_mini"
+                    android:layout_marginRight="@dimen/z_margin_mini"
+                    android:layout_marginTop="@dimen/z_margin_mini"
+                    android:background="@drawable/ic_shadow_card" >
+
+                    <LinearLayout
+                        android:id="@+id/openuserprofilepost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:orientation="vertical"
+                        android:padding="@dimen/z_margin_large" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Product uploaded by : "
+                            android:textColor="@color/z_text_color_light"
+                            android:textSize="@dimen/z_font_supermini" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="8dp" >
+
+                            <com.instirepo.app.widgets.CircularImageView
+                                android:id="@+id/seenbyimage"
+                                android:layout_width="@dimen/z_seen_by_uploader_image_height"
+                                android:layout_height="@dimen/z_seen_by_uploader_image_height" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/z_margin_small"
+                                android:layout_weight="1"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:id="@+id/seenbyname"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Ashish Goel"
+                                    android:textColor="@color/z_text_color_dark" />
+
+                                <TextView
+                                    android:id="@+id/seenbytime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/z_margin_supermini"
+                                    android:includeFontPadding="false"
+                                    android:text="Uploaded 3 days ago"
+                                    android:textColor="@color/z_text_color_light"
+                                    android:textSize="@dimen/z_font_supermini" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.instirepo.app.widgets.ObservableScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/chatcontaner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/orange_post"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/chat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="Chat"
+                    android:textColor="@color/z_white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/z_green_color_primary"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/call"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/calluplaodtext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="Call"
+                    android:textColor="@color/z_white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/faketoolbarshopdetail"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:clickable="true" >
+
+        <FrameLayout
+            android:id="@+id/backbuttonfake"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_navigation_arrow_back_white" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <FrameLayout
+            android:id="@+id/appbarcontainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shadow_toolbar" >
+
+            <include layout="@layout/toolbar_layout" />
+        </FrameLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
+
+    <include layout="@layout/error_layout" />
+
+    <include layout="@layout/progress_layout" />
+
+</FrameLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- FAB -->
+    <dimen name="z_fab_margin_0_for_v21">16dp</dimen>
+
+</resources>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/z_margin_large" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/z_margin_medium"
+                            android:text="TO"
+                            android:textColor="@color/z_text_color_light"
+                            android:textSize="@dimen/z_font_supermini"
+                            android:textStyle="bold" />
+
+                        <com.instirepo.app.widgets.CustomFlowLayout
+                            android:id="@+id/customeflow"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" >
+                        </com.instirepo.app.widgets.CustomFlowLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/savevis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="@dimen/z_margin_large"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:padding="@dimen/z_margin_large"
+                        android:text="SAVE THIS LIST"
+                        android:textColor="@color/PrimaryColor"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/z_grey_shade_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <LinearLayout
+                        android:id="@+id/publiclayoutcretaepostbutton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingBottom="24dp" >
+
+                        <ImageView
+                            android:id="@+id/batchimage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/z_margin_large"
+                            android:background="@drawable/create_post_visibility_bg"
+                            android:padding="@dimen/z_margin_large"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/post_public" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Public"
+                            android:textColor="@color/z_text_color_dark"
+                            android:textSize="@dimen/z_font_supermini"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/branchlayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingBottom="24dp" >
+
+                        <ImageView
+                            android:id="@+id/batchimage1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/z_margin_large"
+                            android:background="@drawable/create_post_visibility_bg"
+                            android:padding="@dimen/z_margin_large"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/post_branch" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Branch"
+                            android:textColor="@color/z_text_color_dark"
+                            android:textSize="@dimen/z_font_supermini"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/yearlayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingBottom="24dp" >
+
+                        <ImageView
+                            android:id="@+id/batchimage2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/z_margin_large"
+                            android:background="@drawable/create_post_visibility_bg"
+                            android:padding="@dimen/z_margin_large"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/post_year" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Year"
+                            android:textColor="@color/z_text_color_dark"
+                            android:textSize="@dimen/z_font_supermini"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <LinearLayout
+                        android:id="@+id/batchlayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingBottom="24dp" >
+
+                        <ImageView
+                            android:id="@+id/batchimage3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/z_margin_large"
+                            android:background="@drawable/create_post_visibility_bg"
+                            android:padding="@dimen/z_margin_large"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/post_batch" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Batch"
+                            android:textColor="@color/z_text_color_dark"
+                            android:textSize="@dimen/z_font_supermini"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/teacherseelc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingBottom="24dp" >
+
+                        <ImageView
+                            android:id="@+id/batchimage4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/z_margin_large"
+                            android:background="@drawable/create_post_visibility_bg"
+                            android:padding="@dimen/z_margin_large"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/post_teacher" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Teacher"
+                            android:textColor="@color/z_text_color_dark"
+                            android:textSize="@dimen/z_font_supermini"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <com.instirepo.app.widgets.CustomGoogleFloatingActionButton
+        android:id="@+id/createpostfinalsetep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/z_fab_margin_0_for_v21"
+        android:src="@drawable/ic_double_tick"/>
+
+    <FrameLayout
+        android:id="@+id/fragmtnholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
+
+</FrameLayout>
