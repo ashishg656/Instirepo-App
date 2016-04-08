@@ -35,6 +35,7 @@ import com.instirepo.app.fragments.PostsByTeachersFragment;
 import com.instirepo.app.fragments.ProductsCategoriesFragment;
 import com.instirepo.app.fragments.SeenByPeopleFragment;
 import com.instirepo.app.fragments.SelectPostCategoryFragment;
+import com.instirepo.app.fragments.TravelFragment;
 import com.instirepo.app.fragments.UserProfileViewedByOtherFragment;
 import com.instirepo.app.objects.AllPostCategoriesObject;
 import com.instirepo.app.preferences.ZPreferences;
@@ -367,6 +368,14 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener, 
 		navigationView.setItemIconTintList(null);
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int arg1, Intent arg2) {
+		super.onActivityResult(requestCode, arg1, arg2);
+		if (requestCode == TravelFragment.REQUEST_CHECK_SETTINGS) {
+			fragmentHashMap.get(3).onActivityResult(requestCode, arg1, arg2);
+		}
+	}
+
 	class MyPagerAdapter extends FragmentStatePagerAdapter {
 
 		public MyPagerAdapter(FragmentManager fm) {
@@ -382,6 +391,8 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener, 
 				fragment = PostsByTeachersFragment.newInstance(bundle);
 			else if (pos == 1)
 				fragment = PostsByStudentsFragment.newInstance(bundle);
+			else if (pos == 3)
+				fragment = TravelFragment.newInstance(bundle);
 			else
 				fragment = ProductsCategoriesFragment.newInstance(bundle);
 
@@ -391,7 +402,7 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener, 
 
 		@Override
 		public int getCount() {
-			return 3;
+			return 4;
 		}
 
 		@Override
@@ -400,6 +411,8 @@ public class HomeActivity extends BaseActivity implements OnPageChangeListener, 
 				return "Posts By Teachers";
 			} else if (position == 1) {
 				return "Posts By Students";
+			} else if (position == 3) {
+				return "Travel";
 			} else {
 				return "Products";
 			}

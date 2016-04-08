@@ -1,19 +1,15 @@
 package com.instirepo.app.application;
 
-import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
 import java.io.File;
-
-import android.app.ActivityManager;
-import android.app.Application;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory.Options;
-import android.support.annotation.NonNull;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.StandardExceptionParser;
+import com.google.android.gms.analytics.Tracker;
 import com.instirepo.app.R;
 import com.instirepo.app.extras.FontsOverride;
 import com.instirepo.app.serverApi.NutraBaseImageDecoder;
@@ -25,12 +21,22 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
+import android.app.ActivityManager;
+import android.app.Application;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory.Options;
+import android.support.annotation.NonNull;
+import io.fabric.sdk.android.Fabric;
+
 public class ZApplication extends Application {
 
 	static ZApplication sInstance;
 	private RequestQueue mRequestQueue;
 	public static File cacheDir;
 	public static final String IMAGE_DIRECTORY_NAME = "Instirepo";
+
+	public static final String TAG = ZApplication.class.getSimpleName();
 
 	@Override
 	public void onCreate() {
@@ -42,6 +48,9 @@ public class ZApplication extends Application {
 		initImageLoader(getApplicationContext());
 
 		// setFonts("Hind-Light.ttf");
+
+		AnalyticsTrackers.initialize(this);
+		AnalyticsTrackers.getInstance().get(AnalyticsTrackers.Target.APP);
 	}
 
 	public synchronized static ZApplication getInstance() {
@@ -91,6 +100,10 @@ public class ZApplication extends Application {
 		return "http://hola-instirepo.rhcloud.com/ecommerce/";
 	}
 
+	public static String getTravelUrl() {
+		return "http://hola-instirepo.rhcloud.com/travel/";
+	}
+
 	public static String getImageUrl(String s) {
 		return "http://hola-instirepo.rhcloud.com" + s;
 	}
@@ -102,4 +115,60 @@ public class ZApplication extends Application {
 		}
 	}
 
+	public synchronized Tracker getGoogleAnalyticsTracker() {
+		AnalyticsTrackers analyticsTrackers = AnalyticsTrackers.getInstance();
+		return analyticsTrackers.get(AnalyticsTrackers.Target.APP);
+	}
+
+	/***
+	 * Tracking screen view
+	 *
+	 * @param screenName
+	 *            screen name to be displayed on GA dashboard
+	 */
+	public void trackScreenView(String screenName) {
+		Tracker t = getGoogleAnalyticsTracker();
+
+		// Set screen name.
+		t.setScreenName(screenName);
+
+		// Send a screen view.
+		t.send(new HitBuilders.ScreenViewBuilder().build());
+
+		GoogleAnalytics.getInstance(this).dispatchLocalHits();
+	}
+
+	/***
+	 * Tracking exception
+	 *
+	 * @param e
+	 *            exception to be tracked
+	 */
+	public void trackException(Exception e) {
+		if (e != null) {
+			Tracker t = getGoogleAnalyticsTracker();
+
+			t.send(new HitBuilders.ExceptionBuilder()
+					.setDescription(
+							new StandardExceptionParser(this, null).getDescription(Thread.currentThread().getName(), e))
+					.setFatal(false).build());
+		}
+	}
+
+	/***
+	 * Tracking event
+	 *
+	 * @param category
+	 *            event category
+	 * @param action
+	 *            action of the event
+	 * @param label
+	 *            label
+	 */
+	public void trackEvent(String category, String action, String label) {
+		Tracker t = getGoogleAnalyticsTracker();
+
+		// Build and send an Event.
+		t.send(new HitBuilders.EventBuilder().setCategory(category).setAction(action).setLabel(label).build());
+	}
 }

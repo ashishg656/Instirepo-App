@@ -109,4 +109,11 @@ public interface ZUrls {
 	public String getAllProductCategories = ZApplication.getEcommerceUrl() + "get_all_categories_for_product";
 
 	public String uploadProduct = ZApplication.getEcommerceUrl() + "upload_product/";
+
+	/**
+	 * travel urls
+	 * 
+	 */
+
+	public String getAllNearbyTravels = ZApplication.getTravelUrl() + "get_feed/";
 }
