@@ -1,18 +1,42 @@
 package com.instirepo.app.activities;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.accounts.Account;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.gson.Gson;
+import com.instirepo.app.R;
+import com.instirepo.app.application.ZApplication;
+import com.instirepo.app.extras.ZUrls;
+import com.instirepo.app.fragments.LaunchScreen1Fragment;
+import com.instirepo.app.fragments.LaunchScreen2Fragment;
+import com.instirepo.app.fragments.LaunchScreen3Fragment;
+import com.instirepo.app.fragments.LaunchScreen4Fragment;
+import com.instirepo.app.objects.GoogleLoginObject;
+import com.instirepo.app.preferences.ZPreferences;
+import com.instirepo.app.widgets.CirclePageIndicator;
+import com.instirepo.app.widgets.LaunchActiviityViewPagerTransformer;
+
 import android.animation.ArgbEvaluator;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.IntentSender;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,41 +58,8 @@ import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.Scopes;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Scope;
-import com.google.android.gms.plus.People.LoadPeopleResult;
-import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
-import com.google.gson.Gson;
-import com.instirepo.app.R;
-import com.instirepo.app.application.ZApplication;
-import com.instirepo.app.extras.ZUrls;
-import com.instirepo.app.fragments.LaunchScreen1Fragment;
-import com.instirepo.app.fragments.LaunchScreen2Fragment;
-import com.instirepo.app.fragments.LaunchScreen3Fragment;
-import com.instirepo.app.fragments.LaunchScreen4Fragment;
-import com.instirepo.app.objects.GoogleLoginObject;
-import com.instirepo.app.preferences.ZPreferences;
-import com.instirepo.app.widgets.CirclePageIndicator;
-import com.instirepo.app.widgets.LaunchActiviityViewPagerTransformer;
-
-public class LaunchActivity extends BaseActivity implements
-		OnPageChangeListener, OnClickListener,
-		GoogleApiClient.ConnectionCallbacks,
-		GoogleApiClient.OnConnectionFailedListener,
-		ResultCallback<LoadPeopleResult>, ZUrls {
+public class LaunchActivity extends BaseActivity
+		implements OnPageChangeListener, OnClickListener, ZUrls, OnConnectionFailedListener {
 
 	ViewPager viewPager;
 	ArgbEvaluator argbEvaluator;
@@ -86,27 +77,15 @@ public class LaunchActivity extends BaseActivity implements
 	Button googleLoginButton;
 	ProgressDialog progressDialog;
 
-	// GOOGLE API
-	/* Request code used to invoke sign in user interactions. */
-	private static final int RC_SIGN_IN = 0;
-	/* Client used to interact with Google APIs. */
-	private GoogleApiClient mGoogleApiClient;
-	/* Is there a ConnectionResult resolution in progress? */
-	private boolean mIsResolving = false;
-	/* Should we automatically resolve ConnectionResults when possible? */
-	private boolean mShouldResolve = false;
-	private static final int PROFILE_PIC_SIZE = 400;
-
 	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+	GoogleApiClient mGoogleApiClient;
 
 	// DATA TO SEND
-	String emailToSend, idToSend, imageUrlToSend, nameToSend,
-			accessTokenToSend, additionalDataToSend;
+	String emailToSend, idToSend, imageUrlToSend, nameToSend, accessTokenToSend, additionalDataToSend;
 
 	int deviceWidth;
 	float heightOfScreenShotImage;
-	float factorofImageTobeshownAlongHeight = 0.5f,
-			factorOfImageToBeTranslatedAlongWidth = 0.08f;
+	float factorofImageTobeshownAlongHeight = 0.5f, factorOfImageToBeTranslatedAlongWidth = 0.08f;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -137,45 +116,37 @@ public class LaunchActivity extends BaseActivity implements
 		try {
 			Field mScroller = ViewPager.class.getDeclaredField("mScroller");
 			mScroller.setAccessible(true);
-			Scroller scroller = new Scroller(this,
-					new DecelerateInterpolator(), true);
+			Scroller scroller = new Scroller(this, new DecelerateInterpolator(), true);
 			mScroller.set(viewPager, scroller);
 		} catch (Exception e) {
 		}
 
-		loginButtonsLayout.getViewTreeObserver().addOnGlobalLayoutListener(
-				new OnGlobalLayoutListener() {
+		loginButtonsLayout.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 
-					@Override
-					public void onGlobalLayout() {
-						if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-							mainContainerLayout.getViewTreeObserver()
-									.removeGlobalOnLayoutListener(this);
-						} else {
-							mainContainerLayout.getViewTreeObserver()
-									.removeOnGlobalLayoutListener(this);
-						}
-						loginButtonsLayoutHeight = loginButtonsLayout
-								.getHeight();
-						skipButtonHeight = skipButtonLayout.getHeight();
-					}
-				});
+			@Override
+			public void onGlobalLayout() {
+				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+					mainContainerLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+				} else {
+					mainContainerLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				}
+				loginButtonsLayoutHeight = loginButtonsLayout.getHeight();
+				skipButtonHeight = skipButtonLayout.getHeight();
+			}
+		});
 
-		mainContainerLayout.getViewTreeObserver().addOnGlobalLayoutListener(
-				new OnGlobalLayoutListener() {
+		mainContainerLayout.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 
-					@Override
-					public void onGlobalLayout() {
-						if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-							mainContainerLayout.getViewTreeObserver()
-									.removeGlobalOnLayoutListener(this);
-						} else {
-							mainContainerLayout.getViewTreeObserver()
-									.removeOnGlobalLayoutListener(this);
-						}
-						deviceHeight = mainContainerLayout.getHeight();
-					}
-				});
+			@Override
+			public void onGlobalLayout() {
+				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+					mainContainerLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+				} else {
+					mainContainerLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				}
+				deviceHeight = mainContainerLayout.getHeight();
+			}
+		});
 
 		argbEvaluator = new ArgbEvaluator();
 		colors.add(getResources().getColor(R.color.home_viewpager_color_3));
@@ -188,8 +159,7 @@ public class LaunchActivity extends BaseActivity implements
 		viewPager.setAdapter(adapter);
 		pageIndicator.setViewPager(viewPager);
 
-		viewPager.setPageTransformer(false,
-				new LaunchActiviityViewPagerTransformer(this));
+		viewPager.setPageTransformer(false, new LaunchActiviityViewPagerTransformer(this));
 
 		skipButton.setOnClickListener(this);
 		googleLoginButton.setOnClickListener(this);
@@ -200,12 +170,10 @@ public class LaunchActivity extends BaseActivity implements
 	}
 
 	private boolean checkPlayServices() {
-		int resultCode = GooglePlayServicesUtil
-				.isGooglePlayServicesAvailable(this);
+		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 		if (resultCode != ConnectionResult.SUCCESS) {
 			if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-				GooglePlayServicesUtil.getErrorDialog(resultCode, this,
-						PLAY_SERVICES_RESOLUTION_REQUEST).show();
+				GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
 			} else {
 				makeToast("This device doesn't support Play services, App will not work normally");
 				finish();
@@ -213,25 +181,6 @@ public class LaunchActivity extends BaseActivity implements
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	protected void onStart() {
-		mGoogleApiClient.connect();
-		super.onStart();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		checkPlayServices();
-	}
-
-	@Override
-	protected void onStop() {
-		if (mGoogleApiClient.isConnected())
-			mGoogleApiClient.disconnect();
-		super.onStop();
 	}
 
 	class MyPagerAdapter extends FragmentPagerAdapter {
@@ -269,24 +218,19 @@ public class LaunchActivity extends BaseActivity implements
 
 	@SuppressLint("NewApi")
 	@Override
-	public void onPageScrolled(int position, float positionOffset,
-			int positionOffsetPixels) {
-		if (position < (adapter.getCount() - 1)
-				&& position < (colors.size() - 1)) {
-			mainContainerLayout.setBackgroundColor((Integer) argbEvaluator
-					.evaluate(positionOffset, colors.get(position),
-							colors.get(position + 1)));
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+		if (position < (adapter.getCount() - 1) && position < (colors.size() - 1)) {
+			mainContainerLayout.setBackgroundColor(
+					(Integer) argbEvaluator.evaluate(positionOffset, colors.get(position), colors.get(position + 1)));
 		} else {
-			mainContainerLayout
-					.setBackgroundColor(colors.get(colors.size() - 1));
+			mainContainerLayout.setBackgroundColor(colors.get(colors.size() - 1));
 		}
 		gradientBg.setImageAlpha(0);
 		skipButtonBg.setImageAlpha(0);
 
 		int currentItem = viewPager.getCurrentItem();
 
-		if ((currentItem == 0 && position == 0)
-				|| (currentItem == 1 && position == 0)) {
+		if ((currentItem == 0 && position == 0) || (currentItem == 1 && position == 0)) {
 			translateLoginButtons(positionOffset);
 			translateSkipButton(positionOffset);
 
@@ -299,16 +243,14 @@ public class LaunchActivity extends BaseActivity implements
 			fadeLauncherIcon(1);
 			translateLauncherIconUp(1);
 			scaleLauncherIcon(1);
-		} else if ((currentItem == 2 && position == 2)
-				|| (currentItem == 3 && position == 2 && positionOffset != 0)) {
+		} else if ((currentItem == 2 && position == 2) || (currentItem == 3 && position == 2 && positionOffset != 0)) {
 			fadeSkipButtonAndLastFragmentBg(positionOffset);
 			translateLauncherIconUp(1 - positionOffset);
 			fadeLauncherIcon(1 - positionOffset);
 			scaleLauncherIcon(1 - positionOffset);
 			translateLoginButtons(1 - positionOffset);
 			translateSkipButton(1 - positionOffset);
-		} else if ((currentItem == 2 && position == 2)
-				|| (currentItem == 3 && position == 3)) {
+		} else if ((currentItem == 2 && position == 2) || (currentItem == 3 && position == 3)) {
 			gradientBg.setImageAlpha(255);
 			skipButtonBg.setImageAlpha(255);
 		} else if (currentItem == 2 && position == 3) {
@@ -316,43 +258,35 @@ public class LaunchActivity extends BaseActivity implements
 			skipButtonBg.setImageAlpha(255);
 		}
 
-		animateImageForScreenshot(position, positionOffset,
-				positionOffsetPixels, viewPager.getCurrentItem());
+		animateImageForScreenshot(position, positionOffset, positionOffsetPixels, viewPager.getCurrentItem());
 	}
 
 	@SuppressLint("NewApi")
-	private void animateImageForScreenshot(int position, float positionOffset,
-			int positionOffsetPixels, int currentItem) {
+	private void animateImageForScreenshot(int position, float positionOffset, int positionOffsetPixels,
+			int currentItem) {
 		final ImageView image1 = (ImageView) findViewById(R.id.screenshitimaege);
 		ImageView image2 = (ImageView) findViewById(R.id.screenshitimaege222);
 
-		Log.w("as", "jsjc pos " + position + " - offset " + positionOffset
-				+ "  - current " + currentItem);
+		Log.w("as", "jsjc pos " + position + " - offset " + positionOffset + "  - current " + currentItem);
 
 		if (heightOfScreenShotImage < 10) {
-			image1.getViewTreeObserver().addOnPreDrawListener(
-					new OnPreDrawListener() {
+			image1.getViewTreeObserver().addOnPreDrawListener(new OnPreDrawListener() {
 
-						@Override
-						public boolean onPreDraw() {
-							image1.getViewTreeObserver()
-									.removeOnPreDrawListener(this);
-							heightOfScreenShotImage = image1
-									.getMeasuredHeight();
-							heightOfScreenShotImage = heightOfScreenShotImage
-									* factorofImageTobeshownAlongHeight;
-							return true;
-						}
-					});
+				@Override
+				public boolean onPreDraw() {
+					image1.getViewTreeObserver().removeOnPreDrawListener(this);
+					heightOfScreenShotImage = image1.getMeasuredHeight();
+					heightOfScreenShotImage = heightOfScreenShotImage * factorofImageTobeshownAlongHeight;
+					return true;
+				}
+			});
 		}
 
-		if ((position == 0 && currentItem == 0)
-				|| (position == 0 && currentItem == 1)) {
+		if ((position == 0 && currentItem == 0) || (position == 0 && currentItem == 1)) {
 			float trans = deviceWidth * (1 - positionOffset);
 			image1.setTranslationX(trans);
 			image2.setTranslationX(trans);
-		} else if ((position == 1 && currentItem == 1)
-				|| (position == 1 && currentItem == 2)) {
+		} else if ((position == 1 && currentItem == 1) || (position == 1 && currentItem == 2)) {
 			image1.setTranslationX(deviceWidth * (-positionOffset));
 
 			float scale = Math.min(1.5f, 1 + positionOffset / 2);
@@ -363,14 +297,12 @@ public class LaunchActivity extends BaseActivity implements
 			image2.setTranslationY(transY);
 
 			if (factorOfImageToBeTranslatedAlongWidth != 0) {
-				float transX = positionOffset
-						* factorOfImageToBeTranslatedAlongWidth * deviceWidth;
+				float transX = positionOffset * factorOfImageToBeTranslatedAlongWidth * deviceWidth;
 				image2.setTranslationX(transX);
 			}
-		} else if ((position == 2 && currentItem == 2)
-				|| (position == 2 && currentItem == 3)) {
-			image2.setTranslationX(deviceWidth * (-positionOffset)
-					+ (factorOfImageToBeTranslatedAlongWidth * deviceWidth));
+		} else if ((position == 2 && currentItem == 2) || (position == 2 && currentItem == 3)) {
+			image2.setTranslationX(
+					deviceWidth * (-positionOffset) + (factorOfImageToBeTranslatedAlongWidth * deviceWidth));
 		}
 	}
 
@@ -414,8 +346,7 @@ public class LaunchActivity extends BaseActivity implements
 	private void translateLauncherIconUp(float positionOffset) {
 		if (positionOffset >= 0.5)
 			positionOffset = 0.5f;
-		float trans = (deviceHeight - getResources().getDimensionPixelSize(
-				R.dimen.z_launch_app_icon_margin))
+		float trans = (deviceHeight - getResources().getDimensionPixelSize(R.dimen.z_launch_app_icon_margin))
 				* positionOffset * -1;
 		launchIcon.setTranslationY(trans);
 	}
@@ -442,223 +373,88 @@ public class LaunchActivity extends BaseActivity implements
 	}
 
 	private void onGoogleSignInClicked() {
-		mShouldResolve = true;
-		mGoogleApiClient.connect();
-
-		progressDialog = ProgressDialog.show(this, "Google Login",
-				"Getting Google login details. Please wait..", true, false);
-	}
-
-	private void initialiseGoogleApiClient() {
-		mGoogleApiClient = new GoogleApiClient.Builder(this)
-				.addConnectionCallbacks(this)
-				.addOnConnectionFailedListener(this).addApi(Plus.API)
-				.addScope(new Scope(Scopes.PROFILE)).build();
-
-		if (mGoogleApiClient.isConnected()) {
-			Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-			mGoogleApiClient.disconnect();
-			mGoogleApiClient.connect();
-		}
+		Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+		startActivityForResult(signInIntent, PLAY_SERVICES_RESOLUTION_REQUEST);
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == RC_SIGN_IN) {
-			if (resultCode != RESULT_OK) {
-				mShouldResolve = false;
-				if (progressDialog != null)
-					progressDialog.dismiss();
-			}
 
-			mIsResolving = false;
-			mGoogleApiClient.connect();
-			if (!progressDialog.isShowing())
-				progressDialog = ProgressDialog
-						.show(this, "Google Login",
-								"Logging in through Google..Please Wait..",
-								true, false);
+		// Result returned from launching the Intent from
+		// GoogleSignInApi.getSignInIntent(...);
+		if (requestCode == PLAY_SERVICES_RESOLUTION_REQUEST) {
+			GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+			handleSignInResult(result);
+		}
+	}
+
+	private void handleSignInResult(GoogleSignInResult result) {
+		Log.d("Instirepo", "handleSignInResult:" + result.isSuccess());
+		if (result.isSuccess()) {
+			// Signed in successfully, show authenticated UI.
+			GoogleSignInAccount acct = result.getSignInAccount();
+			
+			nameToSend = acct.getDisplayName();
+			emailToSend = acct.getEmail();
+			idToSend= acct.getId();
+			imageUrlToSend= acct.getPhotoUrl().toString();
+			
 		} else {
-
+			// Signed out, show unauthenticated UI.
+			
 		}
 	}
 
-	@Override
-	public void onConnectionFailed(ConnectionResult connectionResult) {
-		if (!mIsResolving && mShouldResolve) {
-			if (connectionResult.hasResolution()) {
-				try {
-					if (progressDialog != null)
-						progressDialog.dismiss();
-					connectionResult.startResolutionForResult(this, RC_SIGN_IN);
-					mIsResolving = true;
-				} catch (IntentSender.SendIntentException e) {
-					progressDialog = ProgressDialog.show(this, null,
-							"Getting user account details");
-					mIsResolving = false;
-					mGoogleApiClient.connect();
-				}
-			} else {
-				if (progressDialog != null)
-					progressDialog.dismiss();
-				makeToast("Login error...Please try again and check your internet connection "
-						+ connectionResult.describeContents());
-			}
-		} else {
-			if (progressDialog != null)
-				progressDialog.dismiss();
-		}
-	}
+	private void initialiseGoogleApiClient() {
+		// Configure sign-in to request the user's ID, email address, and basic
+		// profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+		GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail()
+				.build();
 
-	@Override
-	public void onConnected(Bundle bundle) {
-		mShouldResolve = false;
-
-		if (progressDialog != null) {
-			progressDialog.dismiss();
-		}
-		if (progressDialog != null && !progressDialog.isShowing())
-			progressDialog = ProgressDialog.show(this, null,
-					"Getting user details.Please wait..");
-
-		Plus.PeopleApi.loadVisible(mGoogleApiClient, null).setResultCallback(
-				this);
-
-		if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-			Person currentPerson = Plus.PeopleApi
-					.getCurrentPerson(mGoogleApiClient);
-			String personName = currentPerson.getDisplayName();
-			String personPhoto = currentPerson.getImage().getUrl();
-			String personGooglePlusProfile = currentPerson.getUrl();
-			String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-			String id = currentPerson.getId();
-
-			personPhoto = personPhoto.substring(0, personPhoto.length() - 2)
-					+ PROFILE_PIC_SIZE;
-
-			nameToSend = personName;
-			imageUrlToSend = personPhoto;
-			emailToSend = email;
-			idToSend = id;
-			additionalDataToSend = currentPerson
-					+ "  ---   profile url   --   " + personGooglePlusProfile;
-		} else {
-
-		}
-
-		GetGoogleIdTokenTask task = new GetGoogleIdTokenTask();
-		task.execute();
-	}
-
-	private void onGoogleSignOutClicked() {
-		if (mGoogleApiClient.isConnected()) {
-			Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-			mGoogleApiClient.disconnect();
-		}
-	}
-
-	@Override
-	public void onConnectionSuspended(int arg0) {
-
-	}
-
-	@Override
-	public void onResult(LoadPeopleResult arg0) {
-
-	}
-
-	private class GetGoogleIdTokenTask extends AsyncTask<Void, Void, String> {
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			if (progressDialog != null) {
-				progressDialog.dismiss();
-			}
-			progressDialog = ProgressDialog.show(LaunchActivity.this, null,
-					"Getting Google Plus Access Token");
-		}
-
-		@Override
-		protected String doInBackground(Void... params) {
-			String accountName = Plus.AccountApi
-					.getAccountName(mGoogleApiClient);
-			Account account = new Account(accountName,
-					GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
-			String scopes = "audience:server:client_id:"
-					+ "860159170646-etjq78ciilius08ehhoq0k63ttco4s2j.apps.googleusercontent.com";
-			try {
-				return GoogleAuthUtil.getToken(getApplicationContext(),
-						account, scopes);
-			} catch (IOException e) {
-				return null;
-			} catch (GoogleAuthException e) {
-				return null;
-			}
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if (progressDialog != null)
-				progressDialog.dismiss();
-			if (result != null) {
-				accessTokenToSend = result;
-				makeLoginRequestToServer();
-			} else {
-
-			}
-		}
+		// Build a GoogleApiClient with access to the Google Sign-In API and the
+		// options specified by gso.
+		mGoogleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this)
+				.addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 	}
 
 	public void makeLoginRequestToServer() {
 		progressDialog = ProgressDialog.show(this, null, "Logging In");
-		StringRequest request = new StringRequest(Method.POST, loginUrl,
-				new Listener<String>() {
+		StringRequest request = new StringRequest(Method.POST, loginUrl, new Listener<String>() {
 
-					@Override
-					public void onResponse(String res) {
-						if (progressDialog != null)
-							progressDialog.dismiss();
-						GoogleLoginObject obj = new Gson().fromJson(res,
-								GoogleLoginObject.class);
-						ZPreferences.setUserProfileID(LaunchActivity.this,
-								obj.getUser_id() + "");
-						ZPreferences.setUserImageURL(LaunchActivity.this,
-								imageUrlToSend);
-						ZPreferences.setUserName(LaunchActivity.this,
-								nameToSend);
-						ZPreferences.setUserEmail(LaunchActivity.this,
-								emailToSend);
-						if (obj.isIs_details_found_on_server()) {
-							ZPreferences.setIsUserLogin(LaunchActivity.this,
-									true);
-							Intent intent = new Intent(LaunchActivity.this,
-									HomeActivity.class);
-							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-									| Intent.FLAG_ACTIVITY_CLEAR_TASK
-									| Intent.FLAG_ACTIVITY_NEW_TASK);
-							startActivity(intent);
-							LaunchActivity.this.finish();
-						} else {
-							Intent intent = new Intent(LaunchActivity.this,
-									LoginActivity.class);
-							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-									| Intent.FLAG_ACTIVITY_CLEAR_TASK
-									| Intent.FLAG_ACTIVITY_NEW_TASK);
-							startActivity(intent);
-							LaunchActivity.this.finish();
-						}
-					}
-				}, new ErrorListener() {
+			@Override
+			public void onResponse(String res) {
+				if (progressDialog != null)
+					progressDialog.dismiss();
+				GoogleLoginObject obj = new Gson().fromJson(res, GoogleLoginObject.class);
+				ZPreferences.setUserProfileID(LaunchActivity.this, obj.getUser_id() + "");
+				ZPreferences.setUserImageURL(LaunchActivity.this, imageUrlToSend);
+				ZPreferences.setUserName(LaunchActivity.this, nameToSend);
+				ZPreferences.setUserEmail(LaunchActivity.this, emailToSend);
+				if (obj.isIs_details_found_on_server()) {
+					ZPreferences.setIsUserLogin(LaunchActivity.this, true);
+					Intent intent = new Intent(LaunchActivity.this, HomeActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK
+							| Intent.FLAG_ACTIVITY_NEW_TASK);
+					startActivity(intent);
+					LaunchActivity.this.finish();
+				} else {
+					Intent intent = new Intent(LaunchActivity.this, LoginActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK
+							| Intent.FLAG_ACTIVITY_NEW_TASK);
+					startActivity(intent);
+					LaunchActivity.this.finish();
+				}
+			}
+		}, new ErrorListener() {
 
-					@Override
-					public void onErrorResponse(VolleyError arg0) {
-						makeToast("Some error occured.Try again");
-						if (progressDialog != null)
-							progressDialog.dismiss();
-					}
-				}) {
+			@Override
+			public void onErrorResponse(VolleyError arg0) {
+				makeToast("Some error occured.Try again");
+				if (progressDialog != null)
+					progressDialog.dismiss();
+			}
+		}) {
 			@Override
 			protected Map<String, String> getParams() throws AuthFailureError {
 				Map<String, String> p = new HashMap<>();
@@ -672,6 +468,12 @@ public class LaunchActivity extends BaseActivity implements
 			}
 		};
 		ZApplication.getInstance().addToRequestQueue(request, loginUrl);
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult arg0) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
