@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- End current session if app sleeps for a period of time -->
+    <integer name="ga_sessionTimeout">300</integer>
+
+    <!-- Enable automatic Activity measurement -->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!-- The property id associated with this analytics tracker -->
+    <string name="ga_trackingId">UA-65892231-4</string>
+    <string name="ga_sampleFrequency">100.0</string>
+
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+
+    <screenName name="com.instirepo.app.activities.LoginActivity">Login Activity</screenName>
+    <screenName name="com.instirepo.app.activities.MessageListActivity">Message List Activity</screenName>
+    <screenName name="com.instirepo.app.activities.LaunchActivity">Launch Activity</screenName>
+    <screenName name="com.instirepo.app.activities.HomeActivity">Home Activity</screenName>
+    <screenName name="com.instirepo.app.activities.CreatePostActivity">Create Post Activity</screenName>
+    <screenName name="com.instirepo.app.activities.AllMessagesActivity">All Messages Activity</screenName>
+    <screenName name="com.instirepo.app.activities.AboutUsActivity">About Us Activity</screenName>
+    <screenName name="com.instirepo.app.activities.NotificationsActivity">Notifications Activity</screenName>
+    <screenName name="com.instirepo.app.activities.PostDetailActivity">Post Detail Activity</screenName>
+    <screenName name="com.instirepo.app.activities.ProductDetailActivity">Product Detail Activity</screenName>
+    <screenName name="com.instirepo.app.activities.ProductsListingActivity">Products Listing Activity</screenName>
+    <screenName name="com.instirepo.app.activities.SellProductActivity">Sell Product Activity</screenName>
+    <screenName name="com.instirepo.app.activities.SplashActivity">Splash Activity</screenName>
+    <screenName name="com.instirepo.app.activities.UserProfileActivity">User Profile Activity</screenName>
+
+</resources>

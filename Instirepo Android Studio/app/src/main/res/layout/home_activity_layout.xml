@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true" >
+
+        <!-- The main content view -->
+
+        <FrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pager_launch"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent" />
+
+                <android.support.design.widget.AppBarLayout
+                    android:id="@+id/appbarlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/z_toolbar_height"
+                        android:gravity="center_vertical"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+                    </android.support.v7.widget.Toolbar>
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/z_button_height"
+                        app:tabGravity="center"
+                        app:tabIndicatorColor="@color/z_white"
+                        app:tabMode="scrollable"
+                        app:tabSelectedTextColor="@color/z_white"
+                        app:tabTextColor="@color/z_white_transparency" />
+                </android.support.design.widget.AppBarLayout>
+            </FrameLayout>
+
+            <com.instirepo.app.circularreveal.RevealFrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <View
+                    android:id="@+id/revealviewfab"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#BFffffff"
+                    android:clickable="true"
+                    android:visibility="gone" />
+            </com.instirepo.app.circularreveal.RevealFrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|bottom"
+                android:orientation="vertical" >
+
+                <com.instirepo.app.floatingactionbutton.FloatingActionMenu
+                    android:id="@+id/fabmenuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/z_margin_small"
+                    app:menu_animationDelayPerItem="50"
+                    app:menu_colorNormal="@color/PrimaryColor"
+                    app:menu_colorPressed="@color/PrimaryDarkColor"
+                    app:menu_colorRipple="#80ffffff"
+                    app:menu_icon="@drawable/fab_add"
+                    app:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+                    app:menu_labels_showAnimation="@anim/fab_slide_in_from_right" >
+
+                    <com.instirepo.app.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/rideshare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/transport"
+                        app:fab_colorNormal="@color/PrimaryColor"
+                        app:fab_colorPressed="@color/PrimaryDarkColor"
+                        app:fab_colorRipple="#80ffffff"
+                        app:fab_label="Ride Share"
+                        app:fab_size="mini" >
+                    </com.instirepo.app.floatingactionbutton.FloatingActionButton>
+
+                    <com.instirepo.app.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/sellproduct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_shopping_fab"
+                        app:fab_colorNormal="@color/PrimaryColor"
+                        app:fab_colorPressed="@color/PrimaryDarkColor"
+                        app:fab_colorRipple="#80ffffff"
+                        app:fab_label="Sell Product"
+                        app:fab_size="mini" >
+                    </com.instirepo.app.floatingactionbutton.FloatingActionButton>
+
+                    <com.instirepo.app.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/createpostbutton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_edit_small_white"
+                        app:fab_colorNormal="@color/PrimaryColor"
+                        app:fab_colorPressed="@color/PrimaryDarkColor"
+                        app:fab_colorRipple="#80ffffff"
+                        app:fab_label="Create Post"
+                        app:fab_size="mini" >
+                    </com.instirepo.app.floatingactionbutton.FloatingActionButton>
+                </com.instirepo.app.floatingactionbutton.FloatingActionMenu>
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/fragmentcontainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </FrameLayout>
+
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/coordinatorlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </android.support.design.widget.CoordinatorLayout>
+        </FrameLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/z_white"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/navigation_drawer_header_layout"
+            app:itemBackground="@null"
+            app:menu="@menu/z_drawer_items_menu" />
+    </android.support.v4.widget.DrawerLayout>
+
+    <include layout="@layout/splash_activity_layout" />
+
+</FrameLayout>
