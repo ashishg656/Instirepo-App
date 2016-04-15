@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/com.instirepo.app"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:clipToPadding="false"
-        android:paddingBottom="60dp" >
+        android:paddingBottom="60dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/z_margin_small"
                 android:background="@drawable/ic_cart_bg_shadow"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <FrameLayout
                     android:id="@+id/createpostimagelayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <com.instirepo.app.widgets.RoundedImageView
                         android:id="@+id/rounderimagecreapost"
@@ -44,14 +44,14 @@
                         android:layout_gravity="right"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
-                        android:gravity="right" >
+                        android:gravity="right">
 
                         <LinearLayout
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_gravity="right"
                             android:background="@color/z_black_50_alpha"
-                            android:gravity="center" >
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -66,11 +66,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/z_margin_large" >
+                    android:padding="@dimen/z_margin_large">
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
+                        android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/postHeading"
@@ -89,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <View
                         android:layout_width="match_parent"
@@ -100,11 +100,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="@dimen/z_margin_large" >
+                        android:padding="@dimen/z_margin_large">
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
+                            android:layout_height="wrap_content">
 
                             <EditText
                                 android:id="@+id/postcomapnyname"
@@ -130,11 +130,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/z_margin_large" >
+                    android:padding="@dimen/z_margin_large">
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
+                        android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/postdesciption"
@@ -163,7 +163,7 @@
                     android:clickable="true"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="@dimen/z_margin_large" >
+                    android:padding="@dimen/z_margin_large">
 
                     <ImageView
                         android:layout_width="14dp"
@@ -193,7 +193,7 @@
                     android:clickable="true"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="@dimen/z_margin_large" >
+                    android:padding="@dimen/z_margin_large">
 
                     <ImageView
                         android:layout_width="14dp"
@@ -223,7 +223,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/z_margin_large"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -239,7 +239,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone" >
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -255,11 +255,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/z_margin_small"
                     android:background="@drawable/ic_cart_bg_shadow"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="150dp" >
+                        android:layout_height="150dp">
 
                         <com.instirepo.app.widgets.RoundedImageView
                             android:layout_width="match_parent"
@@ -290,11 +290,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="@dimen/z_margin_large" >
+                        android:padding="@dimen/z_margin_large">
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
+                            android:layout_height="wrap_content">
 
                             <EditText
                                 android:id="@+id/eventlocation"
@@ -317,7 +317,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="@dimen/z_margin_large" >
+                        android:padding="@dimen/z_margin_large">
 
                         <TextView
                             android:id="@+id/eventstartdate"
@@ -347,7 +347,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="@dimen/z_margin_large" >
+                        android:padding="@dimen/z_margin_large">
 
                         <TextView
                             android:id="@+id/eventstarttime"
@@ -377,7 +377,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="@dimen/z_margin_large" >
+                        android:padding="@dimen/z_margin_large">
 
                         <TextView
                             android:id="@+id/eventenddate"
@@ -407,7 +407,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="@dimen/z_margin_large" >
+                        android:padding="@dimen/z_margin_large">
 
                         <TextView
                             android:id="@+id/eventendtime"
@@ -437,11 +437,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="@dimen/z_margin_large" >
+                        android:padding="@dimen/z_margin_large">
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
+                            android:layout_height="wrap_content">
 
                             <EditText
                                 android:id="@+id/registrationfee"
@@ -466,11 +466,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="@dimen/z_margin_large" >
+                        android:padding="@dimen/z_margin_large">
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
+                            android:layout_height="wrap_content">
 
                             <EditText
                                 android:id="@+id/contactnumberformoredetails"
@@ -492,7 +492,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone" >
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -508,11 +508,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/z_margin_small"
                     android:background="@drawable/ic_cart_bg_shadow"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="150dp" >
+                        android:layout_height="150dp">
 
                         <com.instirepo.app.widgets.RoundedImageView
                             android:layout_width="match_parent"
@@ -543,11 +543,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="@dimen/z_margin_large" >
+                        android:padding="@dimen/z_margin_large">
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
+                            android:layout_height="wrap_content">
 
                             <EditText
                                 android:id="@+id/pollch1"
@@ -570,11 +570,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="@dimen/z_margin_large" >
+                        android:padding="@dimen/z_margin_large">
 
                         <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
+                            android:layout_height="wrap_content">
 
                             <EditText
                                 android:id="@+id/pollch2"
@@ -594,8 +594,7 @@
                         android:layout_height="wrap_content"
                         android:animateLayoutChanges="true"
                         android:background="@color/z_white"
-                        android:orientation="vertical" >
-                    </LinearLayout>
+                        android:orientation="vertical"></LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -605,7 +604,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/z_white" >
+                        android:background="@color/z_white">
 
                         <LinearLayout
                             android:id="@+id/admorechocief"
@@ -615,7 +614,7 @@
                             android:clickable="true"
                             android:gravity="center"
                             android:orientation="horizontal"
-                            android:padding="@dimen/z_margin_large" >
+                            android:padding="@dimen/z_margin_large">
 
                             <ImageView
                                 android:layout_width="14dp"
