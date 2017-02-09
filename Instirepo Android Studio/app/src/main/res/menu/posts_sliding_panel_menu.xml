@@ -1,16 +1,16 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/erportpostslidingmeny"
         android:icon="@drawable/flag_button_selector"
-        android:title="Report Post"/>
+        android:title="Report Post" />
     <item
         android:id="@+id/markimportant"
         android:icon="@drawable/star_button_selector"
-        android:title="Mark Important"/>
+        android:title="Mark Important" />
     <item
         android:id="@+id/followpostmenusliding"
         android:icon="@drawable/follow_button_selector"
-        android:title="Follow Post"/>
+        android:title="Follow Post" />
 
 </menu>

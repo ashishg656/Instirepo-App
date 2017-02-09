@@ -29,157 +29,157 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 public class FavouritePostsFragment extends UserProfileBaseFragment implements
-		ZUrls {
+        ZUrls {
 
-	boolean isRequestRunning;
-	Integer nextPage = 1;
-	boolean isMoreAllowed = true;
+    boolean isRequestRunning;
+    Integer nextPage = 1;
+    boolean isMoreAllowed = true;
 
-	boolean canScrollViewPagerHeader;
-	MyPostsFavouritePostsListAdapter adapter;
+    boolean canScrollViewPagerHeader;
+    MyPostsFavouritePostsListAdapter adapter;
 
-	public static FavouritePostsFragment newInstance(Bundle v) {
-		FavouritePostsFragment frg = new FavouritePostsFragment();
-		frg.setArguments(v);
-		return frg;
-	}
+    public static FavouritePostsFragment newInstance(Bundle v) {
+        FavouritePostsFragment frg = new FavouritePostsFragment();
+        frg.setArguments(v);
+        return frg;
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View v = inflater.inflate(
-				R.layout.my_posts_user_profile_fragment_layout, container,
-				false);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(
+                R.layout.my_posts_user_profile_fragment_layout, container,
+                false);
 
-		recyclerView = (RecyclerView) v
-				.findViewById(R.id.postsbyreachersrecyclef);
-		progressSuperContainer = (LinearLayout) v
-				.findViewById(R.id.progressupercontainer);
-		setProgressLayoutVariablesAndErrorVariables(v);
+        recyclerView = (RecyclerView) v
+                .findViewById(R.id.postsbyreachersrecyclef);
+        progressSuperContainer = (LinearLayout) v
+                .findViewById(R.id.progressupercontainer);
+        setProgressLayoutVariablesAndErrorVariables(v);
 
-		return v;
-	}
+        return v;
+    }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-		layoutManager = new LinearLayoutManager(getActivity());
-		recyclerView.setLayoutManager(layoutManager);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
 
-		recyclerView.setPadding(0, 0, 0, 0);
+        recyclerView.setPadding(0, 0, 0, 0);
 
-		recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-			@Override
-			public void onScrollStateChanged(RecyclerView recyclerView,
-					int newState) {
-				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-					int pos = layoutManager.findFirstVisibleItemPosition();
-					if (pos == 0) {
-						((UserProfileActivity) getActivity())
-								.setToolbarTranslation(recyclerView
-										.getChildAt(0));
-					} else
-						((UserProfileActivity) getActivity())
-								.scrollToolbarAfterTouchEnds();
-				}
-				super.onScrollStateChanged(recyclerView, newState);
-			}
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView,
+                                             int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    int pos = layoutManager.findFirstVisibleItemPosition();
+                    if (pos == 0) {
+                        ((UserProfileActivity) getActivity())
+                                .setToolbarTranslation(recyclerView
+                                        .getChildAt(0));
+                    } else
+                        ((UserProfileActivity) getActivity())
+                                .scrollToolbarAfterTouchEnds();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
 
-			@Override
-			public void onScrolled(RecyclerView r, int dx, int dy) {
-				super.onScrolled(recyclerView, dx, dy);
-				if (canScrollViewPagerHeader) {
-					if (recyclerView.getAdapter() != null) {
-						int lastitem = layoutManager
-								.findLastVisibleItemPosition();
-						int totalitems = recyclerView.getAdapter()
-								.getItemCount();
-						int diff = totalitems - lastitem;
-						if (diff < 6 && !isRequestRunning && isMoreAllowed) {
-							loadData();
-						}
-					}
+            @Override
+            public void onScrolled(RecyclerView r, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (canScrollViewPagerHeader) {
+                    if (recyclerView.getAdapter() != null) {
+                        int lastitem = layoutManager
+                                .findLastVisibleItemPosition();
+                        int totalitems = recyclerView.getAdapter()
+                                .getItemCount();
+                        int diff = totalitems - lastitem;
+                        if (diff < 6 && !isRequestRunning && isMoreAllowed) {
+                            loadData();
+                        }
+                    }
 
-					((UserProfileActivity) getActivity()).scrollToolbarBy(-dy);
+                    ((UserProfileActivity) getActivity()).scrollToolbarBy(-dy);
 
-					((UserProfileActivity) getActivity())
-							.scrollFragmentRecycler(layoutManager
-									.findFirstVisibleItemPosition(),
-									recyclerView.getChildAt(0).getTop(), dy,
-									recyclerView.getScrollY());
-				} else {
-					canScrollViewPagerHeader = true;
-				}
-			}
-		});
+                    ((UserProfileActivity) getActivity())
+                            .scrollFragmentRecycler(layoutManager
+                                            .findFirstVisibleItemPosition(),
+                                    recyclerView.getChildAt(0).getTop(), dy,
+                                    recyclerView.getScrollY());
+                } else {
+                    canScrollViewPagerHeader = true;
+                }
+            }
+        });
 
-		loadData();
-	}
+        loadData();
+    }
 
-	private void loadData() {
-		isRequestRunning = true;
-		if (adapter == null) {
-			showLoadingLayout();
-			hideErrorLayout();
-		}
-		final String url = getFavouritePosts + "?pagenumber=" + nextPage;
-		StringRequest req = new StringRequest(Method.POST, url,
-				new Listener<String>() {
+    private void loadData() {
+        isRequestRunning = true;
+        if (adapter == null) {
+            showLoadingLayout();
+            hideErrorLayout();
+        }
+        final String url = getFavouritePosts + "?pagenumber=" + nextPage;
+        StringRequest req = new StringRequest(Method.POST, url,
+                new Listener<String>() {
 
-					@Override
-					public void onResponse(String res) {
-						isRequestRunning = false;
-						PostsListObject obj = new Gson().fromJson(res,
-								PostsListObject.class);
-						setAdapterData(obj);
-					}
-				}, new ErrorListener() {
+                    @Override
+                    public void onResponse(String res) {
+                        isRequestRunning = false;
+                        PostsListObject obj = new Gson().fromJson(res,
+                                PostsListObject.class);
+                        setAdapterData(obj);
+                    }
+                }, new ErrorListener() {
 
-					@Override
-					public void onErrorResponse(VolleyError err) {
-						isRequestRunning = false;
-						try {
-							Cache cache = ZApplication.getInstance()
-									.getRequestQueue().getCache();
-							Entry entry = cache.get(url);
-							String data = new String(entry.data, "UTF-8");
-							PostsListObject obj = new Gson().fromJson(data,
-									PostsListObject.class);
-							setAdapterData(obj);
-						} catch (Exception e) {
-							if (adapter == null) {
-								showErrorLayout();
-								hideLoadingLayout();
-							}
-						}
-					}
-				}) {
-			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				HashMap<String, String> p = new HashMap<>();
-				p.put("user_id", ZPreferences.getUserProfileID(getActivity()));
-				return p;
-			}
-		};
-		ZApplication.getInstance().addToRequestQueue(req, teacherPostsUrl);
-	}
+            @Override
+            public void onErrorResponse(VolleyError err) {
+                isRequestRunning = false;
+                try {
+                    Cache cache = ZApplication.getInstance()
+                            .getRequestQueue().getCache();
+                    Entry entry = cache.get(url);
+                    String data = new String(entry.data, "UTF-8");
+                    PostsListObject obj = new Gson().fromJson(data,
+                            PostsListObject.class);
+                    setAdapterData(obj);
+                } catch (Exception e) {
+                    if (adapter == null) {
+                        showErrorLayout();
+                        hideLoadingLayout();
+                    }
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> p = new HashMap<>();
+                p.put("user_id", ZPreferences.getUserProfileID(getActivity()));
+                return p;
+            }
+        };
+        ZApplication.getInstance().addToRequestQueue(req, teacherPostsUrl);
+    }
 
-	protected void setAdapterData(PostsListObject obj) {
-		nextPage = obj.getNext_page();
-		if (nextPage == null) {
-			isMoreAllowed = false;
-		}
-		if (adapter == null) {
-			hideErrorLayout();
-			hideLoadingLayout();
-			adapter = new MyPostsFavouritePostsListAdapter(getActivity(),
-					obj.getPosts(), isMoreAllowed, true);
-			recyclerView.setAdapter(adapter);
-		} else {
-			((MyPostsFavouritePostsListAdapter) adapter).addData(
-					obj.getPosts(), isMoreAllowed);
-		}
-	}
+    protected void setAdapterData(PostsListObject obj) {
+        nextPage = obj.getNext_page();
+        if (nextPage == null) {
+            isMoreAllowed = false;
+        }
+        if (adapter == null) {
+            hideErrorLayout();
+            hideLoadingLayout();
+            adapter = new MyPostsFavouritePostsListAdapter(getActivity(),
+                    obj.getPosts(), isMoreAllowed, true);
+            recyclerView.setAdapter(adapter);
+        } else {
+            ((MyPostsFavouritePostsListAdapter) adapter).addData(
+                    obj.getPosts(), isMoreAllowed);
+        }
+    }
 
 }
